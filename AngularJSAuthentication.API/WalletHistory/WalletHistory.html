@@ -1,0 +1,341 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+
+
+<style>
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+
+
+    .Divcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* fraction*/
+        padding-left: 10px;
+    }
+</style>
+<div class="page page-table"  button-permission-binder parentName="Offer" pageName="Wallet History">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Wallet History
+            </strong>
+        </div>
+        <br />
+        <div class="form-group col-md-12">
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Warehouses</label>
+                <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse" selected-model="examplemodel" extra-settings="examplesettings"></div>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Date Range</label><br>
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name"></label><br />
+                <button class="btn-primary" style="float:right;" ng-click="SearchData(warehouse)">Search</button>
+            </div>
+            <div class="form-group col-md-2,text-right">
+                <label for="site-name"></label><br>
+                <button class="btn-dark skexport" style="float:right;" ng-click="exportWalletData(SearchData)">Export</button>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            No.
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Order Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderId')"
+                                  data-ng-class="{active: row == 'OrderId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderId')"
+                                  data-ng-class="{active: row == '-OrderId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            WarehouseName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ShopName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ShopName')"
+                                  data-ng-class="{active: row == 'ShopName'}"></span>
+                            <span class="glyphicon glyphicon-DisplayName-down"
+                                  data-ng-click="order('-ShopName')"
+                                  data-ng-class="{active: row == '-ShopName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            TotalWalletAmount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('TotalWalletAmount')"
+                                  data-ng-class="{active: row == 'TotalWalletAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-TotalWalletAmount')"
+                                  data-ng-class="{active: row == '-TotalWalletAmount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+
+                            NewAdded WAmount
+
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('NewAddedWAmount')"
+                                  data-ng-class="{active: row == 'NewAddedWAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-NewAddedWAmount')"
+                                  data-ng-class="{active: row == '-NewAddedWAmount'}"></span>
+                        </div>
+                    </th>
+   
+                    <th>
+                        <div class="th">
+                            NewOut WAmount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('NewOutWAmount')"
+                                  data-ng-class="{active: row == 'NewOutWAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-NewOutWAmount')"
+                                  data-ng-class="{active: row == '-NewOutWAmount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Through
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Through')"
+                                  data-ng-class="{active: row == 'Through'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Through')"
+                                  data-ng-class="{active: row == '-Through'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Skcode
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Skcode')"
+                                  data-ng-class="{active: row == 'Skcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Skcode')"
+                                  data-ng-class="{active: row == '-Skcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            PeopleName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('PeopleName')"
+                                  data-ng-class="{active: row == 'PeopleName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PeopleName')"
+                                  data-ng-class="{active: row == '-PeopleName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Date
+                        </div>
+                    </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in FilterData">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.OrderId}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.TotalWalletAmount}}</td>
+                    <td>{{trade.NewAddedWAmount}}</td>
+                    <td>{{trade.NewOutWAmount}}</td>
+                    <td>{{trade.Through}}</td>
+                    <td>{{trade.Skcode}}</td>
+                    <td>{{trade.PeopleName}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+
+

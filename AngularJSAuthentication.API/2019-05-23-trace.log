@@ -1,0 +1,97 @@
+2019-05-23 18:22:26.2614|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2019-05-23 18:22:26.2614|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|start Warehouse: 
+2019-05-23 18:22:26.2873|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:22:26.2873|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:22:26.3192|INFO|AngularJSAuthentication.API.Controllers.DashboardReportController|start get all Sales Executive: 
+2019-05-23 18:22:26.3192|INFO|AngularJSAuthentication.API.Controllers.DashboardReportController|User ID : 1 , Company Id : 183
+2019-05-23 18:22:29.9994|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|End  Warehouse: 
+2019-05-23 18:22:30.2886|INFO|AngularJSAuthentication.API.Controllers.DashboardReportController|start get all Sales Executive: 
+2019-05-23 18:22:30.3245|INFO|AngularJSAuthentication.API.Controllers.DashboardReportController|User ID : 1 , Company Id : 183
+2019-05-23 18:22:32.8767|INFO|AngularJSAuthentication.API.Controllers.DashboardReportController|End Customer: 
+2019-05-23 18:23:41.0266|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|start Warehouse: 
+2019-05-23 18:23:41.0266|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:23:41.0266|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:23:41.0266|INFO|AngularJSAuthentication.API.Controllers.AppHomeController|start AppHomeDynamic: 
+2019-05-23 18:23:41.0266|INFO|AngularJSAuthentication.API.Controllers.AppHomeController|User ID : {0} , Company Id : {1} Get Sactions
+2019-05-23 18:23:41.0352|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|End  Warehouse: 
+2019-05-23 18:23:41.0861|INFO|AngularJSAuthentication.API.Controllers.AppHomeController|End AppHomeDynamic: 
+2019-05-23 18:27:03.0403|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|start Warehouse: 
+2019-05-23 18:27:03.0403|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:27:03.0403|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:27:03.0403|INFO|AngularJSAuthentication.API.Controllers.BaseCategoryController|start Category: 
+2019-05-23 18:27:03.0503|INFO|AngularJSAuthentication.API.Controllers.BaseCategoryController|User ID : 1 , Company Id : 183
+2019-05-23 18:27:03.0503|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2019-05-23 18:27:03.0503|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 183
+2019-05-23 18:27:03.0503|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|End  Warehouse: 
+2019-05-23 18:27:03.0772|INFO|AngularJSAuthentication.API.Controllers.BaseCategoryController|End  BaseCategory: 
+2019-05-23 18:27:03.0932|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2019-05-23 18:27:03.0952|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|start Subsubategory: 
+2019-05-23 18:27:03.0952|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|User ID : 1 , Company Id : 183
+2019-05-23 18:27:03.1490|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|End  Subsubategory: 
+2019-05-23 18:27:07.2519|INFO|AngularJSAuthentication.API.Controllers.AppHomeController|start AppHomeDynamic: 
+2019-05-23 18:27:07.2519|INFO|AngularJSAuthentication.API.Controllers.AppHomeController|User ID : {0} , Company Id : {1} Get Sactions
+2019-05-23 18:27:07.2519|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|start Warehouse: 
+2019-05-23 18:27:07.2519|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:27:07.2519|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:27:07.2519|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|End  Warehouse: 
+2019-05-23 18:27:07.2519|INFO|AngularJSAuthentication.API.Controllers.AppHomeController|End AppHomeDynamic: 
+2019-05-23 18:34:03.8206|INFO|AngularJSAuthentication.API.Controllers.OfferController|start Offer: 
+2019-05-23 18:34:03.8206|INFO|AngularJSAuthentication.API.Controllers.OfferController|End Get Company: 
+2019-05-23 18:34:03.8555|INFO|AngularJSAuthentication.API.Controllers.OfferController|End  Offer: 
+2019-05-23 18:37:21.4450|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|start Warehouse: 
+2019-05-23 18:37:21.4450|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:37:21.4450|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:37:21.4450|INFO|AngularJSAuthentication.API.Controllers.CityController|start City: 
+2019-05-23 18:37:21.4450|INFO|AngularJSAuthentication.API.Controllers.CityController|User ID : 1 , Company Id : 183
+2019-05-23 18:37:21.4569|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|End  Warehouse: 
+2019-05-23 18:37:21.4739|INFO|AngularJSAuthentication.API.Controllers.CityController|End  City: 
+2019-05-23 18:37:25.7439|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2019-05-23 18:37:25.7439|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 183
+2019-05-23 18:37:25.7439|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2019-05-23 18:37:25.7549|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|start Subsubategory: 
+2019-05-23 18:37:25.9982|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|End  Subsubategory: 
+2019-05-23 18:37:48.3012|INFO|AngularJSAuthentication.API.Controllers.OfferController|start single User: 
+2019-05-23 18:37:48.7301|INFO|AngularJSAuthentication.API.Controllers.OfferController|End Get coupon by id: System.Collections.Generic.List`1[AngularJSAuthentication.Model.ItemMaster]
+2019-05-23 18:37:56.6295|INFO|AngularJSAuthentication.API.Controllers.OfferController|Add offer: 
+2019-05-23 18:37:56.7781|INFO|AngularJSAuthentication.API.Controllers.OfferController|End  Add offer: 
+2019-05-23 18:37:58.6961|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2019-05-23 18:37:58.7150|INFO|AngularJSAuthentication.API.Controllers.OfferController|start Offer: 
+2019-05-23 18:37:58.7150|INFO|AngularJSAuthentication.API.Controllers.OfferController|End Get Company: 
+2019-05-23 18:37:58.7240|INFO|AngularJSAuthentication.API.Controllers.OfferController|End  Offer: 
+2019-05-23 18:38:39.1194|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2019-05-23 18:38:39.2002|INFO|AngularJSAuthentication.API.Controllers.OfferController|start Offer: 
+2019-05-23 18:38:39.2002|INFO|AngularJSAuthentication.API.Controllers.OfferController|End Get Company: 
+2019-05-23 18:38:39.2002|INFO|AngularJSAuthentication.API.Controllers.OfferController|End  Offer: 
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.CityController|start City: 
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.CityController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.CityController|End  City: 
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|start Warehouse: 
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:42.2238|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|start Subsubategory: 
+2019-05-23 18:38:42.2388|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2019-05-23 18:38:42.2388|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|End  Warehouse: 
+2019-05-23 18:38:42.4303|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|End  Subsubategory: 
+2019-05-23 18:38:45.4466|INFO|AngularJSAuthentication.API.Controllers.CityController|start City: 
+2019-05-23 18:38:45.4466|INFO|AngularJSAuthentication.API.Controllers.CityController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:45.4466|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|start Warehouse: 
+2019-05-23 18:38:45.4466|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:45.4466|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:45.4466|INFO|AngularJSAuthentication.API.Controllers.CityController|End  City: 
+2019-05-23 18:38:45.4466|INFO|AngularJSAuthentication.API.Controllers.WarehouseController|End  Warehouse: 
+2019-05-23 18:38:47.2128|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|start Subsubategory: 
+2019-05-23 18:38:47.2128|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2019-05-23 18:38:47.2128|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 183
+2019-05-23 18:38:47.2128|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2019-05-23 18:38:47.4489|INFO|AngularJSAuthentication.API.Controllers.SubsubCategoryController|End  Subsubategory: 
+2019-05-23 18:39:11.3226|INFO|AngularJSAuthentication.API.Controllers.OfferController|start single User: 
+2019-05-23 18:39:11.4652|INFO|AngularJSAuthentication.API.Controllers.OfferController|End Get coupon by id: System.Collections.Generic.List`1[AngularJSAuthentication.Model.ItemMaster]
+2019-05-23 18:39:18.1251|INFO|AngularJSAuthentication.API.Controllers.OfferController|Add offer: 
+2019-05-23 18:39:27.5092|INFO|AngularJSAuthentication.API.Controllers.OfferController|Add offer: 
+2019-05-23 18:39:27.5435|INFO|AngularJSAuthentication.API.Controllers.OfferController|End  Add offer: 
+2019-05-23 18:39:31.4966|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2019-05-23 18:39:31.5235|INFO|AngularJSAuthentication.API.Controllers.OfferController|start Offer: 
+2019-05-23 18:39:31.5235|INFO|AngularJSAuthentication.API.Controllers.OfferController|End Get Company: 
+2019-05-23 18:39:31.5235|INFO|AngularJSAuthentication.API.Controllers.OfferController|End  Offer: 

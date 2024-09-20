@@ -1,0 +1,487 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<style>
+    .collapsible {
+        background-color: #00a4e9;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 8%;
+        height: 40px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        padding: 10px;
+        box-shadow: 5px 5px 8px gray;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+</style>
+<style>
+    div.ex1 {
+        background-color: lightblue;
+        min-height: 300px;
+        max-height: 500px;
+        overflow: scroll;
+    }
+
+    div.ex2 {
+        background-color: lightblue;
+        width: 110px;
+        height: 150px;
+        overflow: hidden;
+    }
+
+    div.ex3 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        overflow: auto;
+    }
+
+    div.ex4 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        overflow: visible;
+    }
+</style>
+<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+<style>
+    .or-bld {
+        font-size: 25px;
+        font-weight: bold;
+        color: #EB5A00;
+        font-family: fantasy;
+    }
+
+    .or-bld-2 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #EB5A00;
+        font-family: fantasy;
+    }
+
+
+    .box-ds {
+        border: solid 1px lightgray;
+        padding: 13px 6px;
+        margin: 5px
+    }
+
+    .or-sm {
+        margin-top: 8px;
+    }
+
+    .btn-br {
+        /*position: absolute;*/
+        margin-left: 8px;
+        border-radius: 19px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .pull-right-im {
+        float: right !important;
+    }
+
+    .br-or {
+        border-top: solid 2px lightgray;
+        margin: 20px 0px;
+    }
+
+    .bx-dr {
+        border: solid 1px lightgray;
+        padding: 2px 5px;
+        min-width: 61px;
+    }
+</style>
+<style>
+    .accordion {
+        background-color: #03A9F4;
+        color: #fff;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 20px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="client-document-container">
+    <div class="containers">
+        <br />
+        <div class="p-3 mb-2 bg-primary ">
+            <div class="panel-heading"> <h4> <strong> <span class="glyphicon glyphicon-th"> </span>GR Cancellation Module</strong> </h4></div>
+        </div>
+        <!--<h4 class="title">Unconfirmed GR product received detail</h4>
+    <br />-->
+        <div class="row">
+            <!--<div class="col-sm-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getApprovedgrdata(pageno)">
+                     <option value="">--Select Hub--</option>
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" > {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                </select>
+            </div>-->
+            <div class="col-sm-2">
+                <label for="site-name">Enter POId</label><br />
+                <input type="number" placeholder="Enter PO Id" class="form-control" data-ng-model="searchKey">
+            </div>
+            <div class="col-sm-2">
+                <label for="site-name">Search</label><br />
+                <button type="button" class="btn btn-primary" ng-click="searchData()" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-search"> </span>  Search By PO Number
+                </button>
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>SNo.</th>
+                        <th>PO Id.</th>
+                        <th>GR.No.</th>
+                        <th>GR PersonName</th>
+                        <th>GR Status</th>
+                        <th>GR Date</th>
+                        <th>GR Amount</th>
+                        <th>Vehicle Type</th>
+                        <th>Vehicle Number</th>
+                        <!--<th>Approve</th>-->
+                        <th>Cancel GR</th>
+                        <th>Free Item</th>
+                    </tr>
+                </thead>
+                <!--<tbody ng-repeat="O in GrMaster">-->
+                <tbody dir-paginate="O in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                <tbody data-ng-repeat="O in currentPageStores">
+                <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                    <td class="CX"><span style="color:red;">+</span></td>
+                    <td>{{$index+1}}</td>
+                    <td>{{O.PurchaseOrderId}}</td>
+                    <td>{{O.GrNumber}}</td>
+                    <td>{{O.GrPersonName}}</td>
+                    <td ng-style="{ 'color' : (O.Status == 'Approved') ? 'black' : 'red'  }">{{O.Status}}</td>
+                    <td>{{O.GrDate | date : format : medium}}</td>
+                    <td style="color:red;">{{O.GrAmount | number : 2}}</td>
+                    <td ng-show="O.VehicleType != null">{{O.VehicleType}}</td>
+                    <td ng-show="O.VehicleType == null"><span style="color:red;">-</span></td>
+                    <td ng-show="O.VehicleType != null">{{O.VehicleNumber }}</td>
+                    <td ng-show="O.VehicleType == null"><span style="color:red;">-</span></td>
+                    <!--<td>
+        <button ng-hide="PurchaseOrderData.Status == 'Received' || PurchaseOrderData.Status == 'Canceled'" class="btn btn-primary btn-br" style="float:right; margin-right: 15px;" id="ap{{O.GrNumber}}" click-and-disable="SaveApprovedGr(O)">&nbsp;Approved GR</button>
+        <!--<a class="btn btn-success btn-br" ng-disabled="O.Status == 'Confirmed'" href="#/UnconfirmedGR/{{O.GrNumber}}" target="_blank">View</a>-->
+                    <!--<button ng-disabled="O.Status == 'Confirmed'" ng-click="UnconfirmedGRDetail(O)" class="btn btn-success btn-br">Confirm</button>-->
+                    <!--</td>-->
+                    <td>
+                        <button ng-hide="PurchaseOrderData.Status == 'Received' || PurchaseOrderData.Status == 'Canceled'" class="btn btn-danger btn-br" style="float:right; margin-right: 15px;" id="sap{{O.GrNumber}}" click-and-disable="CancelApprovedGr(O)">&nbsp;Cancel GR</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-br" style="float:right; margin-right: 15px;" ng-click="viewfree(O.PurchaseOrderId,O.GrNumber)">&nbsp;View Free Item</button>
+                    </td>
+                    <!--<td>
+            <button class="btn btn-danger btn-br" style="float:right; margin-right: 15px;" ng-click="viewfree(O.PurchaseOrderId,O.GrNumber)">&nbsp;View Free Item</button>
+        </td>-->
+                </tr>
+                <tr class="sub">
+                    <td></td>
+                    <td colspan="5">
+                        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <th>SNo.</th>
+                                <th>Item Name.</th>
+                                <th>HSN</th>
+                                <th>Batch.No.</th>
+                                <th>MFG Date</th>
+                                <th>Total Quantity</th>
+                                <th>Qty Received</th>
+                                <th>Dam Received</th>
+                                <th>Exp Received</th>
+                                <th>Price</th>
+                                <th>Total Amount</th>
+                            </tr>
+                            <tr ng-repeat="PurchaseorderDetail in O.Detail" ng-class-even="'even'" ng-class-odd="'odd'">
+                                <td>{{$index+1}}</td>
+                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                <td>{{PurchaseorderDetail.BatchNo}}</td>
+                                <td>{{PurchaseorderDetail.MFG | date : format : medium}}</td>
+                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                <td>{{PurchaseorderDetail.DamagQtyRecived}}</td>
+                                <td>{{PurchaseorderDetail.ExpQtyRecived}}</td>
+                                <td>{{PurchaseorderDetail.Price}}</td>
+                                <td>{{PurchaseorderDetail.Price * PurchaseorderDetail.QtyRecived | number : 2}}</td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer">
+                <div class="row">
+                    <dir-pagination-controls max-size="5"
+                                             direction-links="true"
+                                             boundary-links="true"
+                                             on-page-change="getApprovedgrdata(newPageNumber)">
+                        //get method call every time when page changes
+                    </dir-pagination-controls>
+                    <div class="col-md-6 text-right pagination-container">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="selected"//this give no. of items selected to show on page
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page
+                                entries per page
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!--<footer class="table-footer">
+        <div class="row">
+            <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()"></select>
+                    entries per page
+                </span>
+            </div>
+            <div class="col-md-6 text-right pagination-container">
+                <pagination class="pagination-sm"
+                            page="currentPage"
+                            total-items="filteredStores.length"
+                            max-size="4"
+                            on-select-page="select(page)"
+                            items-per-page="numPerPage"
+                            rotate="false"
+                            boundary-links="true"></pagination>
+            </div>
+        </div>
+    </footer>-->
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="ViewfreeItemGR.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Free Item List</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12"></div>
+            <br />
+            <table ng-if="frShow" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>PurchaseOrder Id</th>
+                        <th>GR Number</th>
+                        <th>SupplierName</th>
+                        <th>itemname</th>
+                        <th>No of Piece</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="item in FreeItems">
+                        <td>{{item.PurchaseOrderId}}</td>
+                        <td>{{item.GRNumber}}</td>
+                        <td>{{item.SupplierName}}</td>
+                        <td>{{item.itemname}}</td>
+                        <td>{{item.TotalQuantity | number:2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-danger" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </form>
+</script>

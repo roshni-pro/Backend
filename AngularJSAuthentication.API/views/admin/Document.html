@@ -1,0 +1,215 @@
+﻿
+<style>
+    #dragandrophandler {
+        border: 2px dashed #92AAB0;
+        width: 650px;
+        height: 200px;
+        color: #92AAB0;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 0px 10px 10px;
+        font-size: 200%;
+        display: table-cell;
+    }
+</style>
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Document" >
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> Document table</strong> </div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()"> <span class="glyphicon glyphicon-plus"> </span> Add Document</button>
+            
+        </div>
+        <br />
+       
+        
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Document Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DocumentName')"
+                                  data-ng-class="{active: row == 'DocumentName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DocumentDocumentName')"
+                                  data-ng-class="{active: row == '-DocumentName'}"></span>
+                        </div>
+                    </th>
+
+                   
+
+                  
+                    <th>
+                        <div class="th">
+                            Point
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Department')"
+                                  data-ng-class="{active: row == ' Point'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Department')"
+                                  data-ng-class="{active: row == '- Point'}"></span>
+                        </div>
+                    </th>
+                   
+                  
+                   
+                    <th>
+                        <div class="th">
+                            Active
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Active')"
+                                  data-ng-class="{active: row == 'Active'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Active')"
+                                  data-ng-class="{active: row == '-Active'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('WH Master login')>-1)">
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    
+                    <!--<th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>-->
+                </tr>
+
+
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in getDocument">
+                    <td>{{trade.DocumentName}}</td>
+                 
+                   
+                    <td>{{trade.Doc_Point}}</td>
+                    <td>{{trade.Active}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <!--<td><button class="btn-sm btn-primary">Details</button> </td>-->
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('WH Master login')>-1)"><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1)"><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myPeopleModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Document</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Document Name:</label><br />
+                <input id="FP_name" type="text" class="form-control" name="DName" ng-model="DocumentData.DocumentName" placeholder="Enter Document Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Point:</label><br />
+                <input id="LP_name" type="text" class="form-control" name="DName" ng-model="DocumentData.Point" placeholder="Enter Point" />
+            </div>
+          
+            
+                 <div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="DocumentData.Active" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="AddDocument(DocumentData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<!--Update People-->
+<script type="text/ng-template" id="myPeopleModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Document</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Document Name:</label><br />
+                <input id="FP_name" type="text" class="form-control" name="DName" ng-model="DocumentData.DocumentName" placeholder="Enter Document Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Point:</label><br />
+                <input id="LP_name" type="text" class="form-control" name="DName" ng-model="DocumentData.Point" placeholder="Enter Point" />
+            </div>
+
+
+            <div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="DocumentData.Active" />
+            </div>
+        </div>
+          
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutPeople(PeopleData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<!-- /new site modal -->

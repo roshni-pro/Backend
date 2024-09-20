@@ -1,0 +1,165 @@
+﻿<div class="page page-table" button-permission-binder parentName="Customer" pageName="Not Ordered">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> Not Ordered Customer  </strong>
+        </div>
+        
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Sales Person</label><br>
+                <select class="form-control" id="site-name" ng-model="data.PeopleID" ng-change="selectedItemChanged(data)">
+                    <option value="">-Select-</option>
+                    <option value="{{a.PeopleID}}" ng-repeat="a in Peopledata">{{a.DisplayName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Option</label><br>
+                <input type="radio" ng-value="true" ng-change="VisitNotVisit()" ng-model="status" /> Visited
+                <input type="radio" ng-value="false" ng-change="VisitNotVisit()" ng-model="status" /> Not Visited
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button class="btn-sm btn-primary skexport" ng-click="exportData()"> <span class="glyphicon glyphicon-plus"> </span> Export  List</button>
+            </div>
+        </div>
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-3">
+                <label for="site-name">SKcode</label><br>
+                <input class="form-control" ng-model="skcode" placeholder="Enter Sk code" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="Search()">Search</button>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="getNotorderddata()">Refresh</button>
+            </div>
+           
+        </div>
+
+        <table class="table table-bordered table-responsive ">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            No.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sales Person
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            SKCODE
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shop Name
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Visited
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Comment
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                           GetLocation
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Date
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores | orderBy:'id':true">
+                    <td>{{1+$index}}</td>
+                    <td>{{trade.SalespersonName}}</td>
+                    <td>{{trade.Skcode}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.status}}</td>
+                    <td>{{trade.Visited}}</td>
+                    <td>{{trade.Comment}}</td>
+                    <td title="'Location'"><button  class="btn btn-info btn-lg skshowlocation" data-toggle="modal" data-target="#Loc" ng-click="GetLocationData(trade)">ShowLocation</button></td>
+                    <td>{{trade.CreatedDate |date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+
+
+
+<!-- Modal -->
+<div id="Loc" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">See Locatin Map</h4>
+            </div>
+            <script src="http://maps.google.com/maps/api/js?libraries=places&region=in&language=en&sensor=true"></script>
+            <div class="modal-body">
+               
+                <div id="map_canvas" style="height: 650px;width: 850px;margin: 0.6em;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

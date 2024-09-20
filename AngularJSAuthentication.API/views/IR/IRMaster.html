@@ -1,0 +1,564 @@
+﻿<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 99%;
+        margin: 10px;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+
+<div class="page page-table" button-permission-binder parentName="IR Master" pageName="IR Master">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> IR Master</strong>
+        </div>
+        <div class="row" style="padding:10px;">
+            <div class="col-sm-2">
+                <label for="site-name"></label><br />
+                <input type="number" placeholder="Enter Purchase Order ID" class="form-control" data-ng-model="searchKey">
+            </div>
+            <div class="col-sm-2">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-primary" ng-click="searchData(searchKey)" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-search"> </span>  Search
+                </button>
+            </div>
+            <div class="col-sm-2">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-warning" ng-click="GetPostedIR(searchKey)" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-search"> </span>  Get Posted IR
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-default table-dynamic" ng-show="PostedIRSection">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>Posted IR</strong>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>SNo.</th>
+                            <th>IRID</th>
+                            <th>IR Type</th>
+                            <th>Status</th>
+                            <th>Created By</th>
+                            <th>Create Date</th>
+                            <th>TotalAmount</th>
+                            <th>Discount</th>
+                            <th>Send for approval</th>
+                            <th>View Receipt</th>
+                            <th>Edit</th>
+                            <th>Reject Reasion</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="O in PostedIR">
+                        <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                            <td class="CX"><span style="color:red;">+</span></td>
+                            <td>{{$index+1}}</td>
+                            <td>{{O.IRID}}</td>
+                            <td>{{O.IRType}}</td>
+                            <td>{{O.IRStatus}}</td>
+                            <td>{{O.CreatedBy}}</td>
+                            <td>{{O.CreationDate | date : format : medium}}</td>
+                            <td>{{O.TotalAmount | number:2}}</td>
+                            <td>{{O.Discount | number:2}}</td>
+                            <td>
+                                <button class="btn btn-danger" ng-disabled="O.IRStatus != 'IR Uploaded'" ng-click="sendforapproval(O)">
+                                    <span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Send
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-warning" ng-click="view(O)">
+                                    <span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;view
+                                </button>
+                            </td>
+                            <td>
+                                <button ng-disabled="O.IRStatus == 'IR Posted' || O.IRStatus == 'IR Uploaded' || O.IRStatus == 'Approved from Buyer side' || O.IRStatus =='Pending from Buyer side' " class="btn btn-danger" ng-click="Edit(O)">
+                                    <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
+                                </button>
+                            </td>
+                            <td ng-if="O.RejectedComment!=null">{{O.RejectedComment}}</td>
+                            <td ng-if="O.RejectedComment==null" style="text-align:center">-</td>
+                        </tr>
+                        <tr class="sub">
+                            <td></td>
+                            <td colspan="5">
+                                <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR1'" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Item Name.</th>
+                                        <th>HSN</th>
+                                        <th>No of Pieces</th>
+                                        <th>Qty Recived</th>
+                                        <th>Recive</th>
+                                        <th>Price</th>
+                                        <th>Disc</th>
+                                        <th>GST Tsx Amt</th>
+                                        <th>Cess Tax Amt</th>
+                                        <th>Amt</th>
+                                        <th>Total Amt</th>
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                        <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                        <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                        <th>{{PurchaseorderDetail.QtyRecived1}}</th>
+                                        <th>{{PurchaseorderDetail.Price1 | number:2}}</th>
+                                        <th>{{PurchaseorderDetail.dis1 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1 | number:2}}</th>
+                                        <th>{{((((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.TotalTaxPercentage)/100) +((((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) | number:2}}  </th>
+
+                                    </tr>
+
+                                </table>
+                                <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR2'" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Item Name.</th>
+                                        <th>HSN</th>
+                                        <th>No of Pieces</th>
+                                        <th>Qty Recived</th>
+                                        <th>Recive</th>
+                                        <th>Price</th>
+                                        <th>Disc</th>
+                                        <th>GST Tax Amt</th>
+                                        <th>Cess Tax Amt</th>
+                                        <th>Amt</th>
+                                        <th>Total Amt</th>
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                        <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                        <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                        <th>{{PurchaseorderDetail.QtyRecived2}}</th>
+                                        <th>{{PurchaseorderDetail.Price2 | number:2}}</th>
+                                        <th>{{PurchaseorderDetail.dis2 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2 | number:2}}</th>
+                                        <th>{{((((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) | number:2}}  </th>
+                                    </tr>
+                                </table>
+                                <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR3'" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Item Name.</th>
+                                        <th>HSN</th>
+                                        <th>No of Pieces</th>
+                                        <th>Qty Recived</th>
+                                        <th>Recive</th>
+                                        <th>Price</th>
+                                        <th>Disc</th>
+                                        <th>GST Tax Amt</th>
+                                        <th>Cess Tax Amt</th>
+                                        <th>Amt</th>
+                                        <th>Total Amt</th>
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                        <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                        <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                        <th>{{PurchaseorderDetail.QtyRecived3}}</th>
+                                        <th>{{PurchaseorderDetail.Price3 | number:2}}</th>
+                                        <th>{{PurchaseorderDetail.dis3 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3 | number:2}}</th>
+                                        <th>{{((((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) | number:2}}  </th>
+                                    </tr>
+                                </table>
+                                <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR4'" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Item Name.</th>
+                                        <th>HSN</th>
+                                        <th>No of Pieces</th>
+                                        <th>Qty Recived</th>
+                                        <th>Recive</th>
+                                        <th>Price</th>
+                                        <th>Disc</th>
+                                        <th>GST Tax Amt</th>
+                                        <th>Cess Tax Amt</th>
+                                        <th>Amt</th>
+                                        <th>Total Amt</th>
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                        <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                        <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                        <th>{{PurchaseorderDetail.QtyRecived4}}</th>
+                                        <th>{{PurchaseorderDetail.Price4 | number:2}}</th>
+                                        <th>{{PurchaseorderDetail.dis4 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4 | number:2}}</th>
+                                        <th>{{((((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) | number:2}}  </th>
+                                    </tr>
+                                </table>
+                                <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR5'" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Item Name.</th>
+                                        <th>HSN</th>
+                                        <th>No of Pieces</th>
+                                        <th>Qty Recived</th>
+                                        <th>Recive</th>
+                                        <th>Price</th>
+                                        <th>Disc</th>
+                                        <th>GST Tax Amt</th>
+                                        <th>Cess Tax Amt</th>
+                                        <th>Amt</th>
+                                        <th>Total Amt</th>
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                        <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                        <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                        <th>{{PurchaseorderDetail.QtyRecived5}}</th>
+                                        <th>{{PurchaseorderDetail.Price5 | number:2}}</th>
+                                        <th>{{PurchaseorderDetail.dis5 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                        <th>{{(PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5 | number:2}}</th>
+                                        <th>{{((((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) | number:2}}  </th>
+                                    </tr>
+                                </table>
+
+                                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                    <tr> <th colspan="4" style="color:red; text-align:center;">IR Amount Bifurcation</th></tr>
+                                    <tr>
+                                        <th>Discount Amount</th>
+                                        <th>Expense Amount ({{O.ExpenseAmountType}})</th>
+                                        <th>Other Amount ({{O.OtherAmountType}})</th>
+                                        <th>Round Off Amount ({{O.RoundoffAmountType}})</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{O.Discount}}</td>
+                                        <td>{{O.ExpenseAmount}}</td>
+                                        <td>{{O.OtherAmount}}</td>
+                                        <td>{{O.RoundofAmount}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-default table-dynamic" ng-show="Grflag">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> GR Detail</strong>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>SNo.</th>
+                            <th>GR.No.</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="O in PurchaseOrder.GRIdsObj">
+                        <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                            <td class="CX"><span style="color: red;">+</span></td>
+                            <td>{{$index+1}}</td>
+                            <td>{{O.GrNumber}}</td>
+                            <td><input type="checkbox" ng-model="O.IsSelected" style="width: 20px;height: 20px;" /></td>
+                        </tr>
+                        <tr class="sub">
+                            <td></td>
+                            <td colspan="5">
+                                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Itemnumber</th>
+                                        <th>ItemName</th>
+                                        <th>Quantity</th>
+                                        <th>Select</th>
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.gritem" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.Itemnumber}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.Quantity}}</td>
+                                        <td><input type="checkbox" style="width: 20px;height: 20px;" ng-model="PurchaseorderDetail.IsSelected" ng-disabled="O.IsSelected == false" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <button style="float:right; margin:10px 10px 10px 0px" type="button" class="btn btn-primary" ng-click="GetIRDetail()" data-dismiss="modal">
+                    IR
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-default table-dynamic" ng-show="Irflag">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> IR Detail</strong>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6 form-group">
+                    <label for="site-name">IR Type:</label><br />
+                    <input readonly class="form-control" ng-model="PurchaseOrderIR.IRType" />
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="site-name">Invoice Number:</label><br />
+                    <input class="form-control" ng-model="PurchaseOrderIR.IRID" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th>SNo.</th>
+                            <th>Itemnumber</th>
+                            <th>ItemName</th>
+                            <th>HSN</th>
+                            <th>GRQ</th>
+                            <th>IRQ</th>
+                            <th>TAX</th>
+                            <th>Recive Qty</th>
+                            <th>Price</th>
+                            <th width="175px">Disc Type</th>
+                            <th>Disc</th>
+                            <th>Taxable Amt</th>
+                            <th>GST</th>
+                            <th>SGST</th>
+                            <th>CGST</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="IRItems in PurchaseOrderIR.purDetails">
+                        <td>{{$index+1}}</td>
+                        <td>{{IRItems.ItemNumber}}</td>
+                        <td>{{IRItems.ItemName}}</td>
+                        <td>{{IRItems.HSNCode}}</td>
+                        <td>{{IRItems.QtyRecived}}</td>
+                        <td>{{IRItems.IRQuantity}}</td>
+                        <td>{{IRItems.TotalTaxPercentage}}</td>
+                        <td>
+                            <input type="number" ng-disabled="IRItems.QtyRecived ==IRItems.IRQuantity" ng-change="AmountCalculation(PurchaseOrderIR)" ng-model="IRItems.Qty" style="width:60px; height: 33px;" min="0" />
+                        </td>
+                        <td>
+                            <input type="number" ng-disabled="IRItems.QtyRecived == IRItems.IRQuantity" ng-change="AmountCalculation(PurchaseOrderIR)" ng-model="IRItems.Price" style="width:60px; height: 33px;" min="0" />
+                        </td>
+                        <td>
+                            <span>
+                                <select class="form-control" style="float:left; width: 80px;font-size: smaller; padding-left: 1px;" ng-model="IRItems.distype" data-ng-change="cleardisdata()" required>
+                                    <option value="">-SELECT-</option>
+                                    <option value="Percent">Percent</option>
+                                    <option value="Amount">Amount</option>
+                                </select>
+                                <input style="width:70px; height: 33px; margin-left: 5px;" ng-change="AmountCalculation(PurchaseOrderIR)" ng-show="IRItems.distype == 'Percent'" type="number" placeholder="Percent" ng-model="IRItems.DesP" min="0" />
+                                <input style="width:70px; height: 33px; margin-left: 5px;" ng-change="AmountCalculation(PurchaseOrderIR)" ng-show="IRItems.distype == 'Amount'" type="number" placeholder="Amount" ng-model="IRItems.DesA" min="0" />
+                            </span>
+                        </td>
+                        <td>{{IRItems.discount | number: 2}}</td>
+                        <td>{{IRItems.taxableamt | number: 2}}</td>
+                        <td>({{IRItems.TotalTaxPercentage}}%)&nbsp;{{ IRItems.gstamt | number: 2}}</td>
+                        <td>({{IRItems.TotalTaxPercentage/2}}%)&nbsp;{{ IRItems.gstamt/2 | number: 2}}</td>
+                        <td>({{IRItems.TotalTaxPercentage/2 }}%)&nbsp;{{ IRItems.gstamt/2 | number: 2}}</td>
+                        <td>{{IRItems.TtlAmt | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="18">
+                            <h4 style="color:darkblue; float:right">  <strong>Total Amount : {{PurchaseOrderIR.TotalAmount | number:2}}&nbsp;<i class="fa fa-inr" style=""></i></strong> </h4>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-default table-dynamic" ng-show="Irflag">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> IR Master add/Minus other Amount & Discount </strong>
+        </div>
+        <div class="row" style="margin:5px;">
+            <div class="col-md-4">
+                <label for="site-name">Discount type:</label>
+                <select class="form-control" ng-model="PurchaseOrderIR.totaldistype">
+                    <option value="">---SELECT---</option>
+                    <option value="Percent">Percent</option>
+                    <option value="Amount">Amount</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="site-name">Disc(%)/Amt</label>
+                <input class="form-control" type="number" ng-change="CalculateTotaDiscount(PurchaseOrderIR)" ng-model="PurchaseOrderIR.discounttc" min="0" />
+
+            </div>
+            <div class="col-md-3">
+                <label>Amount </label><br />
+                <label> {{PurchaseOrderIR.discount | number:2}} </label>
+            </div>
+        </div>
+        <div class="row" style="margin:5px;">
+            <div class="col-md-4">
+                <input type="number" class="form-control" placeholder="Enter Other amount" ng-model="PurchaseOrderIR.OtherAmount" min="0" /><br />
+                <input type="text" class="form-control" placeholder="Remark" ng-model="PurchaseOrderIR.OtherAmountRemark" /><br />
+                <button id="btnSave" class="btn btn-primary" ng-click="calOtheramountAdd(PurchaseOrderIR)"> <span class="glyphicon glyphicon-plus"></span>&nbsp;ADD (+)</button>
+                <button id="btnSave" class="btn btn-danger" ng-click="calOtheramountMinus(PurchaseOrderIR)"> <span class="glyphicon glyphicon-minus"></span>&nbsp;Minus (-)</button>
+            </div>
+            <div class="col-md-4">
+                <input type="number" class="form-control" placeholder="Enter Expense amount" ng-model="PurchaseOrderIR.ExpenseAmount" min="0" /><br />
+                <input type="text" class="form-control" placeholder="Remark" ng-model="PurchaseOrderIR.ExpenseAmountRemark" /><br />
+                <button id="btnSave" class="btn btn-primary" ng-click="calExpenseamountAdd(PurchaseOrderIR)"> <span class="glyphicon glyphicon-plus"></span>&nbsp;ADD (+)</button>
+                <button id="btnSave" class="btn btn-danger" ng-click="calExpenseamountMinus(PurchaseOrderIR)"> <span class="glyphicon glyphicon-minus"></span>&nbsp;Minus (-)</button>
+            </div>
+            <div class="col-md-4">
+                <input type="number" class="form-control" placeholder="Enter Round Off" ng-model="PurchaseOrderIR.RoundofAmount" min="0" /><br />
+                <button id="btnSave" class="btn btn-primary" ng-click="calRoundOffAdd(PurchaseOrderIR)"> <span class="glyphicon glyphicon-plus"></span>&nbsp;ADD (+)</button>
+                <button id="btnSave" class="btn btn-danger" ng-click="calRoundOffMinus(PurchaseOrderIR)"> <span class="glyphicon glyphicon-minus"></span>&nbsp;Minus (-)</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin:5px;">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button style="float:right; margin:10px 10px 10px 0px" type="button" class="btn btn-primary" ng-click="PostIR(PurchaseOrderIR)" ng-disabled="(PurchaseOrderIR.TotalAmount == 0) ?  true : false" data-dismiss="modal">
+                            Post IR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/ng-template" id="InvoiceView.html">
+    <style>
+        .imgWth {
+            width: 100% !important;
+        }
+    </style>
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Invoice Receipt</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <br />
+                </div>
+                <div class="form-group" data-ng-repeat="trad in IrRec">
+                    <label for="site-name">
+                        Invoice Number: {{trad.InvoiceNumber }}
+                    </label><br />
+                    <img alt="" src="{{baseurl}}{{trad.IRLogoURL}}" class="imgWth"><br />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>

@@ -1,0 +1,385 @@
+﻿<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+
+<style>
+
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+
+
+    .Divcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* fraction*/
+        padding-left: 10px;
+    }
+
+   
+
+</style>
+
+<div class="page page-table"  button-permission-binder parentName="Offer" pageName="Wallet Zone">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Wallet Master Page
+            </strong>
+        </div><br />
+        <br>
+        <div class="form-group col-md-12">
+            <div class="form-group col-md-4">
+               
+            </div>
+            <div class="form-group col-md-4">
+                <button ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1 )" class="btn btn-danger skcashconversion" ng-click="openCashConvesion()">
+                    <span class="glyphicon glyphicon-open"> </span> Cash Conversion
+                </button>
+            </div>
+            <div class="form-group col-md-4">
+                <button ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  ||UserRole.rolenames.indexOf('HQ CS LEAD')>-1 )" class="btn-sm btn-dark skexport" ng-click="exportData()">
+                    <span class="glyphicon glyphicon-export"> </span> Export  List
+                </button>
+            </div>
+        </div>
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="selectedwarehouse(WarehouseId)">
+                            <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="site-name">Select Created Date Range</label><br />
+                        <div class="form-group">
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="site-name"></label><br />
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="SearchData(WarehouseId)">Search</button>
+                        <label for="site-name"></label>
+                        <button type="button" class="btn btn-btn-twitter-round" ng-click="Refresh()">Refresh</button>
+                    </div>
+                </div>
+       
+            <br>
+            <table ng-show="allcusts" ng-table="tableParams" show-filter="true" class="table table-striped table-responsive " id="exportable">
+                <tbody>
+                    <tr ng-class-odd="'odd'" ng-class-even="'even'" ng-click="user.$selected = !user.$selected; changeSelection(user)"
+                        ng-class="{'active': user.$selected}" data-ng-repeat="customer in $data| orderBy:'-CustomerId'">
+                        <td>{{$index+1}}</td>
+                        <td title="'CustomerId'" filter="{ CustomerId: 'text'}" sortable="'CustomerId'">{{customer.CustomerId}}</td>
+                        <td title="'City'" filter="{ City: 'text'}" sortable="'City'">{{customer.City}}</td>
+                        <td title="'WarehouseName'" filter="{ WarehouseName: 'text'}" sortable="'WarehouseName'">{{customer.WarehouseName}}</td>
+                        <td title="'Skcode'" filter="{ Skcode: 'text'}" sortable="'Skcode'">{{customer.Skcode}}</td>
+                        <td title="'ShopName'" filter="{ ShopName: 'text'}" sortable="'ShopName'">{{customer.ShopName}}</td>
+                        <td title="'TotalAmount'" sortable="'TotalAmount'" filter="{ TotalAmount: 'text'}">
+                            <span ng-if="customer.TotalAmount!= 0" class="badge badge-primary ml-2">{{customer.TotalAmount}}</span>
+                            <span ng-if="customer.TotalAmount == 0" class="badge badge-danger ml-2">{{customer.TotalAmount}}</span>
+                        </td>
+                        <td title="'CreatedDate'" filter="{ CreatedDate: 'date'}" sortable="'CreatedDate'">{{customer.CreatedDate| date:'medium'}}</td>
+                        <td><button class="btn-sm btn-primary skedit" ng-click="edit(customer)">Edit</button> </td>
+                        <td><button class="btn-sm btn-dark skhistory" data-toggle="modal" data-target="#oldstock" ng-click="WalletHistorys(customer)">Stock History</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+</section>
+</div>
+
+<script type="text/ng-template" id="myADDModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Create Wallet</h4>
+        </div>
+        <div class="modal-body" style="top:20px">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group row col-md-12">
+                    <label for="site-name">Enter customer skcode: </label>
+                    <input id="site-name" type="text" class="form-control" ng-model="skcode" placeholder="Enter skcode" />
+                    <!--<select class="form-control" id="site-name" ng-model="saveData.CustomerId">
+                        <option value="">----Choose Customer---</option>
+                        <option value="{{x.CustomerId}}" ng-repeat="x in customer">{{x.Skcode}} - {{x.ShopName}}</option>
+                    </select>-->
+                </div>
+                <div class="form-group row col-md-12"> 
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="GetCustomer(skcode)">Confirm Customer</button>
+                </div>               
+                <div class="form-group row col-md-12">
+                    <label for="site-name">Add Wallet Amount:</label>
+                    <input id="site-name" type="number" class="form-control" ng-model="saveData.CreditAmount" placeholder="Enter Name" />
+                </div>
+
+                <div class="form-group row col-md-12">
+                    <label for="site-name">Comment:</label>
+                    <input id="comment" type="text" class="form-control" ng-model="saveData.Through" placeholder="Comment" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <br>
+            <br>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" id="disabledButton"  class="btn btn-ar btn-primary sksave" ng-click="AddWallet()">Save</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myEDITModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Wallet</h4>
+        </div>
+        <div class="modal-body" style="top:20px">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <label for="site-name">Wallet Amount:</label>
+                    <input id="site-name" type="number" class="form-control" ng-model="saveData.TotalAmount" readonly />
+                </div>
+                <div class="form-group row">
+                    <label for="site-name">Add Wallet Amount:</label>
+                    <input id="site-name" type="number" class="form-control" ng-model="saveData.CreditAmount" placeholder="Enter Name" />
+                </div>
+
+                <div class="form-group row">
+                    
+                    <label for="site-name">Select Wallet Name</label><br />
+                        <select class="form-control" id="site-name" ng-model="saveData.Through">
+                            <option value="{{Manualwalletdropdowns.Name}}" ng-repeat="Manualwalletdropdowns in Manualwalletdropdown"> {{Manualwalletdropdowns.Name}}</option>
+                        </select>
+                </div>
+                <div class="form-group row" ng-if="saveData.Through==specialWalletID">
+                    <label for="site-name">Comment:</label>
+                    <input id="site-name" class="form-control" ng-model="saveData.Comment" />
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" id="disabledButton"   class="btn btn-ar btn-primary sksave" ng-click="AddWallet()">Save</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="cashConversionModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add\Edit (Point To Rupee conversion)</h4>
+        </div>
+        <div class="modal-body" style="top:20px">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <label for="site-name">Point :</label>
+                    <input id="site-name" type="number" class="form-control" ng-model="pointData.point" placeholder="Enter point" />
+                </div>
+                <div class="form-group row">
+                    <label for="site-name">INR:</label>
+                    <input id="site-name" type="number" class="form-control" ng-model="pointData.rupee" placeholder="Enter rupee" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AddcashData()">Save</button>
+            <br /><br />
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="form-group row">
+                    <strong>
+                        {{pointData.point}} point equal to {{pointData.rupee}} rupees
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
+
+
+<!--For Wallet history-->
+<div class="modal fade " id="oldstock" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Wallet History</h3>
+                <button class="btn-sm btn-dark" style="float:right;" ng-click="HistoryexportData()"> <span class="glyphicon glyphicon-export"></span>Export</button>
+                <br>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr >
+                        <th>
+                            <div class="th">
+                               TotalWalletAmount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                IN WalletAmount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                OuT WalletAmount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                From
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                OrderId
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                EditBy
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Date
+                            </div>
+                        </th>
+                       
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="trade in OldStockData|itemsPerPage:itemsPerPage" total-items="total_count">
+                    <tr data-ng-repeat="trade in OldStockData">
+                        <td><span class="label label-primary ng-binding">{{trade.TotalWalletAmount}}</span></td>
+                        <td><span class="label label-success ng-binding">+{{trade.NewAddedWAmount}}</span></td>
+                        <td><span class="label label-info ng-binding">-{{trade.NewOutWAmount}}</span></td>
+                        <td><span class="label label-danger ng-binding">{{trade.Through}}</span></td>
+                        <td><span class="label label-primary ng-binding">{{trade.OrderId}}</span></td>
+                        <td><span class="label label-primary ng-binding">{{trade.PeopleName}}</span></td>
+                        <td><span class="label label-default ng-binding">{{trade.CreatedDate| date:'medium'}}</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="WalletHistory(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,267 @@
+﻿
+
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 25px;
+            font-family: fantasy;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .modal-dialog {
+            width: 70% !important;
+        }
+
+        .redispatch {
+            color: blue;
+        }
+
+        .delivered {
+            color: forestgreen;
+        }
+
+        .canceled {
+            color: red;
+        }
+
+        @media screen {
+            #printSection {
+                display: none;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printSection, #printSection * {
+                visibility: visible;
+            }
+
+            #printSection {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+
+            #printThisElement {
+                display: block !important;
+            }
+
+            #page-break {
+                display: block;
+                page-break-before: always;
+            }
+        }
+
+        #printThisElement {
+            display: none;
+        }
+
+        /* =============================================================
+          GENERAL STYLES
+        ============================================================ */
+        /*body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            line-height: 30px;
+        }*/
+
+        .pad-top-botm {
+            padding-bottom: 40px;
+            padding-top: 22px;
+        }
+
+        h4 {
+            text-transform: uppercase;
+        }
+        /* =============================================================
+          PAGE STYLES
+        ============================================================ */
+
+        .contact-info span {
+            font-size: 14px;
+            padding: 0px 50px 0px 50px;
+        }
+
+        .contact-info hr {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .client-info {
+            font-size: 15px;
+        }
+
+        .ttl-amts {
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        .containers {
+            padding-left: 45px;
+            padding-right: 45px;
+        }
+
+        .box-size {
+            font-size: 16px !important;
+            height: 30px;
+            width: 50%;
+        }
+
+        @media print {
+            btn-sm.btn-primary.no-print {
+                display: none !important;
+            }
+
+            glyphicon.glyphicon-print.no-print {
+                display: none !important;
+            }
+        }
+
+        .modal-dialog {
+            width: 90% !important;
+        }
+
+        .hd {
+            display: none;
+        }
+    </style>
+    <style>
+        #myProgress {
+            width: 100%;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            width: 1%;
+            height: 30px;
+            background-color: #4CAF50;
+        }
+    </style>
+    <script>
+       
+    </script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+
+
+<div class="form-group" style="margin:20px; display:flex; align-items:center;"  button-permission-binder parentName="Reports" pageName="Health Chart">
+    <label for="site-name" style="margin:10px;">Agents :</label><br />
+    <div ng-dropdown-multiselect="" options="dataselect" selected-model="examplemodel" extra-settings="examplesettings" style="margin:10px;"></div>
+    <button type="button" class="btn btn-ar btn-primary" ng-click="GetChart(examplemodel)" style="margin:10px;">Show Chart</button>
+</div>
+
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<br />
+<br />
+<br />
+<br />
+ 
+    
+<div ng-show="check==true">
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    <div class="th">
+                       Documents
+                        
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                       Completed
+                         
+                    </div>
+                </th>
+                
+                 
+                 
+                 
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="trade in  Agentpending">
+                <td>{{trade}}</td>
+                <td><p>Yes</p></td>
+                
+                
+                
+            </tr>
+        </tbody>
+    </table>
+   
+</div>
+
+
+<div ng-show="checks==true">
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    <div class="th">
+                        Documents
+
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Pending
+
+                    </div>
+                </th>
+
+
+
+
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="trade in  Agentpendings">
+                <td>{{trade}}</td>
+                <td><p class="text-danger">Yes</p></td>
+
+
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+   
+ 
+
+
+
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+

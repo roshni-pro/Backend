@@ -1,0 +1,279 @@
+﻿
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Unit Master Category
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary" ng-click="open()">
+                <span class="glyphicon glyphicon-plus"> </span> New Unit Master Category
+            </button>
+        </div>
+        <br />
+       
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                             Unit Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('UnitName')"
+                                  data-ng-class="{active: row == 'UnitName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UnitName')"
+                                  data-ng-class="{active: row == '-UnitName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Base Unit
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('BaseUnit')"
+                                  data-ng-class="{active: row == 'BaseUnitName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-BaseUnit')"
+                                  data-ng-class="{active: row == '-BaseUnitName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Conversion Factor
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ConversionFactor')"
+                                  data-ng-class="{active: row == 'ConversionFactor'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ConversionFactor')"
+                                  data-ng-class="{active: row == '-ConversionFactor'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created By
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedBy')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedBy')"
+                                  data-ng-class="{active: row == '- CreatedBy'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                  
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="model in currentPageStores">
+                    <td>{{model.UnitName}}</td>
+                    <td>{{model.BaseUnitName}}</td>
+                    <td>{{model.ConversionFactor}}</td>
+                    <td>{{model.CreatedBy}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="edit(model)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="opendelete(model,$index)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>     
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="myUnitMasterModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add UnitMaster Category</h4>
+
+        </div>
+
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group" >
+                <label for="site-name"> Unit Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="UnitMasterData.UnitName"  placeholder="Enter Unit name" ng-required />
+            </div>
+            <div class="form-group">              
+
+                <b>Select Base Unit:</b><br />
+                <!--<select class="form-control" ng-options="x as x.UnitName for x in unitMaster"
+                        ng-model="UnitMasterData.BaseUnit">
+                    <option value="{{x}}">{{x.UnitName}}</option>
+                </select>-->
+                
+                    <autocomplete options="datas"
+                                  place-holder="Search options..."
+                                  on-select="onSelect"
+                                  display-property="UnitName"
+                                  input-class="form-control"
+                                  clear-input="false"></autocomplete>
+                    <p>More content</p>
+                    <input type="button" ng-click="clearInput()" value="Clear input" class="btn btn-default" />
+                    <!--<p>{{selectedData.UnitName}}</p>-->
+                
+                               
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Conversion Factor:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="UnitMasterData.ConversionFactor" placeholder="Enter ConversionFactor" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Storing Item Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="UnitMasterData.StoringItemName" placeholder="Enter Storing Name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> is Base Unit?:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="UnitMasterData.isBaseUnit" placeholder="Is Base Unit" ng-required />
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddUnitMaster(UnitMasterData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myUnitMasterPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit UnitMaster</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Unit Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="UnitMasterData.UnitName" placeholder="Enter UnitMaster" />
+            </div>
+            <div class="form-group">
+
+                <b>Select Base Unit:</b><br />
+                <!--<select class="form-control" ng-options="x as x.UnitName for x in unitMaster"
+                ng-model="UnitMasterData.BaseUnit">
+            <option value="{{x}}">{{x.UnitName}}</option>
+        </select>-->
+
+                <autocomplete options="datas"
+                              place-holder="Search options..."
+                              on-select="onSelect"
+                              display-property="UnitName"
+                              input-class="form-control"
+                              clear-input="false"></autocomplete>
+                <p>More content</p>
+                <input type="button" ng-click="clearInput()" value="Clear input" class="btn btn-default" />
+                <!--<p>{{selectedData.UnitName}}</p>-->
+
+
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Conversion Factor:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="UnitMasterData.ConversionFactor" placeholder="Enter ConversionFactor" ng-required />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name"> Storing Item Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="UnitMasterData.StoringItemName" placeholder="Enter Storing Name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> is Base Unit?:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="UnitMasterData.isBaseUnit" placeholder="Is Base Unit" ng-required />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutUnitMaster(UnitMasterData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteUnitMaster.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Unit Master</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteUnitMaster(UnitMasterData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

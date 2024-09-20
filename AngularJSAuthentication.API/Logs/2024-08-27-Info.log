@@ -1,0 +1,4 @@
+2024-08-27 12:48:21.6932|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-27 12:48:21.7362|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-27 12:48:37.6431|ERROR|AngularJSAuthentication.API.Controllers.ItemMasterController|Error in ItemMaster The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2024-08-27 12:48:37.6431|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  ItemMaster: 

@@ -1,0 +1,289 @@
+﻿<head>
+    <style>
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #00a4e9;
+            border-radius: 15px;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #e09a02;
+            border-color: #ffae03;
+            border-radius: 15px;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #12bd8f;
+            border-color: #0fc191;
+        }
+
+        .input-group-addon {
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1;
+            color: #075842;
+            text-align: center;
+            background-color: #61d6b6;
+            border: 1px solid #229173;
+            border-radius: 16px;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857;
+            color: #767676;
+            background-color: white;
+            background-image: none;
+            border: 1px solid #cbd5dd;
+            border-radius: 24px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+            -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+            transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #12bd8f;
+            border-color: #0fc191;
+            border-radius: 15px;
+        }
+
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: bold;
+            line-height: 1;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+
+        <br />
+        <div class="p-3 mb-2 bg-primary ">
+
+            <div class="panel-heading"> <h4> <strong> <span class="glyphicon glyphicon-th"> </span>Payment Upload View</strong> </h4></div>
+
+        </div>
+        <br/>
+        <br/>
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-3">
+                <form class="form-inline" role="form">
+                    <div class="form-group" style="width:20pc">
+                        <label for="site-name"> Select Filetype:</label><br />
+                        <select class="form-control" id="site-name" ng-model="data.type" ng-change="OnloadChanged(data)" style="width:15pc">
+                            <option value="">--select--</option>
+                            <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="form-group col-md-3">
+                <form class="form-inline" role="form">
+                    <div class="form-group" style="width:20pc">
+                        <label for="site-name"> Select Status:</label><br />
+                        <select class="form-control" id="site-name" ng-model="data.status" ng-change="selectStutus(data)" style="width:15pc">
+                            <option value="">--select--</option>
+                            <option value="{{a.stvalue}}" ng-repeat="a in newstatus">{{a.text}}</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group" style="width:20pc">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Search</label><br />
+                <button type="button" class="btn btn-ar btn-warning" id="Search1" name="Sall" ng-click="selectedtypeChanged(data)">Search</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="panel-body">
+    <table class="table table-bordered table-striped table-responsive">
+
+        <tr>
+            <th>
+                <div class="th">
+                    S.No                  
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Upload ID                  
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    File Type                 
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Upload By                    
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Status                 
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Upload Date                   
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Show Details
+                </div>
+            </th>
+        </tr>
+        <tbody>
+            <tr data-ng-repeat="trade in onlinetxn">
+                <td>{{1+$index}}</td>
+                <td>{{trade.UploadId}}</td>
+                <td>{{trade.FileType}}</td>
+                <td>{{trade.UplaodBy}}</td>
+                <td ng-if="(trade.IsReconcile == true)">
+                    <span class="label label-info ng-binding">Verified</span>
+                </td>
+                <td ng-if="(trade.IsReconcile == false)">
+                    <span class="label label-danger ng-binding">Un-Verified</span>
+                </td>
+                <td>{{trade.UploadDate | date:'medium'}}</td>
+
+                <td>
+                    <a class="btn btn-success btn-br" ng-show="trade.FileType == 'ePayLater'" href="#/ePayUploadDetails/{{trade.UploadId}}" target="_parent"> Epay Details</a>
+                    <a class="btn btn-success btn-br" ng-show="trade.FileType == 'HDFC'" href="#/HDFCUploadDetails/{{trade.UploadId}}" target="_parent"> Hdfc Details</a>
+                    <a class="btn btn-success btn-br" ng-show="trade.FileType == 'Mpos'" href="#/MposUploadDetails/{{trade.UploadId}}" target="_parent">Mpos Details</a>
+                    <!--<a class="btn btn-success btn-br" ng-show="trade.FileType == 'HDFC_UPI'" href="#/HDFCUPIUploadDetails/{{trade.UploadId}}" target="_parent">Hdfc_UPI Details</a>-->
+                    <a class="btn btn-success btn-br" ng-show="trade.FileType == 'HDFC_NetBanking'" href="#/HDFCNetBankingUploadDetails/{{trade.UploadId}}" target="_parent">Hdfc_NetBanking Details</a>
+                    <a class="btn btn-success btn-br" ng-show="trade.FileType == 'credit hdfc'" href="#/HDFCCreditUploadDetails/{{trade.UploadId}}" target="_parent">HDFC-Credit Details</a>
+                    <a class="btn btn-success btn-br" ng-show="trade.FileType == 'Razorpay QR'" href="#/RazorpayQRUploadDetails/{{trade.UploadId}}" target="_parent">Razorpay QR Details</a>
+                    <a class="btn btn-success btn-br" ng-show="trade.FileType == 'UPI'" href="#/UPIUploadDetails/{{trade.UploadId}}" target="_parent"> UPI Details</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <footer class="table-footer">
+        <div class="row">
+            <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()"></select>
+                    entries per page
+                </span>
+            </div>
+            <div class="col-md-6 text-right pagination-container">
+                <pagination class="pagination-sm"
+                            page="currentPage"
+                            total-items="filteredStores.length"
+                            max-size="4"
+                            on-select-page="select(page)"
+                            items-per-page="numPerPage"
+                            rotate="false"
+                            boundary-links="true"></pagination>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+
+
+
+
+

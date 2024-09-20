@@ -1,0 +1,21 @@
+2023-05-30 10:52:55.8590|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-30 10:54:21.0520|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-30 11:04:25.1425|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-30 11:08:04.5485|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-30 11:08:24.0660|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-30 14:55:04.8548|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-30 15:09:53.3587|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 497

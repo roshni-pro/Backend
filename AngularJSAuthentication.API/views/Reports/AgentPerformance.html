@@ -1,0 +1,140 @@
+﻿<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 25px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> Agents Dashboard</strong> </div>
+        <br />
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-3">
+                <label for="site-name">City</label><br>
+                <select id="site-name" class="form-control" ng-model="AgentPeform.CityId" ng-change="Clustercitybased(AgentPeform.CityId)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in cities">{{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Cluster</label><br>
+                <select id="site-name" class="form-control" ng-model="AgentPeform.ClusterId" ng-change="clusterChange(AgentPeform.ClusterId)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{cluster.ClusterId}}" ng-repeat="cluster in getcluster">{{cluster.ClusterName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Executives</label><br>
+                <select id="site-name" class="form-control" ng-model="AgentPeform.PeopleID">
+                    <option value="">---SELECT---</option>
+                    <option value="{{ex.PeopleID}}" ng-repeat="ex in executive">{{ex.DisplayName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" id="Search1" name="Sall" ng-click="beatchange(AgentPeform.CityId,AgentPeform.ClusterId,AgentPeform.PeopleID)">Search</button>
+            </div>
+            <div class="form-group col-md-3">
+                <div style="margin-left: -330px;margin-top: 19px;">
+                    <!--<button href="#myModal" ng-click="open1(Demanddata)" type="button" class="btn btn-danger">
+                    <span><strong>Add Detail</strong></span>
+                </button>-->
+
+                    
+                </div>
+            </div>
+        </div>
+            <!--<div class="form-group col-md-3 pull-right">
+            <button type="button" class="btn btn-ar btn-success" ng-click="PostDashData()" data-dismiss="modal">Agent report</button>
+        </div>-->
+
+            <br />
+
+        <div>
+            <div style="overflow:auto;width:100%">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <table>
+                            <tr>
+                                <th class="col-md-5">Agents</th>
+                                <th ng-repeat="q in beats">{{ q.agents}}</th>
+
+                            </tr>
+                            <tr>
+                                <td>Signed Up</td>
+                                <td ng-repeat="a in beats">{{a.custsignedup}}</td>
+
+
+
+                            </tr>
+                            <tr>
+                                <td>Active</td>
+                                <td ng-repeat="b in beats">{{b.custactive }}</td>
+
+                            </tr>
+                            <tr>
+                                <td>Sales <i class="fa fa-rupee"></i></td>
+                                <td ng-repeat="c in beats">{{c.sales  | number : 2}}</td>
+
+                            </tr>
+                            <tr>
+                                <td>Delivery %</td>
+                                <td ng-repeat="d in beats">{{d.DeliveryPerc | number : 2}}</td>
+
+
+                            </tr>
+                            <tr>
+                                <td>Cancellation %</td>
+                                <td ng-repeat="e in beats">{{e.CancelPerc  | number : 2}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>TAT</td>
+                                <td ng-repeat="f in beats">{{f.totTat}}</td>
+
+                            </tr>
+                            <tr>
+                                <td>Commission <i class="fa fa-rupee"></i></td>
+                                <td ng-repeat="f in beats">{{f.totCom | number : 2}}</td>
+
+                            </tr>
+
+
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+
+        </div>
+
+</section>
+</div>
+
+
+
+
+

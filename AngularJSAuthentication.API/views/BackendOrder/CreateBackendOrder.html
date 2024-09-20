@@ -1,0 +1,1175 @@
+﻿<style>
+    /*.an {
+        background: white;
+        padding: 11px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        border: solid 1px lightgray;
+    }*/
+
+    .an:hover {
+        color: cornflowerblue;
+        background: lightgray;
+    }
+
+    .tooltip-inner {
+        font-size: x-large !important;
+        max-width: 50%;
+    }
+
+    .fa-info-circle {
+        font-size: x-large;
+    }
+
+    .scrl {
+        height: auto;
+        overflow: auto;
+        padding: 5px;
+        border: solid 1px black;
+        margin-right: 5px;
+        background-color: white;
+    }
+
+    .card {
+        display: inline-block; /* Arrange cards side-by-side */
+        margin: 10px;
+        margin-left: 106px;
+        border-radius: 8px;
+        width: 459px; /* Adjust card width as needed */
+        color: white;
+        background: green;
+    }
+
+    .btnbb {
+        line-height: 30px;
+        width: 97px;
+        color: #264a0c;
+        border-radius: 11px;
+        align-items: center;
+        text-align: center;
+        font-weight: 900;
+        background-color: #85e142;
+        border: none;
+        font-size: 114%;
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        background-color: #fff;
+        z-index: 1000;
+        padding: 10px;
+    }
+
+    .header-title {
+        margin: 0;
+        flex-grow: 1;
+        text-align: center;
+    }
+</style>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>Create Backend Order</strong> </div>
+        <br />
+        <form name="myFormSiteModal">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!--<div class="col-md-12" ng-disabled="IsSelected">
+                            <div class="form-group col-md-9">
+                                <label for="site-name">Chose Customize (customer) then select else don't click on checkbox</label>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input id="sdite-name" type="checkbox" class="form-control" ng-model="IsCustomize" />
+
+                            </div>
+                        </div>-->
+                        <!--<div class="form-group" ng-show="IsCustomize">
+                            <p>Search Customer by Skcode<span style="color:red;">*</span></p>
+                            <input id="skcode" placeholder="enter skcode then select warehouse" class="form-control" type="text" ng-model="Searchkey" ng-change="GetWarehouseBySkcode(Searchkey)" />
+                        </div>-->
+                        <div class="form-group">
+                            <p>Select Warehouse</p>
+
+
+                            <select class="form-control" id="site-name" name="Warename" ng-model="warehousess.WarehouseId" ng-disabled="warehousess.WarehouseId" data-ng-change="getCustData(warehousess.WarehouseId, Searchkey);WalletPointCheck()">
+                                <option value="">---SELECT---</option>
+                                {{warehouseId }}{{ warehousess.value}}
+                                <option value="{{warehousess.value}}" data-ng-selected="warehouseId == warehousess.value" ng-repeat="warehousess in warehouse"> {{warehousess.label}} </option>
+                            </select>
+                        </div>
+
+                        <!--<div class="form-group col-md-6" ng-if="IsCustomize">
+                            <label for="site-name">Delivery boys</label><br>
+                            <select class="form-control" id="site-name" ng-model="shoppingCart.DBoyId">
+                                <option value="">-Select-</option>
+                                <option value="{{db.PeopleID}}" ng-repeat="db in DBoys"> {{db.DisplayName}}</option>
+                            </select>
+                        </div>-->
+
+                        <div class="form-group">
+                            <p>Mobile(+91)<span style="color:red;">*</span></p>
+                            <input id="number" class="form-control" type="tel" ng-keypress="NumberValidation($event)" ng-disabled="isShow" ng-model="shoppingCart.Customerphonenum" ng-change="checkNumber(shoppingCart.Customerphonenum)"
+                                   maxlength="10" />
+                            <p id="demo2" style="color: red;"></p>
+                            <p id="demo6" style="color: red;"></p>
+                        </div>
+                        <div class="form-group" ng-if="isenabled">
+                            <p>CustomerName<span style="color:red;">*</span></p>
+                            <input id="CustomerName" class="form-control" type="text"  ng-model="shoppingCart.CustomerName" />
+                            <p id="demo5" style="color: red;"></p>
+                        </div>
+                        <div class="form-group" ng-if="isenabled">
+                            <p>GST/TIN_No/Ref No:<span style="color:red;">(23AAVCS1981Q1ZE)</span></p>
+                            <input id="CustomerName" class="form-control" type="text" ng-keypress="ValidationGSTcheck(shoppingCart.RefNo)" ng-disabled="shoppingCart.RefNo && !IsvalidGST" ng-model="shoppingCart.RefNo" />
+                            <p id="demo5" style="color: red;"></p>
+                            <button type="button" class="btn btn-ar btn-success" ng-disabled="GstBtn" ng-click="GstVerify(shoppingCart.Customerphonenum,shoppingCart.RefNo)" data-dismiss="modal">Gst Verify</button>
+                            <button ng-if="IsCustomerAddbtn" type="button" class="btn btn-ar btn-success" ng-click="createcustomer()" data-dismiss="modal">Add Customer</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group" ng-if="isenabled">
+                            <p>Address<span style="color:red;">*</span></p>
+                            <textarea id="address" class="form-control" rows="10"  ng-model="shoppingCart.ShippingAddress"></textarea>
+                            <p id="demo3" style="color: red;"></p>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group" ng-if="isenabled">
+                            <p style="font-size:16px">Customer Type: {{customertype}}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <section class="panel panel-default table-dynamic">
+
+        <div class="modal-header ">
+            <h4 class="modal-title">
+                <b>Add Item</b>
+                <button class="text-center btn btn-primary" style="margin-left: 1084%; margin-top: -3%" data-toggle="modal" data-target="#popupp">Check Price</button>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <p>Search Item</p>
+                        <input type="text" class="form-control" id="inputBox" ng-model="keyword" ng-keyup="KeywordValidation(keyword)" ng-change="getItemList()" placeholder="type item name" />
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group ">
+                        <p style="color:white">.</p>
+                        <button class="text-center btn btn-primary" ng-click="getItemList()">Search</button>
+                    </div>
+                </div>
+                <div ng-if="customertype=='Consumer'">
+                    <div class="col-sm-5" ng-if="itemList  ">
+                        <div class="form-group">
+                            <p>Select Item</p>
+                            <select id="itemlist" class="form-control" name="itemlist" ng-model="itm" data-ng-change="onSelectItem(itm)">
+                                <option value="">---SELECT---</option>
+                                <option value="{{itm}}" data-ng-selected="itms>0?itms==itm.ItemId:''" ng-repeat="itm in itemList">
+                                    {{itm.ItemName}} => MRP({{itm.MRP}})  => AvlQty({{itm.CurrentInventory}}) => MOQ({{itm.MinOrderQty}}) => UnitPrice({{itm.UnitPrice}} )
+                                    <!--=> MOQ({{itm.MinOrderQty}}) => UnitPrice({{itm.UnitPrice}}-->
+                                </option>
+                                <!--itms>0?itms==itm.ItemId:''-->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="customertype!='Consumer'">
+                    <div class="col-sm-5" ng-if="itemList  ">
+                        <div class="form-group">
+                            <p>Select Item</p>
+                            <select id="itemlist" class="form-control" name="itemlist" ng-model="itm" data-ng-change="onSelectItem(itm)">
+                                <option value="">---SELECT---</option>
+                                <option value="{{itm}}" data-ng-selected="itms>0?itms==itm.ItemId:''" ng-repeat="itm in itemList">
+                                    {{itm.ItemName}} => MRP({{itm.MRP}})  => AvlQty({{itm.CurrentInventory}}) )
+                                    <!--=> MOQ({{itm.MinOrderQty}}) => UnitPrice({{itm.UnitPrice}}-->
+                                </option>
+                                <!--itms>0?itms==itm.ItemId:''-->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <p>Select Batch Code</p>
+                        <select class="form-control" id="Batch" name="Batch" ng-model="Batch" data-ng-change="onBatchchnage(Batch)">
+                            <option value="">---SELECT---</option>
+                            <option value="{{Batch}}" data-ng-selected="batchid>0?batchid==Batch.StockBatchMasterId:''" ng-repeat="Batch in Batchqtydata">
+                                BatchCode({{Batch.BatchCode}}) => Batchqty({{Batch.Batchqty}})
+                            </option>
+                        </select>
+                    </div>
+                </div> 
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <p>Order Qty</p>
+                        <input class="form-control"
+                               onpaste="return false;" onCopy="return false" onCut="return false"
+                               type="number" min="1" ng-model="batchqty" ng-keypress="PreventMinus($event)" ng-keyup="BatchValidation(Batch,batchqty,itm,$event)" />
+                    </div>
+                </div>
+                <!--<div class="col-sm-2">
+        <div class="form-group">
+            <p>Remaining Batch Qty</p>
+            <input class="form-control" disabled type="text" ng-model="Remaingbatchqty" />
+        </div>
+    </div>-->
+                <div class="col-sm-1">
+                    <div class="form-group">
+                        <p style="color:white">.</p>
+                        <button class="text-center btn btn-primary" id="focusButton" ng-click="onadd(Batch,batchqty,itm)">Add</button>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-group ">
+                        <p style="color:white">.</p>
+                        <button class="text-center btn btn-primary" id="focusButtonn" ng-click="ClearItemList()">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="customertype!='Consumer'">
+                <section class="panel panel-default table-dynamic">
+                    <div class="modal-body">
+                        <table class="table table-bordered table-striped table-responsive ">
+                            <thead>
+                                <tr>
+                                    <th>SNo.</th>
+                                    <th>Moq</th>
+                                    <th>Unit Price</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="i in itemmoqs">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{i.MinOrderQty}}</td>
+                                    <td>{{i.UnitPrice}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<section class="panel panel-default table-dynamic">
+    <div class="modal-body">
+        <table class="table table-bordered table-striped table-responsive ">
+            <thead>
+                <tr>
+                    <th>SNo.</th>
+                    <th>ItemId</th>
+                    <th>ItemName</th>
+                    <th>UnitPrice</th>
+                    <th>Qty</th>
+                    <th>Amount</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody data-ng-repeat="i in AddItem">
+                <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{i.ItemId}}</td>
+                    <td>{{i.ItemName}}</td>
+                    <td>{{i.UnitPrice}}</td>
+                    <td>{{i.qty}}</td>
+                    <td>{{i.UnitPrice * i.qty | number:2}}</td>
+                    <td>
+                        <button class="text-center btn btn-primary" ng-click="Deleteitem(i)">Delete</button>
+                        <button class="text-center btn btn-primary" ng-click="Edititem(i)" data-toggle="modal" data-target="#popupp2">Edit</button>
+                    </td>
+
+                </tr>
+                <tr data-ng-repeat="f in i.Freebiesitem">
+                    <!--<td></td>-->
+
+
+                    <td></td>
+                    <td>{{f.OfferFreeItemId}}</td>
+                    <td>{{f.OfferFreeItemName}}<br /><span style="color:red">({{f.Message}}) </span> </td>
+                    <td>{{f.UnitPrice}}</td>
+                    <td>{{f.OfferQty}}</td>
+                    <td>{{f.Amount}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br />
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-2" ng-if="totalamount >0">
+                    <div class="form-group">
+                        <p>Bill-Discount</p>
+                        <input id="BillDiscount" ng-keypress="amountdecimal($event)" ng-keyup="amtcheck(shoppingCart.BillDiscount)" class="form-control" type="number" min="0" ng-model="shoppingCart.BillDiscount" />
+                    </div>
+                </div>
+                <!--<div class="col-sm-2" >
+                    <div class="form-group"><br />
+                        <button class="text-center btn btn-primary" style=" margin-top: 9px; " ng-click="ApplyBillDiscount(shoppingCart.BillDiscount)">Apply Bill Discount</button>
+                    </div>
+                </div>-->
+                <div class="col-sm-2" ng-if="totalamount >0">
+                    <div class="form-group">
+                        <p>Offer Bill-Discount</p>
+                        <input id="offerBillDiscount" class="form-control" disabled ng-model="BillDiscountOfferAmount" />
+                    </div>
+                </div>
+                <div class="col-sm-2" ng-if="totalamount >0">
+                    <div class="form-group">
+                        <p>Total Amount</p>
+                        <span class="form-control" disabled>{{totalamount | number:2}}</span>
+                    </div>
+                </div>
+                <div class="col-sm-2" ng-if="totalamount >0">
+                    <div class="form-group" ng-if="customertype=='Consumer'">
+                        <p>Net Amount</p>
+                        <span class="form-control" disabled>{{totalamount - shoppingCart.BillDiscount - (shoppingCart.UsedWalletPoint/ConsumerWalletConfig) -(BillDiscountOfferAmount) | number:2}}</span>
+                    </div>
+                    <div class="form-group" ng-if="customertype!='Consumer'">
+                        <p>Net Amount</p>
+                        <span class="form-control" disabled>{{totalamount - shoppingCart.BillDiscount - (shoppingCart.UsedWalletPoint/RetailerWalletConfig) -(BillDiscountOfferAmount) | number:2}}</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <p>Wallet Point</p>
+                        <input id="WalletDiscount" class="form-control" type="number" min="0" ng-model="shoppingCart.WalletPoint" disabled />
+                    </div>
+                </div>
+                <div class="col-sm-2" ng-if="shoppingCart.WalletPoint >0">
+                    <div class="form-group">
+                        <p>Wallet Point</p>
+                        <input id="UsedWalletDiscount" class="form-control" type="number" min="0" ng-model="shoppingCart.UsedWalletPoint" ng-keyup="WalletValidation(shoppingCart.UsedWalletPoint)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2" style="margin-left:1%">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popupp1" ng-if="AddItem.length>0" ng-click="OfferBtn()">GetOffer</button>
+            </div>
+            <div class="col-sm-2" style="margin-left:1%">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CheckCredit">Apply Credit Note</button>
+            </div>
+            <div class="col-sm-2 " style="margin-left:1%">
+                <button class="text-center btn btn-primary" style="margin-left: 90%; margin-top:-3%" ng-if="appliedOffer.length>0" data-toggle="modal" data-target="#Offerpopupp" ng-click="AppliedOfferList()">Applied Offers</button>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal-body">
+
+    <button type="button" style="margin-left:80%" class="btn btn-ar btn-warning " data-toggle="modal" data-target="#popup" ng-click="open()" data-dismiss="modal">Cancel</button>
+    <button type="button" style="margin-left:5%" class="btn btn-ar btn-primary skadd" ng-click="Searchsave(shoppingCart)" ng-model="shoppingCart.RefNo">Create Order</button>
+</div>
+
+<body ng-app="MyApp" ng-controller="CreateBackendController">
+    <div class="container">
+        <div class="modal fade" id="popup" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" style=" margin-left: 17%; margin-right: 10%; margin-top: 30%;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+
+                    </div>
+                    <h4 style="text-align:center"><b>Are you sure you want to cancel the Order?</b></h4>
+                    <div class="row">
+                        <div class="col-12" style="margin-left:80%">
+                            <button type="button" class="btn btn-ar btn-warning" data-dismiss="modal" ng-click="cancel()">Yes</button>&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" ng-click="ok()">No</button>
+                        </div>
+
+
+                        <div class="row">.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+
+<body ng-app="MyApp" ng-controller="CreateBackendController">
+    <div class="container">
+        <div class="modal fade" id="popupp" role="dialog">
+            <div class="modal-dialog" style="display: inline;">
+                <div class="modal-content" style=" margin-left: 17%; margin-right: 10%; margin-top: 10%;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="Close()">×</button>
+
+                    </div>
+                    <h4 style="text-align:center"><b>Check Item Price</b></h4>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <p>Search Item</p>
+                                    <input type="text" class="form-control" ng-model="PopupKeyword" ng-keyup="KeywordValidation(PopupKeyword)" ng-change="checkPrice()" placeholder="type item name" />
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group ">
+                                    <p style="color:white">.</p>
+                                    <button class="text-center btn btn-primary" ng-click="checkPrice()">Search</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-7" ng-if="checkList">
+                                <div class="form-group">
+                                    <p>Select Item</p>
+                                    <select id="checkList" class="form-control" name="checkList" ng-model="itmm" data-ng-change="onSelectCheck(itmm)">
+                                        <option value="">---SELECT---</option>
+                                        <option value="{{itmm}}" data-ng-selected="itmss>0?itmss==itmm.ItemId:''" ng-repeat="itmm in checkList">
+                                            {{itmm.ItemName}} => MRP({{itmm.MRP}})  => AvlQty({{itmm.CurrentInventory}}) => MOQ({{itmm.MinOrderQty}}) => UnitPrice({{itmm.UnitPrice}})
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group ">
+                                    <p>MOQ : {{MinOrderQty}} </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group ">
+                                    <p>Available Qty : {{CurrentInventory}} </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <section class="panel panel-default table-dynamic">
+                        <div class="modal-body">
+                            <table class="table table-bordered table-striped table-responsive ">
+                                <thead>
+                                    <tr>
+                                        <th>MOQ</th>
+                                        <th>Available Qty</th>
+                                        <th>UnitPrice</th>
+                                        <th>TradePrice</th>
+                                        <th>WholeSalePrice</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="i in CheckItemList[0].MoqItems">
+                                        <td>{{i.MinOrderQty}}</td>
+                                        <td>{{i.CurrentInventory}}</td>
+                                        <td>{{i.UnitPrice}}</td>
+                                        <td>{{i.TradePrice}}</td>
+                                        <td>{{i.WholeSalePrice}}</td>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" style=" margin-left: 95%" ng-click="Close()">Close</button>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="modal fade" id="popupp1" role="dialog">
+            <div class="modal-dialog" style="display: inline;">
+                <div class="modal-content" style="margin-left: 26%; margin-right: 29%; margin-top: 5%; position: relative;">
+                    <div class="modal-header">
+                        <h4 class="header-title"><b>Check Offer Item</b></h4>
+                        <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" ng-click="Close()">Close</button>
+                    </div>
+                    <div class="modal-body" id="modalBody" style="max-height: 70vh; overflow-y: auto; padding-top: 60px;">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="card" style="text-align:center" ng-repeat="i in offerList">
+                                    <div ng-if="i.BillDiscountOfferOn=='FreeItem'" style="background: #eb5a00; border-radius: 8px 8px 0px 0px; padding: 1px 10px; text-align: left ">
+                                        <h4 ng-if="i.IsBillDiscountFreebiesItem==true"> <b>On every purchase of {{i.offerminorderquantity}}{{i.offeritemname}}&nbsp;Get free </b></h4>
+                                        <h4 ng-if="i.IsBillDiscountFreebiesValue==true"> <b>On every purchase worth rupees {{i.BillAmount}}&nbsp;{{i.offeritemname}}&nbsp; Get free</b></h4>
+                                        <div ng-repeat="r in i.RetailerBillDiscountFreeItemDcs">
+                                            <p style="text-align:left; margin-top:2%"> {{r.ItemName}}&nbsp;({{r.Qty}} Qty)</p>
+                                        </div>
+                                    </div>
+                                    <div class="row" style=" display: inline-flex;margin-bottom:10px">
+                                        <div ng-if="!i.ImagePath" class="col-2" style=" width: 48%;">
+                                            <img ng-if="i.OfferOn!='ScratchBillDiscount'" style='padding-top: 23px; width: 45%' src="../../Content/logo_sk.png">
+                                            <img ng-if="i.OfferOn=='ScratchBillDiscount'" style='padding-top: 23px; width: 45%' src="../../Content/scratch_card.png">
+                                        </div>
+                                        <div class="col-2" ng-if="i.ImagePath" style=" width: 48%;">
+                                            <img style='padding-top: 23px; width: 60%' src={{serviceBase}}{{i.ImagePath}}>
+                                        </div>
+                                        <div class="col-10" style="text-align:center">
+                                            <div ng-if="i.BillDiscountOfferOn=='Percentage'">
+                                                <div ng-if="i.OfferOn=='BillDiscount'">
+                                                    <h4>
+                                                        <b> {{i.DiscountPercentage}} % Bill Discount</b>&nbsp;&nbsp;
+                                                        <i class="fa fa-info-circle" style="cursor: pointer;"
+                                                           tooltip-append-to-body="true" tooltip-placement="right"
+                                                           tooltip="Offer Conditions {{i.DiscountPercentage}} % Bill Discount {{i.Description}}
+                                                               Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                        <!--BD on %-->
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <div ng-if="i.BillDiscountOfferOn=='WalletPoint'">
+                                                <div ng-if="i.WalletType=='WalletPercentage'">
+                                                    <div ng-if="i.ApplyOn=='PreOffer'">
+                                                        <h4>
+                                                            <b> {{i.BillDiscountWallet}} % OFF</b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Offer Conditions {{i.BillDiscountWallet}} % OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                            <!--BD on Wallet %-->
+                                                        </h4>
+                                                    </div>
+                                                    <div ng-if="i.ApplyOn!='PreOffer'">
+                                                        <h4>
+                                                            <b>  {{i.BillDiscountWallet}} % Post Offer credited after<br /> order delivered</b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Offer Conditions {{i.BillDiscountWallet}} % OFF Post Offer Post offer, Wallet % {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="i.WalletType=='Amount'">
+                                                    <div ng-if="i.ApplyOn=='PreOffer'">
+                                                        <h4 ng-if="customertype=='Consumer'">
+                                                            <b> Flat ₹ {{i.BillDiscountWallet / ConsumerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet / ConsumerWalletConfig |number:2}} OFF BD on Wallet Points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                        </h4>
+                                                        <h4 ng-if="customertype!='Consumer'">
+                                                            <b> Flat ₹ {{i.BillDiscountWallet / RetailerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet / RetailerWalletConfig |number:2}} OFF BD on Wallet Points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                        </h4>
+                                                    </div>
+                                                    <div ng-if="i.ApplyOn!='PreOffer'">
+                                                        <h4 ng-if="customertype=='Consumer'">
+                                                            <b>   {{i.BillDiscountWallet }}  points credited after order delivered </b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Offer Conditions  {{i.BillDiscountWallet }}  points credited after order delivered, Wallet points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                        </h4>
+                                                        <h4 ng-if="customertype!='Consumer'">
+                                                            <b>   {{i.BillDiscountWallet }}  points credited after order delivered </b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Offer Conditions {{i.BillDiscountWallet }}  points credited after order delivered, Wallet points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-if="i.BillDiscountOfferOn=='FreeItem'">
+                                                <h4>
+                                                    <b> Free Item Offer</b>&nbsp;&nbsp;
+                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                       tooltip="Offer Conditions Free Item Offer {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                </h4>
+                                            </div>
+                                            <div ng-if="i.OfferOn=='ScratchBillDiscount'">
+                                                <h4 ng-if="i.IsScratchBDCode==false">
+                                                    <b> Scratch & Win</b>&nbsp;&nbsp;
+                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                       tooltip="Unlock the card first"></i>
+                                                </h4>
+                                                <div ng-if="i.BillDiscountOfferOn=='Percentage' && i.IsScratchBDCode==true">
+                                                    <h4>
+                                                        <b> {{i.DiscountPercentage}} % Bill Discount</b>&nbsp;&nbsp;
+                                                        <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                           tooltip="Offer Conditions {{i.DiscountPercentage}} % Bill Discount {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                    </h4>
+                                                </div>
+                                                <div ng-if="i.BillDiscountOfferOn=='WalletPoint' && i.IsScratchBDCode==true">
+                                                    <h4 ng-if="customertype=='Consumer'">
+                                                        <b>   Flat ₹ {{i.BillDiscountWallet/ConsumerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                        <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                           tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet/ConsumerWalletConfig |number:2}} OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                    </h4>
+                                                    <h4 ng-if="customertype!='Consumer'">
+                                                        <b>   Flat ₹ {{i.BillDiscountWallet/RetailerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                        <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                           tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet/RetailerWalletConfig |number:2}} OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                            <p>Min Order Value ₹ {{i.BillAmount}}</p>
+                                            <p>Offer valid on select products</p>
+                                            <button ng-if="!i.showRemove && i.OfferOn!='ScratchBillDiscount'" type="button" class="btnbb" ng-click="ApplyNowBtn(i)"> Apply Now</button>
+                                            <button ng-if="(i.IsScratchBDCode==true && i.OfferOn=='ScratchBillDiscount' && !i.showRemove )" class="btnbb" ng-click="ApplyNowBtn(i)"> Apply Now</button>
+                                            <button ng-if="i.showRemove" type="button" class="btnbb" style="background-color: #fd3f3f;color:white" ng-click="RemoveBtn(i)"> Remove</button>
+                                            <button ng-if="(i.IsScratchBDCode==false && i.OfferOn=='ScratchBillDiscount' )" type="button" class="btnbb" style="background-color: #fd3f3f;color:white" ng-click="unlockScratch(i)"> Unlock</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div class="container">
+        <div class="modal fade" id="popupp1" role="dialog">
+            <div class="modal-dialog" style="display: inline;">
+                <div class="modal-content" style="margin-left: 26%; margin-right: 29%; margin-top: 5%; position: relative;">
+    <div class="modal-header">
+    </div>
+    <div class="d-flex">
+        <h4 style="text-align:center"><b>Check Offer Item </b></h4>
+        <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" style=" position: fixed !important; right: 31% !important; bottom: 84% !important;" ng-click="Close()">Close</button>
+    </div>
+    <div class="modal-body " style="display: contents">
+        <div class="row">
+            <div class="col-10">
+                <div class="card" style="text-align:center" ng-repeat="i in offerList">
+                    <div ng-if="i.BillDiscountOfferOn=='FreeItem'" style="background: #eb5a00; border-radius: 8px 8px 0px 0px; padding: 1px 10px; text-align: left ">
+                        <h4 ng-if="i.IsBillDiscountFreebiesItem==true"> <b>On every purchase of {{i.offerminorderquantity}}{{i.offeritemname}}&nbsp;Get free </b></h4>
+                        <h4 ng-if="i.IsBillDiscountFreebiesValue==true"> <b>On every purchase worth rupees {{i.offerminorderquantity}}&nbsp;{{i.offeritemname}}&nbsp; Get free</b></h4>
+                        <div ng-repeat="r in i.RetailerBillDiscountFreeItemDcs">
+                            <p style="text-align:left; margin-top:2%"> {{r.ItemName}}&nbsp;({{r.Qty}} Qty)</p>
+                        </div>
+                    </div>
+                    <div>
+    <div class="row" style=" display: inline-flex;margin-bottom:10px">
+        <div ng-if="!i.ImagePath" class="col-2" style=" width: 48%;">
+            <img ng-if="i.OfferOn!='ScratchBillDiscount'" style='padding-top: 23px; width: 45%' src="../../Content/logo_sk.png">
+            <img ng-if="i.OfferOn=='ScratchBillDiscount'" style='padding-top: 23px; width: 45%' src="../../Content/scratch_card.png">
+        </div>
+        <div class="col-2" ng-if="i.ImagePath" style=" width: 48%;">
+            <img style='padding-top: 23px; width: 60%' src={{serviceBase}}{{i.ImagePath}}>
+        </div>
+        <div class="col-10" style="text-align:center">
+            <div ng-if="i.BillDiscountOfferOn=='Percentage'">
+                <div ng-if="i.OfferOn=='BillDiscount'">
+                    <h4>
+                        <b> {{i.DiscountPercentage}} % Bill Discount</b>&nbsp;&nbsp;
+                        <i class="fa fa-info-circle" style="cursor: pointer;"
+                           tooltip-append-to-body="true" tooltip-placement="right"
+                           tooltip="Offer Conditions {{i.DiscountPercentage}} % Bill Discount {{i.Description}}
+                                                               Add Item worth Rs{{i.BillAmount}} to unlock"></i>-->
+    <!--BD on %-->
+    <!--</h4>
+        </div>
+    </div>
+    <div ng-if="i.BillDiscountOfferOn=='WalletPoint'">
+        <div ng-if="i.WalletType=='WalletPercentage'">
+            <div ng-if="i.ApplyOn=='PreOffer'">
+                <h4>
+                    <b> {{i.BillDiscountWallet}} % OFF</b>&nbsp;&nbsp;
+                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                       tooltip="Offer Conditions {{i.BillDiscountWallet}} % OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>-->
+    <!--BD on Wallet %-->
+    <!--</h4>
+                    </div>
+                    <div ng-if="i.ApplyOn!='PreOffer'">
+                        <h4>
+                            <b>  {{i.BillDiscountWallet}} % OFF Post Offer</b>&nbsp;&nbsp;
+                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                               tooltip="Offer Conditions {{i.BillDiscountWallet}} % OFF Post Offer Post offer, Wallet % {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                        </h4>
+                    </div>
+                </div>
+                <div ng-if="i.WalletType=='Amount'">
+                    <div ng-if="i.ApplyOn=='PreOffer'">
+                        <h4>
+                            <b> Flat ₹ {{i.BillDiscountWallet / 10}} OFF</b>&nbsp;&nbsp;
+                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                               tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet / 10}} OFF BD on Wallet Points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                        </h4>
+                    </div>
+                    <div ng-if="i.ApplyOn!='PreOffer'">
+                        <h4>
+                            <b>  Flat ₹ {{i.BillDiscountWallet / 10}} OFF Post Offer</b>&nbsp;&nbsp;
+                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                               tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet / 10}} OFF Post Offer Post offer, Wallet points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="i.BillDiscountOfferOn=='FreeItem'">
+                <h4>
+                    <b> Free Item Offer</b>&nbsp;&nbsp;
+                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                       tooltip="Offer Conditions Free Item Offer {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                </h4>
+            </div>
+            <div ng-if="i.OfferOn=='ScratchBillDiscount'">
+                <h4 ng-if="i.IsScratchBDCode==false">
+                    <b> Scratch & Win</b>&nbsp;&nbsp;
+                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                       tooltip="Unlock the card first"></i>
+                </h4>
+                <div ng-if="i.BillDiscountOfferOn=='Percentage' && i.IsScratchBDCode==true">
+                    <h4>
+                        <b> {{i.DiscountPercentage}} % Bill Discount</b>&nbsp;&nbsp;
+                        <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                           tooltip="Offer Conditions {{i.DiscountPercentage}} % Bill Discount {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                    </h4>
+                </div>
+                <div ng-if="i.BillDiscountOfferOn=='WalletPoint' && i.IsScratchBDCode==true">
+                    <h4>
+                        <b>   Flat ₹ {{i.BillDiscountWallet/10}} OFF</b>&nbsp;&nbsp;
+                        <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                           tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet/10}} OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                    </h4>
+                </div>
+            </div>
+            <p>Min Order Value ₹ {{i.BillAmount}}</p>
+            <p>Offer valid on select products</p>
+            <button ng-if="!i.showRemove && i.OfferOn!='ScratchBillDiscount'" type="button" class="btnbb" ng-click="ApplyNowBtn(i)"> Apply Now</button>
+            <button ng-if="(i.IsScratchBDCode==true && i.OfferOn=='ScratchBillDiscount' && !i.showRemove )" class="btnbb" ng-click="ApplyNowBtn(i)"> Apply Now</button>
+            <button ng-if="i.showRemove" type="button" class="btnbb" style="background-color: #fd3f3f;color:white" ng-click="RemoveBtn(i)"> Remove</button>
+            <button ng-if="(i.IsScratchBDCode==false && i.OfferOn=='ScratchBillDiscount' )" type="button" class="btnbb" style="background-color: #fd3f3f;color:white" ng-click="unlockScratch(i)"> Unlock</button>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>-->
+
+    <div class="container">
+        <div class="modal fade" id="popupp2" role="dialog">
+            <div class="modal-dialog" style="display: inline;">
+                <div class="modal-content" style=" margin-left: 17%; margin-right: 10%; margin-top: 10%;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="Close()">×</button>
+                    </div>
+                    <h4 style="text-align:center"><b>Edit Item</b></h4>
+                    <section class="panel panel-default table-dynamic">
+                        <div class="modal-body">
+                            <table class="table table-bordered table-striped table-responsive ">
+                                <thead>
+                                    <tr>
+                                        <th>Batch Code</th>
+                                        <th>Qty</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="i in itmdetails">
+                                        <td>{{i.BatchCode}}</td>
+                                        <td>{{i.qty}}</td>
+                                        <td>
+                                            <i class="fa fa-plus-circle" style="font-size:24px" ng-click="PlusIcon(i.batch,i.qty,i.item,i)"></i>&nbsp;&nbsp;<i class="fa fa-minus-circle" ng-click="minusIcon(i.batch,i.qty,i.item,i)" style="font-size: 24px; margin-left: 23px;"></i>
+                                        </td>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" style=" margin-left: 91%" ng-click="Close()">Close</button>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("focusButton").addEventListener("click", function () {
+            document.getElementById("inputBox").focus();
+        });
+        document.getElementById("focusButtonn").addEventListener("click", function () {
+            document.getElementById("inputBox").focus();
+        });
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.addEventListener('scroll', () => {
+                console.log('Modal body is scrolling');
+                // Add your custom scroll handling logic here
+            });
+        });
+
+
+    </script>
+
+
+    <div class="container">
+        <div ng-if="offerList.length > 0">
+            <div class="modal fade" id="Offerpopupp" role="dialog">
+                <div class="modal-dialog" style="display: inline;">
+                    <div class="modal-content" style=" margin-left: 26%; margin-right: 29%; margin-top: 5%;">
+                        <!--<div class="modal-header">
+                        </div>-->
+                        <div class="d-flex">
+                            <h4 style="text-align:center"><b>Applied Offer List </b></h4>
+                            <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" style=" position: fixed !important; right: 31% !important; bottom: 84% !important;" ng-click="Close()">Close</button>
+                        </div>
+                        <div class="modal-body " style="display: contents">
+                            <div class="row">
+                                <div class="col-10">
+                                    <div class="card" style="text-align:center" ng-repeat="i in AppOfferList">
+                                        <div ng-if="i.BillDiscountOfferOn=='FreeItem'" style="background: #eb5a00; border-radius: 8px 8px 0px 0px; padding: 1px 10px; text-align: left ">
+                                            <h4 ng-if="i.IsBillDiscountFreebiesItem==true"> <b>On every purchase of {{i.offerminorderquantity}}{{i.offeritemname}}&nbsp;Get free </b></h4>
+                                            <h4 ng-if="i.IsBillDiscountFreebiesValue==true"> <b>On every purchase worth rupees {{i.offerminorderquantity}}&nbsp;{{i.offeritemname}}&nbsp; Get free</b></h4>
+                                            <div ng-repeat="r in i.RetailerBillDiscountFreeItemDcs">
+                                                <p style="text-align:left; margin-top:2%"> {{r.ItemName}}&nbsp;({{r.Qty}} Qty)</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="row" style=" display: inline-flex;margin-bottom:10px">
+                                                <div ng-if="!i.ImagePath" class="col-2" style=" width: 48%;">
+                                                    <img ng-if="i.OfferOn!='ScratchBillDiscount'" style='padding-top: 23px; width: 45%' src="../../Content/logo_sk.png">
+                                                    <img ng-if="i.OfferOn=='ScratchBillDiscount'" style='padding-top: 23px; width: 45%' src="../../Content/scratch_card.png">
+                                                </div>
+                                                <div class="col-2" ng-if="i.ImagePath" style=" width: 48%;">
+                                                    <img style='padding-top: 23px; width: 60%' src={{serviceBase}}{{i.ImagePath}}>
+                                                </div>
+                                                <div class="col-10" style="text-align:center">
+                                                    <div ng-if="i.BillDiscountOfferOn=='Percentage'">
+                                                        <div ng-if="i.OfferOn=='BillDiscount'">
+                                                            <h4>
+                                                                <b> {{i.DiscountPercentage}} % Bill Discount</b>&nbsp;&nbsp;
+                                                                <i class="fa fa-info-circle" style="cursor: pointer;"
+                                                                   tooltip-append-to-body="true" tooltip-placement="right"
+                                                                   tooltip="Offer Conditions {{i.DiscountPercentage}} % Bill Discount {{i.Description}}
+                                                               Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                                <!--BD on %-->
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="i.BillDiscountOfferOn=='WalletPoint'">
+                                                        <div ng-if="i.WalletType=='WalletPercentage'">
+                                                            <div ng-if="i.ApplyOn=='PreOffer'">
+                                                                <h4>
+                                                                    <b> {{i.BillDiscountWallet}} % OFF</b>&nbsp;&nbsp;
+                                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                       tooltip="Offer Conditions {{i.BillDiscountWallet}} % OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                                    <!--BD on Wallet %-->
+                                                                </h4>
+                                                            </div>
+                                                            <div ng-if="i.ApplyOn!='PreOffer'">
+                                                                <h4>
+                                                                    <b>  {{i.BillDiscountWallet}} % Post Offer credited after<br /> order delivered</b>&nbsp;&nbsp;
+                                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                       tooltip="Offer Conditions {{i.BillDiscountWallet}} % OFF Post Offer Post offer, Wallet % {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                        <div ng-if="i.WalletType=='Amount'">
+                                                            <div ng-if="i.ApplyOn=='PreOffer'">
+                                                                <h4 ng-if="customertype=='Consumer'">
+                                                                    <b> Flat ₹ {{i.BillDiscountWallet / ConsumerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                       tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet / ConsumerWalletConfig |number:2}} OFF BD on Wallet Points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                                </h4>
+                                                                <h4 ng-if="customertype!='Consumer'">
+                                                                    <b> Flat ₹ {{i.BillDiscountWallet / RetailerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                       tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet / RetailerWalletConfig |number:2}} OFF BD on Wallet Points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                                </h4>
+                                                            </div>
+                                                            <div ng-if="i.ApplyOn!='PreOffer'">
+                                                                <h4 ng-if="customertype=='Consumer'">
+                                                                    <b>   {{i.BillDiscountWallet }}  points credited after order delivered </b>&nbsp;&nbsp;
+                                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                       tooltip="Offer Conditions {{i.BillDiscountWallet }}  points credited after order delivered, Wallet points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                                </h4>
+                                                                <h4 ng-if="customertype!='Consumer'">
+                                                                    <b>   {{i.BillDiscountWallet }}  points credited after order delivered </b>&nbsp;&nbsp;
+                                                                    <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                       tooltip="Offer Conditions {{i.BillDiscountWallet }}  points credited after order delivered, Wallet points {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="i.BillDiscountOfferOn=='FreeItem'">
+                                                        <h4>
+                                                            <b> Free Item Offer</b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Offer Conditions Free Item Offer {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                        </h4>
+                                                    </div>
+                                                    <div ng-if="i.OfferOn=='ScratchBillDiscount'">
+                                                        <h4 ng-if="i.IsScratchBDCode==false">
+                                                            <b> Scratch & Win</b>&nbsp;&nbsp;
+                                                            <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                               tooltip="Unlock the card first"></i>
+                                                        </h4>
+                                                        <div ng-if="i.BillDiscountOfferOn=='Percentage' && i.IsScratchBDCode==true">
+                                                            <h4>
+                                                                <b> {{i.DiscountPercentage}} % Bill Discount</b>&nbsp;&nbsp;
+                                                                <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                   tooltip="Offer Conditions {{i.DiscountPercentage}} % Bill Discount {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                            </h4>
+                                                        </div>
+                                                        <div ng-if="i.BillDiscountOfferOn=='WalletPoint' && i.IsScratchBDCode==true">
+                                                            <h4 ng-if="customertype=='Consumer'">
+                                                                <b>   Flat ₹ {{i.BillDiscountWallet/ConsumerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                                <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                   tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet/ConsumerWalletConfig |number:2}} OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                            </h4>
+                                                            <h4 ng-if="customertype!='Consumer'">
+                                                                <b>   Flat ₹ {{i.BillDiscountWallet/RetailerWalletConfig |number:2}} OFF</b>&nbsp;&nbsp;
+                                                                <i class="fa fa-info-circle" style="cursor: pointer;" tooltip-append-to-body="true" tooltip-placement="right"
+                                                                   tooltip="Offer Conditions Flat ₹ {{i.BillDiscountWallet/RetailerWalletConfig |number:2}} OFF {{i.Description}}  Add Item worth Rs{{i.BillAmount}} to unlock"></i>
+                                                            </h4>
+                                                        </div>
+                                                    </div>
+                                                    <p>Min Order Value ₹ {{i.BillAmount}}</p>
+                                                    <p>Offer valid on select products</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<div class="modal fade" id="CheckCredit" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-left: 13% !important; margin-right: 8% !important; margin-top: 10% !important; ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" style="margin-left: 97%;" ng-click="onCloseApprovalReturnpopup()">×</button>
+            </div>
+            <h4 style="text-align: center; font-size: x-large;"><b>Apply Credit Note</b></h4>
+            <div class="modal-body">
+                <div class="row" style="display: flex; justify-content: space-evenly;">
+                    <div class="col3" style="font-weight: bolder!important; font-size: large!important;">Enter Credit Note:</div>
+                    <div class="col3">
+                        <input type="text" ng-model="EnteredCreditNote" class="form-control" />&nbsp;
+                    </div>
+                    <div class="col3">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="CheckCredit()">Apply</button> &nbsp;&nbsp;
+                    </div>
+
+                </div>
+
+                <div class="row" style="text-align :center">
+                    <div class="row">
+                        <div class="row" style="text-align: center; font-size: large;" ng-if="CheckCereditBtn">
+                            Credit Note Amount: {{CheckCreditAmount|number:2}}
+                            <br />
+                            Valit Till : {{CheckCreditValidTill}}
+                        </div>
+                        <div class="row" style="text-align: center; font-size: large;" ng-if="!CheckCereditBtn">
+                            {{CheckCereditMessage}}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="onCloseApprovalReturnpopup()">OK</button>
+                    <button type="button" class="btn btn-primary" ng-click="Clear()">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script type="text/ng-template" id="CreateBackendOrder.html">
+    <style>
+        .modal-content {
+            width: 500px;
+            margin-left: 22%;
+            margin-top: 24%;
+        }
+    </style>
+    <div >
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+        </div>
+                <div class="row" >
+                    <h4 style="text-align:center"><b >Are you sure you want to proceed?</b></h4>-->
+<!--<span style=" margin-left: 43px;">
+</span>-->
+<!--</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning"  data-dismiss="modal" ng-click="cancel()" >Yes</button>
+                <button type="button" class="btn btn-ar btn-warning"  data-dismiss="modal" ng-click="ok()">No</button>
+            </div>
+    </div>
+</script>-->
+<!--<div class="form-group">
+<p>Select Batch Code</p>-->
+<!--<input type="text" ng-model="BatchCode" class="form-control" placeholder="Select BatchCode" ng-change="getItemList()" />
+<div class="scrl" ng-if="item">-->
+<!--<div ng-repeat="itm in item" class="an" ng-click="onSelectItem(itm)">
+    <span> BatchCode {{itm.BatchCode}} =>Batchqty({{itm.Batchqty}}) </span>
+</div>-->
+<!--</div>-->
+<!--<input type="text" ng-model="BatchCode" class="form-control" placeholder="Select BatchCode" ng-change="getItemList()" />
+    <br />
+    <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="itm" ng-change="checkqty(itm)">
+        <option value="{{itm.StockBatchMasterId}}" ng-repeat="itm in item">BatchCode(itm.BatchCode) => Batchqty => (itm.Batchqty)</option>
+    </select>
+</div>-->
+<!--<div class="form-group col-md-3">
+    <label for="qty">Name</label>
+    <input class="form-control" type="text" ng-disabled="true" ng-model="selecteditem.ItemName" />
+</div>
+<div class="form-group col-md-3">
+    <label for="price">Available Qty</label>
+    <input id="tamount" class="form-control" type="text" ng-model="selecteditem.CurrentInventory" value="{{CurrentInventory}}" disabled />
+</div>
+<div class="form-group col-md-3">
+    <label for="qty">MOQ</label>
+    <input class="form-control" type="number" min="0" ng-model="selecteditem.MinOrderQty" value="{{selecteditem.MinOrderQty}}" disabled />
+</div>
+<div class="form-group col-md-3">
+    <label for="noofset">No Of Set Qty<span style="color:red;">*</span></label>
+    <input id="noofset" class="form-control" type="number" min="0" ng-model="selecteditem.NoOfSet" value="{{selecteditem.NoOfSet}}" ng-change="AmountCalculation(selecteditem)" />
+    <p id="demo" style="color: red;"></p>
+</div>
+<div class="form-group col-md-3">
+    <label for="qty">Order Qty</label>
+    <input class="form-control" type="number" min="0" value="{{selecteditem.MinOrderQty*selecteditem.NoOfSet  | number : 2}}" disabled />
+</div>
+<div class="form-group col-md-3">
+    <label for="price">Default Unit Price</label>
+    <input class="form-control" type="number" min="0" ng-model="selecteditem.UnitPrice" value="{{selecteditem.UnitPrice | number : 2}}" disabled />
+</div>
+<div class="form-group col-md-3">
+    <label for="price">Edit Unit Price</label>
+    <input class="form-control" type="number" min="0" ng-model="selecteditem.EditUnitPrice" value="{{selecteditem.EditUnitPrice | number : 2}}" ng-change="AmountCalculation(selecteditem)" />
+</div>
+<div class="form-group col-md-3">
+    <label for="price">Total Amount</label>
+    <input id="tamount" class="form-control" type="text" ng-model="TotalAmount" value="{{TotalAmount | number : 2}}" disabled />
+</div>-->
+<!--<table class="table table-bordered table-striped table-responsive ">
+<thead>
+    <tr>
+        <th>
+            <div class="th">
+                SNo.
+            </div>
+        </th>
+        <th>
+            <div class="th">
+                ItemId
+            </div>
+        </th>
+        <th>
+            <div class="th">
+                ItemName
+            </div>
+        </th>
+        <th>
+            <div class="th">
+                Quantity
+            </div>
+        </th>
+        <th>
+            <div class="th">
+                Default UnitPrice
+            </div>
+        </th>
+        <th>
+            <div class="th">
+                Edit UnitPrice
+            </div>
+        </th>
+        <th>
+            <div class="th">
+                TotalAmount
+            </div>
+        </th>
+        <th>
+            <div class="th">
+                Delete
+            </div>
+        </th>
+    </tr>
+</thead>
+<tbody ng-init="total = 0">
+    <tr data-ng-repeat="trade in DOdata">
+        <td>{{$index+1}}</td>
+        <td>{{trade.ItemId}}</td>
+        <td>{{trade.ItemName}}</td>
+        <td>{{trade.qty  | number : 2}}</td>
+        <td>{{trade.UnitPrice | number : 2 }}</td>
+        <td>{{trade.EditUnitPrice | number : 2 }}</td>
+        <td ng-init="$parent.total = $parent.total + (trade.EditUnitPrice * trade.qty)">{{trade.EditUnitPrice * trade.qty | number : 2}}</td>
+        <td>-->
+<!--<button ng-click="remove(trade)" ng-confirm-click="You are about to overwrite your Item content!! Are you SURE you want to Delete this Item from content?">
+    Delete
+</button>-->
+<!--<a class="btn glyphicon glyphicon-trash" ng-click="remove(trade)"></a>-->
+<!--<a class="btn glyphicon glyphicon-trash" ng-click="RemoveDetail(trade)"></a>-->
+<!--</td>
+        </tr>
+        <tr ng-if="DOdata.length>0">
+            <td><b>Total Bill Amount</b></td>
+            <td></td>
+            <td><b>Rs. : {{ total  | number : 2 }} /-</b></td>
+        </tr>
+    </tbody>
+</table>-->
+<!--<div class="modal-footer">
+    <button type="button" class="btn btn-ar btn-warning " ng-click="cancel()" data-dismiss="modal">Cancel</button>
+    <button type="button" class="btn btn-ar btn-primary skadd" ng-click="Searchsave(shoppingCart)">Create Order</button>
+</div>-->
+<!--</section>-->
+<!--<script type="text/ng-template" id="removedetail.html">
+<div>
+    <form>
+        <div class="containers" style="position: relative">-->
+<!--<button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>-->
+<!--<button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span class="icon icon-x" aria-hidden="true">
+        </span>
+        <span class="sr-only">Close</span>
+    </button>
+    <style>
+        div.paragraph {
+            text-align: center;
+        }
+    </style>
+    <body>
+        <h6>Delete Item</h6>
+        <div class="paragraph">
+            <h5>Are You Sure you want to Delete this Item?</h5>
+        </div>
+    </body>
+</div>
+<div class="modal-footer">-->
+<!--<button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>-->
+<!--<button type="button" class="btn btn-ar btn-primary" ng-click="remove()" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            </div>
+            <footer style="page-break-before: always;"></footer>
+        </form>
+    </div>
+</script>-->

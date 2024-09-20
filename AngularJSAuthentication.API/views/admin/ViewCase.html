@@ -1,0 +1,460 @@
+﻿
+<div class="page page-table"  button-permission-binder parentName="Case Managment" pageName="View Case">
+    <section class="panel panel-default table-dynamic">
+        view case
+
+        <br />
+        <div class="p-3 mb-2 bg-primary ">
+
+            <div class="panel-heading"> <h4> <strong> <span class="glyphicon glyphicon-th"> </span>View Cases</strong> </h4></div>
+
+        </div>
+
+    </section>
+</div>
+<div class="form-group col-md-12 clear-both">
+    <!--<div class="form-group col-md-3">
+        <label for="site-name">SKcode</label><br>
+        <input class="form-control" ng-model="Demanddata.skcode" placeholder="Enter Sk code" />
+    </div>
+    <div class="form-group col-md-3">
+        <label for="site-name">Mobile</label><br>
+        <input class="form-control" ng-model="Demanddata.mobile" placeholder="Enter moblie" />
+    </div>
+    <div class="form-group col-md-1">
+        <label for="site-name">Search Task</label><br>
+        <input class="form-control" ng-model="Demanddata.status" placeholder="Search" />
+    </div>-->
+    <div class="table-filters">
+        <div class="row">
+            <div class="col-sm-3 col-xs-4"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div>
+            <div class="col-sm-3 col-xs-6 filter-result-info">
+                <span>
+                    Showing {{filteredStores.length}}/{{stores.length}} entries
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="text-right">
+        <button class="btn-sm btn-primary skexport" ng-click="exportData()"  style="background-color: black;border-color: black;"> <span class="glyphicon glyphicon-plus"> </span> Export Cases list</button>
+    </div>
+    <!--<div class="form-group col-md-3">
+        <label for="site-name"></label><br />
+        <button type="button" class="btn btn-ar btn-primary" id="Search2" name="Sall" ng-click="Searchdata(Demanddata)">Search</button>
+        <div class="text-right">
+            <button class="btn-sm btn-primary" ng-click="exportData()"> <span class="glyphicon glyphicon-plus"> </span> Export Cases list</button>
+        </div>
+    </div>-->
+</div>
+
+<script type="text/javascript">
+    function refreshPage() {
+        window.location.reload();
+    }
+</script>
+
+
+<table class="table table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>
+                <div class="th">
+                    S.No
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order('BaseCategoryName')"
+                          data-ng-class="{active: row == 'BaseCategoryName'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('-BaseCategoryName')"
+                          data-ng-class="{active: row == '-BaseCategoryName'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Skcode
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order('BaseCategoryName')"
+                          data-ng-class="{active: row == 'BaseCategoryName'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('-BaseCategoryName')"
+                          data-ng-class="{active: row == '-BaseCategoryName'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    MobileNumber
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order(' CreatedDate')"
+                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('- CreatedDate')"
+                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Category Name
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order('HindiName')"
+                          data-ng-class="{active: row == 'HindiName'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('-HindiName')"
+                          data-ng-class="{active: row == '-HindiName'}"></span>
+                </div>
+            </th>
+
+            <th>
+                <div class="th">
+                    SubCategory Name
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order('Code')"
+                          data-ng-class="{active: row == 'Code'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('-Code')"
+                          data-ng-class="{active: row == '-Code'}"></span>
+                </div>
+            </th>
+
+
+            <th>
+                <div class="th">
+                    Priority
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order('IsActive')"
+                          data-ng-class="{active: row == 'IsActive'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('-IsActive')"
+                          data-ng-class="{active: row == '-IsActive'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Call type
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order(' CreatedDate')"
+                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('- CreatedDate')"
+                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Summary
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order(' CreatedDate')"
+                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('- CreatedDate')"
+                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Status
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order(' CreatedDate')"
+                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('- CreatedDate')"
+                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Assign To
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order(' CreatedDate')"
+                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('- CreatedDate')"
+                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Description ReAssign
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order(' CreatedDate')"
+                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('- CreatedDate')"
+                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    CreatedbyName
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order(' CreatedDate')"
+                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('- CreatedDate')"
+                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Created Date
+                    <span class="glyphicon glyphicon-chevron-up"
+                          data-ng-click="order('CreatedDate')"
+                          data-ng-class="{active: row == 'CreatedDate'}"></span>
+                    <span class="glyphicon glyphicon-chevron-down"
+                          data-ng-click="order('-CreatedDate')"
+                          data-ng-class="{active: row == '-CreatedDate'}"></span>
+                </div>
+            </th>
+
+            <th>
+                <div class="th">
+                    Set Status
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    History
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="trade in currentPageStores">
+            <td>{{1+$index}}</td>
+            <td>{{trade.Skcode}}</td>
+            <td>{{trade.MobileNumber}}</td>
+            <td>{{trade.CategoryName}}</td>
+            <td>{{trade.SubCategoryName}}</td>
+            <td>{{trade.Priority}}</td>
+            <td>{{trade.Statuscall}}</td>
+            <td>{{trade.Summary}}</td>
+            <td>{{trade.Status}}</td>
+            <td>{{trade.Assignto}}</td>
+            <td>{{trade.Description}}</td>
+            <td>{{trade.CreatedByName}}</td>
+            <td>{{trade.CreatedDate | date:'medium'}}</td>
+            <td><button class="btn-sm btn-primary sksetstatus" ng-show="trade.Status == 'Open'||trade.Status == 'Reassign'" ng-click="open(trade)">Set Status</button> </td>
+            <td><button class="btn-sm btn-primary skhistory" data-toggle="modal" data-target="#customermodel" ng-click="CaseHistroy(trade)">History</button></td>
+        </tr>
+    </tbody>
+</table>
+<footer class="table-footer">
+    <div class="row">
+        <div class="col-md-6 page-num-info">
+            <span>
+                Show
+                <select data-ng-model="numPerPage"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNumPerPageChange()"></select>
+                entries per page
+            </span>
+        </div>
+        <div class="col-md-6 text-right pagination-container">
+            <pagination class="pagination-sm"
+                        page="currentPage"
+                        total-items="filteredStores.length"
+                        max-size="4"
+                        on-select-page="select(page)"
+                        items-per-page="numPerPage"
+                        rotate="false"
+                        boundary-links="true"></pagination>
+        </div>
+    </div>
+</footer>
+<!--set status-->
+<script type="text/ng-template" id="mySetStatus.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Set Status</h4>
+        </div>
+        <section class="panel panel-default table-dynamic">
+            <div class="modal-body">
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">SKcode</label><br>
+                    <input class="form-control" ng-model="CaseData.Skcode" placeholder="Enter Sk code" disabled>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">Mobile</label><br>
+                    <input class="form-control" ng-model="CaseData.MobileNumber" placeholder="Enter moblie" disabled>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">Issue Category<span style="color:red;">*</span></label><br />
+                    <input class="form-control" ng-model="CaseData.CategoryName" disabled>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Issue SubCategory <span style="color:red;">*</span></label><br />
+                    <input class="form-control" ng-model="CaseData.SubCategoryName" disabled>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Priority</label><br />
+                    <input class="form-control" ng-model="CaseData.Priority" disabled>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Call Type</label><br />
+                    <input class="form-control" id="site-name" ng-model="CaseData.Statuscall" disabled>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Status</label><br />
+                    <select class="form-control" id="site-name" ng-model="CaseData.stype">
+                        <option value="" ng-selected="true">--Select--</option>
+                        <option value="{{casestatus.stype}}" ng-repeat="casestatus in status"> {{casestatus.stype}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3" ng-if="(CaseData.stype == 'Reassign')">
+                    <label for="site-name">AssignTo</label><br />
+                    <select class="form-control" id="site-name" ng-model="CaseData.atype">
+                        <option value="" ng-selected="true">--Select--</option>
+                        <option value="{{casestatus.atype}}" ng-repeat="casestatus in Assignto"> {{casestatus.atype}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="site-name">Description<span style="color:red;">*</span></label><br />
+                    <textarea id="site-name-summary" type="text" class="form-control" ng-model="CaseData.Summary" placeholder="Enter Summary" cols="3" rows="6" style="background-color: azure; font-weight: bold;" disabled />
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="site-name">Description ReAssign<span style="color:red;">*</span></label><br />
+                    <textarea id="site-name-summary" type="text" class="form-control" ng-model="CaseData.Description" placeholder="Enter Description" cols="3" rows="6" style="background-color: azure; font-weight: bold;" />
+                </div>
+            </div>
+        </section>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="SetCase(CaseData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<!--CaseHistory-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<div class="modal fade " id="customermodel" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Case History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+
+                        <th>
+                            <div class="th">
+                                SkCode
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Mobile Name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Category Name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Sub Category Name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Priority
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Call type
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Summary
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Status
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Assign To
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Description Re Assign
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Created by Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Created Date
+                            </div>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in CasedataHistroy">
+                        <td>{{trade.Skcode}}</td>
+                        <td>{{trade.MobileNumber}}</td>
+                        <td>{{trade.CategoryName}}</td>
+                        <td>{{trade.SubCategoryName}}</td>
+                        <td>{{trade.Priority}}</td>
+                        <td>{{trade.CallType}}</td>
+                        <td>{{trade.Summary}}</td>
+                        <td>{{trade.Status}}</td>
+                        <td>{{trade.Assignto}}</td>
+                        <td>{{trade.DescriptionReAssign}}</td>
+                        <td>{{trade.CreatedbyName}}</td>
+                        <td>{{trade.UpdatedDate | date:'medium'}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

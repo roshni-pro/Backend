@@ -1,0 +1,289 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Current Stock" pageName="Safety Stock">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Safety Stock
+            </strong>
+        </div>
+        <br />
+
+
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-2 col-xs-3">
+                    <label for="site-name"> Warehouse:</label><br />
+                    <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getcurrentstock(WarehouseId)">
+                        <option value="">--Default--</option>
+                        <option value="{{a.WarehouseId}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.WarehouseId">{{a.WarehouseName}} {{a.CityName}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-3 col-xs-3">
+                    <label>&nbsp</label>
+                    <div class="form-group ">
+                        <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-3">
+                    <label>&nbsp</label>
+                    <div class="form-group col-md-12">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="getcurrentstock(srch.WarehouseId)">Search</button>
+                    </div>
+
+                </div>
+                <div class="col-sm-3 col-xs-3">
+                    <button class="btn-sm btn-dark skexport" ng-click="exportData1()" style="margin-top: 30px" > <span class="glyphicon glyphicon-export"> </span> Export Safety stock</button>
+                </div>
+
+            </div>
+            <table class="table table-bordered table-striped table-responsive" id="exportable">
+                <thead>
+                    <tr>
+
+                        
+                        <th>
+                            <div class="th">
+                                ABCCategory
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('ItemName')"
+                                      data-ng-class="{active: row == 'ItemName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-ItemName')"
+                                      data-ng-class="{active: row == '-ItemName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ItemName
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('ItemName')"
+                                      data-ng-class="{active: row == 'ItemName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-ItemName')"
+                                      data-ng-class="{active: row == '-ItemName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ItemNumber
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('ItemName')"
+                                      data-ng-class="{active: row == 'ItemName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-ItemName')"
+                                      data-ng-class="{active: row == '-ItemName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Item MultiMrpId
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('ItemName')"
+                                      data-ng-class="{active: row == 'ItemName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-ItemName')"
+                                      data-ng-class="{active: row == '-ItemName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                MRP
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('ItemName')"
+                                      data-ng-class="{active: row == 'ItemName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-ItemName')"
+                                      data-ng-class="{active: row == '-ItemName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Safety Stock Qty
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('CurrentInventory')"
+                                      data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-CurrentInventory')"
+                                      data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Manual Push
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('CreationDate')"
+                                      data-ng-class="{active: row == 'CreationDate'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-CreationDate')"
+                                      data-ng-class="{active: row == '-CreationDate'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                History
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('CreationDate')"
+                                      data-ng-class="{active: row == 'CreationDate'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-CreationDate')"
+                                      data-ng-class="{active: row == '-CreationDate'}"></span>
+                            </div>
+                        </th>
+
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in currentPageStores">
+                        <!--<tr data-ng-repeat="trade in currentPageStores">-->
+                        
+                        <td>{{trade.ABCClassification}}</td>
+                        <td>{{trade.itemname}}</td>
+                        <td>{{trade.ItemNumber}}</td>
+                        <td>{{trade.ItemMultiMRPId}}</td>
+                        <td>{{trade.MRP}}</td>
+                        <td>{{trade.SafetystockfQuantity}} </td>
+                        <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)"> Edit</button> </td>
+                        <!--<td >
+        <button class="btn-sm btn-primary skhistory" ng-init="LimitId=trade.StockId;entityName='CurrentStock'" ng-click="showMe1=true">History</button>
+        <div ng-if="showMe1" show-limit-history></div>
+    </td>-->
+                        <td><button class="btn-sm btn-primary skhistory" data-toggle="modal" data-target="#safetyhistory" ng-click="SafetystockHistory(trade)"> History</button> </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+ 
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<script type="text/ng-template" id="MySafetyStockPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add SafetyStock Quantity</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Manual In qty:</label><br />
+               
+                <input type="number"  ng-model="SafetystockData.SafetystockfQuantity"/>
+               
+            </div>
+            <!--<div class="form-group">
+                <label for="site-name"> Reason For entry:</label><br />
+                <input id="site-name" class="form-control" rows="3" required="" ng-model="inventoryData.ManualReason" placeholder="Enter Reason" />
+            </div>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" click-and-disable="PutsSafetyStock(SafetystockData)">Save</button>
+        </div>
+    </form>
+</script>
+<div class="modal fade " id="safetyhistory" role="dialog">
+    <div class="modal-dialog1">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Safety Stock History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <!--<div class="th">
+
+                    <td>{{SafetyStock[0].StockId}}</td>-->
+                <thead>
+                    <tr class="w1-red">
+
+                        <th>
+                            <div class="th">
+                                ItemMultiMRPId
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ItemNumber
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Created BY
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Updated By
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Old Safety Stock
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                New Safety Stock
+                            </div>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr data-ng-repeat="trade in SafetyStock">
+                        <td>{{trade.ItemMultiMRPId}}</td>
+                        <td>{{trade.ItemNumber}}</td>
+                        <td>{{trade.CreatedBy}}</td>
+                        <td>{{trade.UpdateBy}}</td>
+                        <td>{{trade.OldSafetyStock}}</td>
+                        <td>{{trade.NewSafetyStock}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer w3-red">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>

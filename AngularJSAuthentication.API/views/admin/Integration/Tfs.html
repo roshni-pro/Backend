@@ -1,0 +1,99 @@
+﻿<div class="k-widget k-window maximizable-window loader-overlay-container" style="padding-top: 80px; min-width: 90px; min-height: 50px; max-height: 670px; width: 600px; z-index: 10003; left: 340px; top: 50px; bottom: 50px;">
+    <div class="k-window-titlebar k-header" style="margin-top: -80px;">&nbsp;<span class="k-window-title" style="right: 40px;">Connection Details</span><div class="k-window-actions"><a role="button" href="#" class="k-window-action k-link"><span role="presentation" class="k-icon k-i-close">Close</span></a></div></div><div data-role="window" class="k-window-content k-content window-form" tabindex="0" style="max-height: 100%;">
+        <div class="window-form-content">
+            <div class="error-container"></div><div class="create-project-container item-details-content">
+                <form action="javascript:void(0);" method="post" autocorrect="false">
+                    <section class="tfs-template-details">
+                        <div class="property single-line no-indent">
+                            <div class="label">Server Name</div>
+                            <div class="value title" data-tpcontrol-name="serverName" data-tpcontrol-settings="{type:InputEditor, settings: {skipConfirm: true, fields: [name], fieldLabelKey: name, enabledField: canEdit, cssClasses: [stretch], events: { textChanged: nameChanged }}, validation:[required]}">
+                                <input type="text" class="tp-name-textbox stretch" data-bind="value: name, events: { keyup: onKeyUp, input: onKeyUp, paste: onKeyUp, cut: onKeyUp }">
+                            </div>
+                            <div class="label">Collection</div>
+                            <div class="value title" data-tpcontrol-name="collection" data-tpcontrol-settings="{type:InputEditor, settings: {skipConfirm: true, fields: [collection], fieldLabelKey: collection, enabledField: canEdit, cssClasses: [stretch], events: { textChanged: collectionChanged }}}">
+                                <input type="text" class="tp-name-textbox stretch" data-bind="value: collection, events: { keyup: onKeyUp, input: onKeyUp, paste: onKeyUp, cut: onKeyUp }">
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="project-template-details">
+                        <header class="legend">Connection Details</header>
+                        <div class="section-content">
+                            <div class="property single-line no-indent">
+                                <div class="label">Path</div>
+                                <div class="value title" data-tpcontrol-name="path" data-tpcontrol-settings="{type:InputEditor, settings: {skipConfirm: true, fields: [path], fieldLabelKey: path, enabledField: canEdit, cssClasses: [stretch], events: { textChanged: pathChanged }}}">
+                                    <input type="text" class="tp-name-textbox stretch" data-bind="value: path, events: { keyup: onKeyUp, input: onKeyUp, paste: onKeyUp, cut: onKeyUp }">
+                                </div>
+                            </div>
+                            <div class="property single-line no-indent">
+                                <div class="label">Port Number</div>
+                                <div class="value" data-tpcontrol-name="portNumber" data-tpcontrol-settings="{type:NumberEditor, settings: {skipConfirm: true, fields: [portNumber], fieldLabelKey: portNumber, enabledField: canEdit, cssClasses: [small], events: { numberChanged: portChanged } }, validation: [notNegativeInt]}" data-min="1" data-max="65000">
+                                    <input type="text" class="small" data-min="1" data-max="65000" placeholder="none">
+                                </div>
+                            </div>
+                            <div class="property single-line no-indent">
+                                <div class="label">Protocol &nbsp;</div>
+                                <div class="value">
+                                    <label><input type="radio" name="protocol" value="http" data-bind="checked: protocol, enabled: canEdit">HTTP</label>
+                                    <label><input type="radio" name="protocol" value="https" data-bind="checked: protocol, enabled: canEdit">HTTPS</label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="project-template-details">
+                        <header class="legend">Preview</header>
+                        <div class="section-content">
+                            <span data-bind="text: preview">http://:8080/tfs/DefaultCollection</span>
+                        </div>
+                    </section>
+
+                    <section class="project-template-details">
+                        <header class="legend">
+                            Service Account Login Information
+                            <span class="link inline-actions" title="Edit" data-bind="visible: editButtonVisible, events: {click: editLogin}" style="display: none;">
+                                <i class="icon-edit"></i>
+                            </span>
+                            <span class="link inline-actions" title="Cancel edit" data-bind="visible: cancelButtonVisible, events: {click: cancelEditLogin}" style="display: none;">
+                                <i class="icon-remove"></i>
+                            </span>
+                        </header>
+                        <div class="section-content">
+                            <div data-bind="invisible: isEditing" style="display: none;">
+                                <div class="property single-line no-indent">
+                                    <label class="label">Username:</label>
+                                    <div class="value" data-bind="text: username">site165786453626</div>
+                                </div>
+                                <div class="property single-line no-indent">
+                                    <label class="label">Password:</label>
+                                    <div class="value">******</div>
+                                </div>
+                            </div>
+                            <div data-bind="visible: isEditing">
+                                <p>
+                                    These credentials must be a valid TFS admin account.
+                                    They will be used to perform all sync operations.
+                                </p>
+                                <div class="property single-line no-indent">
+                                    <label for="username" class="label">Username</label>
+                                    <div class="value">
+                                        <input id="username" class="larger" type="text" data-bind="value: username, events: { keyup: userChanged }">
+                                    </div>
+                                </div>
+                                <div class="property single-line no-indent">
+                                    <label for="password" class="label">Password</label>
+                                    <div class="value">
+                                        <input id="password" class="larger" type="password" data-bind="value: password, events: { keyup: passChanged }">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="actions">
+                        <button type="button" class="k-button primary tp-button-saveandclose" data-bind="enabled:saveCmd.enabled, click: saveCmd.action, invisible: saveCmd.invisible, attr: { title: saveCmd.tooltip }" title="Save &amp; Close (Ctrl + Enter)"><span data-bind="text: saveCmd.text">Save &amp; Close</span><span class="hint" data-bind="text: saveCmd.shortCut">Ctrl + Enter</span></button><button type="button" class="k-button default tp-button-cancel" data-bind="enabled:cancelCmd.enabled, click: cancelCmd.action, invisible: cancelCmd.invisible, attr: { title: cancelCmd.tooltip }" title="Cancel (Esc)"><span data-bind="text: cancelCmd.text">Cancel</span><span class="hint" data-bind="text: cancelCmd.shortCut">Esc</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

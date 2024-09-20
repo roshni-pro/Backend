@@ -1,0 +1,336 @@
+﻿    <!--<style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+
+        <style > .cities {
+            width: 300px;
+            height: 500px;
+            padding: 25px;
+            margin: 25px;
+            align-items: center;
+        }
+    </style>-->
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: Verdana, sans-serif;
+            margin: 0
+        }
+
+        .mySlides {
+            display: none
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        /* Slideshow container */
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+            /* On hover, add a black background color with a little bit see-through */
+            .prev:hover, .next:hover {
+                background-color: rgba(0,0,0,0.8);
+            }
+
+        /* Caption text */
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+            .active, .dot:hover {
+                background-color: #717171;
+            }
+
+        /* Fading animation */
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+            .prev, .next, .text {
+                font-size: 11px
+            }
+        }
+    </style>
+    
+    <div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> App Home Exclude
+            </strong>
+        </div>
+        <br />
+
+        <br />
+
+        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>WareHouse</th>
+                    <th>ID</th>
+                    <th>Back Section Image</th>
+                    <th>Section Type</th>
+                    <th>Section Image</th>
+                    <th>Sequence No</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="Data in AppHomeData">
+                <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                    <td class="CX"><span>+</span></td>
+                    <td>{{Data.WarehouseName}}</td>
+                    <td>{{Data.id}}</td>
+                    <td>
+                        <div class="form-group">
+                            <img alt="" src="{{Data.BackSectionImage}}" class="img-square img80_80">
+                        </div>
+                    </td>
+                    <td>{{Data.SectionType}}</td>
+                    <td>
+                        <div class="form-group">
+                            <img alt="" src="{{Data.SectionImage}}" class="img-square img80_80">
+                        </div>
+                    </td>
+                    <td>
+                        {{
+Data.sequenceno
+                        }}
+                    </td>
+                </tr>
+                <tr class="sub">
+                    <td></td>
+                    <td colspan="5">
+                        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <th>ID</th>
+                                <th>Titles</th>
+                                <th>Image</th>
+                                <th>Item Name</th>
+                                <!--<th>Slider</th>-->
+
+                            </tr>
+                            <tr ng-repeat="a in Data.detail" ng-class-even="'even'" ng-class-odd="'odd'">
+                                <td>{{a.id}}</td>
+                                <td>{{a.titles}}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <img alt="" src="{{a.image}}" class="img-square img80_80">
+                                    </div>
+                                </td>
+                                <td>{{a.ItemName}}</td>
+                                <!--<td>
+                                </td>-->
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+
+    <!--<div class="cities">
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="https://res.cloudinary.com/shopkirana/image/upload/v1552725815/AppHome/sksurf.jpg" style="width:100%">
+                <div class="text">Caption Text</div>
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="https://res.cloudinary.com/shopkirana/image/upload/v1552725815/AppHome/skkisan.jpg" style="width:100%">
+                <div class="text">Caption Two</div>
+            </div>
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="https://res.cloudinary.com/shopkirana/image/upload/v1552989614/AppHome/a7lqo21552989612283.jpg" style="width:100%">
+                <div class="text">Caption Three</div>
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+        <div class="container">
+            <div class="first">first</div>
+            <div class="third">third</div>
+            <div class="second">second</div>
+            <div class="fourth">fourth</div>
+        </div>
+
+    </div>-->
+
+        
+    <script>
+            window.onload = function () {
+                $("#nav-container").remove();
+                $("#header").remove();
+            };
+    </script>  
+    <script>
+            $(function () {
+                $('body').on('click', '.CX span', function () {
+                    //When Click On + sign
+                    if ($(this).text() == '+') {
+                        $(this).text('-');
+                    }
+                    else {
+                        $(this).text('+');
+                    }
+                    $(this).closest('tr') // row of + sign
+                        .next('tr') // next row of + sign
+                        .toggle(); // if show then hide else show
+                });
+            });
+    </script>
+   <!--<script>
+            var slideIndex = 1;
+            showSlides(slideIndex);
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("dot");
+                if (n > slides.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = slides.length }
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+            }
+    </script>
+    <script type="text/javascript" src="http://www.hscripts.com/jquery.js"></script>
+    <script type="text/javascript">
+            $(function () {
+                $('.fadein img:gt(0)').hide();
+                setInterval(function () { $('.fadein :first-child').fadeOut().next('img').fadeIn().end().appendTo('.fadein'); }, 1000);
+            });
+    </script>-->

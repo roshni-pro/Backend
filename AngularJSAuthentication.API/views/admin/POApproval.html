@@ -1,0 +1,405 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+</style>
+<div class="page page-table"  button-permission-binder parentName="Purchase Order" pageName="PO Approval">
+    <div class="panel-heading">
+        <strong>
+            <span class="glyphicon glyphicon-th"> </span>PO Approval page
+        </strong>
+    </div>
+    <div class="">
+        <div class="col-xs-12 col-md-12">
+            <h3>PO Approval Detail</h3>
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getdata(WarehouseId)">
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                </select>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Sr. No
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Message') "
+                                      data-ng-class="{active: row == 'Message'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Message') "
+                                      data-ng-class="{active: row == '-Message'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Level
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('NotificationTime') "
+                                      data-ng-class="{active: row == 'NotificationTime'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-NotificationTime') "
+                                      data-ng-class="{active: row == '-NotificationTime'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Warehouse Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('NotificationTime') "
+                                      data-ng-class="{active: row == 'NotificationTime'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-NotificationTime') "
+                                      data-ng-class="{active: row == '-NotificationTime'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Approver
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Image') "
+                                      data-ng-class="{active: row == 'Image'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Image') "
+                                      data-ng-class="{active: row == '-Image'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Reviewer
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Image') "
+                                      data-ng-class="{active: row == 'Image'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Image') "
+                                      data-ng-class="{active: row == '-Image'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Amount lmt.
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Image') "
+                                      data-ng-class="{active: row == 'Image'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Image') "
+                                      data-ng-class="{active: row == '-Image'}"></span>
+                            </div>
+                        </th>
+                        <th  ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Purchase Lead')>-1)">
+                            <div class="th" >
+                                Edit
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Image') "
+                                      data-ng-class="{active: row == 'Image'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Image') "
+                                      data-ng-class="{active: row == '-Image'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                History
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Image') "
+                                      data-ng-class="{active: row == 'Image'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Image') "
+                                      data-ng-class="{active: row == '-Image'}"></span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in currentPageStores">
+                        <td>{{trade.Poapprovelid}}</td>
+                        <td>{{trade.Level}}</td>
+                        <td>{{trade.WarehouseName}}</td>
+                        <td>{{trade.ApprovalName1}},&nbsp;{{trade.ApprovalName2}},&nbsp;{{trade.ApprovalNam3}},&nbsp;{{trade.ApprovalName4}},&nbsp;{{trade.ApprovalName5}}</td>
+                        <td>{{trade.ReviewerName1}},&nbsp;{{trade.ReviewerName2}},&nbsp;{{trade.ReviewerName3}},&nbsp;{{trade.ReviewerName4}},&nbsp;{{trade.ReviewerName5}}</td>
+
+                        <td>{{trade.AmountlmtMin}} To {{trade.AmountlmtMax}} </td>                       
+                        <td  ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Purchase Lead')>-1)" ><button type="button"  class="btn btn-danger skedit"    ng-click="open(trade)" >Edit</button></td>
+                        <td><button class="btn-sm btn-primary skhistory" data-toggle="modal" data-target="#poapprovalmodel" ng-click="PoApprovalHistroy(trade)">History</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="POApproval.html">
+    <div class="page page-table">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span> PO Approval  Report
+                </strong>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                </div>
+                <div class="row">
+                    <form role="form">
+                        <div class="form-group col-md-12">
+                            <label for="site-name">Warehouse:</label>
+                            <label for="site-name">{{saveData.WarehouseName}}</label><br />
+                            <!--<select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getapr1(warehouses.WarehouseId)">
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} </option>
+                            </select>-->
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Approver1</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Approval1">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Approval1}}" ng-repeat="ppl in pplapr1" data-ng-selected="saveData.Approval1 == ppl.Approval1"> {{ppl.ApprovalName1}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Approver2</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Approval2">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Approval2}}" ng-repeat="ppl in pplapr2" data-ng-selected="saveData.Approval2 == ppl.Approval2"> {{ppl.ApprovalName2}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Approver3</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Approval3">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Approval3}}" ng-repeat="ppl in pplapr3" data-ng-selected="saveData.Approval3 == ppl.Approval3"> {{ppl.ApprovalName3}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Approver4</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Approval4">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Approval4}}" ng-repeat="ppl in pplapr4" data-ng-selected="saveData.Approval4 == ppl.Approval4"> {{ppl.ApprovalName4}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="site-name">Approver5</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Approval5">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Approval5}}" ng-repeat="ppl in pplapr5" data-ng-selected="saveData.Approval5 == ppl.Approval5"> {{ppl.ApprovalName5}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Reviewer1</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Reviewer1">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Reviewer1}}" ng-repeat="ppl in pplRvr1" data-ng-selected="saveData.Reviewer1 == ppl.Reviewer1"> {{ppl.ReviewerName1}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Reviewer2</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Reviewer2">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Reviewer2}}" ng-repeat="ppl in pplRvr2" data-ng-selected="saveData.Reviewer2 == ppl.Reviewer2"> {{ppl.ReviewerName2}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Reviewer3</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Reviewer3">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Reviewer3}}" ng-repeat="ppl in pplRvr3" data-ng-selected="saveData.Reviewer3 == ppl.Reviewer3"> {{ppl.ReviewerName3}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Reviewer4</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Reviewer4">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Reviewer4}}" ng-repeat="ppl in pplRvr4" data-ng-selected="saveData.Reviewer4 == ppl.Reviewer4"> {{ppl.ReviewerName4}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="site-name">Reviewer5</label><br />
+                            <select class="form-control" id="site-name" ng-model="saveData.Reviewer5">
+                                <option value="0">--Select--</option>
+                                <option value="{{ppl.Reviewer5}}" ng-repeat="ppl in pplRvr5" data-ng-selected="saveData.Reviewer5 == ppl.Reviewer5"> {{ppl.ReviewerName5}} </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="site-name">Amount lmt :</label>
+                            <input type="number" min="0" ng-model="saveData.AmountlmtMin" />
+                            <label for="site-name">To :</label>
+                            <input type="number" min="0" ng-model="saveData.AmountlmtMax" />
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button type="button" class="btn btn-ar btn-primary" style="margin-top:23px;" ng-click="Update(saveData)">Update</button>
+                        </div>
+                    </form>
+                </div>
+                <br />
+            </div>
+            <br />
+        </section>
+    </div>
+</script>
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: slategray;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 100% !important;
+        margin-left: 485px;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<div class="modal fade " id="poapprovalmodel" role="dialog">
+
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">PO Approval History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Poapprovelid
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Level
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                WarehouseName
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ApprovalName1
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ApprovalName 2
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ApprovalName3
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ApprovalName4
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ApprovalName5
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ReviewerName1
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ReviewerName2
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ReviewerName3
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ReviewerName4
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ReviewerName5
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                AmountlmtMin
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                AmountlmtMax
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                CreatedDate
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                UpdatedTime
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Updated By
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr data-ng-repeat="trade in dataPoApprovalHistroy">
+                        <td>{{$index+1}}</td>
+                        <td>{{trade.Poapprovelid}}</td>
+                        <td>{{trade.Level}}</td>
+                        <td>{{trade.WarehouseName}}</td>
+                        <td>{{trade.ApprovalName1}}</td>
+                        <td>{{trade.ApprovalName2}}</td>
+                        <td>{{trade.ApprovalName3}}</td>
+                        <td>{{trade.ApprovalName4}}</td>
+                        <td>{{trade.ApprovalName5}}</td>
+                        <td>{{trade.ReviewerName1}}</td>
+                        <td>{{trade.ReviewerName2}}</td>
+                        <td>{{trade.ReviewerName3}}</td>
+                        <td>{{trade.ReviewerName4}}</td>
+                        <td>{{trade.ReviewerName5}}</td>
+                        <td>{{trade.AmountlmtMin}}</td>
+                        <td>{{trade.AmountlmtMax}}</td>
+                        <td>{{trade.CreatedDate | date:'medium'}}</td>
+                        <td>{{trade.UpdatedTime | date:'medium'}}</td>
+                        <td>{{trade.UserName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+</div>

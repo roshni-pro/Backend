@@ -1,0 +1,259 @@
+﻿
+<div class="page page-table"  button-permission-binder parentName="Promotion" pageName="ItemPramotion">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Item Pramotion
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary" ng-click="open()">
+                <span class="glyphicon glyphicon-plus"> </span> New Item
+            </button>
+        </div>
+        <br />
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            SNo.                          
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Title
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('title')"
+                                  data-ng-class="{active: row == 'title'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-title')"
+                                  data-ng-class="{active: row == '-title'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Discription')"
+                                  data-ng-class="{active: row == 'Description'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Discription')"
+                                  data-ng-class="{active: row == '-Description'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Start Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StartDate')"
+                                  data-ng-class="{active: row == 'StartDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-StartDate')"
+                                  data-ng-class="{active: row == '-StartDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            End Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('EndDate')"
+                                  data-ng-class="{active: row == 'EndDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-EndDate')"
+                                  data-ng-class="{active: row == '-EndDate'}"></span>
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>-->
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="pramotion in currentPageStores">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{pramotion.ItemName}}</td>
+                    <td>{{pramotion.title}}</td>
+                    <td>{{pramotion.Description}}</td>
+                    <td>{{pramotion.StartDate | date:'medium'}}</td>
+                    <td>{{pramotion.EndDate | date:'medium'}}</td>
+                    <!--<td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="opendelete(trade)">Remove</button> </td>-->
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="newitempramotion.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add New Item</h4>
+
+        </div>
+
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Warehouse</label><br>
+                <select class="form-control" id="site-name" ng-model="PramotionData.Warehouseid" ng-change="filterbywarehouse(PramotionData.Warehouseid)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                </select>
+                </div>
+                <div class="form-group">
+                    <label for="site-name"> Item Name:</label><br />
+                    <select class="form-control" id="site-name" ng-model="PramotionData.ItemId">
+                        <option value="">---SELECT---</option>
+                        <option value="{{item.ItemId}}" ng-repeat="item in Items | unique:'itemname' "> {{item.itemname}}</option> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Pramotion Title:</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PramotionData.title" placeholder="Enter Pramotion Title" ng-required />
+                </div>
+                <div class="form-group">
+                    <label for="site-name"> Description:</label><br />
+                    <textarea id="site-name" class="form-control" rows="3" required="" ng-model="PramotionData.Description" placeholder="Enter Description"></textarea>
+                </div>
+
+                <div class="form-group">
+            <label for="site-name">Start Date:</label><br />
+            <input id="site-name" type="date" class="form-control" ng-model="PramotionData.StartDate" placeholder="Enter Start Date" ng-required />
+        </div>
+                <div class="form-group">
+            <label for="site-name">End Date:</label><br />
+            <input id="site-name" type="date" class="form-control" ng-model="PramotionData.EndDate" placeholder="Enter End Date" ng-required />
+        </div>
+            <div class="form-group">
+                <label for="site-name">Discount(in%):</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="PramotionData.PramotionalDiscount" placeholder="Enter Discount" ng-required />
+            </div>
+            </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddPramotionItem(PramotionData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myCategoryModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Pramotion</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Item Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="PramotionData.ItemName" placeholder="Enter  Category name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Pramotion title:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="PramotionData.title" placeholder="Enter  Category name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Description:</label><br />
+                <textarea id="site-name" class="form-control" rows="3" required="" ng-model="PramotionData.Discription" placeholder="Enter  description"></textarea>
+            </div>
+
+            <div class="form-group">
+        <label for="site-name">Start Date:</label><br />
+        <input id="site-name" type="text" class="form-control" ng-model="PramotionData.StartDate" placeholder="Enter  Category name" ng-required />
+    </div>
+            <div class="form-group">
+        <label for="site-name">End Date:</label><br />
+        <input id="site-name" type="text" class="form-control" ng-model="PramotionData.EndDate" placeholder="Enter  Category name" ng-required />
+    </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutCategory(CategoryData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteCategory.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete  Category</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteCategory(CategoryData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,138 @@
+﻿<form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+
+    <div class="modal-header">
+           <h4 class="modal-title">Post Your Demand</h4>
+    </div>
+    <!--<div class="modal-body">
+        <div class="colasdasdasd">
+            <p style="color: #FF0000" ng-show="gotErrors" class="ng-hide"> Unable To Create Site  ! Please Try Again</p>
+            <p style="color: #FF0000" ng-show="AlreadyExist" class="ng-hide"> Site Already Exist  ! Please Try Another Site</p>
+        </div>-->
+
+
+
+        <div class="form-group col-md-12">
+            <label for="site-name">Item Name:</label><br>
+            <select class="form-control" id="site-name" ng-model="demand.itemname1">
+                <option value="">Select Item</option>
+                <option value="{{item.itemname}}" ng-repeat="item in itemMasters" > {{item.itemname}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="site-name">Quantity:</label>
+            <input id="item-quantity" class="form-control ng-pristine ng-animate ng-valid-remove ng-invalid-add ng-invalid-required-add ng-valid-remove-active ng-invalid ng-invalid-add-active ng-invalid-required ng-invalid-required-add-active" type="text" required="" placeholder="Enter Quantity" ng-model="demand.Quantity1" style="transition-duration: 0.15s, 0.15s; transition-property: none;transition-duration: 0.15s, 0.15s;">
+
+
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="site-name">Description</label><br>
+            <textarea id="Description" class="form-control ng-pristine ng-animate ng-valid-remove ng-invalid-add ng-invalid-required-add ng-valid-remove-active ng-invalid-add-active ng-invalid-required ng-invalid-required-add-active ng-invalid" rows="4" required="" placeholder="Enter Description" ng-model="demand.Description1" style="transition-duration: 0.15s, 0.15s; transition-property: none;transition-duration: 0.15s, 0.15s;"></textarea>
+        </div>
+      
+    
+    <div class="form-group col-md-3">
+        <!--<button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>-->
+        <button type="button" class="btn btn-ar btn-primary" ng-click="AddDemand(demand)">Add to List</button>
+    </div>
+    <div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        SNo.
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('itemname')"
+                                  data-ng-class="{active: row == 'itemname'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-itemname')"
+                                  data-ng-class="{active: row == '-itemname'}"></span>
+                        </div>
+                    </th>
+                       <th>
+                        <div class="th">
+                            Quantity
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Quantity')"
+                                  data-ng-class="{active: row == 'Quantity'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Quantity')"
+                                  data-ng-class="{active: row == '-Quantity'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Description')"
+                                  data-ng-class="{active: row == 'Description'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Description')"
+                                  data-ng-class="{active: row == '-Description'}"></span>
+                        </div>
+                    </th>
+                   
+
+                    <!--<th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>-->
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="detail in demandlist">
+                    <td>{{ $index+1 }}  </td>
+                    <td>{{detail.itemname}}</td>
+                    <td>{{detail.Quantity}}</td>
+                    <td>{{detail.Description}}</td>
+                    <!--<td>{{trade.City}}</td>
+                    <td>{{trade.SortOrder}}</td>
+                    <td>{{trade.Discription}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="opendelete(trade)">Remove</button> </td>-->
+                </tr>
+            </tbody>
+        </table>
+        <!--<footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>-->
+    </div>
+    <div class="form-group col-md-3">
+        <!--<button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>-->
+        <button type="button" class="btn btn-ar btn-primary" ng-click="savedemand()">Post Your Demands</button>
+    </div>
+</form>

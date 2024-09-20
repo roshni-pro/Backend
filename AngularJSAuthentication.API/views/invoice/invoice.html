@@ -1,0 +1,361 @@
+﻿<style>
+       @media screen {
+           #printSection {
+               display: none;
+           }
+       }
+
+       @media print {
+           body * {
+               visibility: hidden;
+           }
+
+           #printSection, #printSection * {
+               visibility: visible;
+           }
+
+           #printSection {
+               position: absolute;
+               left: 0;
+               top: 0;
+           }
+       }
+
+       }
+       /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+       /*body {
+           font-family: 'Open Sans', sans-serif;
+           font-size: 16px;
+           line-height: 30px;
+       }*/
+
+       .pad-top-botm {
+           padding-bottom: 40px;
+           padding-top: 22px;
+       }
+
+       h4 {
+           text-transform: uppercase;
+       }
+       /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+       .contact-info span {
+           font-size: 14px;
+           padding: 0px 50px 0px 50px;
+       }
+
+       .contact-info hr {
+           margin-top: 0px;
+           margin-bottom: 0px;
+       }
+
+       .client-info {
+           font-size: 15px;
+       }
+
+       .ttl-amts {
+           text-align: right;
+           padding-right: 50px;
+       }
+
+       .containers {
+           padding-left: 45px;
+           padding-right: 45px;
+       }
+</style>
+<script>
+
+    function printDiv(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        //Get the HTML of whole page
+        var oldPage = document.body.innerHTML;
+
+        //Reset the page's HTML with div's HTML only
+        document.body.innerHTML =
+          "<html><head><title></title></head><body>" +
+          divElements + "</body>";
+
+        //Print Page
+        window.print();
+        alert("hi");
+         window.location = "http://localhost:26264/home.html#/orderMaster";
+        //window.location = "http://SK10-12-15.webfortis.in/home.html#/orderMaster";
+        //alert("hi");
+        //Restore orignal HTML
+        //document.body.innerHTML = oldPage;
+
+
+    }
+    //// old print
+
+   
+
+    var $printSection
+    document.getElementById("btnPrint").onclick = function () {
+        //printElement(document.getElementById("divtoPrint"));
+        printDivThroughTrick("divtoPrint");
+
+        //var modThis = document.querySelector("#printSection .modifyMe");
+
+
+        onRouteChangeOff();
+        window.location.reload();
+
+    }
+
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+
+</script>
+
+<div id="divtoPrint" class="client-document-container">
+    <div class="containers">
+        <div class="row contact-info">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <hr />
+                <span>
+                    <strong>Invoice Details</strong>
+                </span>
+                <span style="float:right">
+                    <strong>Call : </strong>  +91 - 810- 999- 9422
+                </span>
+
+                <hr />
+            </div>
+        </div>
+        <div class="row pad-top-botm ">
+            <div class="col-lg-6 col-md-6 col-sm-6 ">
+                <img src="./images/logo.PNG" style="padding-bottom:20px;" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+
+                <strong>   ShopKirana E Trading Pvt. Ltd.</strong>
+                <br />
+                <i>Address :</i> 96 , Brijeshwari Annex,
+                <br />
+                Near Bangali Square, Indore,
+                <br />
+                Madhya Pradesh.
+
+            </div>
+        </div>
+        <div class="row text-center contact-info">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <hr />
+
+
+            </div>
+        </div>
+        <div class="row pad-top-botm client-info">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <h4>  <strong>Client Information</strong></h4>
+                <b class="col-md-3">Customer Name :</b><strong class="col-md-9" style="font-size: 18px;"> {{OrderData.CustomerName}}</strong>
+                <br />
+                <b class="col-md-3">Address :</b><span class="col-md-9">{{OrderData.BillingAddress}}</span>
+                <br />
+                <b class="col-md-3">Call :</b><strong class="col-md-9">{{OrderData.Customerphonenum}}</strong>
+                <br />
+                <b class="col-md-3">E-mail :</b><span class="col-md-9">{{OrderData.CustomerType}}</span>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+
+                <h4><strong>Payment Details </strong></h4>
+                <b class="col-md-3">Invoice Id</b><strong class="col-md-9">{{OrderData.invoice_no}}</strong>
+                <br />
+                <b class="col-md-3">Bill Amount :</b><strong class="col-md-9" style="font-size: 18px;"> {{totalfilterprice |number:2}}&nbsp;<i class="fa fa-inr"></i></strong>
+                <br />
+                <b class="col-md-3">Bill Date :</b><span class="col-md-9">{{OrderData.UpdatedDate}}</span>
+                <br />
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>I No.</th>
+                                <th>Item Code.</th>
+                                <th>Item Name.</th>
+                                <th>MRP.</th>
+                                <th>Unit Price.</th>
+                                <th>MOQ</th>
+                                <th>Total Qty.</th>
+                                <th>Net Amt.</th>
+                                <th>Discount %</th>
+                                <th>Discount Amt</th>
+                                <th>Net Amt. after Discount</th>
+                                <th>Tax %</th>
+                                <th>Tax Amt</th>
+                                <th>Total Amt. inc Tax</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="orderDetail in orderDetails">
+                                <td>{{orderDetail.ItemId}}</td>
+                                <td>{{orderDetail.itemcode}}</td>
+                                <td>{{orderDetail.itemname}}</td>
+                                <td>{{orderDetail.price}}</td>
+                                <td>{{orderDetail.UnitPrice}}</td>
+                                <td>{{orderDetail.MinOrderQty}}</td>
+                                <td>{{orderDetail.qty}}</td>
+                                <td>{{orderDetail.NetAmmount}}</td>
+                                <td>{{orderDetail.DiscountPercentage}}</td>
+                                <td>{{orderDetail.DiscountAmmount}}</td>
+                                <td>{{orderDetail.NetAmtAfterDis}}</td>
+                                <td>{{orderDetail.TaxPercentage}}</td>
+                                <td>{{orderDetail.TaxAmmount}}</td>
+                                <td>{{orderDetail.TotalAmt}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <div class="ttl-amts">
+
+                </div>
+                <hr />
+                <div class="ttl-amts">
+                    <h4> <strong>Bill Amount : {{totalfilterprice | number:2}}&nbsp;<i class="fa fa-inr"></i></strong> </h4>
+                </div>
+            </div>
+        </div>
+        <!--<div class="modifyMe">old</div>-->
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <strong> Important: </strong>
+                <ol>
+                    <li>
+                        This is an electronic generated invoice so doesn't require any signature.
+
+                    </li>
+
+                </ol>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <hr />
+                      <!--  onclick="javascript: printDiv('divtoPrint')"-->
+                        <button id="btnPrint" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" > <span class="glyphicon glyphicon-print"> </span> Print Invoice</button>
+                        <!--<input type="button" value="Print 1st Div" onclick="javascript: printDiv('divtoPrint')" />-->
+                        <!--&nbsp;&nbsp;&nbsp;
+                        <button class="btn-sm btn-primary" style="float:right; margin-right: 15px;" onclick="javascript: printDiv('divtoPrint')"> <span class="glyphicon glyphicon-print"> </span> Export to PDF</button>
+                        &nbsp;&nbsp;&nbsp;-->
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr style="border-top: dotted 4px;" />
+    <div class="col-lg-6 col-md-6 col-sm-6 ">
+        <img src="./images/logo.PNG" style="padding-bottom:20px;" />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <p align="right">Signature and Stamp</p>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Delivery Receipt (Office Use Only).</th>
+                            <th colspan="2">Date:</th>
+                            <th colspan="2">Time:</th>
+                            <th colspan="2" rowspan="3" class="col-lg-3">Notes.</th>
+                            <th>Goods Received(Retailer)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Retailer ID</td>
+                            <td>Retailer Name</td>
+                            <td>Invoice #</td>
+                            <td>No. of Items</td>
+                            <td>Payment Method</td>
+                            <td>Total Amount Received</td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <td>{{OrderData.CustomerId}}</td>
+                            <td>{{OrderData.CustomerName}}</td>
+                            <td>{{OrderData.OrderId}}</td>
+                            <td>{{Itemcount}}</td>
+                            <td></td>
+                            <td>  {{totalfilterprice |number:2}}   </td>
+                            <td colspan="2"></td>
+
+                            <td>Payment Received(Delivery Person)</td>
+                            <td class="col-lg-2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                ShopKirana E Trading Pvt. Ltd. | Phone: 8109999422 | 96, Brijeshwari Annex, Near Bangali square, Indore (M.P.) 452001
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <hr style="border-top: dotted 5px;" />
+</div>
+

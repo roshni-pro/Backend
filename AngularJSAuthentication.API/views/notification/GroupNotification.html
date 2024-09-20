@@ -1,0 +1,342 @@
+﻿
+<style>
+    .tags {
+        margin-bottom: 5px;
+    }
+
+        .tags .tag {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 13px;
+        }
+
+    .tag .close {
+        font-size: 14px;
+        margin-left: 5px;
+    }
+
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        width: 300px;
+        height: 24px;
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1051 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        _width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+</style>
+
+<script src="scripts/jquery-ui.min.js"></script>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Create Group Notification
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <button class="btn btn-primary" ng-click="open()">
+                    <span class="glyphicon glyphicon-plus">
+                    </span>Create Group
+                </button>
+
+            </div>
+            <!--<div class="col-md-6">
+                <button class="btn btn-primary" ng-click="open()">
+                    <span class="glyphicon glyphicon-plus">
+                    </span> SendToCustomer                </button>
+
+            </div>-->
+        </div>
+        <div class="">
+           
+            <div class="col-xs-12 col-md-12">
+                <h3>Group Notification</h3>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    GroupName
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('GroupName') "
+                                          data-ng-class="{active: row == 'GroupName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-GroupName') "
+                                          data-ng-class="{active: row == '-GroupName'}"></span>
+                                </div>
+                            </th>
+                            <!--<th>
+                                <div class="th">
+                                    GroupCreationTime
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('GroupCreationTime') "
+                                          data-ng-class="{active: row == 'GroupCreationTime'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-GroupCreationTime') "
+                                          data-ng-class="{active: row == '-GroupCreationTime'}"></span>
+                                </div>
+                            </th>-->
+                           
+                         
+                            <th>
+                                <div class="th">
+                                    Edit
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Delete
+                                </div>
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in currentPageStores">
+                           
+                            <td>{{trade.GroupName}}</td>
+                           
+                         
+    
+                            <td><button class="btn-sm btn-primary"  ng-click="edit(trade)">Edit</button> </td>
+                            <td><button class="btn-sm btn-danger" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                </div>
+            </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myADDModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">CreateGroup</h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">GroupName:</label><br />
+                
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.GroupName" placeholder="Enter GroupName" />
+            </div>
+
+            <!--<div class="form-group" >
+                <label for="site-name">To:</label><br />
+                <select class="form-control" id="site-name" ng-model="saveData.NotifiedTo">
+                    <option value="">---SELECT---</option>
+                    <option value="EveryOne">EveryOne</option>
+                    <option value="{{customer.CustomerId}}" ng-repeat="customer in customers" ng-if="customer.UserName!=null">{{customer.Fname}} -{{customer.Lname}} - {{customer.MobileNumber}}</option>
+                </select>
+            </div>-->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h4><i class="fa fa-tag fa-lg"></i> Tags</h4></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <tag-manager tags="tags" autocomplete="allTags"></tag-manager>
+                                    <hr>
+                                    <h3>Current Tags</h3>
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="tag in tags">{{tag}}</li>
+                                    </ul>
+
+                                </div>
+
+                            </div>
+                        </div><!--/panel-body-->
+                    </div>
+                </div>
+            </div><!--/row-->
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Add(saveData)">Send</button>
+        </div>
+    </form>
+</script>
+
+<!--<script type="text/ng-template" id="myputmodal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit DiningTable </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">TableNumber:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.TableNumber" placeholder="Enter TableNumber" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Booked:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="saveData.Booked" placeholder="Enter Booked" />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">OrderNumber:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.OrderNumber" placeholder="Enter OrderNumber" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Area:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.Area" placeholder="Enter Area" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Capacity:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.Capacity" placeholder="Enter Capacity" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Put(saveData)">Save</button>
+        </div>
+    </form>
+</script>-->
+
+<script type="text/ng-template" id="mydeletemodal.html">
+
+    <form name="myFormdeleteModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete </h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="delete(saveData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

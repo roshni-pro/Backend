@@ -1,0 +1,193 @@
+﻿
+<div class="page page-table"  button-permission-binder parentName="Reports" pageName="Fill Rate Cut Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Fill Rate Report  
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+
+                <div class="col-md-2">
+                    <label for="site-name"> Zone </label><br />
+                    <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                        <option value="">---Select Zone---</option>
+                        <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> Region </label><br />
+                    <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetWarehouses(RegionId)">
+                        <option value="">---Select Region---</option>
+                        <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> Hub </label><br />
+                    <select class="form-control" id="site-name" ng-model="vm.warehouseid" >
+                        <option value="">--Select Hub--</option>
+                        <option value="{{warehouse.value}}" ng-repeat="warehouse in warehouses">{{warehouse.label}} </option>
+                    </select>
+                </div>
+
+                <!--<div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <select class="form-control" id="site-name" ng-model="vm.warehouseid">
+                            <option value="null">Select Warehouse</option>
+                            <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in vm.warehouseList"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                        </select>
+                    </div>
+                </div>-->
+                <div class="col-sm-2">
+                    <label for="site-name">Select Date Range</label><br />
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="date" type='text' title="Select Date" autocomplete="off" class="form-control date-picker" />
+                            <span class="input-group-addon ">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--<div class="form-group">
+        <label for="site-name">Select Month</label><br />
+        <input type="month" id="start" name="start" min="2018-03" ng-model="vm.MonthYear">
+        <input type="text" name="FilterMonthYear" ng-model="vm.MonthYear" class="form-control" readonly='true' />
+    </div>-->
+
+                <div class="col-sm-2">
+                    <button class="btn btn-primary" style="margin-top: 27px;" ng-click="search()">Search</button>
+                    <button class="btn btn-dark" style="margin-top: 27px;" ng-click="exportData1(vm.warehouseid)">Export</button>
+                </div>
+            </div><br/>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Warehouse Name
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Item Name
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Supplier Name
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Order Quantity
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        supply Quantity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Cancel Quantity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Quantity Not Dispatch
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Damage Stock Quantity
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Not In Stock Quantity
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Damage Comment
+                                    </div>
+                                </th>
+
+
+                                <th>
+                                    <div class="th">
+                                        Not In Stock Comment
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Bills Affected
+                                    </div>
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody ng-if="vm.reportData && vm.reportData.length > 0">
+                            <tr data-ng-repeat="item in vm.reportData">
+                                <td>{{item.Warehouse}}</td>
+                                <td>{{item.ItemName}}</td>
+                                <td>{{item.SupplierName}}</td>
+                                <td>{{item.OrderQty}}</td>
+                                <td>{{item.supplyQty}}</td>
+                                <td>{{item.CancelOrderQty}}</td>
+                                <td>{{item.quantityNotDispatch}}</td>
+                                <td>{{item.DamageStockQuantity}}</td>
+                                <td>{{item.NotInStockQuantity}}</td>
+                                <td>{{item.DamageComment}}</td>
+                                <td>{{item.NotInStockComment}}</td>
+                                <td>{{item.Billsaffected}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="vm.numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="vm.currentPage"
+                                            total-items="vm.totalRecords"
+                                            max-size="4"
+                                            on-select-page="search(page)"
+                                            items-per-page="vm.numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+
+
+

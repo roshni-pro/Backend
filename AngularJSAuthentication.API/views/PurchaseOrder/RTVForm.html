@@ -1,0 +1,1273 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+
+<style>
+    .collapsible {
+        background-color: #00a4e9;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 8%;
+        height: 40px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        padding: 10px;
+        box-shadow: 5px 5px 8px gray;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+</style>
+
+<style>
+    div.ex1 {
+        background-color: lightblue;
+        min-height: 300px;
+        max-height: 500px;
+        overflow: scroll;
+    }
+
+    div.ex2 {
+        background-color: lightblue;
+        width: 110px;
+        height: 150px;
+        overflow: hidden;
+    }
+
+    div.ex3 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        overflow: auto;
+    }
+
+    div.ex4 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        overflow: visible;
+    }
+</style>
+
+<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+
+<style>
+    .or-bld {
+        font-size: 25px;
+        font-weight: bold;
+        color: #EB5A00;
+        font-family: fantasy;
+    }
+
+    .or-bld-2 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #EB5A00;
+        font-family: fantasy;
+    }
+
+
+    .box-ds {
+        border: solid 1px lightgray;
+        padding: 13px 6px;
+        margin: 5px
+    }
+
+    .or-sm {
+        margin-top: 8px;
+    }
+
+    .btn-br {
+        /*position: absolute;*/
+        margin-left: 8px;
+        border-radius: 19px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .pull-right-im {
+        float: right !important;
+    }
+
+    .br-or {
+        border-top: solid 2px lightgray;
+        margin: 20px 0px;
+    }
+
+    .bx-dr {
+        border: solid 1px lightgray;
+        padding: 2px 5px;
+        min-width: 61px;
+    }
+</style>
+
+<style>
+    .accordion {
+        background-color: #03A9F4;
+        color: #fff;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 20px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .form-control {
+        border-width: 1px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-radius: 15px;
+    }
+
+    .b1 {
+        border-radius: 15px;
+    }
+</style>
+
+<div class="client-document-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-primary skadd" ng-click="CreateRTV()" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-plus"> </span>Create RTV
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="GetRTV(searchdata)" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-refresh"> </span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <!--<select class="form-control" id="site-name" ng-model="searchdata.WarehouseId">
+                    <option value="">-Select-</option>
+                    <option value="{{warehouses.value}}" ng-repeat="warehouses in warehouse"> {{warehouses.label}}</option>
+                </select>-->
+
+                <div ng-dropdown-multiselect="" id="Cityid" options="warehouse"
+                     selected-model="MultiCityModel"
+                     extra-settings="MultiCityModelsettings"
+                     style="width:200px"></div>
+
+            </div>
+            <div class="col-sm-2">
+                <label for="site-name">Supplier Code</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="searchdata.SupplierCode" />    
+            </div>
+            <div class="col-sm-2">
+                <label for="site-name">RTV Id</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="searchdata.RTVId" />
+
+            </div>
+            <div class="col-sm-2">
+                <label for="site-name">Select Status</label><br />
+                <select class="form-control" id="site-name" ng-model="searchdata.Status">
+                    <option value="">Select</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Dispatched">Dispatched</option>
+                    <option value="RTV Canceled">RTV Canceled</option>
+                </select>
+            </div>
+
+
+            <div style="background-color:antiquewhite">
+                <div class="col-sm-2">
+                    <label for="site-name">Select Date Range</label><br />
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon ">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary b1" ng-click="GetRTV(searchdata)">Search</button>
+                <button type="button" class="btn btn-ar btn-dark b1" ng-click="exportData(searchdata)">Export</button>
+
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="container-fluid">
+                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>RTV Number</th>
+                            <th>Warehouse Name</th>
+                            <th>Supplier Name</th>
+                            <th>Depo Name</th>
+                            <th>Stock Type</th>
+                            <th>GST Amount</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Created By</th>
+                            <th>Date</th>
+                            <th>Details</th>
+                            <th>Edit</th>
+                            <th>Voucher</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="O in GrMaster">
+                        <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                            <td class="CX"><span style="color:red;">+</span></td>
+                            <td>{{O.Id}}</td>
+                            <td>{{O.WarehouseName}}</td>
+                            <td>{{O.SupName}}-{{O.SupplierCode}}</td>
+                            <td>{{O.DepoName}}</td>
+                            <td>{{O.StockType}}</td>
+                            <td>{{O.GSTAmount | number : 2}}</td>
+                            <td>{{O.TotalAmount | number : 2}}</td>
+                            <td>{{O.Status}}</td>
+
+                            <td>{{O.CreatedBy}}</td>
+                            <td>{{O.CreatedDate | date : format : medium}}</td>
+                            <td>
+                                <a class="btn btn-ar btn-primary btn-br" ng-click="ShowRTVDetails(O)">Open</a>
+                            </td>
+                            <td><button type="button" class="btn btn-ar btn-warning" ng-show="(O.Status == 'Pending' ||  O.Status =='Dispatched')" ng-click="editRTV(O)">EditRTV</button></td>
+
+                            <td>
+                                <a class="btn btn-success btn-br" ng-click="PrintRTV(O)">Voucher</a>
+                            </td>
+
+                        </tr>
+                        <tr class="sub">
+                            <td></td>
+                            <td colspan="5">
+                                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Multi MRP Id</th>
+                                        <th>Item Number</th>
+                                        <th>Item Name</th>
+                                        <th>MOQ</th>
+                                        <th>RTV Qty</th>
+                                        <th>NPP</th>
+                                        <th>APP Price</th>
+                                        <th>GST Amount</th>
+                                        <th>Total Amount</th>
+                                    </tr>
+                                    <tr ng-repeat="RTVD in O.Detail" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{RTVD.ItemMultiMRPId}}</td>
+                                        <td>{{RTVD.ItemNumber}}</td>
+                                        <td>{{RTVD.ItemName}}</td>
+                                        <td>{{RTVD.MOQ}}</td>
+                                        <td>{{RTVD.Quantity}}</td>
+                                        <td>{{RTVD.NPP}}</td>
+                                        <td>{{RTVD.PurchasePrice}}</td>
+                                        <td>{{RTVD.GSTAmount | number : 2}}</td>
+                                        <td>{{RTVD.Amount | number : 2}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select name="page" ng-model="vm.rowsPerPage" ng-change="onNumPerPageChange()">
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="vm.currentPage"
+                                        total-items="vm.count"
+                                        max-size="4"
+                                        on-select-page="changePage(page)"
+                                        items-per-page="vm.rowsPerPage"
+                                        rotate="false"
+                                        boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="CreateRTVForm.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="ok()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Search Model</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <select class="form-control" id="site-name" ng-model="data.WarehouseId" ng-disabled="data.WarehouseId">
+                            <option value=""> -Select-</option>
+                            <option value="{{warehousespo.WarehouseId}}" ng-repeat="warehousespo in warehouseAddPO"> {{warehousespo.WarehouseName}} {{warehousespo.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="site-name">Search Supplier</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input id="site-name" type="text" class="form-control" ng-model="data.supplier" ng-disabled="supplierData1" placeholder="Enter Supplier Name or code for search" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="SearchSupplier(data)">
+                            <span class="glyphicon glyphicon-search"> </span> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <select class="form-control ng-pristine ng-valid" id="site-name" ng-disabled="supplierData" ng-model="data.SupplierId" ng-change="GetDepo(data.SupplierId)">
+                    <option value="{{s.SupplierId}}" ng-repeat="s in Suppliers">{{s.SupplierName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Depo:</label><br />
+                <select class="form-control" ng-model="data.DepoId" ng-options="Depos.DepoId as Depos.DepoName for Depos in datadepomaster"></select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Stock Type:</label><br />
+                <select class="form-control" ng-model="data.StockType" ng-disabled="POdata.length>0" ng-change="ClearList();key=undefined">
+                    <option value="">--Select--</option>
+                    <option value="Damage">Damage</option>
+                    <option value="Current">Current</option>
+                    <option value="Clearance">Clearance</option>
+                    <option value="NonSellableStocks">Non Sellable Stock</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="site-name">Search Item</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input id="site-name" type="text" class="form-control" ng-model="key" placeholder="Enter item Name for search" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="Search(key,data)">
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="data.StockId" ng-change="Minqtry(data.StockId,data.StockType);">
+                    <option value="{{s}}" ng-repeat="s in itemData">{{s.itemname}}=({{s.ItemNumber}})=MRPId:({{s.MultiMrpId}})={{data.StockType}}:({{s.CurrentInventory}}) </option>
+                </select>
+            </div>
+            <div ng-if="GetStockBatchMastersList">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Select Batch Code
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    BatchCode
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Qty
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Expiry Date
+                                </div>
+                            <th>
+                                <div class="th">
+                                    MFG Date
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Pieces
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    APP Price
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in GetStockBatchMastersList">
+                            <td>{{$index+1}}</td>
+                            <td><input class="form-control" type="checkbox"  ng-disabled="trade.selectedcheck" value="{{trade.check}}" ng-model="trade.check" ng-click="trade.check==false;trade.Noofset=''" /></td>
+                            <td>{{trade.BatchCode}}</td>
+                            <td>{{trade.Qty}}</td>
+                            <td>{{trade.CreatedDate | date:'medium'}}</td>
+                            <td>{{trade.ExpiryDate | date:'medium'}}</td>
+                            <td>{{trade.MFGDate | date:'medium'}}</td>
+                            <td>   <input type="number" min="0" ng-disabled="(!trade.check ||trade.selectedcheck)" ng-change="checkqty(trade.StockBatchMasterId,trade.Qty,trade.Noofset,trade)" ng-model="trade.Noofset" /></td>
+                            <td>   <input id="site-name" type="number" min="0" ng-model="trade.APP_Price" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--<div class="form-group ">
+        <label for="site-name">Pieces</label><br />
+        <input id="site-name" type="number" min="0" class="form-control" ng-model="data.Noofset" />
+    </div>
+    <div class="form-group ">
+        <label for="site-name">APP Price</label><br />
+        <input id="site-name" type="number" min="0" class="form-control" ng-model="APP_Price" />
+    </div>-->
+            <div class="form-group">
+                <button type="button" style="float: right;" class="btn btn-ar btn-primary" ng-click="AddData(data,APP_Price,selectedTarde)"><span class="glyphicon glyphicon-plus"> </span> Add</button>
+            </div>
+            <br /><br />
+            <div class="form-group">
+                <br /><br />
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ItemNumber
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ItemName
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    CurrentInventory
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    App Price
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Batch Code
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Pieces
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Remove
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in POdata">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.ItemNumber}}</td>
+                            <td>{{trade.Itemname}}</td>
+                            <td>{{trade.CurrentInventory}}</td>
+                            <td>{{trade.App_price}}</td>
+                            <td>{{trade.BatchCode}}</td>
+                            <td>{{trade.Noofset}}</td>
+                            <td><a class="btn glyphicon glyphicon-trash" ng-click="remove(trade)"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-danger" ng-click="ok()" data-dismiss="modal">
+                <span class="glyphicon glyphicon-remove-circle"> </span> Cancel
+            </button>
+            <button type="button" class="btn btn-ar btn-default" ng-click="Searchsave(data)" ng-disabled="IsDisabled">
+                <span class="glyphicon glyphicon-folder-close"> </span> Create RTV
+            </button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="PrintRTVForm.html">
+    <style>
+        @media print {
+            th, td {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .border {
+                border: 1px solid #000 !important;
+            }
+        }
+    </style>
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="ok()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">RTV Voucher</h4>
+        </div>
+        <div class="modal-body">
+
+            <div id="divtoPrint" class="client-document-container">
+
+                <div class="containers" style="padding: 30px;">
+                    <p style="text-align:center">
+                        <strong>ShopKirana E Trading Pvt. Ltd.</strong>
+                    </p>
+                    <p style="text-align:center">RTV Note</p>
+
+                    
+                    <div class="row">
+                        <style type="text/css">
+                            @media print {
+                                table {
+                                    top: 10px !important;
+                                }
+
+                                    table, table tr, table td {
+                                        border-top: #000 solid 1px !important;
+                                        border-bottom: #000 solid 1px !important;
+                                        border-left: #000 solid 1px !important;
+                                        border-right: #000 solid 1px !important;
+                                        border-spacing: 0;
+                                        padding: 0;
+                                        text-align: center;
+                                    }
+                            }
+                        </style>
+                        <table class="table table-bordered" style="font-size:12px!important;" width="100%">
+                            <tbody class="border">
+                                <tr>
+                                    <td colspan="12" style="text-align:center;"><strong>RTV Detail</strong></td>
+                                </tr>
+                                <tr>                                    
+                                    <td style="text-align:center;width:25% !important;background-color:#fff;" colspan="3"><strong>RTV No: {{RTV.RTVNo}} </strong></td>
+                                    <td style="text-align:center;width:25%!important;background-color:#fff;" colspan="3"><strong>Delivery Date: {{RTV.RTVNoCreatedDate | date:'dd/MM/yyyy'}} </strong></td>
+                                    <td style="text-align:center;width:25%!important;background-color:#fff;" colspan="3"><strong>Voucher No: {{RTV.Id}} </strong></td>
+                                    <td style="text-align:center;width:25%!important;background-color:#fff;" colspan="3"><strong>Created Date: {{RTV.CreatedDate | date:'dd/MM/yyyy'}} </strong></td>
+                                </tr>
+                                <tr style="background-color:darkgray;">
+                                    
+                                    <td rowspan="2" height="130" width="100">
+                                        <img width="100" height="100" src="../../Content/SK.png" />
+                                    </td>
+                                    <td height="30" style="text-align:center;background-color:darkgray;" colspan="10">Warehouse Info.</td>
+                                </tr>
+                                <tr>
+                                    <td height="30" colspan="9" style="background-color:#fff;">
+                                        <b class="col-md-12"><strong style="font-size: 18px;"> {{RTV.WarehouseName}}</strong></b>
+                                        <br />
+                                        <b class="col-md-2">C/O:</b><span class="col-md-10">{{WhAddress}}</span>
+                                        <br />
+                                        <b class="col-md-2">Tell No:</b><strong class="col-md-10">{{WhPhone}}</strong>
+                                        <br />
+                                        <b class="col-md-2">GSTIN No:</b><strong class="col-md-10">{{WhGst}}</strong>
+                                        <br />
+                                        <b class="col-md-2">Stock type:</b><strong class="col-md-10">{{RTV.StockType}}</strong>
+                                    </td>
+                                </tr>
+                                <tr style="background-color:darkgray;">
+                                    <td height="30" style="text-align:center;" colspan="5">Supplier Info.</td>
+                                    <td height="30" style="text-align:center;" colspan="5">Depo Info.</td>
+                                </tr>
+                                <tr style="background-color:#fff;">
+                                    <td height="30" colspan="5">
+                                        <b class="col-md-12"><strong style="font-size: 18px;"> {{RTV.SupName}}</strong></b>
+                                        <br />
+                                        <b class="col-md-3">C/O:</b><span class="col-md-9">&nbsp;{{supaddress}}</span>
+                                        <br />
+                                        <b class="col-md-3">Tell No:</b><strong class="col-md-9">&nbsp;{{supMobileNo}}</strong>
+                                        <br />
+                                        <!--<b class="col-md-3">GSTIN No:</b><strong class="col-md-9">&nbsp;{{SupGst}}</strong>-->
+                                    </td>
+                                    <td height="30" colspan="5">
+                                        <b class="col-md-12"><strong style="font-size: 18px;"> {{RTV.DepoName}}</strong></b>
+                                        <br />
+                                        <b class="col-md-3">C/O:</b><span class="col-md-9">&nbsp;{{depoaddress}}</span>
+                                        <br />
+                                        <b class="col-md-3">Tell No:</b><strong class="col-md-9">&nbsp;{{depoMobileNo}}</strong>
+                                        <br />
+                                        <b class="col-md-3">GSTIN No:</b><strong class="col-md-9">&nbsp;{{depoGSTin}}</strong>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <!--<b class="col-md-3">Email:</b><strong class="col-md-9">&nbsp;{{depoEmail}}</strong>-->
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        <div class="th">
+                                            Sno
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            Multi MRP Id
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="th">
+                                            Item Number
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            Batch Code
+                                        </div>
+                                    </td>
+                                    <td width="250">
+                                        <div class="th">
+                                            Item Name
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            RTV Qty
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            MOQ
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            NPP
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            APP Price
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            GST Amount
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="th">
+                                            Total Amount
+                                        </div>
+                                    </td>
+                                </tr>
+                            <tbody class="border">
+                                <tr data-ng-repeat="orderDetailq in RTV.Detail" ng-style="set_color(orderDetail)">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{orderDetailq.ItemMultiMRPId}}</td>
+                                    <td>{{orderDetailq.ItemNumber}}</td>
+                                    <td>{{orderDetailq.BatchCode}}</td>
+                                    <td>{{orderDetailq.ItemName}}</td>
+                                    <td>{{orderDetailq.Quantity}}</td>
+                                    <td>{{orderDetailq.MOQ}}</td>
+                                    <td>{{orderDetailq.NPP | number:2}}</td>
+                                    <td>{{orderDetailq.PurchasePrice | number:2}}</td>
+                                    <td>{{orderDetailq.GSTAmount | number:2}}</td>
+                                    <td>{{orderDetailq.Amount | number:2}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <!--//Implementation Vinayak//-->
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="pull-right to-ttl">Total Taxable Amount</div>
+                                    </td>
+                                    <td>{{RTV.TotalAmount | number:2}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9"><div class="pull-right to-ttl">GST Amount</div></td>
+                                    <td>{{RTV.GSTAmount | number:2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9"><div class="pull-right to-ttl">Total Amount</div></td>
+                                    <td>{{RTV.TotalAmount + RTV.GSTAmount | number:2 }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <br />
+                        <h4>
+                            * This is computer generated document no signature required.
+                        </h4>
+                    </div>
+                    <br />
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-danger" ng-click="ok()" data-dismiss="modal">
+                <span class="glyphicon glyphicon-remove-circle"> </span> Cancel
+            </button>
+            <button type="button" class="btn btn-ar btn-default" onclick="javascript: printDiv('divtoPrint')">
+                <span class="glyphicon glyphicon-folder-close"> </span> Print
+            </button>
+        </div>
+    </form>
+</script>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+    function printDiv(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrint");
+        onRouteChangeOff();
+        window.location.reload();
+    }
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+</script>
+
+<!--merge modal-->
+<script type="text/ng-template" id="myRTVdetail.html">
+    <form name="myModalRTVOrder">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">RTV Details </h4>
+        </div>
+        <div class="modal-body">
+            <div class="page page-table">
+                <!--<section class="panel panel-default table-dynamic">-->
+                <div class="panel-heading text-center" style="background-color:#ff6a00;color:aliceblue;">
+                    <strong>
+                        <span class="glyphicon glyphicon-th"></span> RTV Details
+                    </strong>
+                </div>
+                <h4 class="title">Initial Orders... </h4>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Id  </label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="RTVDetails.Id" disabled />
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Supplier Name</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="SupplierName" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Supplier Phone Number</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="MobileNo" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Billing Address</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="BillingAddress" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Shipping Address</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="BillingAddress" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Bill Amount</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="RTVDetails.TotalAmount" disabled />
+                </div>
+                <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    ItemMultiMRPId
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ItemNumber
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Batch Code
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ItemName
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    MOQ
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Quantity
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    NPP
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    APP Price
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    GSTAmount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Stock
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th" ng-show="(RTVDetails.Status == 'Pending')">
+                                    Edit
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="detail in RTVDetails.detail" ng-style="set_color(detail)">
+                            <td>{{detail.ItemMultiMRPId}}</td>
+                            <td>{{detail.ItemNumber}}</td>
+                            <td>{{detail.BatchCode}}</td>
+                            <td>{{detail.ItemName}}</td>
+                            <td>{{detail.MOQ}}</td>
+                            <td>{{detail.Quantity}}</td>
+                            <td>{{detail.NPP}}</td>
+                            <td>{{detail.PurchasePrice}}</td>
+                            <td>{{detail.GSTAmount | number : 2}}</td>
+                            <td>{{detail.PurchasePrice*detail.Quantity  | number : 2}}</td>     <!--ng-show="(detail.Status == 'Pending'RTV Canceled)"-->
+                            <td>{{detail.Stock }}</td>
+                            <td><button class="btn-sm btn-primary" ng-show="(RTVDetails.Status == 'Pending')" ng-click="ManualEdit(detail)"> Manual Edit</button></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <button class="btn-sm btn-primary" click-And-Disable="deliverdRTV(RTVDetails)" ng-show="RTVDetails.Status == 'Dispatched'" ng-disabled="itemDelivered == true"> Delivered </button>
+                            <button type="button" class="btn btn-ar btn-warning" ng-show="RTVDetails.Status == 'Pending'" ng-click="DispatchRTV(RTVDetails)">Dispatched</button>
+                        </div>
+                    </div>
+                </div>
+                <!--</section>-->
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Close</button>
+        </div>
+    </form>
+</script>
+<!--for manual Quantity edit-->
+<script type="text/ng-template" id="ManualEditRtv.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Change Manual Qty In Item Detail</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Manual In qty:</label><br />
+                <button type="button" ng-click="updatelineitem(Item)">-</button>
+
+                <input type="number" ng-disabled="xy" ng-model="Item.Quantity" ng-init="valuemax = Item.Noqty" readonly />
+                <button type="button" ng-click="updatelineitem1(Item)">+</button>
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <!-- <button type="button" class="btn btn-ar btn-primary" ng-click="Putinventory(Quantity)">Save</button>-->
+            <button type="button" class="btn btn-ar btn-primary" ng-click="ok()">Ok</button>
+        </div>
+    </form>
+</script>
+  <!--for RTV cancel order-->
+<!--<script type="text/ng-template" id="myRTVCancel.html">
+    <form name="myRTVCancel">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">RTV Edit Status </h4>
+        </div>
+        <div class="modal-body">
+            <div class="page page-table">
+                <h4 class="title">RTV</h4>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Invoice ID  </label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="RTVDetails.Id" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Supplier Name</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="RTVDetails.SupName" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Phone Number</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="MobileNo" disabled />
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">Total Amount</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="RTVDetails.TotalAmount | number : 2" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Status</label><br />
+                    <select class="form-control input-sm" ng-model="RTVDetails.Status">
+                        <option value="Pending">Pending</option>
+                        <option value="RTV Canceled">RTV Canceled</option>
+                    </select>
+                </div>
+               
+                <div>
+                    <label for="site-name"> </label><br />
+                    <button type="button" class="btn btn-primary" style="margin-top:21px" ng-click="Savedata(RTVDetails)">Save</button>
+                    <button type="button" class="btn btn-ar btn-warning" style="margin-top:21px" ng-click="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+
+                </div>
+                </div>
+            </div>
+    </form>
+                
+</script>-->
+<script type="text/ng-template" id="myRTVCancel.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Change RTV Status</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group col-md-3">
+                <label for="site-name"> Supplier Name</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="rtvstatuschange.SupName" disabled />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">RTV Number</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="rtvstatuschange.Id " disabled />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Status</label><br />
+                <select class="form-control input-sm" ng-model="rtvstatuschange.Status">
+                    <option value="" disabled >select option</option>
+                    <option value="RTV Canceled">RTV Canceled</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <!-- <button type="button" class="btn btn-ar btn-primary" ng-click="Putinventory(Quantity)">Save</button>-->
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Savedata(rtvstatuschange)">Save</button>
+        </div>
+    </form>
+</script>

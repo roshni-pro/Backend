@@ -1,0 +1,152 @@
+﻿
+
+    <div class="container-fluid" style="font-size: 15px; font-family: monospace;">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Supplier Payment </h4>
+            <div>
+                {{SupplierName}}
+            </div>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name">Select Date Range</label><br />
+            <div class="form-group">
+                <div class='input-group date'>
+                    <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                    <span class="input-group-addon ">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="site-name"></label><br />
+            <button type="button" class="btn btn-ar btn-primary" ng-click="SearchSupplierPaymentData()">Search By Date</button>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name">Refrence Number</label><br />
+            <div class="form-group">
+                <div class='input-group'>
+                    <input class="form-control" placeholder="Enter Reference" ng-model="saveData.RefrenceNumber" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="site-name"></label><br />
+            <button type="button" class="btn btn-ar btn-primary" ng-click="SearchRefrence(saveData)">Search</button>
+        </div>
+        <table style="font-family: monospace;" class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Suppliar name
+
+                        </div>
+                    </th>
+                    <th width="220">
+                        <div class="th">
+                            Date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Perticular
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Vch. Type
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Invoice No/Payment Reference
+                        </div>
+                    </th>
+                    <th style="text-align:right;">
+                        <div class="th">
+                            Debit
+                        </div>
+                    </th>
+                    <th style="text-align:right;">
+                        <div class="th">
+                            Credit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Debit or Credit note Remark
+                        </div>
+                    </th>
+                    <th width="220">
+                        <div class="th">
+                            Issued on Date for CN & DN
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Refrence CN & DN
+                        </div>
+                    </th>
+                    <th style="text-align:right;">
+                        <div class="th">
+                            Closing Balance
+                        </div>
+                    </th>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in SupplierPaymentData">
+                    <td style="font-family: monospace;">{{trade.SupplierName}}</td>
+                    <td style="font-family: monospace;">{{trade.InVoiceDate  | date:'medium'}}</td>
+                    <td style="font-family: monospace;">{{trade.Perticular}}</td>
+                    <td style="font-family: monospace;">{{trade.VoucherType}}</td>
+                    <td style="font-family: monospace;">{{trade.InVoiceNumber}}</td>
+                    <td style="text-align:right;font-family: monospace;">{{trade.DebitInvoiceAmount | number:2}}</td>
+                    <td style="text-align:right;font-family: monospace;">{{trade.CreditInVoiceAmount | number:2}}</td>
+                    <td style="font-family: monospace;">{{trade.PaymentStatusCorD}}</td>
+                    <td style="font-family: monospace;">{{trade.CreditDebitRemark}}</td>
+                    <td style="font-family: monospace;">{{trade.IssuedOnDate | date:'medium'}}</td>
+                    <td style="font-family: monospace;">{{trade.Refrence}}</td>
+                    <td style="text-align:right;font-family: monospace;">{{trade.ClosingBalance | number:2}}&nbsp;<i class="fa fa-inr" style=""></i></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"
+                                data-ng-init="POListChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </div>
+

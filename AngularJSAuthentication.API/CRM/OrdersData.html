@@ -1,0 +1,112 @@
+
+<div class="page page-table"  button-permission-binder parentName="CRM" pageName="Order Data Download">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> Order Master</strong>
+        </div>
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                <div class="form-group col-md-2">
+                    <label for="site-name">Select Warehouse</label><br />
+                    <select class="form-control" id="site-name" ng-model="WarehouseId">
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="site-name">Select Date Range</label><br />
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon ">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="site-name">Search</label><br />
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="Search(db)">Search</button>
+                    <!--<button type="button" class="btn btn-ar btn-primary" ng-click="exportData(db)">Export to Excel</button>-->
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name">Advance Search</label><br />
+                    <button class="btn btn-ar btn-primary" onclick="myFunction()"> Show Advance Search</button>
+
+                    <!--<button type="button" class="btn btn-ar btn-primary" ng-click="exportData(db)">Export to Excel</button>-->
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+<!--Advance Serch for Order Report-->
+<!--<button class="btn btn-ar btn-primary" onclick="myFunction()">Show Advance Search</button>-->
+
+<script>
+function myFunction() {
+    var x = document.getElementById("AdvanceSearch");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+    }
+    myFunction();
+</script>
+<div id="AdvanceSearch">
+    <div class="page page-table">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong><span class="glyphicon glyphicon-th"></span> Advance Search for Order Report</strong>
+            </div>
+            <div class="panel-body">
+                <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                    <div class="form-group col-md-12">
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Select City <span style="color:red;">*</span></label><br>
+                            <select class="form-control" id="site-name" ng-model="Demanddata.Cityid">
+                                <option value="">---SELECT---</option>
+                                <option value="{{city.Cityid}}" ng-repeat="city in cities"> {{city.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Warehouses <span style="color:red;">*</span></label><br>
+                            <select class="form-control" id="site-name" ng-model="Demanddata.WarehouseId">
+                                <option value="">---SELECT---</option>
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse | filter:{Cityid:Demanddata.Cityid}"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Year<span style="color:red;">*</span></label><br />
+                            <select class="form-control" ng-model="Demanddata.Year">
+                                <option value="2017">2017</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Export</label><br />
+                            <button type="button" class="btn btn-ar btn-primary skexport" ng-click="getSearchADVdata(Demanddata)"><span class="glyphicon glyphicon-plus"></span>Export</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+

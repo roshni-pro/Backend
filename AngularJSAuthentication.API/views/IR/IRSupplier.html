@@ -1,0 +1,158 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+
+<div class="client-document-container"  button-permission-binder parentName="Account" pageName="IR Settlement">
+    <div class="containers">
+        <div class="row contact-info">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <hr />
+                <span>
+                    <strong>Supplier IR Details</strong>
+                </span>
+                <span style="float:right">
+                    <strong>Call : </strong>  +91 - 810- 999- 9422
+                </span>
+                <hr />
+            </div>
+        </div><br />
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form-group col-lg-4 col-md-4 col-sm-4">
+                <label for="site-name">Select Supplier:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierId" ng-change="supplietIRGR(SupplierId)" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{s.SupplierId}}" ng-repeat="s in supplier"> {{s.Name}}</option>
+                </select>
+            </div>
+        </div><br />
+        <div class="row" ng-if="isShow">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Purchase</th>
+                                <th colspan="6">GR</th>
+                                <th colspan="4">IR</th>
+                                <th colspan="2">Confirm IR/GR</th>
+                            </tr>
+                            <tr>
+                                <th>Order Id</th>
+                                <th>GR 1 AMOUNT</th>
+                                <th>GR 2 AMOUNT</th>
+                                <th>GR 3 AMOUNT</th>
+                                <th>GR 4 AMOUNT</th>
+                                <th>GR 5 AMOUNT</th>
+                                <th>Total AMOUNT</th>
+                                <th>IR 1 AMOUNT</th>
+                                <th>IR 2 AMOUNT</th>
+                                <th>IR 3 AMOUNT</th>
+                                <th>Total AMOUNT</th>
+                                <th>Confirm</th>
+                                <th>Wrong</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="p in data">
+                                <td>{{p.PurchaseOrderId}}</td>
+                                <td>{{p.GRAmount1 | number:2}}</td>
+                                <td>{{p.GRAmount2 | number:2}}</td>
+                                <td>{{p.GRAmount3 | number:2}}</td>
+                                <td>{{p.GRAmount4 | number:2}}</td>
+                                <td>{{p.GRAmount5 | number:2}}</td>
+                                <td>{{p.GRTotal | number:2}}</td>
+                                <td>{{p.IRAmount1 | number:2}}</td>
+                                <td>{{p.IRAmount2 | number:2}}</td>
+                                <td>{{p.IRAmount3 | number:2}}</td>
+                                <td>{{p.IRTotal | number:2}}</td>
+                                <td><button type="button" class="btn btn-primary" ng-click="showDetail(p)">confirm</button></td>
+                                <td><button type="button" class="btn btn-primary" ng-click="showDetail(p)">wrong</button></td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td colspan="6">{{GR_Total | number:2}}</td>
+                                <td colspan="4">{{IR_Total | number:2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <div class="row">
+                </div>
+                <!--<div class="modal-footer">
+                    <button type="button" class="btn-lg btn-primary" ng-click="AddIR(saveData.IRAmount,saveData.InvoiceNumber)">Pay Amount</button>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>

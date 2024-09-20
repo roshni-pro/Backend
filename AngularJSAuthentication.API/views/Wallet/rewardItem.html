@@ -1,0 +1,236 @@
+﻿<style>
+    .img-square {
+        width: 150px;
+        height: 100px;
+    }
+</style>
+
+<div class="page page-table"  button-permission-binder parentName="Offer" pageName="Redeem Item">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Reward Item
+            </strong>
+        </div>
+        
+        <div class="panel-body">
+            <div class="table-filters">
+                <div class="row ">
+                    <button class="btn btn-primary skadd" ng-click="open()" ng-if="UserRole.rolenames.indexOf('Digital sales lead')>-1 || UserRole.rolenames.indexOf('HQ Master login')>-1">
+                        <span class="glyphicon glyphicon-plus">
+                        </span> Add Item
+                    </button>
+                    <div class="col-sm-5 col-xs-6 pull-right">
+                        <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form>
+                    </div>
+                    <div class="col-sm-2 col-xs-6 filter-result-info pull-right">
+                        <span>
+                            Showing {{stores.length}} entries
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Name
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Redeem Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Dicription
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Is Active
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Image
+                        </div>
+                    </th>
+                    <th ng-if="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('Customer support senior executive')>-1 || UserRole.rolenames.indexOf('Digital sales lead')>-1">
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th ng-if="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('Digital sales lead')>-1">
+                        <div class="th">
+                            Remove
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in rewardItems">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.rName}}</td>
+                    <td>{{trade.rPoint}}</td>
+                    <td>{{trade.rItem}}</td>
+                    <td>{{trade.Description}}</td>
+                    <td>{{trade.IsActive}}</td>
+                    <td>
+                        <div class="form-group">
+                            <img src='{{trade.ImageUrl}}'
+                                 class="img-square img80_80" onError="this.onerror = null; this.src = '../../img/logoicon.png';" />
+                        </div>
+                    </td>
+                    <td ng-if="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('Customer support senior executive')>-1 || UserRole.rolenames.indexOf('Digital sales lead')>-1"><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td ng-if="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('Digital sales lead')>-1"><button class="btn-sm btn-danger skremove" ng-click="openremove(trade)">Remove</button> </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myADDModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Create </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.rName" placeholder="Enter redeem Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Redeem Point:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.rPoint" placeholder="Enter Redeem Point" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Purchasing Item:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.rItem" placeholder="Enter Purchasing Item Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Description:</label><br />
+                <textarea id="site-name" type="text" class="form-control" ng-model="saveData.Description" placeholder="Enter Description" style="height:144px;" />
+            </div>
+
+            <label for="uploadAdvertisements">Upload Image:</label>
+            <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+            <div ng-repeat="item in uploader.queue">
+                <button type="button" class="btn btn-success btn-xs skimage" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Is Active:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="saveData.IsActive" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" data-target="#myModal">Open Preview</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-if="!saveData.rItemId" ng-click="Add(saveData)">Save</button>
+            <button type="button" class="btn btn-ar btn-primary skupdate" ng-if="saveData.rItemId" ng-click="Put(saveData)">Update</button>
+        </div>
+    </form>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Preview</div>
+                    <div class="panel-body" style="background-image: url(../../UploadedLogos/MobileImage.png) ; height:500px; width:300px">
+                        <div class="modal-body">
+                            <div class="row col-md-12" style="padding-top: 130px; padding-bottom: 10px; padding-left: 27px">
+                                <span style="color:white; word-wrap: break-word;max-width: 400px;">{{saveData.NewsName}}</span>
+                            </div>
+                            <div class="row col-md-12" style="padding-top: 10px; padding-bottom: 10px; padding-left: 27px">
+                                <span style="color:white; word-wrap: break-word;max-width: 400px;">{{saveData.Description}}</span>
+                            </div>
+                            <div class="row col-md-12" style="padding-left: 27px">
+                                <img alt="" src="/images/RewardItem/{{uploadedfileName}}" class="img-square img184_100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="myremovemodal.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Reward Item</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="remove(saveData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,489 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .modal-footer {
+            padding: 18px !important;
+            padding-right: 35px !important;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+
+        .autocomplete-options-container {
+            position: relative;
+        }
+
+        .autocomplete-options-dropdown {
+            position: absolute;
+            top: -1px;
+            left: 0px;
+            border: 1px solid #ccc;
+            border-top-color: #d9d9d9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: default;
+            z-index: 1001;
+            background: green;
+        }
+
+        .autocomplete-options-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .autocomplete-option {
+            padding: 4px 10px;
+            line-height: 22px;
+            overflow: hidden;
+            font: normal normal normal 13.3333330154419px/normal Arial;
+        }
+
+            .autocomplete-option.selected {
+                background-color: #eee;
+            }
+
+        .form-group.col-md-4.srch {
+            margin: 8px 0px 0px 8px;
+        }
+
+
+
+        .blocked {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+
+
+    <script src="../../JavaScript/config.js"></script>
+    <script src="../../JavaScript/util.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="../../scripts/angularjs-dropdown-multiselect.js"></script>
+
+</head>
+
+<!--Page Starting Content-->
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>People table</strong> </div>
+        <div class="form-group col-md-12 clear-both">
+
+            <div class="form-group col-md-2">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="open()">Create Group</button>
+            </div>
+
+        </div>
+        <div class="form-group col-md-12 clear-both">
+
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Mapping</label><br />
+                <select class="form-control" id="site-name-project" ng-model="srch.Mapping" ng-change="Mapping(srch)">
+                    <option value="">--Select--</option>
+                    <option value="Mapped"> Mapped</option>
+                    <option value="UnMapped"> UnMapped</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-2"  ng-show="srch.Mapping=='Mapped'">
+                <label for="site-name">Select Group</label><br />
+                <select class="form-control" id="site-name-project" ng-model="srch.group" ng-change="Mapping(srch)">
+                    <option value="">--Select--</option>
+                    <option value="{{group.GroupID}}" ng-repeat="group in GroupNames"> {{group.GroupName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-2" ng-show="srch.Mapping=='UnMapped'">
+                <label for="site-name">Select Department</label><br />
+                <select class="form-control" id="site-name-project" ng-model="srch.Department">
+                    <option value="">--Select--</option>
+                    <option value="{{location.Source}}" ng-repeat="location in Departments"> {{location.Source}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-2" ng-show="srch.Mapping=='UnMapped'">
+                <label for="site-name">Select Permission</label><br />
+                <select class="form-control" id="site-name-project" ng-model="srch.Permission">
+                    <option value="">--Select--</option>
+                    <option value="{{sales.Source}}" ng-repeat="sales in Permissions"> {{sales.Source}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-2" ng-show="srch.Mapping=='UnMapped'">
+                <label for="site-name">Select Desgination</label><br />
+                <select class="form-control" id="site-name-project" ng-model="srch.Desgination">
+                    <option value="">--Select--</option>
+                    <option value="{{state.Source}}" ng-repeat="state in Desginations"> {{state.Source}}</option>
+                </select>
+            </div>
+
+            <!--<div class="form-group col-md-2">
+        <label for="site-name">Select Status(Active or not)</label><br />
+        <select class="form-control" id="site-name-project" ng-model="srch.Active">
+            <option value="">--Select--</option>
+            <option value="true"> Yes</option>
+            <option value="false"> No</option>
+        </select>
+    </div>-->
+
+
+        </div>
+
+        <div class="form-group col-md-12 clear-both" ng-show="srch.Mapping">
+
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="searchdata(srch)">Search</button>
+            </div>
+
+
+            <div class="form-group col-md-4 srch" style="float: right">
+                <input type="text" placeholder="search" class="form-control ng-valid ng-dirty" data-ng-model="searchKeywords" data-ng-keyup="search()" style="">
+
+
+                <span style="margin: 0px 0px 0px 185px;">
+                    Showing {{filteredStores.length}}/{{stores.length}} entries
+                </span>
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group col-md-12" ng-show="srch.Mapping">
+            <table class="table table-bordered table-striped table-responsive" id="tblCustomers">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Full Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Customer Name')"
+                                      data-ng-class="{active: row == 'Customer Name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Customer Name')"
+                                      data-ng-class="{active: row == '-Customer Name'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                User Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order(' Mobile')"
+                                      data-ng-class="{active: row == ' Mobile'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('- Mobile')"
+                                      data-ng-class="{active: row == '- Mobile'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Group
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('DisplayName')"
+                                      data-ng-class="{active: row == 'DisplayName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-DisplayName')"
+                                      data-ng-class="{active: row == '-DisplayName'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Department
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Area')"
+                                      data-ng-class="{active: row == 'Area'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Area')"
+                                      data-ng-class="{active: row == '-Area'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Permission
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Area')"
+                                      data-ng-class="{active: row == 'Area'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Area')"
+                                      data-ng-class="{active: row == '-Area'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Email
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Area')"
+                                      data-ng-class="{active: row == 'Area'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Area')"
+                                      data-ng-class="{active: row == '-Area'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Mobile Number
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Area')"
+                                      data-ng-class="{active: row == 'Area'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Area')"
+                                      data-ng-class="{active: row == '-Area'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Active
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Active')"
+                                      data-ng-class="{active: row == 'Active'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Active')"
+                                      data-ng-class="{active: row == '-Active'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Desgination
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Area')"
+                                      data-ng-class="{active: row == 'Area'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Area')"
+                                      data-ng-class="{active: row == '-Area'}"></span>
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Status
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Status')"
+                                      data-ng-class="{active: row == 'Status'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Status')"
+                                      data-ng-class="{active: row == '-Status'}"></span>
+                            </div>
+                        </th>
+
+                        <!--<th>
+                            <div class="th">
+                                Edit
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Delete
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                View History
+                            </div>
+                        </th>-->
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="customer in customers">
+                        <td><input type="checkbox" value="{{customer.check}}" ng-model="customer.check" /></td>
+                        <td>
+                            {{customer.PeopleFirstName}}
+                            {{customer.PeopleLastName}}
+                        </td>
+                        <td>{{customer.PeopleFirstName}}</td>
+                        <td>{{customer.GroupName}}</td>
+                        <td>{{customer.Department}}</td>
+                        <td>{{customer.Permissions}}</td>
+                        <td>{{customer.Email}}</td>
+                        <td>{{customer.Mobile}}</td>
+                        <td ng-if="(customer.Active == true)">
+                            <span class="label label-info ng-binding">{{customer.Active}}</span>
+                        </td>
+                        <td ng-if="(customer.Active == false)">
+                            <span class="label label-danger ng-binding">{{customer.Active}}</span>
+                        </td>
+                        <td>{{customer.Desgination}}</td>
+                        <td>{{customer.Status}}</td>
+                        
+
+                        <!--<td><button class="btn-sm btn-primary" ng-click="edit(customer)">Edit</button> </td>
+                        <td>
+                            <button class="btn-sm btn-danger" ng-click="opendelete(customer,$index)">Remove</button>
+                            <button class="btn-sm btn-danger" ng-show="customer.StopMessaging == true" ng-click="startMessaging(customer,$index)">Start SMS</button>
+                        </td>
+                        <td><button class="btn-sm btn-info" ng-click="opencustomerhistory(customer)">History</button></td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+
+
+    </section>
+</div>
+<!-- /site tiles -->
+<!--Add Group Model -->
+<script type="text/ng-template" id="myModalContent.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Group</h4>
+
+        </div>
+
+        <section class="panel panel-default table-dynamic">
+            <div class="row">
+                <div class="modal-body" id="myModal">
+                    
+
+                    <div class="form-group col-md-4">
+                        <label for="site-name">Select Group</label><br />
+                        <select class="form-control" id="site-name-project" ng-model="addgroup.Group">
+                            <option value="">--Select--</option>
+                            <option value="{{group.GroupID}}" ng-repeat="group in GroupNames"> {{group.GroupName}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="site-name">Description:</label><br />
+                        <textarea id="site-name" type="text" class="form-control" ng-model="addgroup.Description" cols="4" rows="6" />
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddGroup(addgroup)">Save</button>
+        </div>
+
+    </form>
+</script>
+<!--/Add Group Modal -->

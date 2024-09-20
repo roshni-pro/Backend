@@ -1,0 +1,219 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Departments">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Department
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()" >
+                <span class="glyphicon glyphicon-plus"> </span> Add new Department
+            </button>
+        </div>
+        <br />
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.no
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('aliasName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Department Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('aliasName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('aliasName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+
+                    <th >
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th >
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in getdepartment">
+                    <td>{{$index +1}}</td>
+                    <td>{{trade.DepName}}</td>
+                    <td>{{trade.Description}}</td>
+
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="Departmentadd.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Department</h4>
+
+        </div>
+
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+
+            </div>
+            <div class="form-group">
+                <label for="site-name">Department Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="data.DepName" placeholder="Enter Department name" ng-required />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Description:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="data.Description" placeholder="Enter Description here" ng-required />
+            </div>
+
+
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Add(data)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myDepartmentModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Department</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Department Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="data.DepName" placeholder="Enter Department Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Description:</label><br />
+                <input id="site-name" class="form-control" rows="3" required="" ng-model="data.Description" placeholder="Enter Description" />
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="putDepartment(data)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteDepartment.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Department</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="delete(data,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+

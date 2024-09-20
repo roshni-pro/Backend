@@ -1,0 +1,411 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .modal-footer {
+            padding: 18px !important;
+            padding-right: 35px !important;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+
+        .autocomplete-options-container {
+            position: relative;
+        }
+
+        .autocomplete-options-dropdown {
+            position: absolute;
+            top: -1px;
+            left: 0px;
+            border: 1px solid #ccc;
+            border-top-color: #d9d9d9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: default;
+            z-index: 1001;
+            background: green;
+        }
+
+        .autocomplete-options-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .autocomplete-option {
+            padding: 4px 10px;
+            line-height: 22px;
+            overflow: hidden;
+            font: normal normal normal 13.3333330154419px/normal Arial;
+        }
+
+            .autocomplete-option.selected {
+                background-color: #eee;
+            }
+    </style>
+</head>
+
+<div class="page page-table"  button-permission-binder parentName="Item Master" pageName="Items Supplier Mapping">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Item Supplier Mapping
+            </strong>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="form-group col-md-3">
+                <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" />
+            </div>
+            <div class="form-group col-md-3">               
+                <button type="button" class="btn-sm btn-primary" data-ng-click="WareHouseBysearch()">Search Wahrehouse Item</button>
+            </div>                   
+        </div>
+        <br />
+        <!--Start WH Master login Item Master Table-->
+        <table class="table table-bordered table-striped table-responsive" ng-show="UserRole.rolenames.indexOf('WH Master login')>-1">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Item Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('itemname')"
+                                  data-ng-class="{active: row == 'itemname'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-itemname')"
+                                  data-ng-class="{active: row == '-itemname'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Ware House Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Subsub cat Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubsubcategoryName')"
+                                  data-ng-class="{active: row == 'SubsubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubsubcategoryName')"
+                                  data-ng-class="{active: row == '-SubsubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub category Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubcategoryName')"
+                                  data-ng-class="{active: row == 'SubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubcategoryName')"
+                                  data-ng-class="{active: row == '-SubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Category Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubcategoryName')"
+                                  data-ng-class="{active: row == 'SubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubcategoryName')"
+                                  data-ng-class="{active: row == '-SubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            MRP Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Selling Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('GeneralPrice')"
+                                  data-ng-class="{active: row == 'GeneralPrice'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-GeneralPrice')"
+                                  data-ng-class="{active: row == '-GeneralPrice'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Unit Type
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('UnitName')"
+                                  data-ng-class="{active: row == 'UnitName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UnitName')"
+                                  data-ng-class="{active: row == '-UnitName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Selling Unit Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingUnitName')"
+                                  data-ng-class="{active: row == 'SellingUnitName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SellingUnitName')"
+                                  data-ng-class="{active: row == '-SellingUnitName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            TaxGroup Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('TGrpName')"
+                                  data-ng-class="{active: row == 'TGrpName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-TGrpName')"
+                                  data-ng-class="{active: row == '-TGrpName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Total Tax %
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('TotalTaxPercentage')"
+                                  data-ng-class="{active: row == 'TotalTaxPercentage'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-TotalTaxPercentage')"
+                                  data-ng-class="{active: row == '-TotalTaxPercentage'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Min Item Order
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Placeorder')"
+                                  data-ng-class="{active: row == 'Placeorder'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Placeorder')"
+                                  data-ng-class="{active: row == '-Placeorder'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            IsActive
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('IsActive')"
+                                  data-ng-class="{active: row == 'IsActive'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-IsActive')"
+                                  data-ng-class="{active: row == '-IsActive'}"></span>
+                        </div>
+                    </th>                    
+                    <th>
+                        <div class="th">
+                            Map Supplier
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>                    
+                </tr>   
+            </thead>
+            <tbody>
+                <!--|filter:{warehouse_id:wh.Warehouseid}-->
+                <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                <tr data-ng-repeat="trade in WhcurrentPageStores">
+                    <td>{{trade.itemname}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.SubsubcategoryName}}</td>
+                    <td>{{trade.SubcategoryName}}</td>
+                    <td>{{trade.CategoryName}}</td>
+                    <td>{{trade.price | number : 3}}</td>
+                    <td>{{trade.UnitPrice | number : 3}}</td>
+                    <td>{{trade.PurchasePrice | number : 3}}</td>
+                    <td>{{trade.PurchaseUnitName}}</td>
+                    <td>{{trade.SellingUnitName}}</td>
+                    <td>{{trade.TGrpName}}</td>
+                    <td>{{trade.TotalTaxPercentage}}</td>
+                    <td>{{trade.MinOrderQty}}</td>
+                    <td>
+                        <div class="form-group">
+                            <img src='https://s3.ap-south-1.amazonaws.com/fsaapi/imageupload/{{trade.Number}}.jpg'
+                                 class="img-square img80_80" />
+                        </div>
+                    </td>                   
+                    <td>{{trade.active}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="WhSetItemSupplier(trade)">Set Supplier</button> </td>
+                   
+                </tr>
+            </tbody>
+        </table>
+        <!--End WH Master login Item Master Table-->
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selectedPagedItem"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 page-num-info">
+                    <dir-pagination-controls max-size="8"
+                                             direction-links="true"
+                                             boundary-links="true"
+                                             on-page-change="getData1(newPageNumber)">
+                        //get method call every time when page changes
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<!--Update Warehouse Assets Item Master-->
+<script type="text/ng-template" id="myitemSupplierMasterPut.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Item Supplier Mapping</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Supplier:</label><br />
+                <select class="form-control" ng-model="itemMasterData.SupplierId" ng-options="suppliers.SupplierId as suppliers.Name for suppliers in supplier" ng-change="GetDepo(itemMasterData.SupplierId)"></select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Depo:</label><br />
+                <select class="form-control" ng-model="itemMasterData.DepoId" ng-options="Depos.DepoId as Depos.DepoName for Depos in datadepomaster" data-ng-selected="datadepomaster.DepoId == Depos.DepoId"></select>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutitemSupplierMaster(itemMasterData)">Save</button>
+        </div>
+    </form>
+</script>

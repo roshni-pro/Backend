@@ -1,0 +1,261 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        html, body, #map_canvas {
+            height: 500px;
+            width: 500px;
+            margin: 0px;
+            padding: 0px
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbogFMyrNTlMdtsrYzgffJ3guhCdzRS2Y&libraries=drawing" async defer></script>
+
+
+    <style>
+        .tab {
+            width: 100%;
+            border-radius: 100px;
+            margin-bottom: 41px;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>  Add Cluster
+            </strong>
+        </div>
+        <br />
+
+
+        <div class="colasdasdasd">
+            <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+            <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+        </div>
+        <div class="form-group">
+            <label for="site-name">City</label><br />
+            <select class="form-control" id="site-name" ng-model="ClusterData.Cityid" ng-change="selectedtypeChanged(ClusterData.Cityid)">
+                <option value="">---SELECT---</option>
+                <option value="{{c.Cityid}},{{c.CityName}}" ng-repeat="c in cities"> {{c.CityName}}</option>
+            </select>
+        </div>
+
+        <div class="form-group hidden">
+            <label for="site-name">CLuster Name</label><br />
+            <input id="site-name" type="text" class="form-control" placeholder="Enter Cluster Name " ng-model="ClusterData.ClusterName" readonly="readonly" />
+        </div>
+        <!--<div class="form-group">
+            <label for="site-name">Address</label><br />
+            <input id="site-name" type="text" class="form-control" placeholder="Enter Address " ng-model="ClusterData.Address" />
+        </div>-->
+        <!--<div class="form-group">
+            <label for="site-name">Phone No.</label><br />
+            <input id="site-name" type="text" class="form-control" placeholder="Enter Phone No " ng-model="ClusterData.Phone" />
+        </div>-->
+        <div class="form-group">
+            <label for="site-name">Select Warehouse:</label><br />
+            <select class="form-control" id="site-name" ng-model="ClusterData.WarehouseId">
+                <option value="">---SELECT---</option>
+                <option value="{{w.WarehouseId}}" ng-repeat="w in dataselectWarehouse"> {{w.WarehouseName}}</option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <label for="site-name1">Latitude</label><br />
+            <input id="txtlat" type="text" class="form-control" placeholder="Enter Latitude " ng-model="ClusterData.Latitude" />
+        </div>
+        <div class="form-group">
+            <label for="site-name2">Longitude</label><br />
+            <input id="txtlg" type="text" class="form-control" placeholder="Enter Longitude" ng-model="ClusterData.Longitude" />
+        </div>
+
+        <div class="form-group">
+            <label for="site-name"> Active</label><br />
+            <input id="site-name" type="checkbox" class="form-control" ng-model="ClusterData.Active" onclick="initialize();" />
+        </div>
+
+
+        <div>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddCluster(ClusterData)">Save</button>
+            <!--<button type="button" class="btn btn-ar btn-primary" ng-click="AddGeoFence(ClusterData)">Save</button>-->
+            <!--<input type="button" value="sbmit" ng-click="initMap()" />-->
+            <div>
+                <div id="map_canvas" style=" border: 2px solid #3872ac;width:100%"></div>
+                <div class="form-group ">
+                    <div id="info"></div>
+                </div>
+            </div>
+
+
+            <script type="text/javascript">
+
+                var geocoder;
+                var map;
+                var polygonArray = [];
+                var Lat_long_Array = [];
+                var incremt = [];
+                var p = 0;
+
+                function initialize() {
+
+                    var abc = document.getElementById('txtlg').value;
+                    var cde = document.getElementById('txtlat').value;
+                    map = new google.maps.Map(
+                        document.getElementById("map_canvas"), {
+                            center: new google.maps.LatLng(cde, abc),
+                            zoom: 10,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        });
+                    var drawingManager = new google.maps.drawing.DrawingManager({
+                        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                        drawingControl: true,
+                        drawingControlOptions: {
+                            position: google.maps.ControlPosition.TOP_CENTER,
+                            drawingModes: [
+                                google.maps.drawing.OverlayType.MARKER,
+                                google.maps.drawing.OverlayType.CIRCLE,
+                                google.maps.drawing.OverlayType.POLYGON,
+                                google.maps.drawing.OverlayType.POLYLINE,
+                                google.maps.drawing.OverlayType.RECTANGLE]
+                        },
+                        markerOptions: {
+                            icon: 'images/car-icon.png'
+                        },
+                        circleOptions: {
+                            fillColor: '#ffff00',
+                            fillOpacity: 1,
+                            strokeWeight: 5,
+                            clickable: false,
+                            editable: true,
+                            zIndex: 1
+                        },
+                        polygonOptions: {
+                            fillColor: '#BCDCF9',
+                            fillOpacity: 0.5,
+                            strokeWeight: 2,
+                            strokeColor: '#57ACF9',
+                            clickable: false,
+                            editable: true,
+                            zIndex: 1
+                        }
+                    });
+                    console.log(drawingManager)
+                    drawingManager.setMap(map)
+
+                    google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+
+
+                        if (p == 0) {
+                            p = 1;
+                        }
+                        else {
+                            p = p + 1;
+                        }
+                        var ak = p;
+                        document.getElementById('info').innerHTML += "polygon points:" + "<br>";
+                        for (var i = 0; i < polygon.getPath().getLength(); i++) {
+
+                            document.getElementById('info').innerHTML += polygon.getPath().getAt(i).toUrlValue(6) + "<br>";
+                            var lat_long = polygon.getPath().getAt(i).toUrlValue(6) + ",p" + p;
+
+                            Lat_long_Array.push(lat_long);
+                        }
+
+                        polygonArray.push(polygon);
+
+                    });
+                    var pid = polygonArray;
+                }
+                            //initialize();
+                          //  google.maps.event.addDomListener(window, "load", initialize);
+
+            </script>
+
+
+
+        </div>
+
+    </section>
+</div>
+
+

@@ -1,0 +1,562 @@
+﻿
+<div class="modal-header">
+
+    <h4 class="modal-title">Create Manual PR Request </h4>
+</div>
+<div class="modal-body">
+    <div class="row" style="text-align:center" ng-if="IsPOPRCreateStop==true && data.PRPaymentType=='AdvancePR' ">
+        <span style="color:red;font-size:20px;align-content:center">Create new PO stop because good not received and you have reach max PR/PO limit i.e. {{DepoPRPOStopLimit}} </span>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <label for="site-name">Select City</label><br />
+                    <select class="form-control" id="site-name" ng-model="data.Cityid" ng-change="getWarehosues(data.Cityid)" ng-disabled="data.Cityid">
+                        <option value=""> -Select-</option>
+                        <option value="{{citypo.Cityid}}" ng-repeat="citypo in CityAddPO">  {{citypo.CityName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="site-name">Select Warehouse</label><br />
+                    <div ng-dropdown-multiselect="" options="warehouseAddPO" selected-model="subexamplemodel" extra-settings="subexamplesettings" ng-disabled="AutoPRbtn"></div>
+
+                </div>
+                <div class="col-md-3">
+                    <label for="site-name">Refresh</label><br />
+                    <button type="button" class="btn btn-dark" ng-click="refreshAll()" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-refresh"> </span>  Refresh
+                    </button>
+
+                    <button type="button" class="btn btn-dark" ng-click="BacktoDemand()" data-dismiss="modal" ng-show="AutoPRbtn">
+                        Back To Demand page
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--ETA Table -->
+    <div class="form-group">
+        <table class="border" style="width:40%">
+            <tr ng-repeat="w in ETAWhList">
+                <td>{{w.Whname}}</td>
+                <td>
+                    <input name="date" ui-date ui-date-format="MM/DD/YYYY" id="dat" type='date' ng-model="dataeta" title="Select Date" />
+                    <!--<input type="text" id="txteta" ng-model="dataeta" />-->
+                </td>
+                <td> <button id="btnETA" ng-click="ETAconfirm(w.Whid,dataeta);" class="btn-primary"> Confirm ETA </button> </td>
+            </tr>
+        </table>
+    </div>
+    <!--ETA table End-->
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <label for="site-name">Search Supplier</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-4">
+            <input id="site-name" type="text" class="form-control" ng-model="data.supplier" ng-disabled="supplierData1" placeholder="Enter Supplier Name or code for search" />
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="SearchSupplier(data)" ng-disabled="isAutoPRdisable">
+                <span class="glyphicon glyphicon-search"> </span> Search
+            </button>
+        </div>
+        <div class="col-md-3">
+            <select class="form-control ng-pristine ng-valid" id="site-name" ng-disabled="supplierData" ng-model="data.SupplierId" ng-change="GetDepo(data.SupplierId)">
+                <!--<option value="{{s.SupplierId}}" ng-repeat="s in Suppliers">{{s.SupplierName}}</option>Suppliers-->
+                <option value="{{s.SupplierId}}" ng-repeat="s in Suppliers[0]"><strong>{{s.Name}}</strong>&nbsp;({{s.SUPPLIERCODES}}-{{s.City}})</option>
+            </select>
+        </div>
+        <div class="col-md-3" style="margin-top: -25px">
+                  <label for="site-name">Expiry Date</label>
+            <input id="site-name" type="text" class="form-control" ng-disabled="true" ng-model="ExpiryDays" placeholder="Expirydate" />
+        </div>
+
+        <!--</div>
+    <div class="form-group">-->
+        <div class="col-md-12">
+            <input id="site-name" type="text" class="form-control" ng-model="data.CashPurchaseName" ng-show="data.IsCashPurchase" placeholder="Enter Cash Purchase Supplier Name" />
+        </div>
+        <!--</div>
+    <div class="form-group">-->
+        <div class="col-md-12" style="display: flex;" ng-If="dws">
+            <input style=" margin-left: 75%; " type="checkbox" ng-model="checkboxModel.value1" ng-change="DirectSup()" /> &nbsp;&nbsp;&nbsp;
+            <div><b style=" font-weight: 900;">Direct Supplier</b></div>
+        </div>
+        <div class="col-md-12">
+            <table border="0" width="70%">
+                <tr>
+                    <th>Outstanding Amount (Credit+Advance)</th>
+                    <th>Advance Amount</th>
+                    <th>Settled Advance Amount</th>
+                    <th>OutStanding Advance Amount</th>
+                    <th>Advance Adjustment PO</th>
+                </tr>
+                <tr>
+                    <td>{{SupplierOutStandingAmount.OutstandingAmount| number: 2}}</td>
+                    <td>{{SupplierOutStandingAmount.AdvanceAmount| number: 2}}</td>
+                    <td>{{SupplierOutStandingAmount.AdvanceSettledAmount| number: 2}}</td>
+                    <td>{{SupplierOutStandingAmount.OutstandingAdvanceAmount| number: 2}}</td>
+                    <td ng-if="subexamplemodel.length==1">
+                        <!--<span> <input type="checkbox" ng-change="getPOdetails(data.SupplierId)" ng-model="chkselct"></span>-->
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="getPOdetails(data.SupplierId)"><span class="glyphicon glyphicon-plus"> </span> Add Adjustment PO </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12" ng-show="ClosePO==true">
+            <table class="table table-bordered table-striped table-responsive" style="width: 500px !important;margin: 13px;">
+                <tr>
+                    <th colspan="4" style="background-color: #ffd55f;color:black;">Adjustment PO Details</th>
+                </tr>
+                <tr>
+                    <td>Close PO Id</td>
+                    <td> Amount </td>
+                    <td> Created By </td>
+                    <td> Buyer Name </td>
+                </tr>
+                <tr ng-repeat="L in AdvanceOutstandingChecked">
+                    <td>{{L.PurchaseOrderId}}</td>
+                    <td>{{L.Total | number: 2}}</td>
+                    <td>{{L.CreatedBy}}</td>
+                    <td>{{L.BuyerName}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <label for="site-name">Select Depo</label><br />
+            <select class="form-control" ng-model="data.DepoId" ng-options="Depos.DepoId as Depos.DepoName for Depos in datadepomaster" ng-change="CheckPRPOCreateStatus(data.DepoId)"></select>
+        </div>
+        <div class="col-md-4">
+            <label for="site-name">Select PR Payment Type</label><br />
+            <select class="form-control" id="site-name" ng-model="data.PRPaymentType">
+                <option value="" selected>--Select--</option>
+                <option value="CreditPR"> Credit PR</option>
+                <option value="AdvancePR"> Advance PR</option>
+            </select>
+        </div>
+        <div class="col-md-4" ng-if="data.PRPaymentType=='AdvancePR'">
+            <label for="site-name">Supplier Credit Days</label><br />
+            <input id="site-name" type="text" class="form-control" ng-model="data.SupplierCreditDay == 0 " value="0" data-ng-selected="Supplier.PaymentTerms" disabled />
+        </div>
+        <div class="col-md-4" ng-if="data.PRPaymentType=='CreditPR'">
+            <label for="site-name">Supplier Credit Days</label><br />
+            <input id="site-name" type="text" class="form-control" ng-model="data.SupplierCreditDay" value="{{Supplier.PaymentTerms}}" data-ng-selected="Supplier.PaymentTerms" disabled />
+        </div>
+
+        <div class="col-md-4">
+            <label for="site-name">Select Picker Type</label><br />
+            <select class="form-control" id="site-name" ng-model="data.PickerType" ng-change="onfreightchange(data.PickerType)">
+                <option value="" selected>--Select--</option>
+                <option value="Pick">Pick</option>
+                <option value="DeliveryfromSupplier">Delivery from Supplier-Freight</option>
+                <option value="DeliveryfromSupplierFor">Delivery from Supplier-For</option>
+
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-4">
+            <label for="site-name">Buyer</label><br />
+            <select class="form-control ng-pristine ng-valid" ng-model="data.PeopleId" id="site-name" >
+                <option value="0">--Select--</option>
+                <option value="{{ppl.PeopleId}}" ng-repeat="ppl in Buyer" data-ng-selected="ppl.PeopleId == currentBuyerId"> {{ppl.DisplayName}} </option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="site-name">Freight Charge</label><span style="color:red;">*</span><br />
+            <input id="site-name" type="number" class="form-control" ng-model="FreightCharge" placeholder="Enter FreightCharge" ng-click="onfreightChange()" ng-disabled="showfreight" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <label for="site-name">Search Item</label>
+        </div>
+    </div>
+    <div>
+        <div class="col-md-4">
+            <input id="site-name" type="text" class="form-control" ng-model="key" placeholder="Enter item Name/Number for search" ng-disabled="AutoPRbtn" />
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Search(key)" ng-disabled="AutoPRbtn">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>
+        <div class="col-md-6">
+            <!--<select class="form-control ng-pristine ng-valid" id="site-name" ng-model="data.ItemId" ng-change="Minqtry(data.ItemId)">
+                <option value="{{s.ItemId}}" ng-repeat="s in itemData">{{s.itemname}}=({{s.SellingSku}}){{s.CompanyStockCode!=null? s.CompanyStockCode:""}} => MinQty ({{s.PurchaseMinOrderQty}}) => PORate ({{s.POPurchasePrice}}) =>Category({{s.Category}}) => MRP {{s.price}} ({{s.ItemMultiMRPId}})  </option>
+            </select>
+            <input type="hidden" ng-model="data.price" />
+            <input type="hidden" ng-model="data.NetPurchasePrice" />
+            <input type="hidden" ng-model="data.PurchasePrice" />
+            <input type="hidden" ng-model="data.WarehouseId" />
+            <input type="hidden" ng-model="data.Category" />-->
+        </div>
+    </div>
+
+
+    <div>
+        <!--<div class="col-md-4">
+            <input id="site-name" type="text" class="form-control" ng-model="key" placeholder="Enter item Name/Number for search" ng-disabled="AutoPRbtn" />
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Search(key)" ng-disabled="AutoPRbtn">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
+        </div>-->
+        <div class="col-md-12">
+            <label for="site-name">Choose Item </label><br />
+            <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="data.ItemId" ng-change="Minqtry(data.ItemId)">
+                <option value="{{s.ItemId}}" ng-repeat="s in itemData">{{s.itemname}}=({{s.SellingSku}}){{s.CompanyStockCode!=null? s.CompanyStockCode:""}} => MinQty ({{s.PurchaseMinOrderQty}}) => PORate ({{s.POPurchasePrice}}) =>Category({{s.Category}}) => MRP {{s.price}} ({{s.ItemMultiMRPId}})  </option>
+            </select>
+            <input type="hidden" ng-model="data.price" />
+            <input type="hidden" ng-model="data.NetPurchasePrice" />
+            <input type="hidden" ng-model="data.PurchasePrice" />
+            <input type="hidden" ng-model="data.WarehouseId" />
+            <input type="hidden" ng-model="data.Category" />
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-12">
+            <label for="site-name">MOQ </label><br />
+            <select class="form-control ng-pristine ng-valid" id="site-name" ng-change="enNumSet()" ng-model="data.PurchaseMinOrderQty" ng-disabled="AutoPRbtn">
+                <option value="">Select</option>
+                <option value="{{ss.PurchaseMinOrderQty}}" ng-repeat="ss in itmdata">{{ss.PurchaseMinOrderQty}}</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group ">
+            <div class="col-md-3" ng-repeat="wsQty in warehouseQty">
+                <label for="site-name">{{wsQty.WarehouseName}} Number Of Set</label><br />
+                <input id="site-name" type="number" ng-disabled="Ecount == 0" class="form-control" ng-model="wsQty.Noofset" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-3" ng-if="itemWeight">
+            <label>Single Item Unit</label><br />
+            <select name="itemWeightInput" class="form-control" ng-model="itemWeight.weighttype">
+                <option value="">Select</option>
+                <option value="Kg">KG</option>
+                <option value="Gm">GM</option>
+                <!--<option value="Ltr">Ltr</option>
+                <option value="Ml">ML</option>
+                <option value="Pc">Pc</option>-->
+            </select>
+        </div>
+        <div class="col-xs-3" ng-if="itemWeight">
+            <label>Single Item Value</label><br />
+            <input class="form-control" ng-model="itemWeight.weight" />
+        </div>
+
+        <div class="col-xs-3" ng-if="itemWeight && itemWeight.weighttype == 'pc'">
+            <label>Weight in Gram</label><br />
+            <input class="form-control" ng-model="itemWeight.WeightInGram" />
+        </div>
+    </div>
+    <!-- CheckEligibleQtyForPo start -->
+    <div class="row" ng-if="EligibleQtyForPo!=null && EligibleQtyForPo!='' && EligibleQtyForPo!=undefined">
+
+        <div class="col-xs-6">
+            <label>Current Inventory</label><br />
+            <input class="form-control" ng-model="EligibleQtyForPo.CurrentInventory" readonly />
+        </div>
+        <div class="col-xs-6">
+            <label>Available Qty For PO(ItemForecast)</label><br />
+            <input class="form-control" ng-model="EligibleQtyForPo.QtyForAction"  readonly />
+        </div>
+    </div>
+    <br />
+    <!-- CheckEligibleQtyForPo end-->
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <br /><br /><br />
+                <span ng-if="isSaveBtnhide">
+                    <button type="button" style="float:right;" class="btn btn-ar btn-primary" ng-click="AddDataPR(data)"><span class="glyphicon glyphicon-plus"> </span> Add</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped table-responsive ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                SNo.
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Item Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                MRP
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                PO PurchasePrice
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Noofset
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                PurchaseMOQ
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Last Month Sale
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                No of Pices
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Inventry Count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Demand Qty
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Open Po Qty
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ABC Classification
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                WH Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Estimate Amount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Delete
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in POdata">
+                        <td>{{$index+1}}</td>
+                        <td>{{trade.Itemname}}</td>
+                        <td>{{trade.price}}</td>
+                        <td>{{trade.PurchasePrice}}</td>
+                        <td>{{trade.Noofset}}</td>
+                        <td>{{trade.PurchaseMinOrderQty}}</td>
+                        <td ng-style="(trade.Qty <(trade.Noofset*trade.PurchaseMinOrderQty)) && {'background-color':'lightpink'}">{{trade.Qty}}</td>
+                        <td ng-if="trade.Type==1 || trade.Type == 0">{{trade.PurchaseMinOrderQty *trade.Noofset}}</td>
+                        <td ng-if="trade.Type==2">{{trade.PurchaseMinOrderQty *trade.Noofset*trade.Conversionvalue}}</td>
+                        <td>{{trade.inventryCount}}</td>
+                        <td>{{trade.DemandQty}}</td>
+                        <td>{{trade.OpenPOQTy}}</td>
+                        <td>{{trade.Category}}</td>
+                        <td>{{trade.WarehouseName}}</td>
+                        <td>{{trade.PurchasePrice *trade.Noofset*trade.PurchaseMinOrderQty | number:2}}</td>
+                        <td><a class="btn glyphicon glyphicon-trash" ng-click="remove(trade)"></a></td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="7"> <span style="float:left"><strong>Grand Total:</strong></span></td>
+                        <td colspan="5">
+                            <div class="col-md-12" ng-repeat="wsQty in warehouseQty">
+                                <span style=" float:right; font-size:large;">{{wsQty.WarehouseName}} Total: &nbsp;<i class="fa fa-inr"></i>&nbsp;{{getTotal(wsQty.WarehouseId)| number:2}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="7"> <span style="float:left"><strong></strong></span></td>
+                        <td colspan="5">
+                            <div class="col-md-12" ng-show="getTotal">
+                                <span style=" float:right; font-size:large;">Freight Charge: &nbsp;<i class="fa fa-inr"></i>&nbsp;{{FreightCharge | number:2}}</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-ar btn-danger" ng-click="cancel()" data-dismiss="modal">
+        <span class="glyphicon glyphicon-remove-circle"> </span> Cancel
+    </button>
+    <!--<button type="button" class="btn btn-ar btn-warning" ng-disabled="count == 1" ng-click="Draftsave()">
+        <span class="glyphicon glyphicon-folder-close"> </span> Save as draft
+    </button>-->
+    <span ng-if="isSaveBtnhide">
+        <button type="button" class="btn btn-ar btn-primary" ng-disabled="count == 1" ng-hide=" IsPOPRCreateStop==true && data.PRPaymentType=='AdvancePR'" ng-click="SavePR(data)">
+            <span class="glyphicon glyphicon-plus"> </span>Save & Send to approver
+        </button>
+    </span>
+    <span ng-show="AutoPRbtn">
+        <button type="button" class="btn btn-ar btn-primary" ng-hide="IsPOPRCreateStop==true && data.PRPaymentType=='AdvancePR'" ng-click="newSave(data)">Save Auto PR</button>
+    </span>
+</div>
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="msgModel" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-responsive" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td>PR type</td>
+                            <td> {{data.PRPaymentType}} </td>
+                        </tr>
+                        <tr>
+                            <td>PR amount:</td>
+                            <td>{{TotalAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>Adjustment amount:</td>
+                            <td>{{settleAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>To be paid amount</td>
+                            <td>{{TobePaidAmt}}</td>
+                        </tr>
+                        <tr>
+                            <td>Message :</td>
+                            <td>
+                                {{msg}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="saveFinalPR()">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="ModelAcion" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Close PO List </h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-responsive" border="0" cellspacing="0" cellpadding="0">
+                        <tbody ng-init="total = 0">
+
+                            <tr>
+                                <th></th>
+                                <th>Purchase OrderId</th>
+
+                                <th>Total Amount</th>
+                                <td> Created By </td>
+                                <td> Buyer Name </td>
+                            </tr>
+                            <tr ng-repeat="L in AdvanceOutstanding">
+                                <td>
+                                    <input type="checkbox" ng-model="L.check" />
+                                </td>
+                                <td>{{L.PurchaseOrderId}}</td>
+
+                                <td>{{L.Total | number: 2}}</td>
+                                <td>{{L.CreatedBy}}</td>
+                                <td>{{L.BuyerName}}</td>
+                            </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" ng-click="test()">Apply</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--- ETA model Popup --->
+    <div class="modal fade" id="ModelETA" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ETA List </h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped table-responsive" border="0" cellspacing="0" cellpadding="0">
+                        <tbody ng-init="total = 0">
+
+                            <tr>
+
+                                <th>Purchase OrderId</th>
+                                <th>Supplier Name</th>
+                                <td> Buyer Name </td>
+                                <td> Warehouse Name </td>
+                            </tr>
+                            <tr ng-repeat="L in ETAdetailslist">
+                                <td>{{L.PurchaseOrderId}}</td>
+
+                                <td>{{L.SupplierName}}</td>
+                                <td>{{L.BuyerName}}</td>
+                                <td>{{L.WarehouseName}}</td>
+                            </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" ng-click="ETAmorethaFiveConfirmation()">Confirm ETA</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

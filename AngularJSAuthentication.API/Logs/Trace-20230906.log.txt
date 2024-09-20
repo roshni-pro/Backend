@@ -1,0 +1,2 @@
+06-09-2023 16:01:53 ==> Send SMS: http://api.msg91.com/api/sendhttp.php?DLT_TE_ID=1707168623048630188&country=91&sender=SHOPKR&route=4&authkey=245847A93RRLxsuJ463048194P1&message=354292+%3a+is+Your+Customer+Order+No+7875+Delivery+Redispatch+Code.+ShopKirana&mobiles=8866000000
+

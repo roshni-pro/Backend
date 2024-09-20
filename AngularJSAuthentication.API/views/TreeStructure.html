@@ -1,0 +1,79 @@
+﻿<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-family: Helvetica;
+    }
+
+    #tree {
+        width: 100%;
+        height: 100%;
+    }
+    .edit-photo svg{
+        display:none;
+    }
+    .edit-photo:after{
+        content: 'Save';
+        position: absolute;
+        background: #fff;
+        top: 15px;
+        padding: 10px 20px;
+        right: 16px;
+        border-radius: 156px;
+        font-size: 18px;
+        color: rgba(235, 90, 0, 1);
+        cursor:pointer;
+        font-weight:600;
+    }
+     .edit-photo:hover:after{
+         color:#fff;
+         background:orange;
+     }
+     edit-assistant-button-content,
+     .edit-fields div:last-child{
+         display:none;
+     }
+     .edit-fields button{
+         background:#ff6a00;
+         color:#fff;
+         padding:5px 15px;
+         border-radius:15px;
+         border:none;
+        margin-top:10px;
+     }
+     .edit-fields input{
+        box-shadow: 0px 1px 6px 0px #ccc;
+        padding: 5px 10px;
+        border-radius: 15px;
+        margin-top:10px;
+        max-width:250px;
+     }
+     .logoImg{
+        width: 250px;
+        position: absolute;
+        left: 50%;
+        top: 30px;
+        margin-left: -125px;
+     }
+     #tree hr{
+         margin:7px ;
+     }
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="https://balkangraph.com/js/latest/OrgChart.js"></script>
+    <div data-ng-controller="TreeStructureController" Function="LoadChart()"></div>
+    <img class="logoImg" src="https://static.wixstatic.com/media/12d400_41d5b06efb434b059e042a0da9a2bb3b~mv2.png/v1/fill/w_209,h_60,al_c,q_85,usm_0.66_1.00_0.01/Logo%20(3).webp" />
+    <div id="tree" />
+</body>
+</html>

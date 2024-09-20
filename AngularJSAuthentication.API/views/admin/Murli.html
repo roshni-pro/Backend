@@ -1,0 +1,165 @@
+﻿
+
+
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Murli">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Murli
+            </strong>
+        </div>
+        <br />
+        <br />
+        
+        <div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                SkCode
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Reply
+                            </div>
+                        </th>
+
+
+
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in Voicedata">
+
+                        <td>{{$index+1}}</td>
+                        <td>{{trade}}</td>
+                        <td><button class="btn-sm btn-primary skview" ng-click="view(trade)">View</button> </td>
+                    </tr>
+
+                </tbody>
+            </table>
+      
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+       
+     
+</div>
+<script type="text/ng-template" id="myViewModal.html">
+
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    <div class="th">
+                        Audio
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Date
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        MessageType
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Message
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Reply
+                    </div>
+                </th>
+
+            </tr>
+
+        </thead>
+        <tbody>
+            
+            <tr data-ng-repeat="data1 in Voicedata">
+                <td>
+                    <audio src={{data1.filepath}} controls class="link" loop></audio> 
+                </td>
+                <td>{{data1.Date| date:'medium'}}</td>
+                <td>{{data1.messagetype}}</td>
+                <td>{{data1.message}}</td>
+                <td ng-if="data1.messagetype=='IN'"><button class="btn-sm btn-primary"  ng-click="reply(data1)">Reply</button> </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    
+ 
+   
+
+
+</script>
+<script type="text/ng-template" id="myReplyModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Reply the Message</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Skcode:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="Voicedata.skcode"/>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Message:</label><br />
+                <input id="site-name" class="form-control" rows="3" ng-model="Voicedata.message" />
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="MessageReply(Voicedata)">Save</button>
+        </div>
+    </form>
+</script>

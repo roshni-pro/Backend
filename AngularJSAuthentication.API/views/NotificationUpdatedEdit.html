@@ -1,0 +1,350 @@
+﻿<form>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <hr>
+
+
+    <style>
+        h1 {
+            background-color: white;
+            color: black;
+            padding-left: 5%;
+            margin-top: -10px;
+            margin-bottom: -23px;
+        }
+
+        ul {
+            font-size: 14px;
+            text-decoration: none;
+            line-height: 20px;
+            list-style-type: none;
+            font-weight: bold;
+        }
+
+        #button {
+            border-radius: 45px;
+            background-color: #1eacbe;
+            border: 1px solid #1eacbe;
+            padding: 9px;
+            width: 94px;
+            height: 43px;
+            margin-left: 75%;
+            margin-bottom: 5px;
+            margin-top: -49px;
+        }
+
+        #contain {
+            border: 1px solid white;
+            font-size: 20px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+
+        #title {
+            font-size: 20px;
+            height: 300px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        #image {
+            width: 503px;
+            height: 200px;
+            margin-left: 18px;
+            margin-top: 1px;
+            margin-bottom: 8px;
+        }
+
+        #icon {
+            margin-top: 1px;
+            margin-left: 23px;
+            height: 44px;
+            width: 55px;
+            margin-bottom: -39px;
+        }
+
+
+        .icon {
+            background-image: url('../styles/img/Pic.PNG');
+        }
+
+        #backbtn {
+            margin-top: 2px;
+            margin-left: 26px;
+            height: 36px;
+            width: 40px;
+            margin-bottom: -27px;
+        }
+
+        #imgbut {
+            height: 212px;
+            width: 535px;
+            margin-top: -118px;
+            margin-bottom: 2px;
+            margin-left: 1px;
+        }
+
+        #input {
+            border: 1px solid#dedede;
+            background-color: white;
+            padding: 2px 3px;
+            width: 197px;
+            margin-top: 5%;
+        }
+        #button:focus{outline:0}
+    </style>
+
+
+
+    <a href="#/NotificationDashboard"><input type="image" id="backbtn" src="/styles/img/backbutton.png"></a>
+    <h1>Add Notification</h1>
+    <br />
+    <br />
+    <br />
+    <!--<p id="button"></p>-->
+
+    <div style="border: 1px solid red"></div>
+    <br /><br />
+
+    <div class="container" style="margin-left:1%">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Select Association</span>
+                        <br /> <br />
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" id="notisel" name="noti_Select" ng-model="saveData.type" ng-change="selectGroup(saveData)">
+                            <option value="">--select--</option>
+                            <option value="{{a.text}}" ng-repeat="a in selectType">{{a.text}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Select Group</span>
+                        <br /> <br />
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.GroupName" ng-change="getGroupData(saveData)">
+                            <option value="">--select--</option>
+                            <option value="{{v.GroupName}}" ng-repeat="v in selectGroups">{{v.GroupName}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="container" style="margin-left:1%">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Notification Type</span>
+                        <br /> <br />
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.notificationType">
+                            <option value="">--select--</option>
+                            <option value="Actionable">Actionable</option>
+                            <option value="Non-Actionable">Non-Actionable</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body" style="font-size:15px">
+                        <span>Notification Name</span>
+                        <br /><br />
+                    </div>
+                    <input type="text" name="TypeHere" id="contain" ng-model="saveData.notificationName" placeholder="Enter Notification Name">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="container" style="margin-left:1%" ng-show="saveData.notificationType=='Actionable'">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Select Notification Category</span>
+                        <br /> <br />
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.NotificationCategory" ng-change="notificationCategorySelected(saveData)">
+                            <option value="">--select--</option>
+                            <option value="Item">Item</option>
+                            <option value="Brand">Brand</option>
+                            <option value="Flash Deal">Flash Deal</option>
+                            <option value="Offer">Offer</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6" ng-show="saveData.NotificationCategory=='Item'">
+                <div class="card">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Select {{saveData.SubType}}</span>
+                        <br /> <br />
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.Item" ng-change="selectedCatChanged(data)">
+                            <option value="">--select--</option>
+                            <option value="{{Item.ItemId}},{{ Item.itemname }}" ng-repeat="Item in Items"> {{Item.itemname}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" ng-show="saveData.NotificationCategory=='Brand'">
+                <div class="card">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Select {{saveData.SubType}}</span>
+                        <br /> <br />
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.Brand" ng-change="selectedCatChanged(data)">
+                            <option value="">--select--</option>
+                            <option value="{{Ssubsubcats.SubsubCategoryid}},{{Ssubsubcats.SubsubcategoryName}}" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="container" style="margin-left:1%">
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card" style="height:300px">
+                    <div class="card-body" style="font-size:15px">
+                        <span>Add Image<span style="color:red; font-size:12px"> (*Note:- Image Dimensions : 'A'x'B' & Image Size < 10kb)</span></span>
+                        <br />
+                    </div>
+                    <div>
+                        <input type="text" name="ImageName" placeholder="Image Name" style="font-size:20px; margin-left:2.5%; border: 1px solid white; margin-bottom: 20%;" disabled>
+                        <span id="spnFilePath"></span>
+                        <div ng-repeat="item in uploader.queue">
+                            <button class="btn btn-success m-t-20" id="button" style="font-size:15px; margin-top: -279px;background-color:#bce83d" type="button" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                <span class="glyphicon glyphicon-upload"></span> Upload
+                            </button>
+                        </div>
+                        <div class="col-md-6" style="margin-left:-15px;margin-top: 20px; margin-bottom: 30px;">
+                            <input type="image" id="imgbut" alt="Select File" title="Select File" src="../notificationimages/AddNotification.png" />
+                        </div>
+
+                    </div>
+                    <br />
+
+                    <input type="file" id="file" style="display: none" nv-file-select="" uploader="uploader" />
+                    <script type="text/javascript">
+
+                        var fileupload = document.getElementById("file");
+                        var filePath = document.getElementById("spnFilePath");
+                        var image = document.getElementById("imgbut");
+                        image.onclick = function () {
+                            fileupload.click();
+                        };
+                        fileupload.onchange = function () {
+                            var fileName = fileupload.value.split('\\')[fileupload.value.split('\\').length - 1];
+                            filePath.innerHTML = "<b>: </b>" + fileName;
+                        };
+
+                    </script>
+
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card" style="height:300px">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Text</span>
+                    </div>
+                    <input type="text" name="EnterTitle" placeholder="Enter Title" ng-model="saveData.title" style="font-size:20px; margin-left:2.5%; border: 1px solid white;width:150px">
+                    <!--<button class="btn btn-success m-t-20" id="button" style="font-size:15px">Save</button>-->
+                    <textarea name="EnterTitle" id="title" rows="5" ng-model="saveData.Message" placeholder="Enter Notification Details" style="border: 1px solid rgba(0,0,0,.125)" />
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-6">
+                <div class="card" style="margin-top:30px">
+                    <div class="card-body" style="font-size:15px">
+                        <span style="color:red; font-size:17px">* </span><span>Notification Time</span>
+                    </div>
+
+                    <div class="row" style="margin-left:2%;margin-bottom:20px">
+                        <div class="col-md-5">
+                            <br />
+                            <span>Start Date</span>
+                            <input type="date" name="StartDate" id="input" ng-model="saveData.startDate">
+                        </div>
+                        <div class="col-md-5">
+                            <br />
+                            <span>End Date(with Time)</span>
+                            <input type="datetime-local" name="StartDate" id="input" ng-model="saveData.endDate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+
+
+                <button class="btn btn-success m-t-20" id="button" style="font-size:15px; margin-top:90px" ng-click="Add(saveData)">Send</button>
+
+            </div>
+
+
+            <div class="container" style="margin-top:30px">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Sent Via</span>
+                                <div class="container" style="margin-top:20px">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" value="" ng-model="shopkirana" ng-click="sentViaShopkirana()">
+                                        <img src="/styles/img/Shopkirana.png" style="height:19px; width:20px; margin-bottom:5px; margin-left:5px" />&nbsp;Shopkirana
+                                    </label>
+                                    <label class="checkbox-inline" style="margin-left: 50px">
+                                        <input type="checkbox" value="" ng-model="textMessage" ng-click="sentViaTextMessage()">
+                                        <img src="https://img.icons8.com/metro/26/000000/sms.png" style="height:17px; width:20px; margin-bottom:5px; margin-left:5px" />&nbsp;Text Message
+                                    </label>
+                                    <label class="checkbox-inline" style="margin-left: 40px">
+                                        <input type="checkbox" value="" ng-model="whatsApp" ng-click="sentViaWhatsApp()">
+                                        <img src="https://img.icons8.com/color/48/000000/whatsapp.png" style="height:22px; width:22px; margin-bottom:5px" />&nbsp;WhatsApp
+                                    </label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
+    <br /><br />
+    <br />
+</form>

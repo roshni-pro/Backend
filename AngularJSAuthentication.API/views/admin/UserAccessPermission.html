@@ -1,0 +1,453 @@
+﻿<style>
+    #dragandrophandler {
+        border: 2px dashed #92AAB0;
+        width: 650px;
+        height: 200px;
+        color: #92AAB0;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 0px 10px 10px;
+        font-size: 200%;
+        display: table-cell;
+    }
+</style>
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="User Access Permission">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> User Access table</strong> </div>
+        <br />
+
+        <button class="btn-lg btn-primary  pull-left skdetails " ng-click="showAll()">Details</button>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Role Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('PeopleFirstName')"
+                                  data-ng-class="{active: row == 'PeopleFirstName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PeopleFirstName')"
+                                  data-ng-class="{active: row == '-PeopleFirstName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Role Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('PeopleLastName')"
+                                  data-ng-class="{active: row == 'PeopleLastName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PeopleLastName')"
+                                  data-ng-class="{active: row == '-PeopleLastName'}"></span>
+                        </div>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in roles">
+                    <td>{{trade.Id}}</td>
+                    <td>{{trade.Name}}</td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('WH Master Admin')>-1)"><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+    <script type="text/ng-template" id="myPeopleModalPut.html">
+
+        <form name="myFormSiteModal">
+
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                <h4 class="modal-title">Edit People</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="colasdasdasd">
+                    <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                    <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><label for="site-name">Role Id:</label><br /></th>
+                            <td>{{role1.RoleId}}</td>
+                            <th><label for="site-name">Role Name:</label><br /></th>
+                            <td>{{role1.RoleName}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Admin" />
+                                <label for="People-name">Admin</label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.AppAdmin" />
+                                <label for="People-name">AppAdmin</label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.CaseManagement" />
+                                <label for="People-name">CaseManagement</label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Delivery " />
+                                <label for="People-name">Delivery </label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.PurchaseOrder " />
+                                <label for="People-name">PurchaseOrder </label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.TaxMaster " />
+                                <label for="People-name">TaxMaster </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Customer " />
+                                <label for="People-name">Customer </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Supplier " />
+                                <label for="People-name">Supplier </label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Warehouse " />
+                                <label for="People-name">Warehouse </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.CurrentStock " />
+
+                                <label for="People-name">CurrentStock </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.OrderMaster " />
+                                <label for="People-name">OrderMaster </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.DamageStock " />
+                                <label for="People-name">DamageStock </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.ItemMaster " />
+                                <label for="People-name">ItemMaster </label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Reports " />
+                                <label for="People-name">Reports </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.StatisticalRep " />
+                                <label for="People-name">StatisticalRep </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Offer" />
+                                <label for="People-name">Offer</label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Sales " />
+                                <label for="People-name">Sales </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.AppPromotion " />
+                                <label for="People-name">AppPromotion </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.ItemCategory " />
+                                <label for="People-name">ItemCategory </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.CRM  " />
+                                <label for="People-name">CRM  </label>
+
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Request  " />
+                                <label for="People-name">Request  </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.UnitEconomics  " />
+                                <label for="People-name">UnitEconomics  </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.PromoPoint   " />
+                                <label for="People-name">PromoPoint   </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.News   " />
+                                <label for="People-name">News   </label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.CashManagment   " />
+                                <label for="People-name">Cash Management</label>
+                            </td>
+                            <td>
+                                <input id="site-name" type="checkbox" ng-model="role1.Account   " />
+                                <label for="People-name">Account</label>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="PutPeople(role1)">Save</button>
+            </div>
+        </form>
+    </script>
+    <script type="text/ng-template" id="showPeopleModalPut.html">
+        <style>
+            .modal-content{margin-left: -505px !important;
+                    width: fit-content !important;
+            }
+        </style>
+
+        <form name="myModaldeleteOrder">
+
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                <h4 class="modal-title">Show All Detail</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="colasdasdasd">
+                    <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                    <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+                </div>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Id
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Role Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Admin
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    AppAdmin
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    CaseManagement
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Delivery
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PurchaseOrder
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    TaxMaster
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Customer
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Supplier
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    CurrentStock
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    OrderMaster
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    DamageStock
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ItemMaster
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Reports
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    StatisticalRep
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Offer
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Sales
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    AppPromotion
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ItemCategory
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    CRM
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Request
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    UnitEconomics
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PromoPoint
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    News
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Account
+
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in role2">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.RoleName}}</td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Admin" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.AppAdmin" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.CaseManagement" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Delivery" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.PurchaseOrder" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.TaxMaster" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Customer" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Supplier" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Warehouse" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.CurrentStock" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.OrderMaster" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.DamageStock" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.ItemMaster" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Reports" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.StatisticalRep" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Offer" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Sales" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.AppPromotion" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.ItemCategory" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.CRM" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Request" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.UnitEconomics" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.PromoPoint" /></td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.News" /> </td>
+                            <td><input id="site-name" class="form-control" type="checkbox" disabled="disabled" ng-model="trade.Account" /> </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            </div>
+        </form>
+
+    </script>
+</div>

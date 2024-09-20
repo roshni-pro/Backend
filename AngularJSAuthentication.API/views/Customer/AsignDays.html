@@ -1,0 +1,200 @@
+﻿<style>
+    .marButton{
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+
+    option.option2
+{
+    background-color: #f31d11;
+}
+</style>
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Sales Assign Day">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Sales Person asign
+            </strong>
+        </div>
+        <br />
+        <div>
+            <div class="form-group col-md-6 clear-both">
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select Sales Person</label><br>
+                    <select class="form-control" ng-model="data.PeopleID" id="SS_pesn"  name="SALEPERSON" ng-change="selectedItemChanged(data)">
+                        <option value="">-Select-</option>
+                        <option value="{{a.PeopleID}}" ng-repeat="a in Peopledata">{{a.DisplayName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <td>
+                        <label for="site-name">Select Day</label>
+                        <select class="form-control" ng-model="Day" id="SPDay"  name="Selectday" ng-change="selectedDayChanged(Day)">
+                            <option value="" class="option2" >--Select--</option>
+                            
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+
+                    </td>
+                </div>
+
+              
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                          S. NO.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            <!--<input type="checkbox" value="all" ng-checked="selectall()"/>-->
+                            Select Customers
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sk code 
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Skcode')"
+                                  data-ng-class="{active: row == 'Skcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Skcode')"
+                                  data-ng-class="{active: row == '-Skcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shop Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ShopName')"
+                                  data-ng-class="{active: row == 'ShopName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ShopName')"
+                                  data-ng-class="{active: row == '-ShopName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                             Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Name')"
+                                  data-ng-class="{active: row == 'Name'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Name')"
+                                  data-ng-class="{active: row == '-Name'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Mobile
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Mobile')"
+                                  data-ng-class="{active: row == 'Mobile'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Mobile')"
+                                  data-ng-class="{active: row == '-Mobile'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Address
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('BillingAddress')"
+                                  data-ng-class="{active: row == 'BillingAddress'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-BillingAddress')"
+                                  data-ng-class="{active: row == '-BillingAddress'}"></span>
+                        </div>
+                    </th>
+                    
+                   
+                    <th>
+                        <div class="th">
+                            Asign Day
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Day')"
+                                  data-ng-class="{active: row == 'Day'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Day')"
+                                  data-ng-class="{active: row == '-Day'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        Order No
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Details
+                        </div>
+                    </th>-->
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in dataselect">
+                    <td>{{1+$index}}</td>
+                    <td><input type="checkbox"  class="form-control" value="{{trade.check}}" ng-model="trade.check" /></td>
+                    <td>{{trade.Skcode}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.Name}}</td>
+                    <td>{{trade.Mobile}}</td>
+                    <td>{{trade.BillingAddress}}</td>
+                  
+                    <td><label for="site-name">Select Day</label>
+                    <select class="form-control"  ng-model="trade.Day">
+                        <option value="" class="option2" selected="selected" ng-if="trade.Day == null">--Select--</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
+
+                    </td>
+                    <td><input type="number" ng-model="trade.BeatNumber" min="1" max="100" /> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <!--<div class="form-group col-md-3"">
+                <label for="site-name">Select Days</label><br />
+                <select class="form-control" value="{{Day}}" ng-model="Day">
+                    <option value="">---SELECT---</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
+            </div>-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-success skassigncustomersday" ng-click="submit()" data-dismiss="modal">Assign Customers Day</button>
+                <br /><br />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+    </section>
+</div>

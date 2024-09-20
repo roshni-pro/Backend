@@ -1,0 +1,24 @@
+2023-10-09 11:07:02.3863|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-10-09 11:07:02.4383|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : {0} , Company Id : {1}
+2023-10-09 11:07:04.8833|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 
+2023-10-09 11:07:05.1563|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-10-09 11:07:05.1623|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-10-09 11:07:06.1883|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-10-09 11:07:06.2593|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-10-09 11:07:06.2593|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-10-09 11:07:07.0003|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-10-09 11:10:42.1653|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-10-09 11:10:42.1653|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-10-09 11:10:42.1653|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : 1 , Company Id : 1717
+2023-10-09 11:10:42.1653|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : 1 , Company Id : 1717
+2023-10-09 11:10:42.1793|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 
+2023-10-09 11:10:42.1793|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 
+2023-10-09 11:10:46.8019|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-10-09 11:10:46.8019|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : 1 , Company Id : 1717
+2023-10-09 11:10:46.8209|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 
+2023-10-09 12:21:10.9181|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-10-09 12:21:11.0031|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-10-09 12:21:58.9591|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-10-09 12:21:59.1071|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-10-09 12:21:59.1071|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-10-09 12:22:00.0711|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 

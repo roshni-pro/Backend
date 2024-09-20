@@ -1,0 +1,355 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Tax Master" pageName="Tax Master">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>TaxMaster
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()" >
+                <span class="glyphicon glyphicon-plus"> </span> New Tax Type
+            </button>
+                 </div>
+        <br />
+       
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            TaxName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('TaxName')"
+                                  data-ng-class="{active: row == 'TaxName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-TaxName')"
+                                  data-ng-class="{active: row == '-TaxName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                           Tax Alias Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('TAlias')"
+                                  data-ng-class="{active: row == 'TAlias'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-TAlias')"
+                                  data-ng-class="{active: row == '-TAlias'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Tax Percent
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('TPercent')"
+                                  data-ng-class="{active: row == 'TPercent'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-TPercent')"
+                                  data-ng-class="{active: row == '-TPercent'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                             Description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('TDiscription')"
+                                  data-ng-class="{active: row == 'TDiscription'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-TDiscription')"
+                                  data-ng-class="{active: row == '-TDiscription'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedDate')"
+                                  data-ng-class="{active: row == '- CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th >
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th >
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.TaxName}}</td>
+                    <td>{{trade.TAlias}}</td>
+                    <td>{{trade.TPercent}}</td>
+                    <td>{{trade.TDiscription}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                    
+
+                    <td><button class="btn-sm btn-primary skhistory" data-toggle="modal" ng-init="Id=trade.TaxID;entity='TaxMaster'" ng-click="showMe=true">History</button>
+                        <div ng-if="showMe" show-history></div>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>   
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="myaddTaxModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add  Tax Type</h4>
+
+        </div>
+
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group" >
+                <label for="site-name"> Tax Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaxData.TaxName"  placeholder="Enter Tax name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Tax Alias:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaxData.TAlias" placeholder="Enter Tax name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Description:</label><br />
+                <textarea id="site-name" class="form-control" rows="3" required="" ng-model="TaxData.TDiscription" placeholder="Enter Tax description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Tax Percent:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaxData.TPercent" placeholder="Enter Tax percent" ng-required />
+            </div>
+            
+            <div class="form-group">
+                <label for="site-name">  Active:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="TaxData.Active"  />
+            </div>
+           
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AddTax(TaxData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update-->
+<script type="text/ng-template" id="myTaxModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit  Category</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Tax Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaxData.TaxName" placeholder="Enter Tax name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Tax Alias:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaxData.TAlias" placeholder="Enter Tax Alias name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Description:</label><br />
+                <textarea id="site-name" class="form-control" rows="3" required="" ng-model="TaxData.TDiscription" placeholder="Enter Tax description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Tax Percent:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaxData.TPercent" placeholder="Enter Tax percent" ng-required />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">  Active:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="TaxData.Active" />
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning skcancel" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="PutTax(TaxData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteTax.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete  Tax Type</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning skcancel" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteTax(TaxData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+<!-- Tax Histroy  model-->
+<!--<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<div class="modal fade " id="Taxprice" role="dialog">
+    <div class="modal-dialog">
+
+       
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Tax History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Tax Name:
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Tax Alias:
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Description:
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Tax Percent:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Active:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Edit By
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Created\Updated Date
+                            </div>
+                        </th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in dataTaxMasterHistrory">
+                        <td>{{trade.TaxName}}</td>
+                        <td>{{trade.TaxAlias}}</td>
+                        <td>{{trade.TaxPercent}}</td>
+                        <td>{{trade.TaxDiscription}}</td>
+                        <td>{{trade.Active}}</td>
+                        <td>{{trade.username}}</td>
+                        <td>{{trade.CreatedDate| date:'medium'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>-->

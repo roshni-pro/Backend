@@ -1,0 +1,145 @@
+﻿    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Blank PO Model</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <select class="form-control" id="site-name" ng-model="data.WarehouseId" ng-disabled="supplierData">
+                            <option value=""> -Select-</option>
+                            <option value="{{warehousespo.WarehouseId}}" ng-repeat="warehousespo in warehouseAddPO"> {{warehousespo.WarehouseName}} {{warehousespo.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="site-name">Search Supplier</label><br />
+                        <input id="site-name" type="text" class="form-control" ng-model="data.supplier" ng-disabled="supplierData1" placeholder="Enter Supplier Name or code for search" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-ar btn-primary" style=" margin: 23px -85px 7px 0px;" ng-click="SearchSupplier(data)">
+                            <span class="glyphicon glyphicon-search"> </span> Search
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control ng-pristine ng-valid" style="margin: 24px 0px 0px -132px;" id="site-name" ng-change="fillbuyer(data.SupplierId)" ng-disabled="supplierData" ng-model="data.SupplierId">
+                            <option value="{{s.SupplierId}}" ng-repeat="s in Suppliers">{{s.SupplierName}}</option>
+                        </select>
+                    </div>
+                   
+                    
+                </div>
+                <div class="row">
+                    
+
+                    <div class="col-md-3">
+                        <label for="site-name">Buyer</label><br />
+                        <select class="form-control ng-pristine ng-valid" id="site-name" ng-disabled="buyerdata" ng-model="data.PeopleID">
+                            <option value="0">--Select--</option>
+                            <option value="{{ppl.PeopleID}}" ng-repeat="ppl in Buyer" data-ng-selected="ppl.PeopleID == Buyerdata.PeopleID"> {{ppl.DisplayName}} </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="site-name">Search Item</label>
+                        <input id="site-name" type="text" class="form-control" ng-model="key" placeholder="Enter item Name for search" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" style=" margin: 23px -85px 7px 0px;" class="btn btn-ar btn-primary" ng-click="Search(key)">
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control ng-pristine ng-valid" style="margin: 24px 0px 0px -132px;" id="site-name" ng-model="data.ItemId" ng-change="Minqtry(data.ItemId)">
+                            <option value="{{s.ItemId}}" ng-repeat="s in itemData">{{s.itemname}}=({{s.SellingSku}}) => ({{s.PurchaseMinOrderQty}})</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="site-name">Depo Name </label><br />
+                        <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="data.DepoId" ng-disabled="supplierData">
+                            <option value="{{getsupplierdepos.DepoId}}" ng-repeat="getsupplierdepos in getsupplierdepo"> {{getsupplierdepos.DepoName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="site-name">MOQ </label><br />
+                        <select class="form-control ng-pristine ng-valid" id="site-name" ng-change="enNumSet()" ng-model="data.PurchaseMinOrderQty">
+                            <option value="">Select</option>
+                            <option value="{{ss.PurchaseMinOrderQty}}" ng-repeat="ss in itmdata">{{ss.PurchaseMinOrderQty}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                     
+                    </div>
+                    <div class="col-md-4">
+                        <label for="site-name" style="margin: 0px 0px 0px 10px;">Number Of Set </label><br />
+                        <input id="site-name"  type="number" style="margin: 0px 0px 0px 10px;"  ng-disabled="Ecount == 0" class="form-control" ng-model="data.Noofset" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="site-name">&nbsp;</label><br />
+                        <button type="button" style="float:left;" class="btn btn-ar btn-primary" ng-click="AddData(data)"><span class="glyphicon glyphicon-plus"> </span> Add</button>
+                    </div>
+                </div>
+                </div>
+
+              
+            </div>
+        <div class="modal-footer">
+            
+        </div>
+        <table class="table table-bordered table-striped table-responsive ">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            SNo.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Noofset
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            PurchaseMinOrderQty
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            NO.of Pices
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            SupplierId
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in POdata">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.Itemname}}</td>
+                    <td>{{trade.Noofset}}</td>
+                    <td>{{trade.PurchaseMinOrderQty}}</td>
+                    <td>{{trade.PurchaseMinOrderQty *trade.Noofset}}</td>
+                    <td>{{trade.SupplierId}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" ng-disabled="count == 1" ng-click="Searchsave()">
+                <span class="glyphicon glyphicon-plus"> </span>Save 
+            </button>
+        </div>
+    </form>

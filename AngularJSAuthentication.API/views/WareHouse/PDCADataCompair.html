@@ -1,0 +1,82 @@
+﻿<style>
+    table { width: 100%; }
+
+    table, th, td { border: 1px solid black; border-collapse: collapse; }
+
+    th, td { padding: 15px; text-align: center; }
+
+    table tr:nth-child(even) { background-color: #eee; }
+
+    table tr:nth-child(odd) { background-color: #fff; }
+</style>
+<div class="page page-table"  button-permission-binder parentName="Sales" pageName="PDCA Comparision">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> PDCA Comparison Report</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select Month</label><br>
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input type="month" id="start" name="start" min="2018-03" ng-model="MonthYear" onkeydown="return false">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="site-name">Select Warehouses</label>
+                    <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> </label><br>
+                    <div class='input-group date'>
+                        <button type="button" class="btn btn-ar btn-primary skcomparisondata" ng-click="GetData(MonthYear)"> Comparison Data </button>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> </label><br>
+                    <div class='input-group date'>
+                        <button type="button" class="btn btn-ar btn-primary skexport" ng-click="ExportData(MonthYear)"> Export Report </button>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th rowspan="2" align="center"> Category </th>
+                            <th colspan="2" ng-repeat="warehouse in SelectedWarehouse">{{ warehouse.Name}}</th>
+                        </tr>
+                        <tr>
+                            <th ng-repeat="warehouse in Header">{{($index%2)==0? 'Target Amount': 'MTD'}}</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item  in CategoryCompare">
+                            <td>{{ item.CategoryName}}</td>
+                            <th ng-repeat-start="warehouse in SelectedWarehouse">
+                                {{
+                                      GettargetAmount(warehouse.Id,item.WarehoseDetailDcs)
+                                }}
+                            </th>
+                            <th ng-repeat-end>
+                                {{
+                                      GetMTD(warehouse.Id,item.WarehoseDetailDcs)
+                                }}
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,287 @@
+﻿<style>
+    #dragandrophandler {
+        border: 2px dashed #92AAB0;
+        width: 650px;
+        height: 200px;
+        color: #92AAB0;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 0px 10px 10px;
+        font-size: 200%;
+        display: table-cell;
+    }
+</style>
+<script type="text/javascript">
+    function checkSpcialChar(event) {
+        if (!((event.keyCode >= 65) && (event.keyCode <= 90) || (event.keyCode >= 97) && (event.keyCode <= 122) || (event.keyCode = 64) && (event.keyCode <= 57))) {
+            event.returnValue = false;
+            return;
+        }
+        event.returnValue = true;
+    }
+</script>
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Deleted People ">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>Deleted People Table</strong> </div>
+        <br />
+        <!--<div class="text-right">
+            <button class="btn btn-primary" data-toggle="modal" style="background-color: black;" ng-click="Peopleremoveddata(trade)"><span class="glyphicon glyphicon-plus"> </span> Deleted People List</button>
+        </div>-->
+
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-3 col-xs-4"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div> 
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+
+                <tr>
+                    <th>
+                        <div class="th">
+                            Id
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            PeopleId
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            People Name
+                        </div>
+                    </th>
+
+                    <!--<th>
+                        <div class="th">
+                            CreatedBy
+                        </div>
+                    </th>-->
+
+                    <th>
+                        <div class="th">
+                            UpdateBy
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            UpdatedDate
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Details
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Active
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+       
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{1+$index}}</td>
+                    <td>{{trade.PeopleID}}</td>
+                    <td>
+                        {{trade.PeopleFirstName}}
+                        {{trade.PeopleLastName}}
+                    </td>
+                    <!--<td>{{trade.CreatedBy}}</td>-->
+                    <td>{{trade.UpdateBy}}</td>
+                    <td>{{trade.UpdatedDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary skcommentsrecieved" data-toggle="modal" data-target="#Peoplemodel2" ng-click="PeopleHistroydata(trade)">Comments Recieved</button></td>
+                    <td><button class="btn-sm btn-warning  skactive"  ng-click="active(trade)">Active</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+                      
+<!--By Danish-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 50% !important;
+        margin-left: 485px;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<script type="text/ng-template" id="myModaldeletepeople.html">
+    <div class="modal-dialog1">
+        <form name="myFormTaskTypeModal1">
+            <div class="modal-header w3-red">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                        <span class="icon icon-x" aria-hidden="true">
+                        </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                    <h4 class="modal-title">Delete People</h4>
+                </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+                        <br />
+                        <th>
+                            <div class="th">
+
+                                <button class="btn btn-primary"> Comment Section : </button>
+
+                            </div>
+                        </th><br />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <textarea type="text" class="form-control" name="CName" ng-model="PeopleData.DeleteComment" placeholder="Type the Comment" />
+                            </div>
+                        </div><br />
+                    </div>
+                </div>
+        </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletepeoples(PeopleData,$index,DeleteComment)">Yes</button>
+        </div>
+        </div>
+</script>
+
+
+<!--By Danish-->
+<div class="modal fade " id="Peoplemodel2" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;"> Deleted People Comments</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Edited By
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Comments
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in dataPeopleHistrorydata">
+                        <td>{{trade.Id}}</td>
+                        <td>
+                            {{trade.PeopleFirstName}}
+                            {{trade.PeopleLastName}}
+                        </td>
+                        <td>{{trade.UpdateBy}}</td>
+                        <td>{{trade.DeleteComment}}</td>
+
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade " id="Peoplemodel1" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;"> Activated people</h3>
+            </div>           
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

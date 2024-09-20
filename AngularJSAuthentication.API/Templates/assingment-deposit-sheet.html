@@ -1,0 +1,255 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div style="width:95%; max-width:1450px; margin:0px auto;">
+        <div style="text-align:center;">
+            <h3 style="background:#eee; padding:5px 0px;font-weight: 600;">SHOPKIRANA E-TRADING PVT. LTD.</h3>
+            <h4 style="margin:5px 0px;font-weight: 600;">ASSIGNMENT DEPOSIT SHEET @WarehouseName</h4>
+        </div>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+                    <tr>
+                        <td style="padding:3px 5px;">SLIP NO.</td>
+                        <td style="padding:3px 5px;">@SlipNo</td>
+                        <td style="padding:3px 5px;">Date:</td>
+                        <td style="padding:3px 5px;">@NowDate</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">NAME OF AGENT:</td>
+                        <td style="padding:3px 5px;">@AgentNAME</td>
+                        <td style="padding:3px 5px;">NAME OF DELEIVERY BOY:</td>
+                        <td style="padding:3px 5px;">@NameOfDelivery</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+                    @AssingmentDetail
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%">
+                <tr>
+                    <td valign="top">
+                        <table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                            <thead style="text-align:center;">
+                                <tr>
+                                    <th style="padding: 5px; background: #eee;" colspan="3">DENOMINATIONS</th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 5px; background: #eee;">NOTES</th>
+                                    <th style="padding: 5px; background: #eee;">QTY.</th>
+                                    <th style="padding: 5px; background: #eee;">AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @CashDetail
+                            </tbody>
+                            <tfoot style="background: #eee; font-weight: 600;">
+                                <tr>
+                                    <td colspan="2" style="padding: 5px;">TOTAL AMOUNT GIVEN BY CASH:</td>
+                                    <td style="padding:3px 5px;">@TotalCashAmount</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </td>
+                    <td valign="top">
+                        <table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                            <thead style="text-align:center;">
+                                <tr>
+                                    <th style="padding: 5px; background: #eee;" colspan="4">CHEQUE DETAILS</th>
+                                </tr>
+                                <tr>
+                                    <th style="padding: 5px; background: #eee;">ORDER ID</th>
+                                    <th style="padding: 5px; background: #eee;">DATE OF CHE.</th>
+                                    <th style="padding: 5px; background: #eee;">CHEQUE NO.</th>
+                                    <th style="padding: 5px; background: #eee;">CHE. AMOUNT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @ChequeDetail
+                            </tbody>
+                            <tfoot style="background: #eee; font-weight: 600;">
+                                <tr>
+                                    <td style="padding:3px 5px;" colspan="3">TOTAL AMOUNT GIVEN BY CHEQUE:</td>
+                                    <td style="padding:3px 5px;">@TotalChequeAmount</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="padding: 5px; background: #eee;" colspan="4">Online Payment Recived</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:3px 5px;"><strong>ID</strong></td>
+                        <td style="padding:3px 5px;"><strong>Date</strong></td>
+                        <td style="padding:3px 5px;"><strong>UTE No.</strong></td>
+                        <td style="padding:3px 5px;"><strong>Amount</strong></td>
+                    </tr>
+                    @OnlineDetail
+                </tbody>
+                <tfoot style="background: #eee; font-weight: 600;">
+                    <tr>
+                        <td style="padding:3px 5px;" colspan="3">TOTAL AMOUNT GIVEN BY ONLINE:</td>
+                        <td style="padding:3px 5px;">@TotalOnlineAMOUNT</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;text-align: center;">
+                <thead>
+                    <tr>
+                        <th style="padding: 5px; background: #eee;">PARTICULER</th>
+                        <th style="padding: 5px; background: #eee;">AMOUNT</th>
+                        <th style="padding: 5px; background: #eee;">PARTICULER</th>
+                        <th style="padding: 5px; background: #eee;">AMOUNT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding:3px 5px;">Opening Due Amount</td>
+                        <td style="padding:3px 5px;">@TotalDueAmount</td>
+                        <td style="padding:3px 5px;">Total Amount Given By Cash</td>
+                        <td style="padding:3px 5px;">@TotalAllCashAmount</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">assignment Amount 1</td>
+                        <td style="padding:3px 5px;">@AssignmentDueAmount1</td>
+                        <td style="padding:3px 5px;">Total Amount Given By Cheque</td>
+                        <td style="padding:3px 5px;">@TotalAllChequeAmount</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">assignment Amount 2</td>
+                        <td style="padding:3px 5px;">@AssignmentDueAmount2</td>
+                        <td style="padding:3px 5px;">Total Amount Given By Online</td>
+                        <td style="padding:3px 5px;">@TotalAllOnlineAMOUNT</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">assignment Amount 3</td>
+                        <td style="padding:3px 5px;">@AssignmentDueAmount3</td>
+                        <td style="padding:3px 5px;">Less</td>
+                        <td style="padding:3px 5px;">0</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">assignment Amount 4</td>
+                        <td style="padding:3px 5px;">@AssignmentDueAmount4</td>
+                        <td style="padding:3px 5px;">Less</td>
+                        <td style="padding:3px 5px;">0</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Add Due Against postdated Che.</td>
+                        <td style="padding:3px 5px;">0</td>
+                        <td style="padding:3px 5px;">Less</td>
+                        <td style="padding:3px 5px;">0</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Add</td>
+                        <td style="padding:3px 5px;">0</td>
+                        <td style="padding:3px 5px;">Less</td>
+                        <td style="padding:3px 5px;">0</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Add</td>
+                        <td style="padding:3px 5px;">0</td>
+                        <td style="padding:3px 5px;">Less</td>
+                        <td style="padding:3px 5px;">0</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Total Assignment Amount/ Inc. due</td>
+                        <td style="padding:3px 5px;">@AssignmentTotal</td>
+                        <td style="padding:3px 5px;">Today's Received Amount</td>
+                        <td style="padding:3px 5px;">@ReceivedTotal</td>
+                    </tr>
+                </tbody>
+                <tfoot style="background: #eee; font-weight: 600;">
+                    <tr>
+                        <td style="padding:3px 5px;" colspan="3">Total Due Till Date</td>
+                        <td style="padding:3px 5px;">@TotalDueTillDate</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+
+                    @Comments
+                    <!--<tr>
+                        <td style="padding:3px 5px; width: 150px;">REMARKS 1</td>
+                        <td style="padding:3px 5px;">@remark1</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px; width: 150px;">REMARKS 2</td>
+                        <td style="padding:3px 5px;">@remark2</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px; width: 150px;">REMARKS 3</td>
+                        <td style="padding:3px 5px;">@remark3</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;width: 150px;">REMARKS 4</td>
+                        <td style="padding:3px 5px;">@remark4</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px; width: 150px;">REMARKS 5</td>
+                        <td style="padding:3px 5px;">@remark5</td>
+                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>@DBoySigned</td>
+                        <td>@HubHeadSigned</td>
+                        <td>@AssingmentSettledSigned</td>
+                    </tr>
+                    <tr>
+                        <td>@AssignmentPrepaired</td>
+                        <td>@AgentNAME<br /> @DBoyNAME</td>
+                        <td>@HubHeadName</td>
+                        <td>@AssingmentSettledName</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Assingment Prepaired By</td>
+                        <td style="padding:3px 5px;">Agent Name/Signature</td>
+                        <td style="padding:3px 5px;">Hub Head</td>
+                        <td style="padding:3px 5px;">Assingment Settled by</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

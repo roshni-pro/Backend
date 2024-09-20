@@ -1,0 +1,405 @@
+﻿
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> Company table</strong> </div>
+        <br />
+        <div>
+            <button class="btn btn-primary" ng-click="open()" ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"> <span class="glyphicon glyphicon-plus"> </span> Add Company</button>
+                </div>
+        <br />
+
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div> <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                           S.No.
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Email')"
+                                  data-ng-class="{active: row == 'Email'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Email')"
+                                  data-ng-class="{active: row == '-Email'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CompanyName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Email')"
+                                  data-ng-class="{active: row == 'Email'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Email')"
+                                  data-ng-class="{active: row == '-Email'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Address
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Email')"
+                                  data-ng-class="{active: row == 'Email'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Email')"
+                                  data-ng-class="{active: row == '-Email'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CompanyPhone
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Mobile')"
+                                  data-ng-class="{active: row == 'Mobile'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Mobile')"
+                                  data-ng-class="{active: row == '-Mobile'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            No. Emp
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Active')"
+                                  data-ng-class="{active: row == 'Active'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Active')"
+                                  data-ng-class="{active: row == '-Active'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            User Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Login Email
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Login Pass
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Mobile
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Active
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CreatedDate
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th  ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )">
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <!--<th ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )">
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>-->
+                   
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.CompanyName}}</td>
+                    <td>{{trade.Address}}</td>
+                    <td>{{trade.CompanyPhone}}</td>
+                    <td>{{trade.EmployeesCount}}</td>
+                    <td>{{trade.DisplayName}}</td>
+                    <td>{{trade.Email}}</td>
+                    <td>{{trade.Password}}</td>
+                    <td>{{trade.Mobile}}</td>
+                    <td>{{trade.Active}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                    <!--<td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"><button class="btn-sm btn-danger" ng-click="opendelete(trade,$index)">Remove</button> </td>-->
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myCompanyModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Company</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </span>
+                    <input type="email" class="form-control ng-pristine ng-invalid ng-invalid-required ng-valid-email" placeholder="Email" data-ng-model="PeopleData.email" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                    <input type="password" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Password" data-ng-model="PeopleData.password" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </span>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Company Name" data-ng-model="PeopleData.CompanyName" required="">
+                </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-road"></span>
+                        </span>
+                        <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Address" data-ng-model="PeopleData.Address" required="">
+                    </div>
+                </div>
+           
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-road"></span>
+                    </span>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Company Zip" data-ng-model="PeopleData.CompanyZip" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-phone"></span>
+                    </span>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Company Phone" data-ng-model="PeopleData.CompanyPhone" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                    <input type="number" class="form-control ng-pristine ng-invalid ng-invalid-required ng-valid-number" placeholder="Number of Employees" data-ng-model="PeopleData.Employees" required="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddComp(PeopleData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<!--Update People-->
+
+<script type="text/ng-template" id="myCompanyModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Update Company</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </span>
+                    <input type="email" class="form-control ng-pristine ng-invalid ng-invalid-required ng-valid-email" placeholder="Email" data-ng-model="PeopleData.Email" required="" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                    <input type="password" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Password" data-ng-model="PeopleData.Password" required="" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </span>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Company Name" data-ng-model="PeopleData.CompanyName" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-road"></span>
+                    </span>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Address" data-ng-model="PeopleData.Address" required="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-road"></span>
+                    </span>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Company Zip" data-ng-model="PeopleData.CompanyZip" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-phone"></span>
+                    </span>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" placeholder="Company Phone" data-ng-model="PeopleData.CompanyPhone" required="">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                    <input type="number" class="form-control ng-pristine ng-invalid ng-invalid-required ng-valid-number" placeholder="Number of Employees" data-ng-model="PeopleData.EmployeesCount" required="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutComp(PeopleData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeletecompany.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete People</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletepeoples(PeopleData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

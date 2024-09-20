@@ -1,0 +1,53 @@
+﻿<div class="page page-table"  button-permission-binder parentName="Request" pageName="RequestService">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Customer Service Request
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="table-filters">
+                <div class="row ">                    
+                    <div class="col-sm-2 col-xs-6 filter-result-info pull-right">
+                        <span>
+                            Showing {{requestService.length}} entries
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive" style="font-size:20px!important; font-family:'Arial Rounded MT'">
+            <thead>
+                <tr>
+                    <th class="th">
+                       Service Request Id
+                    </th>
+                    <th class="th">
+                        SKCODE
+                    </th>
+                    <th class="th">
+                       Name
+                    </th> 
+                    <th class="th">
+                        Apply for
+                    </th> 
+                    <th class="th">
+                        Created Date
+                    </th>                   
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr data-ng-repeat="trade in requestService">
+                    <td>{{trade.ReqServiceId}}</td>
+                    <td>{{trade.Skcode}}</td>
+                    <td>{{trade.PeopleName}}</td>  
+                    <td>{{trade.ItemName}}</td> 
+                    <td>{{trade.CreatedDate}}</td>                       
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">           
+        </footer>
+    </section>
+</div>

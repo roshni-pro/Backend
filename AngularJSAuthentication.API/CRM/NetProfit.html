@@ -1,0 +1,92 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+</style>
+<div class="page page-table"  button-permission-binder parentName="StatisticalRep" pageName="Net Margin">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Profit Report
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">                        
+                        <div class="form-group">
+                            <label for="site-name">Select:</label><br />
+                            <select class="form-control" id="site-name" ng-model="data.type" ng-change="selectedtypeChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-if="data.type==4">
+                            <label for="site-name">Excecutive</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="examplemodel" extra-settings="examplesettings"></div>
+
+                        </div>
+                        <div class="form-group" ng-if="data.type==2">
+                            <label for="site-name">Hub</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="subexamplemodel" extra-settings="subexamplesettings"></div>
+
+                        </div>
+                        <div class="form-group" ng-if="data.type==3">
+                            <label for="site-name">City</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="ssubexamplemodel" extra-settings="ssubexamplesettings"></div>
+                        </div>      
+                        <div class="form-group" ng-if="data.type==5">
+                            <label for="site-name">Cluster</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="clusterModel" extra-settings="clusterSetting"></div>
+                        </div>                                    
+                        <div class="form-group">
+                            <label for="site-name">Select Date Range</label><br>
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>                       
+                        <div class="form-group">
+                            <button class="btn btn-primary marButton skprofit" ng-click="genereteReport(data,'day')">
+                                <span class="glyphicon glyphicon-plus">
+                                </span> Profit Report
+                            </button>
+                        </div>                        
+                    </form>
+                </div>
+            </div>
+            <br />
+            <br />
+
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <table class="table table-bordered table-striped table-responsive" id="exportable" style="text-align:center;font-size:20px;">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th" style="text-align:center;">
+                                        Net margin Percentage in sales & Purchase 
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center;">
+                                    {{proft | number : 5}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-3"></div>
+            </div> 
+      </div>
+    </section>
+</div>

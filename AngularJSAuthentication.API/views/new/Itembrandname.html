@@ -1,0 +1,176 @@
+﻿
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Item Brand Name
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary" ng-click="open()">
+                <span class="glyphicon glyphicon-plus"> </span> Add new Item Brand Name
+            </button>
+        </div>
+        <br />
+       
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                       Item Brand Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedDate')"
+                                  data-ng-class="{active: row == '- CreatedDate'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                  
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.ItemBrandName}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="opendelete(trade)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+     
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="myItembrandModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add  Item Brand Name</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group" >
+                <label for="site-name"> Item Brand Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="ItembrandData.ItemBrandName"  placeholder="Enter  name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Item Brand Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="ItembrandData.active" />
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddItemBrand(ItembrandData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myItembrandModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Item  Brand Name</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Item Brand Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="ItembrandData.ItemBrandName" placeholder="Enter  name" ng-required />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Item Brand Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="ItembrandData.active" />
+            </div>
+
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutItembrand(ItembrandData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteItembrand.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Item Brand</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteItembrand(ItembrandData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

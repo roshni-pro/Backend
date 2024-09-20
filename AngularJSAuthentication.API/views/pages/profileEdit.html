@@ -1,0 +1,112 @@
+﻿<div class="col-md-6">
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
+        <div class="panel-body">
+            <div class="panel-heading bg-primary clearfix">
+                <a href="" class="pull-left profile">
+                    <img alt="" src="{{peoples.ImageUrl}}" class="img-circle img80_80">
+                </a>
+                <h3>{{peoples.PeopleFirstName}} {{peoples.PeopleLastName}}</h3>
+                <p>{{peoples.Permissions}}</p><br />
+                <div class="form-group">
+                    <!--<label for="uploadAdvertisements">Attach Receipt:</label>-->
+
+                    <input id="file" type="file" nv-file-select="" uploader="uploader" />
+                    <div ng-repeat="item in uploader.queue">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="media">
+                <div class="media-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="" class="col-sm-2">First Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="peoples.PeopleFirstName" value="{{peoples.PeopleFirstName}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="label-focus" class="col-sm-2">Last Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="label-focus" ng-model="peoples.PeopleLastName" value="{{profiles.PeopleLastName}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2">Email</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="peoples.Email" value="{{profiles.Email}}">
+                                <!--<span class="help-block">Some help text goes here.</span>-->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2">Department</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="peoples.Department" value="{{profiles.Department}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2">Permissions</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="peoples.Permissions" value="{{profiles.Permissions}}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-sm-2">Mobile</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" ng-model="peoples.Mobile" value="{{profiles.Mobile}}" disabled>
+                            </div>
+                        </div>
+
+
+                        <!--<div class="form-group">
+        <label for="" class="col-sm-2">Textarea</label>
+        <div class="col-sm-10">
+            <textarea name="" id="" class="form-control" rows="4"></textarea>
+        </div>
+    </div>-->
+                    </form>
+                    <ul class="list-unstyled list-info">
+                        <li>
+                            <span class="icon glyphicon glyphicon-user"></span>
+                            <label>User name</label>
+                            {{peoples.PeopleFirstName}} {{peoples.PeopleLastName}}
+                        </li>
+                        <li>
+                            <span class="icon glyphicon glyphicon-envelope"></span>
+                            <label>Email</label>
+                            {{peoples.Email}}
+                        </li>
+                        <li>
+                            <span class="icon glyphicon glyphicon-home"></span>
+                            <label>Department</label>
+                            {{peoples.Department}}
+                        </li>
+                        <li>
+                            <span class="icon glyphicon glyphicon-earphone"></span>
+                            <label>Permissions</label>
+                            {{peoples.Permissions}}
+                        </li>
+                        <!--<li>
+                            <span class="icon glyphicon glyphicon-flag"></span>
+                            <label>Nationality</label>
+                            Australia
+                        </li>-->
+                    </ul>
+
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-ar btn-warning" href="#/pages/profile">Cancel</a>
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="PutProfile(peoples)">Save</button>
+                        <!--<div ng-repeat="item in uploader.queue">
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="item.upload();PutProfile(peoples)">Save</button>
+                            </div>-->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

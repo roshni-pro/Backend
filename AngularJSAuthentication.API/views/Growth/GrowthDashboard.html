@@ -1,0 +1,278 @@
+﻿<div class="page page-table"  button-permission-binder parentName="Reports" pageName="GrowthDashboard">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Growth Dashboard
+            </strong>
+        </div>
+        <div class="panel-body">
+
+            <div ng-init="initialize()">
+                <div class="row row-inverse">
+                    <div class="col-md-12">
+                        <form class="form-inline" role="form">
+                            <div class="col-sm-2 col-xs-3">
+                                <label for="site-name"> Warehouse:</label><br />
+                                <select ng-model="vm.warehouseID" ng-options="warehouse.WarehouseId as warehouse.combinedName for warehouse in vm.warehouseList" ng-change="getAllData()"></select>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="row row-inverse">
+                    <div class="col-md-2 col-sm-4">
+                        <div class="bx">
+                            <div class="col-xs-6  gd-lft gd-one-i">
+                                <div style="width: 50%;margin: auto;">
+                                    <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                                    <br />
+                                    <label>AGENTS</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 gd-rght gd-one">
+                                <label>{{vm.agent.Required}}</label>
+                                <br />
+                                <label>{{vm.agent.Filled}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-4">
+                        <div class="bx">
+                            <div class="col-xs-6  gd-lft gd-two-i">
+                                <div style="width: 50%;margin: auto;">
+                                    <i class="fa fa-home fa-2x" aria-hidden="true"></i>
+                                    <br />
+                                    <label>KPP</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 gd-rght gd-two">
+                                <label>{{vm.kpp.Required}}</label>
+                                <br />
+                                <label>{{vm.kpp.Filled}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-4">
+                        <div class="bx">
+                            <div class="bx">
+                                <div class="col-xs-6  gd-lft gd-three-i">
+                                    <div style="width: 50%;margin: auto;">
+                                        <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                                        <br />
+                                        <label>RETAILERS</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 gd-rght gd-three">
+                                    <label>{{vm.retailer.Required}}</label>
+                                    <br />
+                                    <label>{{vm.retailer.Filled}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-4">
+                        <div class="bx">
+                            <div class="bx">
+                                <div class="col-xs-6  gd-lft  gd-four-i">
+                                    <div style="width: 50%;margin: auto;">
+                                        <i class="fa fa-tag drop-shadow fa-2x" aria-hidden="true"></i>
+                                        <br />
+                                        <label>BRANDS</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 gd-rght gd-four">
+                                    <label>{{vm.brand.Required}}</label>
+                                    <br />
+                                    <label>{{vm.brand.Filled}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-4">
+                        <div class="bx">
+                            <div class="bx">
+                                <div class="col-xs-6  gd-lft gd-five-i">
+                                    <div style="width: 50%;margin: auto;">
+                                        <i class="fa fa-file-text  fa-2x" aria-hidden="true"></i>
+                                        <br />
+                                        <label>SALES</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 gd-rght gd-five">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-4">
+                        <div class="bx">
+                            <div class="bx">
+                                <div class="col-xs-6  gd-lft gd-six-i">
+                                    <div style="width: 50%;margin: auto;">
+                                        <i class="fa fa-sitemap  fa-2x" aria-hidden="true"></i>
+                                        <br />
+                                        <label>ORG</label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 gd-rght gd-six">
+                                    <label>{{vm.organization.Required}}</label>
+                                    <br />
+                                    <label>{{vm.organization.Filled}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-inverse">
+                    <div class="col-sm-12">
+                        <label class="gd-t"> Total Progress</label>
+                    </div>
+                    <div class="col-sm-12 gd-progress">
+                        <div class="progress">
+
+                            <div class="progress-bar" role="progressbar" style="width: {{vm.totalCompletePercent}}%" aria-valuenow="{{vm.totalCompletePercent}}" aria-valuemin="0" aria-valuemax="100">
+                                <div style="font-size: 13px;padding-top: 2px;">{{vm.totalCompletePercent}}% Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row row-inverse">
+                    <div class="col-sm-3">
+                        <div id="infraChartContainer" style="height: 250px; width: 100%;"></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div id="peopleChartContainer" style="height: 250px; width: 100%;"></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div id="cityMappingChartContainer" style="height: 250px; width: 100%;"></div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div id="productPartnerChartContainer" style="height: 250px; width: 100%;"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+
+
+
+<style>
+    .row-inverse {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        margin-bottom: 15px;
+    }
+
+    .bx {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+        min-height: 100px;
+        border-radius: 5px;
+        margin-top: 15px;
+    }
+
+
+    .gd-lft {
+        min-height: 100px;
+        display: block;
+    }
+
+
+
+    .gd-rght {
+        min-height: 100px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        display: block;
+        padding-top: 10px;
+    }
+
+    .gd-one {
+        background: #167af6 !important;
+    }
+
+    .gd-one-i {
+        color: #167af6 !important;
+    }
+
+    .gd-two {
+        background: #FF7043 !important;
+    }
+
+    .gd-two-i {
+        color: #FF7043 !important;
+    }
+
+
+    .gd-three {
+        background: #42A5F5 !important;
+    }
+
+    .gd-three-i {
+        color: #42A5F5 !important;
+    }
+
+    .gd-four {
+        background: #F9A825 !important;
+    }
+
+    .gd-four-i {
+        color: #F9A825 !important;
+    }
+
+
+    .gd-five {
+        background: #8BC34A !important;
+    }
+
+    .gd-five-i {
+        color: #8BC34A !important;
+    }
+
+
+    .gd-six {
+        background: #9C27B0 !important;
+    }
+
+    .gd-six-i {
+        color: #9C27B0 !important;
+    }
+
+    .gd-lft i {
+        padding-top: 25px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .gd-lft label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .gd-rght label {
+        width: 100%;
+        text-align: center;
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .gd-t {
+        font-size: 20px;
+    }
+
+    .gd-progress .progress {
+        background-color: #FF7043 !important;
+        height: 28px;
+    }
+</style>
+<script src="../../scripts/canvasjs.js"></script>

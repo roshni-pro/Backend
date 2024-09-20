@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+         .reqError {
+        color: #ff0000; /*Red Color*/
+        font-weight: bold;
+        font-size:18px;
+    }
+    </style>
+</head>
+<div class="page page-table" button-permission-binder parentName="Current Stock" pageName="Inventory Edit">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading" >
+            <strong style="font-size : xx-large;font-weight:bold;">
+                <span class="glyphicon glyphicon-th"> </span><b>Inventory Edit Form</b>
+            </strong>
+        </div>
+        <br />
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="row">
+                    <div class="col-sm-2 col-xs-2"  style="font-size : large;font-weight:bold;">
+                        <label for="site-name"> Warehouse:</label><br />
+                        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="WarehouseChange()" style="font-size : large;font-weight:bold; color : blue;box-sizing: initial;">
+                            <option value="undefined">---SELECT---</option>
+                            <option value="{{a.WarehouseId}}" ng-repeat="a in warehouse">{{a.WarehouseName}} {{a.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"  style="font-size : large;font-weight:bold;">
+                        <label for="site-name">Search Item</label>
+                        <input id="site-name" type="text" class="form-control" style="font-size : large;font-weight:bold; color : blue;box-sizing: initial;" ng-model="key" placeholder="Enter item Name for search" />
+                    </div>
+                    <div class="col-md-1" style="margin:22px 0px 0px 0px">
+                        <label for="site-name"></label><br />
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="SearchInventory(key)" style="font-size : large;font-weight:bold;">
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+                    </div>
+                    <div class="col-sm-5" style="margin-left: 45px;font-size : large;font-weight:bold; color : blue">
+                        <label for="site-name">Item List</label>
+                        <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="item" style="font-size : large;font-weight:bold; color : blue;box-sizing: initial;">
+                            <option value="{{item}} " ng-repeat="item in itemData">{{item.ItemNumber}} -{{item.itemname}} : MRP=> ({{item.MRP}}) CurrentInventory=> ({{item.CurrentInventory}})</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="margin:22px 0px 0px 0px">
+                        <label for="site-name"></label><br />
+                        <button type="button" class="btn btn-ar btn-dark" ng-click="AddInventory(item)" style="font-size : large;font-weight:bold;">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <br />
+
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="w1-red">
+                            <th>
+                                <div class="th">
+                                    Item Number
+                                    <span data-ng-click="order(' ItemNumber')"
+                                          data-ng-class="{active: row == 'ItemNumber'}"></span>
+                                    <span data-ng-click="order('-SKUCode')"
+                                          data-ng-class="{active: row == '-ItemNumber'}"></span>
+                                </div>
+
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Multi MRPId
+                                    <span data-ng-click="order('MultiMRPId')"
+                                          data-ng-class="{active: row == 'MultiMRPId'}"></span>
+                                    <span data-ng-click="order('-MultiMRPId')"
+                                          data-ng-class="{active: row == '-MultiMRPId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ABC Classification
+                                    <span data-ng-click="order('MultiMRPId')"
+                                          data-ng-class="{active: row == 'MultiMRPId'}"></span>
+                                    <span data-ng-click="order('-MultiMRPId')"
+                                          data-ng-class="{active: row == '-MultiMRPId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Name
+                                    <span data-ng-click="order('ItemName')"
+                                          data-ng-class="{active: row == 'ItemName'}"></span>
+                                    <span data-ng-click="order('-ItemName')"
+                                          data-ng-class="{active: row == '-ItemName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Current  Inventory
+                                    <span data-ng-click="order(' CurrentInventory')"
+                                          data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                                    <span data-ng-click="order('-CurrentInventory')"
+                                          data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase  Price
+                                    <span data-ng-click="order(' CurrentInventory')"
+                                          data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                                    <span data-ng-click="order('-CurrentInventory')"
+                                          data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total  Amount
+                                    <span data-ng-click="order(' CurrentInventory')"
+                                          data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                                    <span data-ng-click="order('-CurrentInventory')"
+                                          data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Manual In Quantity
+                                    <span data-ng-click="order(' ManualInQty')"
+                                          data-ng-class="{active: row == 'ManualInQty'}"></span>
+                                    <span data-ng-click="order('-Inventory')"
+                                          data-ng-class="{active: row == '-ManualInQty'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Reason
+                                    <span data-ng-click="order('Reason')"
+                                          data-ng-class="{active: row == 'Reason'}"></span>
+                                    <span data-ng-click="order('-Inventory')"
+                                          data-ng-class="{active: row == '-Reason'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Delete
+                                </div>
+                            </th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr data-ng-repeat="trade in InventoryStockData">
+                            <td>
+                                <span class="badge badge-primary ml-2" style="font-size : large;font-weight:bold;"><b>{{trade.ItemNumber}}</b></span>
+                            </td>
+                            <td style="font-size : large;font-weight:bold; color : blue"><b>{{trade.ItemMultiMRPId}}</b></td>
+                            <td style="font-size : large;font-weight:bold; color : blue"><b>{{trade.ABC_Classification}}</b></td>
+                            <td style="font-size : large;font-weight:bold; color : blue"><b>{{trade.itemname}}</b></td>
+                            <td style="font-size : large;font-weight:bold; color : blue">
+                                <span ng-if="trade.CurrentInventory!=0" class="badge badge-primary ml-2" style="font-size : large;font-weight:bold;"><b>{{trade.CurrentInventory}}</b></span>
+                                <span ng-if="trade.CurrentInventory==0" class="badge badge-danger ml-2" style="font-size : large;font-weight:bold;"><b>{{trade.CurrentInventory}}</b></span>
+                            </td>
+                            <td style="font-size : large;font-weight:bold; color : blue"><b>{{trade.PurchasePrice}}</b></td>
+                            <td style="font-size : large;font-weight:bold; color : blue"><b>{{trade.TotalAmount | number:2}}</b></td>
+                            <td style="font-size : large;font-weight:bold; color : blue">
+                                <input type="number" ng-model="trade.ManualInventory" ng-change="ValidateQty(trade)" /><br />
+                                <span class="reqError">*</span>
+                                <span style="color:red">Zero inventory not allowed.</span>
+                            </td>
+                            <td style="font-size : large;font-weight:bold; color : blue">
+                                <div class="col-sm-12" style="font-size : large;font-weight:bold; color : blue">
+                                    <select class="form-control ng-valid" ng-model="trade.ManualReason" ng-change="getReason(trade.ManualReason)" style="font-size : large;font-weight:bold; color : blue;box-sizing: initial;padding-right: 0px;">
+                                        <option value="">----Select------ </option>
+                                        <option value="Damage stock">Damage stock</option>
+                                        <option value="Expiry Stock">Expiry Stock</option>
+                                        <option value="Stock Mismatch">Stock Mismatch</option>
+                                        <option value="Free Item">Free Item </option>
+                                        <option value="MRP change">MRP change</option>
+                                        <option value="Gms Issue">Gms Issue</option>
+                                        <option value="Cancel Order IT issue">Cancel Order IT issue</option>
+                                        <option value="other">Others </option>
+
+                                    </select>
+                                    <span style="color:red">Reason Compulsary.</span>
+                                </div>
+                                <div ng-show="trade.ManualReason == 'other'">
+                                    <input type="text" ng-model="InventoryStockData.ManualReason" />
+                                </div>
+                            </td>
+                            <td><a class="btn glyphicon glyphicon-trash" style="font-size : large;font-weight:bold; color : red" ng-click="remove(trade)"></a></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <div class="pull-right to-ttl" style="font-size : large;font-weight:bold;"><b>Total</b></div>
+                            </td>
+                            <td style="font-size : large;font-weight:bold;"><b>{{TotalPrice | number:2}}</b></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <!--<footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="currentPage"
+                                        total-items="filteredStores.length"
+                                        max-size="4"
+                                        on-select-page="select(page)"
+                                        items-per-page="numPerPage"
+                                        rotate="false"
+                                        boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>-->
+
+            </form>
+            </div>
+                <div class="modal-footer" style="margin-right:50px">
+                    <!--<a href="#/InventoryApprovalPage" target="_blank">-->
+                    <button type="button" id="clickAndDisable" class="btn btn-ar btn-danger" click-And-Disable="SendInventory(InventoryStockData)" style="font-size : large;font-weight:bold;">Send for Approval</button>
+                    <!--</a>-->
+                </div>
+
+    </section>
+</div>
+
+

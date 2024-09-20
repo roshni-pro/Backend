@@ -1,0 +1,260 @@
+﻿
+<style>
+    .modal-dialog {
+        width: 70% !important;
+    }
+</style>
+<style>
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    }
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+</style>
+<div class="page page-table" button-permission-binder parentName="Order" pageName="Shortage Settle History">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> Order Shortage History</strong>
+        </div>
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="form-group col-md-12 clear-both">
+                    
+                    <div class="form-group col-md-3">
+                        <label for="site-name">Delivery boys</label><br>
+                        <select class="form-control" id="site-name" ng-model="Mobile">
+                            <option value="">-Select-</option>
+                            <option value="{{db}}" ng-repeat="db in DBoys"> {{db.DisplayName}}</option>
+                        </select>
+                    </div>
+                 
+                     <div class="form-group col-md-3">
+                        <label for="site-name">Select Date Range</label><br />
+                        <div class="form-group">
+                            <div class='input-group date'>
+                                <input name="daterange" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="site-name">Search</label><br />
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="getdborders(Mobile)">Search</button>
+                      
+                    </div>
+                </div>
+                <div class="form-group col-md-12 clear-both"> 
+                </div>              
+                <table class="table table-bordered table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('WarehouseName')"
+                                          data-ng-class="{active: row == 'WarehouseName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-WarehouseName')"
+                                          data-ng-class="{active: row == '-WarehouseName'}"></span>
+                                </div>
+                            </th>
+                            
+                            <th>
+                                <div class="th">
+                                    OrderId
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('OrderId')"
+                                          data-ng-class="{active: row == ' OrderId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- OrderId')"
+                                          data-ng-class="{active: row == '- OrderId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Customer Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CustomerName')"
+                                          data-ng-class="{active: row == 'CustomerName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CustomerName')"
+                                          data-ng-class="{active: row == '-CustomerName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total Order Amount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('GrossAmount')"
+                                          data-ng-class="{active: row == 'GrossAmount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-GrossAmount')"
+                                          data-ng-class="{active: row == '-GrossAmount'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Short Amount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('ShortAmount')"
+                                          data-ng-class="{active: row == 'ShortAmount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-ShortAmount')"
+                                          data-ng-class="{active: row == '-ShortAmount'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Short Reason
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('ShortReason')"
+                                          data-ng-class="{active: row == 'ShortReason'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-ShortReason')"
+                                          data-ng-class="{active: row == '-ShortReason'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Delivery Person
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('DboyName')"
+                                          data-ng-class="{active: row == 'DboyName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-DboyName')"
+                                          data-ng-class="{active: row == '-DboyName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Create Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' CreatedDate')"
+                                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- CreatedDate')"
+                                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                                </div>
+                            </th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in listMaster|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade in listMaster" ng-style="set_color(trade)" style="color:black">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td>{{trade.OrderId}}</td>
+                            <td>{{trade.CustomerName}}</td>
+                            <td>{{trade.GrossAmount}}</td>
+                            <td style="color: red;">{{trade.ShortAmount}} </td>
+                            <td>{{trade.ShortReason}} </td>
+                            <td>{{trade.DboyName}}</td>
+                            <td>{{trade.CreatedDate | date:'medium'}}</td>
+                          </tr>
+                    </tbody>
+
+                </table>
+
+                <dir-pagination-controls max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true"
+                                         on-page-change="getData(newPageNumber)">
+                    //get method call every time when page changes
+                </dir-pagination-controls>
+            </form>
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selected"//this give no. of items selected to show on page
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page
+                        entries per page
+                    </span>
+                </div>
+                <!--<div class="col-md-6 page-num-info">
+                    <span>
+                        <label for="site-name" step="0.01">Total Amount:  {{totalAmountOfOrders| number : 2}}/-</label>  <br />
+                    </span>
+                </div>-->
+
+            </div>
+        </footer>
+    </section>
+</div>

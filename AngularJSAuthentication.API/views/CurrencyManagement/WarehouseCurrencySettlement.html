@@ -1,0 +1,243 @@
+﻿<head>
+    <style>
+        b, strong {
+    font-weight: bold;
+    color: black;
+}
+ .panel-default > .panel-heading {
+    color: #767676;
+    background-color: #ffffff;
+    border-color: #61554c;
+    border-bottom: 3px solid;
+}
+        .modal-body {
+            position: relative;
+        }
+    .btn-success {
+    color: white;
+    background-color: #00a4e9;
+    border-color: #00a4e9;
+}
+        .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
+            color: white;
+            background-color: #0c4c67;
+            border-color: #17688a;
+        }
+        img.img80_80 {
+    width: 80px;
+    height: 80px;
+    margin-top: 15px;
+}
+ 
+.btn-primary {
+    color: white;
+    background-color: #00a4e9;
+    border-color: #00a4e9;
+    border-radius: 15px;
+}       
+.btn-warning {
+    color: white;
+    background-color: #ffb61c;
+    border-color: #ffae02;
+    border-radius: 15px;
+}
+.btn-info {
+    color: white;
+    background-color: #2ec1cc;
+    border-color: #29adb7;
+    border-radius: 15px;
+}
+    </style>
+</head>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Bank Withdraw Dashboard
+            </strong>
+        </div>
+        <br />
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <div class="col-lg-6">
+
+                </div>
+                <div class="col-lg-6 text-right">
+                    <button type="button" class="btn btn-ar btn-primary" ngEnter="BankWithdraw()" ng-click="BankWithdraw()">Withdraw For Bank</button>
+                    <button type="button" class="btn btn-ar btn-primary" ngEnter="BankCurrencyHistory()" ng-click="BankCurrencyHistory()">Bank Deposit Details</button>
+                    <button type="button" class="btn btn-ar btn-warning" ngEnter="Back()" ng-click="Back()">Back</button>
+                </div>
+           
+            </div>
+        </div>
+        <div class="row">     
+            <div class="col-lg-12 ">                  
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-striped table-responsive">
+                            <thead>
+                                <tr style="background-color: #ffffff;">
+                                    <th>
+                                        <div class="th">
+                                            Deposit Date
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Airtel Payment TransactionId
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Bank Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Cash Amount
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Cheque Amount
+                                        </div>
+
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Total Deposit Amount
+                                        </div>
+
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Depositer Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Withdraw Slip
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="th">
+                                            Deposit Slip
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="th">
+                                            Action
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cash in CurrencySettlementSource" ng-if="CurrencySettlementSource.length>0">
+                                    <td>
+                                        {{cash.SettlementDate| date:'dd/MM/yyyy hh:mma'}}
+                                    </td>
+                                    <td>
+                                        {{cash.ProcessTransId}}
+                                    </td>
+                                    <td>
+                                        {{cash.SettlementSource}}
+                                    </td>
+                                    <td>
+                                        &#8377; {{cash.TotalCashAmt}}
+                                    </td>
+                                    <td>
+                                        &#8377; {{cash.TotalChequeAmt}}
+                                    </td>
+                                    <td>
+                                        &#8377; {{cash.TotalCashAmt + cash.TotalChequeAmt}}
+                                    </td>
+                                    <td>
+                                        {{cash.HandOverPersonName}}
+                                    </td>
+
+                                    <td>
+                                        <div class="col-lg-12" ng-repeat="image in cash.SettlementProofImages">
+                                            <a href="{{image.SettlementImage}}" download="">{{SplitLastvalue(image.SettlementImage)}}</a><br />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-lg-12" ng-repeat="image in cash.SlipImages">
+                                            <a href="{{image.SettlementImage}}" download>{{SplitLastvalue(image.SettlementImage)}}</a><br />
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <button type="button" class="btn btn-ar btn-primary" ng-click="openUploadImage(cash.Id)">Upload</button> <br />
+                                    </td>
+                                </tr>
+                                <tr ng-if="CurrencySettlementSource.length==0">
+                                    <td align="center" colspan="9"> No data found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>       
+    </section>
+</div>
+
+<script type="text/ng-template" id="myUploadImageModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Chaque collection </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Settlement Type :</label>
+            <div class="col-sm-4">
+                <!--<div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" ng-model="uploadSettlementImage.settlementimagetype" value="Withdraw">
+                <label class="form-check-label" for="inlineRadio1">Withdraw Slip</label>
+            </div>-->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-model="uploadSettlementImage.settlementimagetype" value="Deposit">
+                    <label class="form-check-label" for="inlineRadio2">Deposit Slip</label>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="form-group col-md-12">
+
+            <input class="btn btn-success" id="file" type="file" nv-file-select="" uploader="WithdrawImage" />
+            <div ng-repeat="item in WithdrawImage.queue">
+                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+
+        </div>
+        <div class="form-group col-md-12" >
+            <label for="site-name" class="col-sm-2 col-form-label">Comment</label>
+            <textarea name="Note" ng-model="uploadSettlementImage.Comment" placeholder="Please Enter Comment" cols="75" rows="3"></textarea>
+
+            <div class="col-sm-6"></div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <img src={{uploadSettlementImage.settlementimage}} class="img-square img80_80" />
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ngEnter="cancel()" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class=" btn btn-ar btn-info" ngEnter="PutImage(data)" ng-click="PutImage(data)">Save</button>
+        </div>
+    </form>
+</script>

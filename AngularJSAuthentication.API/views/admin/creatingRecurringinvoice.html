@@ -1,0 +1,789 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Recurringinvoice</title>
+    <style>
+        .page h1 {
+            font-size: 23px;
+        }
+       
+    </style>
+    <style type="text/css">
+        /*BODY {
+            text-align: center;
+            float:inherit;
+            background-position-x:50px;
+        }*/
+    </style>
+</head>
+<body>
+    <!--<div class="content-wrapper">
+
+        <h1>Recurring Invoice for MoreYeahs</h1>
+
+
+        <form accept-charset="UTF-8" action="/recurring_invoices" class="new_recurring" id="new_recurring" method="post">
+            <div style="display:none"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="L9KeyW8vvvglEwbLn7x9OqT5gjotJ1/9cDV0qjMWipM="></div>
+            <input id="recurring_client_id" name="recurring[client_id]" type="hidden" value="3382431">
+
+            <div class="recurring_container">
+
+                <table class="edit">
+                    <tbody>
+                        <tr>
+                            <td class="label required">
+                                <label for="recurring_start_date_human_format">Start Date</label>
+                            </td>
+                            <td class="field">
+                                <input autocomplete="off" class="date" id="recurring_start_date_human_format" name="recurring[start_date_human_format]" type="date" value="04/24/2015">
+                                <div class="callout_warning_container" style="display:none"><div class="callout_warning_top"><div class="callout_warning">Incorrect date format.</div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    /*<[CDATA[*/
+                                    var recurring_start_date_human_format_picker = new DatePicker({
+                                        relative: 'recurring_start_date_human_format',
+                                        startDayOfWeek: 1,
+
+
+                                        cellCallback: date.picker_cell_callback.curry('recurring_start_date_human_format')
+                                    });
+                                    date.picker_on_page_load('recurring_start_date_human_format', recurring_start_date_human_format_picker);
+                                    /*]]>*/
+                                </script>
+
+                                <input id="today_date" name="today_date" type="hidden" value="04/23/2015">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label required">
+                                <label for="recurring_frequency">Frequency</label>
+                            </td>
+                            <td class="field">
+                                <select id="recurring_frequency_human_format" name="recurring[frequency_human_format]">
+                                    <option value="weekly">Weekly</option>
+                                    <option selected="selected" value="monthly">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="yearly">Yearly</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                                <span id="frequency_days" style="padding-left: 10px; display: none;">Every <input class="custom" id="recurring_frequency" name="recurring[frequency]" size="20" type="text"> days</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label required">
+                                <label for="recurring_send_automatically">Delivery</label>
+                            </td>
+                            <td class="">
+                                <fieldset id="recurring_send_automatically">
+                                    <label><input checked="checked" id="recurring_send_automatically_false" name="recurring[send_automatically]" type="radio" value="false"> Save invoice as draft in invoices overview on scheduled date</label> <br>
+                                    <label><input id="recurring_send_automatically_true" name="recurring[send_automatically]" type="radio" value="true"> Automatically send this invoice via email on scheduled date</label>
+                                </fieldset>
+                            </td>
+                        </tr>
+                        <tr class="email_fields" style="display: none;">
+                            <td class="label required">
+                                <label for="recurring_sent_by_fields">Sender</label>
+                            </td>
+                            <td class="field">
+                                <select id="recurring_sent_by_fields" name="recurring[sent_by_fields]"><option value="Akhilesh Gandhi#info@moreyeahs.com">Akhilesh Gandhi (info@moreyeahs.com)</option></select>
+                            </td>
+                        </tr>
+                        <tr id="email_recipients" class="email_fields" style="display: none;">
+                            <td class="label required">
+                                <label for="recurring_recipients">Recipients</label>
+                            </td>
+                            <td class="">
+                                There are no contacts for <em>MoreYeahs</em> (you can add new contacts via <strong>Manage &gt; Clients</strong>).
+                                <br>
+                                <input name="recurring[send_me_a_copy]" type="hidden" value="0"><input class="select_recipients" id="recurring_send_me_a_copy" name="recurring[send_me_a_copy]" type="checkbox" value="1">        <label for="recurring_send_me_a_copy"><em>Send copy to sender</em></label>
+                            </td>
+                        </tr>
+                        <tr class="email_fields" style="display: none;">
+                            <td class="label required">
+                                <label for="recurring_message_body">Email Message</label>
+                            </td>
+                            <td>
+                                <textarea class="invoice_message" cols="5" id="recurring_message_body" name="recurring[message_body]" rows="65" style="width: 440px; height: 6em;"></textarea>
+                                <div class="helper" style="width: 440px; margin-top: 5px">A summary of your invoice, along with a PDF version of the invoice will be attached with the message.</div>
+                            </td>
+                        </tr>
+                        <tr class="payment_reminder email_fields" style="display: none;">
+                            <td class="label required">
+                                <label for="recurring_has_payment_reminder">Reminder</label>
+                            </td>
+                            <td class="">
+                                <input name="recurring[has_payment_reminder]" type="hidden" value="0"><input class="select_recipients" id="recurring_has_payment_reminder" name="recurring[has_payment_reminder]" type="checkbox" value="1">        <label for="recurring_has_payment_reminder">Send an email reminder to client once the invoice is</label>
+                                <input class="mini" id="recurring_reminder_after_nr_days_due" name="recurring[reminder_after_nr_days_due]" type="text" value="3" disabled=""> days late and every
+                                <input class="mini" id="recurring_recurring_reminder_every_nr_days" name="recurring[recurring_reminder_every_nr_days]" type="text" value="7" disabled=""> days after
+
+                                <div class="helper" style="width: 440px; margin-top: 5px">
+                                    An email reminder will automatically be sent to the recipients above.
+                                    The reminder message can be configured under Invoices &gt; Configure &gt; Messages.
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="invoice_container_edit" style="margin-top: 0">
+                <div id="invoice_header">
+                    <table class="edit">
+                        <tbody>
+                            <tr>
+                                <td class="label">
+                                    <label for="recurring_purchase_order">PO Number</label>
+                                </td>
+                                <td>
+                                    <input id="recurring_purchase_order" name="recurring[purchase_order]" size="10" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">
+                                    <label for="recurring_due_at_human_format">Due Date</label>
+                                </td>
+                                <td>
+                                    <select id="recurring_due_at_human_format" name="recurring[due_at_human_format]">
+                                        <option selected="selected" value="upon receipt">Upon receipt</option>
+                                        <option value="net 15">Net 15</option>
+                                        <option value="net 30">Net 30</option>
+                                        <option value="net 45">Net 45</option>
+                                        <option value="net 60">Net 60</option>
+                                        <option value="custom">Custom</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr id="due_at_timeframe" style="display: none;">
+                                <td class="label required">&nbsp;</td>
+                                <td>
+                                    <input class="custom" id="recurring_due_at" name="recurring[due_at]" size="30" type="text"> days after receipt
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="edit">
+
+                        <tbody>
+                            <tr id="tax_columns">
+                                <td class="label required">
+                                    Tax
+                                </td>
+                                <td>
+                                    <span id="tax_field_control" style="display:none">
+                                        <input class="tax js-change-total js-change-xero" id="recurring_tax" name="recurring[tax]" size="10" type="text">
+                                        %
+                                        <span class="secondary" id="tax_controls">
+                                            (
+                                            <a href="#" id="do_not_apply_tax_link" onclick="invoice.do_not_apply_tax(); return false;">No tax</a>               <span id="apply_tax2_link">
+                                                |
+                                                <a href="#" onclick="invoice.show_tax_fields(2); return false;">Apply another tax</a>
+                                            </span>              )
+                                        </span>
+                                    </span>          <span id="apply_tax_link">            <a href="#" onclick="invoice.show_tax_fields(); return false;">Apply tax to invoice</a></span>
+                                </td>
+                            </tr>
+                            <tr id="tax_2_columns" style="display:none">
+                                <td class="label">Tax 2</td>
+                                <td>
+                                    <span id="tax2_field_control" style="display:none">
+                                        <input class="tax js-change-total" id="recurring_tax2" name="recurring[tax2]" size="10" type="text"> %
+                                        <span class="secondary">
+                                            (
+                                            <a href="#" id="do_not_apply_tax2_link" onclick="invoice.do_not_apply_tax(2); return false;">No tax</a>              )
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">Discount</td>
+                                <td>
+                                    <span id="discount_field_control">
+                                        <input class="tax js-change-total" id="recurring_discount" name="recurring[discount]" size="10" type="text"> %
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label">
+                                    <label for="recurring_currency">Currency</label>
+                                </td>
+                                <td>
+                                    <select id="recurring_currency" name="recurring[currency]" onchange="invoice.parse_out_currency_symbol(); invoice.recompute_amounts_and_totals(); invoice.reformat_unit_price();">
+                                        <option selected="selected" value="United States Dollar - USD">United States Dollar - USD</option>
+                                        <option value="Euro - EUR">Euro - EUR</option>
+                                        <option value="British Pound - GBP">British Pound - GBP</option>
+                                        <option value="Australian Dollar - AUD">Australian Dollar - AUD</option>
+                                        <option value="Canadian Dollar - CAD">Canadian Dollar - CAD</option>
+                                        <option value="Japanese Yen - JPY">Japanese Yen - JPY</option>
+                                        <option value="United Arab Emirates Dirham - AED">United Arab Emirates Dirham - AED</option>
+                                        <option value="Afghan Afghani - AFN">Afghan Afghani - AFN</option>
+                                        <option value="Albanian Lek - ALL">Albanian Lek - ALL</option>
+                                        <option value="Armenian Dram - AMD">Armenian Dram - AMD</option>
+                                        <option value="Netherlands Antillean Gulden - ANG">Netherlands Antillean Gulden - ANG</option>
+                                        <option value="Angolan Kwanza - AOA">Angolan Kwanza - AOA</option>
+                                        <option value="Argentine Peso - ARS">Argentine Peso - ARS</option>
+                                        <option value="Aruban Florin - AWG">Aruban Florin - AWG</option>
+                                        <option value="Azerbaijani Manat - AZN">Azerbaijani Manat - AZN</option>
+                                        <option value="Bosnia and Herzegovina Convertible Mark - BAM">Bosnia and Herzegovina Convertible Mark - BAM</option>
+                                        <option value="Barbadian Dollar - BBD">Barbadian Dollar - BBD</option>
+                                        <option value="Bangladeshi Taka - BDT">Bangladeshi Taka - BDT</option>
+                                        <option value="Bulgarian Lev - BGN">Bulgarian Lev - BGN</option>
+                                        <option value="Bahraini Dinar - BHD">Bahraini Dinar - BHD</option>
+                                        <option value="Burundian Franc - BIF">Burundian Franc - BIF</option>
+                                        <option value="Bermudian Dollar - BMD">Bermudian Dollar - BMD</option>
+                                        <option value="Brunei Dollar - BND">Brunei Dollar - BND</option>
+                                        <option value="Bolivian Boliviano - BOB">Bolivian Boliviano - BOB</option>
+                                        <option value="Brazilian Real - BRL">Brazilian Real - BRL</option>
+                                        <option value="Bahamian Dollar - BSD">Bahamian Dollar - BSD</option>
+                                        <option value="Bitcoin - BTC">Bitcoin - BTC</option>
+                                        <option value="Bhutanese Ngultrum - BTN">Bhutanese Ngultrum - BTN</option>
+                                        <option value="Botswana Pula - BWP">Botswana Pula - BWP</option>
+                                        <option value="Belarusian Ruble - BYR">Belarusian Ruble - BYR</option>
+                                        <option value="Belize Dollar - BZD">Belize Dollar - BZD</option>
+                                        <option value="Congolese Franc - CDF">Congolese Franc - CDF</option>
+                                        <option value="Swiss Franc - CHF">Swiss Franc - CHF</option>
+                                        <option value="Unidad de Fomento - CLF">Unidad de Fomento - CLF</option>
+                                        <option value="Chilean Peso - CLP">Chilean Peso - CLP</option>
+                                        <option value="Chinese Renminbi Yuan - CNY">Chinese Renminbi Yuan - CNY</option>
+                                        <option value="Colombian Peso - COP">Colombian Peso - COP</option>
+                                        <option value="Costa Rican Colón - CRC">Costa Rican Colón - CRC</option>
+                                        <option value="Cuban Convertible Peso - CUC">Cuban Convertible Peso - CUC</option>
+                                        <option value="Cuban Peso - CUP">Cuban Peso - CUP</option>
+                                        <option value="Cape Verdean Escudo - CVE">Cape Verdean Escudo - CVE</option>
+                                        <option value="Czech Koruna - CZK">Czech Koruna - CZK</option>
+                                        <option value="Djiboutian Franc - DJF">Djiboutian Franc - DJF</option>
+                                        <option value="Danish Krone - DKK">Danish Krone - DKK</option>
+                                        <option value="Dominican Peso - DOP">Dominican Peso - DOP</option>
+                                        <option value="Algerian Dinar - DZD">Algerian Dinar - DZD</option>
+                                        <option value="Estonian Kroon - EEK">Estonian Kroon - EEK</option>
+                                        <option value="Egyptian Pound - EGP">Egyptian Pound - EGP</option>
+                                        <option value="Eritrean Nakfa - ERN">Eritrean Nakfa - ERN</option>
+                                        <option value="Ethiopian Birr - ETB">Ethiopian Birr - ETB</option>
+                                        <option value="Fijian Dollar - FJD">Fijian Dollar - FJD</option>
+                                        <option value="Falkland Pound - FKP">Falkland Pound - FKP</option>
+                                        <option value="Georgian Lari - GEL">Georgian Lari - GEL</option>
+                                        <option value="Ghanaian Cedi - GHS">Ghanaian Cedi - GHS</option>
+                                        <option value="Ghanaian Cedi - GHS">Ghanaian Cedi - GHS</option>
+                                        <option value="Gibraltar Pound - GIP">Gibraltar Pound - GIP</option>
+                                        <option value="Gambian Dalasi - GMD">Gambian Dalasi - GMD</option>
+                                        <option value="Guinean Franc - GNF">Guinean Franc - GNF</option>
+                                        <option value="Guatemalan Quetzal - GTQ">Guatemalan Quetzal - GTQ</option>
+                                        <option value="Guyanese Dollar - GYD">Guyanese Dollar - GYD</option>
+                                        <option value="Hong Kong Dollar - HKD">Hong Kong Dollar - HKD</option>
+                                        <option value="Honduran Lempira - HNL">Honduran Lempira - HNL</option>
+                                        <option value="Croatian Kuna - HRK">Croatian Kuna - HRK</option>
+                                        <option value="Haitian Gourde - HTG">Haitian Gourde - HTG</option>
+                                        <option value="Hungarian Forint - HUF">Hungarian Forint - HUF</option>
+                                        <option value="Indonesian Rupiah - IDR">Indonesian Rupiah - IDR</option>
+                                        <option value="Israeli New Sheqel - ILS">Israeli New Sheqel - ILS</option>
+                                        <option value="Indian Rupee - INR">Indian Rupee - INR</option>
+                                        <option value="Iraqi Dinar - IQD">Iraqi Dinar - IQD</option>
+                                        <option value="Iranian Rial - IRR">Iranian Rial - IRR</option>
+                                        <option value="Icelandic Króna - ISK">Icelandic Króna - ISK</option>
+                                        <option value="Jersey Pound - JEP">Jersey Pound - JEP</option>
+                                        <option value="Jamaican Dollar - JMD">Jamaican Dollar - JMD</option>
+                                        <option value="Jordanian Dinar - JOD">Jordanian Dinar - JOD</option>
+                                        <option value="Kenyan Shilling - KES">Kenyan Shilling - KES</option>
+                                        <option value="Kyrgyzstani Som - KGS">Kyrgyzstani Som - KGS</option>
+                                        <option value="Cambodian Riel - KHR">Cambodian Riel - KHR</option>
+                                        <option value="Comorian Franc - KMF">Comorian Franc - KMF</option>
+                                        <option value="North Korean Won - KPW">North Korean Won - KPW</option>
+                                        <option value="South Korean Won - KRW">South Korean Won - KRW</option>
+                                        <option value="Kuwaiti Dinar - KWD">Kuwaiti Dinar - KWD</option>
+                                        <option value="Cayman Islands Dollar - KYD">Cayman Islands Dollar - KYD</option>
+                                        <option value="Kazakhstani Tenge - KZT">Kazakhstani Tenge - KZT</option>
+                                        <option value="Lao Kip - LAK">Lao Kip - LAK</option>
+                                        <option value="Lebanese Pound - LBP">Lebanese Pound - LBP</option>
+                                        <option value="Sri Lankan Rupee - LKR">Sri Lankan Rupee - LKR</option>
+                                        <option value="Liberian Dollar - LRD">Liberian Dollar - LRD</option>
+                                        <option value="Lesotho Loti - LSL">Lesotho Loti - LSL</option>
+                                        <option value="Lithuanian Litas - LTL">Lithuanian Litas - LTL</option>
+                                        <option value="Latvian Lats - LVL">Latvian Lats - LVL</option>
+                                        <option value="Libyan Dinar - LYD">Libyan Dinar - LYD</option>
+                                        <option value="Moroccan Dirham - MAD">Moroccan Dirham - MAD</option>
+                                        <option value="Moldovan Leu - MDL">Moldovan Leu - MDL</option>
+                                        <option value="Malagasy Ariary - MGA">Malagasy Ariary - MGA</option>
+                                        <option value="Macedonian Denar - MKD">Macedonian Denar - MKD</option>
+                                        <option value="Myanmar Kyat - MMK">Myanmar Kyat - MMK</option>
+                                        <option value="Mongolian Tögrög - MNT">Mongolian Tögrög - MNT</option>
+                                        <option value="Macanese Pataca - MOP">Macanese Pataca - MOP</option>
+                                        <option value="Mauritanian Ouguiya - MRO">Mauritanian Ouguiya - MRO</option>
+                                        <option value="Maltese Lira - MTL">Maltese Lira - MTL</option>
+                                        <option value="Mauritian Rupee - MUR">Mauritian Rupee - MUR</option>
+                                        <option value="Maldivian Rufiyaa - MVR">Maldivian Rufiyaa - MVR</option>
+                                        <option value="Malawian Kwacha - MWK">Malawian Kwacha - MWK</option>
+                                        <option value="Mexican Peso - MXN">Mexican Peso - MXN</option>
+                                        <option value="Malaysian Ringgit - MYR">Malaysian Ringgit - MYR</option>
+                                        <option value="Mozambican Metical - MZN">Mozambican Metical - MZN</option>
+                                        <option value="Namibian Dollar - NAD">Namibian Dollar - NAD</option>
+                                        <option value="Nigerian Naira - NGN">Nigerian Naira - NGN</option>
+                                        <option value="Nicaraguan Córdoba - NIO">Nicaraguan Córdoba - NIO</option>
+                                        <option value="Norwegian Krone - NOK">Norwegian Krone - NOK</option>
+                                        <option value="Nepalese Rupee - NPR">Nepalese Rupee - NPR</option>
+                                        <option value="New Zealand Dollar - NZD">New Zealand Dollar - NZD</option>
+                                        <option value="Omani Rial - OMR">Omani Rial - OMR</option>
+                                        <option value="Panamanian Balboa - PAB">Panamanian Balboa - PAB</option>
+                                        <option value="Peruvian Nuevo Sol - PEN">Peruvian Nuevo Sol - PEN</option>
+                                        <option value="Papua New Guinean Kina - PGK">Papua New Guinean Kina - PGK</option>
+                                        <option value="Philippine Peso - PHP">Philippine Peso - PHP</option>
+                                        <option value="Pakistani Rupee - PKR">Pakistani Rupee - PKR</option>
+                                        <option value="Polish Złoty - PLN">Polish Złoty - PLN</option>
+                                        <option value="Paraguayan Guaraní - PYG">Paraguayan Guaraní - PYG</option>
+                                        <option value="Qatari Riyal - QAR">Qatari Riyal - QAR</option>
+                                        <option value="Romanian Leu - RON">Romanian Leu - RON</option>
+                                        <option value="Serbian Dinar - RSD">Serbian Dinar - RSD</option>
+                                        <option value="Russian Ruble - RUB">Russian Ruble - RUB</option>
+                                        <option value="Rwandan Franc - RWF">Rwandan Franc - RWF</option>
+                                        <option value="Saudi Riyal - SAR">Saudi Riyal - SAR</option>
+                                        <option value="Solomon Islands Dollar - SBD">Solomon Islands Dollar - SBD</option>
+                                        <option value="Seychellois Rupee - SCR">Seychellois Rupee - SCR</option>
+                                        <option value="Sudanese Pound - SDG">Sudanese Pound - SDG</option>
+                                        <option value="Swedish Krona - SEK">Swedish Krona - SEK</option>
+                                        <option value="Singapore Dollar - SGD">Singapore Dollar - SGD</option>
+                                        <option value="Saint Helenian Pound - SHP">Saint Helenian Pound - SHP</option>
+                                        <option value="Slovak Koruna - SKK">Slovak Koruna - SKK</option>
+                                        <option value="Sierra Leonean Leone - SLL">Sierra Leonean Leone - SLL</option>
+                                        <option value="Somali Shilling - SOS">Somali Shilling - SOS</option>
+                                        <option value="Surinamese Dollar - SRD">Surinamese Dollar - SRD</option>
+                                        <option value="South Sudanese Pound - SSP">South Sudanese Pound - SSP</option>
+                                        <option value="São Tomé and Príncipe Dobra - STD">São Tomé and Príncipe Dobra - STD</option>
+                                        <option value="Salvadoran Colón - SVC">Salvadoran Colón - SVC</option>
+                                        <option value="Syrian Pound - SYP">Syrian Pound - SYP</option>
+                                        <option value="Swazi Lilangeni - SZL">Swazi Lilangeni - SZL</option>
+                                        <option value="Thai Baht - THB">Thai Baht - THB</option>
+                                        <option value="Tajikistani Somoni - TJS">Tajikistani Somoni - TJS</option>
+                                        <option value="Turkmenistani Manat - TMM">Turkmenistani Manat - TMM</option>
+                                        <option value="Turkmenistani Manat - TMT">Turkmenistani Manat - TMT</option>
+                                        <option value="Tunisian Dinar - TND">Tunisian Dinar - TND</option>
+                                        <option value="Tongan Paʻanga - TOP">Tongan Paʻanga - TOP</option>
+                                        <option value="Turkish Lira - TRY">Turkish Lira - TRY</option>
+                                        <option value="Trinidad and Tobago Dollar - TTD">Trinidad and Tobago Dollar - TTD</option>
+                                        <option value="New Taiwan Dollar - TWD">New Taiwan Dollar - TWD</option>
+                                        <option value="Tanzanian Shilling - TZS">Tanzanian Shilling - TZS</option>
+                                        <option value="Ukrainian Hryvnia - UAH">Ukrainian Hryvnia - UAH</option>
+                                        <option value="Ugandan Shilling - UGX">Ugandan Shilling - UGX</option>
+                                        <option value="Uruguayan Peso - UYU">Uruguayan Peso - UYU</option>
+                                        <option value="Uzbekistani Som - UZS">Uzbekistani Som - UZS</option>
+                                        <option value="Venezuelan Bolívar - VEF">Venezuelan Bolívar - VEF</option>
+                                        <option value="Vietnamese Đồng - VND">Vietnamese Đồng - VND</option>
+                                        <option value="Vanuatu Vatu - VUV">Vanuatu Vatu - VUV</option>
+                                        <option value="Samoan Tala - WST">Samoan Tala - WST</option>
+                                        <option value="Central African Cfa Franc - XAF">Central African Cfa Franc - XAF</option>
+                                        <option value="Silver (Troy Ounce) - XAG">Silver (Troy Ounce) - XAG</option>
+                                        <option value="Gold (Troy Ounce) - XAU">Gold (Troy Ounce) - XAU</option>
+                                        <option value="East Caribbean Dollar - XCD">East Caribbean Dollar - XCD</option>
+                                        <option value="Special Drawing Rights - XDR">Special Drawing Rights - XDR</option>
+                                        <option value="West African Cfa Franc - XOF">West African Cfa Franc - XOF</option>
+                                        <option value="Cfp Franc - XPF">Cfp Franc - XPF</option>
+                                        <option value="Japanese Yen - JPY">Japanese Yen - JPY</option>
+                                        <option value="Yemeni Rial - YER">Yemeni Rial - YER</option>
+                                        <option value="South African Rand - ZAR">South African Rand - ZAR</option>
+                                        <option value="Zambian Kwacha - ZMK">Zambian Kwacha - ZMK</option>
+                                        <option value="Zambian Kwacha - ZMW">Zambian Kwacha - ZMW</option>
+                                        <option value="Zimbabwean Dollar - ZWD">Zimbabwean Dollar - ZWD</option>
+                                        <option value="Zimbabwean Dollar - ZWL">Zimbabwean Dollar - ZWL</option>
+                                        <option value="Zimbabwean Dollar - ZWN">Zimbabwean Dollar - ZWN</option>
+                                        <option value="Zimbabwean Dollar - ZWR">Zimbabwean Dollar - ZWR</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="span_full edit">
+                        <tbody>
+                            <tr>
+                                <td class="label">
+                                    <label for="recurring_subject">Subject</label>
+                                </td>
+                                <td colspan="3">
+                                    <input class="subject" id="recurring_subject" name="recurring[subject]" size="70" type="text">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="clear:both;"></div>
+                </div>
+
+                <input id="sort_order" name="sort_order" type="hidden" value="0,1,2,3,4">
+                <script type="text/html" id="item-row-prototype">
+                    <td class="control">
+                        <a class="graphic delete" href="#" onclick="invoice.remove_line_item(NUMBER); return false;">delete</a>
+                    </td>
+                    <td class="type">
+                        <select name="itemNUMBER[kind]">
+                            <option value="Product">Product</option>
+                            <option value="Service">Service</option>
+                        </select>
+                    </td>
+                    <td class="description">
+                        <textarea class="expand" cols="40" id="itemNUMBER_description" name="itemNUMBER[description]" rows="1"></textarea>
+                    </td>
+                    <td class="quantity">
+                        <input name="itemNUMBER[quantity]" type="text" value="1.00" />
+                    </td>
+                    <td class="price">
+                        <input name="itemNUMBER[unit_price]" onchange="invoice.format_field(this);" type="text" value="0.00" />
+                    </td>
+                    <td class="amount">
+                        <input name="itemNUMBER[amount]" type="text" />
+                    </td>
+                    <td class="tax" style="display:none">    <input name="itemNUMBER[taxed]" type="checkbox" value="1" /></td>
+                    <td class="tax2" style="display:none">    <input name="itemNUMBER[taxed2]" type="checkbox" value="1" /></td>
+                </script>
+
+
+                <table border="0" cellpadding="0" cellspacing="0" class="timesheet_summary invoice_items" summary="invoice items">
+                    <!--head part-->
+                    <!--<thead>
+                        <tr>
+                            <th class="control">&nbsp;</th>
+                            <th class="type">Type</th>
+                            <th>Description</th>
+                            <th class="quantity">Quantity</th>
+                            <th class="price">Unit Price </th>
+                            <th class="amount">Amount</th>
+                            <th class="tax" id="tax_table_head" style="display:none">Tax</th>
+                            <th class="tax2" id="tax2_table_head" style="display:none">Tax 2</th>
+                        </tr>
+                    </thead>-->
+
+                    <!-- body part-->
+
+                    <!--<tbody id="invoice_item_rows">
+                        <tr id="item-row-0" ng-repeat="i in recurringGridRows">
+                            <td class="control">
+                                <input name="item0[project_id]" type="hidden" value="">
+                                <a class="graphic delete" ng-click="removeRecurringRow($index)" onclick="invoice.remove_line_item(0); return false;">delete</a>
+                            </td>
+
+
+                            <td class="type">
+                                <select name="item0[kind]">
+                                    <option value="Product">Product</option>
+                                    <option selected="selected" value="Service">Service</option>
+                                </select>
+                            </td>
+                            <td class="description">
+                                <textarea class="expand" cols="40" id="item0_description" name="item0[description]" rows="1" style="overflow: hidden;"></textarea>
+                            </td>
+                            <td class="quantity">
+                                <input class="js-change-total" name="item0[quantity]" onchange="invoice.format_field(this);" type="text" value="1.00" ng-model="i.i2">
+                            </td>
+                            <td class="price">
+                                <input class="js-change-total" name="item0[unit_price]" onchange="invoice.format_field(this);" type="text" value="0.00" ng-model="i.i1">
+                            </td>
+                            <td class="amount">{{getRecurringRowTotal(i)}}</td>
+                            <td class="tax" style="display:none">   
+                             <input class="js-change-total" name="item0[taxed]" type="checkbox" value="1"></td>
+                            <td class="tax2" style="display:none">  
+                              <input class="js-change-total" name="item0[taxed2]" type="checkbox" value="1"></td>
+                        </tr>
+
+                        <!--<tr id="item-row-1">
+                            <td class="control">
+                                <input name="item1[project_id]" type="hidden" value="">        <a class="graphic delete" href="#" onclick="invoice.remove_line_item(1); return false;">delete</a>
+                            </td>
+                            <td class="type">
+                                <select name="item1[kind]">
+                                    <option value="Product">Product</option>
+                                    <option selected="selected" value="Service">Service</option>
+                                </select>
+                            </td>
+                            <td class="description">
+                                <textarea class="expand" cols="40" id="item1_description" name="item1[description]" rows="1" style="overflow: hidden;"></textarea>
+                            </td>
+                            <td class="quantity">
+                                <input class="js-change-total" name="item1[quantity]" type="text" value="1.00">
+                            </td>
+                            <td class="price">
+                                <input class="js-change-total" name="item1[unit_price]" onchange="invoice.format_field(this);" type="text" value="0.00">
+                            </td>
+                            <td class="amount">$0.00</td>
+                            <td class="tax" style="display:none">    <input class="js-change-total" name="item1[taxed]" type="checkbox" value="1"></td>
+                            <td class="tax2" style="display:none">    <input class="js-change-total" name="item1[taxed2]" type="checkbox" value="1"></td>
+                        </tr>-->
+
+                        <!--<tr id="item-row-2">
+                            <td class="control">
+                                <input name="item2[project_id]" type="hidden" value="">        <a class="graphic delete" href="#" onclick="invoice.remove_line_item(2); return false;">delete</a>
+                            </td>
+                            <td class="type">
+                                <select name="item2[kind]">
+                                    <option value="Product">Product</option>
+                                    <option selected="selected" value="Service">Service</option>
+                                </select>
+                            </td>
+                            <td class="description">
+                                <textarea class="expand" cols="40" id="item2_description" name="item2[description]" rows="1" style="overflow: hidden;"></textarea>
+                            </td>
+                            <td class="quantity">
+                                <input class="js-change-total" name="item2[quantity]" type="text" value="1.00">
+                            </td>
+                            <td class="price">
+                                <input class="js-change-total" name="item2[unit_price]" onchange="invoice.format_field(this);" type="text" value="0.00">
+                            </td>
+                            <td class="amount">$0.00</td>
+                            <td class="tax" style="display:none">    <input class="js-change-total" name="item2[taxed]" type="checkbox" value="1"></td>
+                            <td class="tax2" style="display:none">    <input class="js-change-total" name="item2[taxed2]" type="checkbox" value="1"></td>
+                        </tr>-->
+
+                        <!--<tr id="item-row-3">
+                            <td class="control">
+                                <input name="item3[project_id]" type="hidden" value="">        <a class="graphic delete" href="#" onclick="invoice.remove_line_item(3); return false;">delete</a>
+                            </td>
+                            <td class="type">
+                                <select name="item3[kind]">
+                                    <option value="Product">Product</option>
+                                    <option selected="selected" value="Service">Service</option>
+                                </select>
+                            </td>
+                            <td class="description">
+                                <textarea class="expand" cols="40" id="item3_description" name="item3[description]" rows="1" style="overflow: hidden;"></textarea>
+                            </td>
+                            <td class="quantity">
+                                <input class="js-change-total" name="item3[quantity]" type="text" value="1.00">
+                            </td>
+                            <td class="price">
+                                <input class="js-change-total" name="item3[unit_price]" onchange="invoice.format_field(this);" type="text" value="0.00">
+                            </td>
+                            <td class="amount">$0.00</td>
+                            <td class="tax" style="display:none">    <input class="js-change-total" name="item3[taxed]" type="checkbox" value="1"></td>
+                            <td class="tax2" style="display:none">    <input class="js-change-total" name="item3[taxed2]" type="checkbox" value="1"></td>
+                        </tr>-->
+
+                        <!--<tr id="item-row-4">
+                            <td class="control">
+                                <input name="item4[project_id]" type="hidden" value="">        <a class="graphic delete" href="#" onclick="invoice.remove_line_item(4); return false;">delete</a>
+                            </td>
+                            <td class="type">
+                                <select name="item4[kind]">
+                                    <option value="Product">Product</option>
+                                    <option selected="selected" value="Service">Service</option>
+                                </select>
+                            </td>
+                            <td class="description">
+                                <textarea class="expand" cols="40" id="item4_description" name="item4[description]" rows="1" style="overflow: hidden;"></textarea>
+                            </td>
+                            <td class="quantity">
+                                <input class="js-change-total" name="item4[quantity]" type="text" value="1.00">
+                            </td>
+                            <td class="price">
+                                <input class="js-change-total" name="item4[unit_price]" onchange="invoice.format_field(this);" type="text" value="0.00">
+                            </td>
+                            <td class="amount">$0.00</td>
+                            <td class="tax" style="display:none">    <input class="js-change-total" name="item4[taxed]" type="checkbox" value="1"></td>
+                            <td class="tax2" style="display:none">    <input class="js-change-total" name="item4[taxed2]" type="checkbox" value="1"></td>
+                        </tr>-->
+
+                    <!--</tbody>-->-->
+
+                    
+                    <!--footer part -->
+
+                    <!--<tfoot id="invoice_table_footer">
+                        <tr id="testing_sort" style="display:none;">
+                            <td colspan="6" style="padding:0 !important;">
+                                <ul id="sort_invoice_item_list"></ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" rowspan="5">
+                                <a class="btn-action btn-small btn-pill" ng-click="addRecurringRow()" id="add_line_item_link" onclick="invoice.add_line_item(); return false;"><span class="btn-add">+</span> Add Item</a>            <a href="#" id="sort_line_items_link" onclick="invoice.sort_line_items(); return false;">Reorder Rows</a>            <div style="display:none;" id="close_sort_items_link">Click and drag a row to reorder. <a href="#" onclick="invoice.close_sort_items(); return false;">Done Reordering</a></div>
+                                <div style="clear:both;"></div>
+                            </td>
+                            <td colspan="2" class="labelsubtot">Subtotal</td>
+                            <td id="sub_total_amount" class="amount" colspan="2">{{RowTotal()}}</td>
+                        </tr>
+                        <tr id="discount_total_row" style="display: none;">
+                            <td colspan="2" class="label">
+                                Discount
+                                <span id="discount_percentage">
+                                    ()
+                                </span>
+                            </td>
+                            <td id="total_discount_amount" class="amount" colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr id="tax_total_row" style="display: none;">
+                            <td colspan="2" class="label">
+                                Tax
+                                <span id="tax_percentage">
+                                    ()
+                                </span>
+                            </td>
+                            <td id="total_tax_amount" class="amount" colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr id="tax2_total_row" style="display: none;">
+                            <td colspan="2" class="label">
+                                Tax 2
+                                <span id="tax2_percentage">
+                                    ()
+                                </span>
+                            </td>
+                            <td id="total_tax2_amount" class="amount" colspan="2">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="totalamt labelamt">Amount Due</td>
+                            <td id="total_amount" class="total amount" colspan="2">{{RowTotal()}}</td>
+                        </tr>
+                    </tfoot>-->
+                <!--</table>-->
+
+                <!--<div id="invoice_notes_area">
+                    <h3><label for="recurring_notes">Notes</label> <span class="notes_text">(Displayed on invoice)</span></h3>
+                    <textarea cols="80" id="recurring_notes" name="recurring[notes]" rows="4"></textarea>
+                    <div class="notes_text">
+                        Formatting tips: <strong>*bold*</strong>, <em>_italics_</em>
+                    </div>
+                </div>-->
+            <!--</div>-->
+
+            <!--<div class="btn-submit-container form-submit-toggle">
+                <input class="btn-submit btn-primary" id="save-invoice-button" name="commit" onclick="return invoice.validate_recurring_invoice()" type="submit" value="Save Invoice">
+                <a class="btn-submit" href="/recurring_invoices">Cancel</a>
+                <div class="loader" style="display:none;">Loading...</div>
+            </div>-->
+            <script type="text/javascript">
+document.observe('dom:loaded', function () {
+client_document.id_prefix = 'recurring';
+
+    invoice.register_on_change_handlers_for_step2();
+    invoice.register_line_items_for_reorder_by_drag();
+    invoice.recompute_amounts_and_totals();
+    new XeroTaxRates();
+
+    invoice.register_on_change_handlers_for_recurring_invoice();
+    $('recurring_start_date_human_format').activate();
+    invoice.test_reorder_enable();
+    autoExpandTextArea = new AutoExpandTextArea();
+}, false);
+            </script>
+
+        <!--</form>          <div style="clear:both;"></div>
+    </div>-->-->
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> All Invoices</strong></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+
+
+                <table border="0" cellpadding="0" cellspacing="0" class="table table-striped table-bordered ">
+                    <thead>
+                        <tr>
+                            <td class="name">Client</td>
+                            <td class="type">Task Type </td>
+                            <td class="day">
+                               Description
+                            </td>
+                            <td class="day">
+                                Issue Date
+                            </td>
+                            <td class="day">
+                               Last Date
+                            </td>
+                            <td class="day"> Currency</td>
+                            <td class="day">Quantity</td>
+                            
+
+                            <td class="total">Amount</td>
+                            <!--<td class="deletetab"></td>-->
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td class="name">
+                                <!--<a class="button button-new-row test-button-new-row js-new-week-row" href="javascript:void(0)" tabindex="2">-->
+                                <button>
+                                    <a class="ss-plus" href="#/invoice/invoicemoreyeahs">Add</a>
+                                </button>
+                                    <!--</a>-->
+                                &nbsp;
+                                <!--<a class="button button-primary test-week-view-save week-view-save button-disabled" href="javascript:void(0)" tabindex="1">Save</a>-->
+
+                            </td>
+                          
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="day test-not-today test-day-total-1">
+                                {{unit_total()}}
+                            </td>
+
+                            <td class="total"> {{amount_total()}}</td>
+                           
+                        </tr>
+                    </tfoot>
+
+
+
+                    <tbody>
+                        <tr class="day-view-entry" data-project-id="7781822" data-task-id="4137742" ng-repeat="i in dayGridRows">
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+                            <td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>
+                            <!--<td class="day today">
+                                <label class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i.d1">aaa</label>
+
+                            </td>-->
+
+                            <!--<td class="total">
+                                {{getdayRowTotal(i)}}
+                            </td>-->
+                            <!--<td class="deletetab js-end-of-week-row ">
+
+                                <div class="pop-over-wrap">
+                                    <a class="js-remove-row js-bubble week-row-delete button button-small button-no-border" href="javascript:void(0)" rel="#pop-over-week-delete" tabindex="1" title="Delete Row">
+                                        <span class="ss-icon" title="Delete Row" ng-click="removeDayRow($index)">Delete</span>
+                                    </a>
+                                    <div class="pop-over pop-over-down-right pop-over-submit pop-over-week-delete">
+                                        Remove entries from timesheet?
+                                        <div>
+                                            <a class="button button-small button-important js-confirm-delete-entry js-bubble" href="https://moreyeahs12.harvestapp.com/time/week/2015/04/06/973600#">Delete</a>
+                                            <a class="button button-small button-cancel js-cancel-delete-entry js-bubble" href="https://moreyeahs12.harvestapp.com/time/week/2015/04/06/973600#">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>-->
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+   
+</body>
+</html>

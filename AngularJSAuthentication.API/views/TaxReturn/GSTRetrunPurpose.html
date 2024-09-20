@@ -1,0 +1,57 @@
+﻿
+
+<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="Tax Retrun">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> GST Returns purpose</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-md-2">
+
+                          
+                            <label for="site-name">Select Report Type:</label>
+
+                            <select class="form-control" id="site-name" ng-model="value">
+                                <option value="">--Select-- </option>
+                                <option value="1">Sales </option>
+                                <option value="2">Sales Retrun </option>
+                                <option value="3">TDS(Advance) </option>
+                                <option value="4">TDS(Bill To Bill) </option>
+                                <option value="5">TCS</option>
+                                <option value="6">Customer's whose sales have crossed 50 Lakhs </option>
+                                <option value="7">Vendor's whose purchases have crossed 50 Lakhs</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="site-name">Select date Range:</label>
+                            <label for="site-name"></label>
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                    <span class="input-group-addon ">
+                                        <span class="fa fa-calendar"></span><br />
+                                    </span>
+
+                                </div>
+                                <br/>
+
+                                <button type="button" class="btn btn-primary skexport" ng-click="exportData(value,dat)">
+                                    <span class="glyphicon glyphicon-export"> </span> Export
+                                </button>
+
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+
+
+

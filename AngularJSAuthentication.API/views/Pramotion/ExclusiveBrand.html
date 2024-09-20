@@ -1,0 +1,94 @@
+﻿<div class="page page-table">
+    <div class="modal-header">
+        <h4 class="modal-title">Add Exclusive Brand</h4>
+    </div>
+    <section class="panel panel-default table-dynamic">
+        <form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+            <div class="form-group col-md-12">
+                <div class="form-group col-md-4">
+
+                    <div class="form-group">
+                        <label for="site-name">Select State:</label><br />
+                        <select class="form-control" id="site-name" ng-model="branddata.Stateid">
+                            <option value="">---SELECT---</option>
+                            <option value="{{state.Stateid}}" ng-repeat="state in states"> {{state.StateName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="form-group">
+                        <label for="site-name">Select City:</label><br />
+                        <select class="form-control" id="site-name" ng-model="branddata.Cityid" ng-change="showsubcategory_city()" >
+                            <option value="">---SELECT---</option>
+                            <option value="{{city.Cityid}}" ng-repeat="city in cities|filter:{Stateid:branddata.Stateid}"> {{city.CityName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <!--ng-change="showsubcategory()"-->
+                    <label for="site-name">Warehouses</label><br>
+                    <select class="form-control" id="site-name" ng-model="branddata.WarehouseId" ng-change="showsubcategory()">
+                        <option value=""> ---SELECT--- </option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse | filter:{Cityid:branddata.Cityid}"> {{warehouses.WarehouseName}}</option> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3">
+                </div>
+            </div>
+            <!--<div class="form-group col-md-12">
+                <div class="form-group col-md-6">
+                    <label for="site-name">Select Category:</label><br />
+                    <select class="form-control" id="site-name" data-ng-disabled="!branddata.Warehouseid" ng-model="branddata.Categoryid" ng-change="showsubcategory()">
+                        <option value="">---SELECT---</option>
+                        <option value="{{categorys.Categoryid}}" ng-repeat="categorys in warehouseCategory | filter:{Warehouseid:branddata.Warehouseid}"> {{categorys.CategoryName}}</option>
+                    </select>
+                </div>
+            </div>-->
+            <div ng-show="tableshow">
+                <div class="form-group col-md-12">
+                    <table class="table table-bordered table-striped table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">Orders</div>
+                                </th>
+                                <th>
+                                    <div class="th">Category Name</div>
+                                </th>
+                                <th>
+                                    <div class="th">Brand Name</div>
+                                </th>
+                                <th>
+                                    <div class="th">Is Pramotional </div>
+                                </th>
+                                <th>
+                                    <div class="th">Image </div>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="sub in subcategory">
+                                <td><input id={{sub.SubCategoryId}} type="text" value="sub.SortOrder" class="form-control" style="width:50px;" ng-model="sub.SortOrder" placeholder="0" required /></td>
+                                <td> <label id={{sub.SubCategoryId}} ng-model="sub.CategoryName">{{sub.CategoryName}}</label></td>
+                                <td> <label id={{sub.SubCategoryId}} ng-model="sub.SubcategoryName">{{sub.SubcategoryName}}</label></td>
+                                <td><input id={{sub.SubCategoryId}} type="checkbox" value="" class="form-control" ng-model="sub.IsExclusive" /></td>
+                                <td><img alt="" src="{{sub.LogoUrl}}" class="img-square img80_80"></td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-3">
+                        <!--<button type="button" class="btn btn-ar btn-primary" ng-click="UpdateSubcategory(subcategory)">Submit</button>-->
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="UpdateSubcategory_city(subcategory)">Submit</button>
+
+                    </div>
+                </div>
+            </div>
+
+</form>
+    </section>
+</div>

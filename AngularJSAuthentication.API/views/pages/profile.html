@@ -1,0 +1,68 @@
+
+<div class="page page-profile">
+
+    <div class="row">
+   
+        <div class="col-md-6">
+
+          
+
+            <div class="panel panel-default"  style="align-items:center">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Profile Info</strong></div>
+                <div class="panel-body">
+                    <div class="panel-heading bg-primary clearfix">
+                        <a href="" class="pull-left profile">
+                            <img alt="" src="{{peoples.ImageUrl}}" class="img-square img80_80">                            
+                        </a>
+                        <h3>{{peoples.PeopleFirstName}} {{peoples.PeopleLastName}}</h3>
+                        <p>{{peoples.Permissions}}</p>
+                    </div>
+                    <div class="media">
+                        <div class="media-body">
+                            <ul class="list-unstyled list-info">
+                                <li>
+                                    <span class="icon glyphicon glyphicon-user"></span>
+                                    <label>User name</label>
+                                    {{peoples.PeopleFirstName}} {{peoples.PeopleLastName}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-envelope"></span>
+                                    <label>Email</label>
+                                    {{peoples.Email}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-home"></span>
+                                    <label>Department</label>
+                                    {{peoples.Department}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-earphone"></span>
+                                    <label>Permissions</label>
+                                    {{peoples.Permissions}}
+                                </li>
+                                <li>
+                                    <span class="icon glyphicon glyphicon-earphone"></span>
+                                    <label>Mobile</label>
+                                    {{peoples.Mobile}}
+                                </li>
+                                <!--<li>
+        <span class="icon glyphicon glyphicon-flag"></span>
+        <label>Nationality</label>
+        Australia
+    </li>-->
+                            </ul>
+                            
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-ar btn-primary" href="#/pages/profile/profileEdit">Edit</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>        
+                        
+</div>  
+
+</div>

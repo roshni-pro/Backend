@@ -1,0 +1,101 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+
+    option.option2 {
+        background-color: #f31d11;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-12">
+                <hr>
+                <h2 class="intro-text text-center">
+                    <strong>Assign New Brand To Warehouse(Here you Get only New Brand)</strong>
+                </h2>
+                <hr>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="site-name">Select Cities</label><br>
+                        <select class="form-control" id="site-name" ng-model="data1.Cityid" ng-change="getWareHouse()">
+                                    <option value="">-Select-</option>
+                                    <option value="{{c.Cityid}}" ng-repeat="c in cities">{{c.CityName}}</option>
+                                </select>
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                        <label for="site-name">Select Warehouse</label><br>
+                        <select class="form-control" id="site-name" ng-model="data1.WarehouseId" ng-change="getWareHouseBrand(data1.WarehouseId)">
+                            <option value="">-Select-</option>
+                            <option value="{{a.WarehouseId}}" ng-repeat="a in Warehouse">{{a.WarehouseName}}</option>
+                        </select>
+                    </div>
+
+                    <!--For Brand Mapping if already assign-->
+
+                    <div class="form-group col-md-3">
+                        <label for="site-name">Select Brand</label><br>
+                        <select class="form-control" id="site-name" ng-disabled="!data1.WarehouseId" ng-model="data1.SubsubCode">
+                            <option value="">-Select-</option>
+                            <option value="{{WHB.SubsubCode}}" ng-repeat="WHB in WareHouseBrand">{{WHB.SubsubcategoryName}}</option>
+                        </select>
+                    </div>
+
+                    
+                    <div class="form-group col-md-3" style="margin: 24px;">
+                        <button type="button" class="btn btn-ar btn-success" ng-click="selectedItemChanged(data1)">Get Unmapped Customers</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group col-md-3"></div>
+                <div class="form-group col-md-3"></div>
+                <div class="form-group col-md-3">
+                    <button type="button" class="btn btn-ar btn-success" ng-click="getselected(data1)">Assign Customers</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="box">
+
+            <table ng-table="tableParams" id="test" show-filter="true" class="table table-striped table-responsive" id="exportable">
+                <colgroup>
+                    <col width="5%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="15%" />
+                    <col width="15%" />
+                    <col width="8%" />
+                    <col width="15%" />
+                    <col width="22%" />
+                </colgroup>
+                <tr id="{{trade.CustomerId}}" ng-class-odd="'odd'" ng-class-even="'even'" ng-click="user.$selected = !user.$selected; changeSelection(user)"
+                    ng-class="{'active': user.$selected}" data-ng-repeat="trade in $data| orderBy:'-Itemid'">
+                    <td width="30" style="text-align: left" header="'ng-table/headers/checkbox.html'">
+                        <input type="checkbox" ng-model="checkboxes.items[trade.CustomerId]" />
+                        {{ $index+1 }}
+                    </td>
+                    <td title="'SKcode'" filter="{ Skcode: 'text'}" ng-model="trade.Skcode" sortable="'Skcode'">{{trade.Skcode}}</td>
+                    <td title="'ShopName'" filter="{ ShopName: 'text'}" ng-model="trade.ShopName" sortable="'ShopName'">{{trade.ShopName}}</td>
+                    <td title="'Name'" filter="{ Name: 'text'}" ng-model="trade.Name" sortable="'Name'">{{trade.Name}}</td>
+                    <td title="'BillingAddress'" filter="{ BillingAddress: 'text'}" ng-model="trade.BillingAddress" sortable="'BillingAddress'">{{trade.BillingAddress}}</td>
+                </tr>
+
+            </table>
+            <script type="text/ng-template" id="ng-table/headers/checkbox.html">
+                <input type="checkbox" ng-model="checkboxes.checked" id="select_all" name="filter-checkbox" value="" />
+            </script>
+        </div>
+
+
+    </div>
+    
+</div>

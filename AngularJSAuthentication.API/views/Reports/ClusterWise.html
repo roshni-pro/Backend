@@ -1,0 +1,254 @@
+﻿
+
+<style>
+    .contentsstotalsell {
+        position: relative;
+    }
+
+    .overlaysstotalsell {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlaysstotalsell-contentsstotalsell {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+    .overlayss {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlayss-contentss {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 20px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="Cluster Wise Report">
+    <div class="modal-header">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span> Cluster Wise Report
+                </strong>
+            </div>
+            <form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+                <div class="form-group col-md-12">
+
+                    <div class="col-md-2">
+                        <label for="site-name"> Zone </label><br />
+                        <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                            <option value="">---Select Zone---</option>
+                            <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="site-name"> Region </label><br />
+                        <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetCity(RegionId)">
+                            <option value="">---Select Region---</option>
+                            <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="site-name"> City </label><br />
+                        <select class="form-control" id="site-name" ng-model="Cityid" ng-change="Clustercitybased(Cityid)">
+                            <option value="">---Select City---</option>
+                            <option value="{{city.CityId}}" ng-repeat="city in cities"> {{city.CityName}}</option>
+                        </select>
+                    </div>
+                    <!--<div class="form-group col-md-2">
+        <label for="site-name">Select City</label><br>
+        <select class="form-control" id="site-name" ng-model="Cityid" ng-change="Clustercitybased(Cityid)">
+            <option value="">---SELECT---</option>
+            <option value="{{city.Cityid}}" ng-repeat="city in cities "> {{city.CityName}}</option>
+        </select>
+    </div>-->
+
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Cluster</label><br>
+                        <select class="form-control" id="site-name" ng-model="ClusterId" ng-change="Warehouse(ClusterId)" required>
+                            <option value="">---SELECT ALL---</option>
+                            <option value="{{clusters.ClusterId}}" ng-repeat="clusters in getcluster | filter:{Cityid:Demanddata.Cityid}"> {{clusters.ClusterName}} </option> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Warehouse</label><br>
+                        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="Agents(ClusterId)" required>
+                            <option value="">---SELECT---</option>
+                            <option value="{{Warehouse.WarehouseId}}" ng-repeat="Warehouse in warehouse"> {{Warehouse.WarehouseName}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Date Range</label><br />
+                        <div class="form-group">
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group col-md-2">
+                        <div class="form-group">
+                            <label for="site-name">Select Department</label><br>
+                            <select class="form-control" id="site-name" ng-model="Department">
+                                <option value="">---SELECT---</option>
+                                <option value="0">Business Development</option>
+                                <option value="1">Sales</option>
+                                <option value="2">Kisan Kirana</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">&nbsp;</label><br>
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="Get(ClusterId)">Filter</button>
+                        <button type="button" class="btn btn-ar btn-dark skexport" ng-click="ExportList()">Export</button>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="form-control" id="site-name" ng-model="vm.agents" ng-disabled="true"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table>
+                            <tr>
+
+                                <th class="col-md-3">Parameter</th>
+                                <th class="col-md-5">Total</th>
+
+
+                            </tr>
+                            <tr ng-if="Department==0">
+                                <td>Total Retailers</td>
+                                <td>{{ClusterWiseData.TotalRetailer }}</td>
+
+                            </tr>
+                            
+                            <tr ng-if="Department==0">
+                                <td>New Retailers</td>
+                                <td>{{ClusterWiseData.TotalNewRetailers}}</td>
+
+                            </tr>
+
+                            <tr ng-if="Department==1">
+                                <td>Active Retailers</td>
+                                <td>{{ClusterWiseData.TotalRetailerActive}}</td>
+
+                            </tr>
+                            <tr ng-if="Department==1">
+                                <td>TotalSale</td>
+                                <td><i class="fa fa-rupee"></i> {{ClusterWiseData.TotalAmountSale| number : 2}}</td>
+                            </tr>
+                            <tr ng-if="Department==1">
+                                <td>Delivered Amount</td>
+                                <td><i class="fa fa-rupee"></i>{{ClusterWiseData.DeliveredAmount| number : 2}} </td>
+                            </tr>
+                            <tr ng-if="Department==1">
+                                <td>Avg/Active Retailer Amt</td>
+                                <td><i class="fa fa-rupee"></i>{{ClusterWiseData.AvgofRetailer}}</td>
+                            </tr>
+
+                            <tr ng-if="Department==1">
+                                <td>Pre-order cancel %</td>
+                                <td>{{ClusterWiseData.Preorder}}</td>
+                            </tr>
+                            <tr ng-if="Department==1">
+                                <td>Post order cancel %</td>
+                                <td>{{ClusterWiseData.Postorder}}</td>
+                            </tr>
+                            <tr ng-if="Department==1">
+                                <td>Cancellation %</td>
+                                <td>{{ClusterWiseData.Cancellation}}</td>
+                            </tr>
+
+                            <tr ng-if="Department==1">
+                                <td>Avg No Of Brands</td>
+                                <td>{{ClusterWiseData.Avgofbrands| number : 2}}</td>
+                            </tr>
+
+                            <tr ng-if="Department==1">
+                                <td>Avg line item</td>
+                                <td>{{ClusterWiseData.Avglineitem| number : 2}}</td>
+                            </tr>
+
+                            <tr ng-if="Department==2">
+                                <td>Sale</td>
+                                <td><i class="fa fa-rupee"></i> {{ClusterWiseData.kisankiranaSale| number : 2}}</td>
+                            </tr>
+
+                            <tr ng-if="Department==2">
+                                <td> Active items</td>
+                                <td>{{ClusterWiseData.KisanKiranaActive}}</td>
+                            </tr>
+
+
+
+
+
+                        </table>
+                    </div>
+                </div>
+                <footer class="table-footer"></footer>
+            </form>
+        </section>
+    </div>
+
+</div>
+
+
+

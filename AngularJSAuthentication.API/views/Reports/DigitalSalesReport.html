@@ -1,0 +1,157 @@
+﻿
+<style>
+    .contentsstotalsell {
+        position: relative;
+    }
+
+    .overlaysstotalsell {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlaysstotalsell-contentsstotalsell {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+    .overlayss {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlayss-contentss {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 20px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="page page-table"  button-permission-binder parentName="StatisticalRep" pageName="Digital Sales Report">
+    <div class="modal-header">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span> Digital Sales Report
+                </strong>
+            </div>
+            <form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+                <div class="form-group col-md-12">
+                    <div class="col-md-2">
+                        <label for="site-name"> Zone </label><br />
+                        <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                            <option value="">---Select Zone---</option>
+                            <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="site-name"> Region </label><br />
+                        <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetWarehouses(RegionId)">
+                            <option value="">---Select Region---</option>
+                            <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                        </select>
+                    </div>
+                    <!--<div class="col-md-2">
+        <label for="site-name"> Hub </label><br />
+        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="GetDSData(WarehouseId)">
+            <option value="">--Select Hub--</option>
+            <option value="{{warehouse.WarehouseId}}" ng-repeat="warehouse in warehouses">{{warehouse.WarehouseName}} </option>
+        </select>
+    </div>-->
+
+                    <div class="col-md-2">
+                        <label for="site-name">Warehouse</label>
+                        <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouses" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="site-name"> </label><br>
+                        <div class='input-group date'>
+                            <button type="button" class="btn btn-ar btn-primary skcomparisondata" ng-click="GetDSData()"> Preview  </button>
+                        </div>
+                    </div>
+
+
+                    <!--<div class="form-group col-md-2">
+        <label for="site-name">Select Warehouse</label><br>
+        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="GetDSData(WarehouseId)">
+            <option value="">---SELECT---</option>
+            <option value="{{Warehouse.WarehouseId}}" ng-repeat="Warehouse in warehouse"> {{Warehouse.WarehouseName}} ({{Warehouse.CityName}})</option>
+        </select>
+    </div>-->
+                </div><br/><br/>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="col-md-4"></th>
+                                    <th>Total</th>
+                                    <th>Last Month</th>
+                                    <th>This Month</th>
+                                    <th>Yesterday</th>
+                                    <th>Today</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="i in DigitalSalesData">
+                                    <td>{{i.FieldName}}</td>
+                                    <td>{{i.Total | number:2}}</td>
+                                    <td>{{i.LastMonth | number:2}}</td>
+                                    <td>{{i.ThisMonth | number:2}}</td>
+                                    <td>{{i.Yesterday | number:2}}</td>
+                                    <td>{{i.Today | number:2}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <footer class="table-footer"></footer>
+            </form>
+        </section>
+    </div>
+</div>

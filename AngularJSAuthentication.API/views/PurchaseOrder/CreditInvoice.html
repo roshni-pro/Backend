@@ -1,0 +1,246 @@
+﻿<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>-->
+<div style="width: 100%;max-width: 1200px;margin: 0px auto;">
+    <div style="width:100%; text-align:left">
+
+        <input type="button" value="Back" style="color: #333;
+    display: block;
+    background: #eee;
+    text-decoration: none;
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px 0 5px;
+    text-align: center;
+    margin-right: 23px;" ng-click="Back()" />
+    </div>
+    <div id="tblcreditinvoice">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th style="text-align:left;">
+                        <img src="https://static.wixstatic.com/media/12d400_41d5b06efb434b059e042a0da9a2bb3b~mv2.png/v1/fill/w_209,h_60,al_c,q_85,usm_0.66_1.00_0.01/Logo%20(3).webp">
+                    </th>
+                    <th style="text-align: right;">
+                        <h3>{{CompanyName}}</h3>
+                        <P style="max-width:380px;float:right;">
+                            {{CompanyAddress}}<br><strong>GSTIN:</strong> {{CompanyGstInNo}}
+                        </P>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th style="background: #eee;padding-top: 15px; text-align:center" colspan="2"><h2>Debit Note</h2></th>
+                </tr>
+                <tr>
+                    <td style="">
+                        <table width="100%" border="1" cellpadding="0" cellspacing="0" valign="top">
+                            <tr>
+                                <td style="padding:5px;" >Purchase Order Number: </td>
+                                <td style="padding:5px;" colspan="2">{{Poid}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <table width="100%" border="1" cellpadding="0" cellspacing="0" valign="top">
+                           
+                            <tr>
+                                <td style="padding:5px;">Debit Note No.</td>
+                                <td style="padding:5px;" colspan="2"> {{CNNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;min-width: 150px">Date of Issue: </td>
+                                <td style="padding:5px;min-width: 150px" colspan="2">{{CreatedDate| date}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">State:</td>
+                                <td style="padding:5px;">{{SupplierState}}</td>
+                                <td style="padding:5px;">Code &nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="vertical-align: top;">
+                        <table width="100%" border="1" cellpadding="0" cellspacing="0" valign="top">
+                            <tr>
+                                <td style="padding:5px;">Original Invoice Number:</td>
+                                <td style="padding:5px;">{{InvoiceNumber}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">Original Invoice Date:</td>
+                                <td style="padding:5px;">{{InvoiceCreatedDate | date }}</td>
+
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;" colspan="2">{{SupplierGstNo.substr(0,2)}} &nbsp;</td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table width="100%" border="1" cellpadding="0" cellspacing="0" valign="top">
+                            <tr style="background: #eee;">
+                                <th style="padding:5px;" colspan="2">Detail of Party/Vendor</th>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">Name:</td>
+                                <td style="padding:5px;">{{SupplierName}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">Address:</td>
+                                <td style="padding:5px;">
+                                    {{SupplierAddress}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px;">GSTIN:</td>
+                                <td style="padding:5px;">{{SupplierGstNo}} </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table><br>
+        <table width="100%" border="1" cellpadding="0" cellspacing="0">
+            <thead style="background: #eee;">
+                <tr>
+                    <th rowspan="2">S.No.</th>
+                    <th rowspan="2">Product</th>
+                    <th rowspan="2">HSN Code</th>
+                    <!--<th rowspan="2">UOM</th>-->
+                    <th rowspan="2">ShortQty</th>
+                    <th rowspan="2">DamageQty</th>
+                    <th rowspan="2">Invoice Excess Qty</th>
+                    <th rowspan="2">Qty.</th>
+                    <th rowspan="2">Rate</th>
+                    <th rowspan="2">Taxable Amount</th>
+                    <!--<th rowspan="2">Taxable Value</th>-->
+                    <th rowspan="2">Tax Amount</th>
+                    <th rowspan="2">Discount</th>
+                    <th  colspan="2" style="text-align:center">CESS</th>
+                    <th colspan="2" style="text-align:center">CGST</th>
+                    <th colspan="2" style="text-align:center">SGST</th>
+                    <th colspan="2" style="text-align:center">IGST</th>
+                    <th rowspan="2" style="text-align:center; width:100px;">Total</th>
+                </tr>
+                <tr>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="t in Creditnotedetails track by $index">
+                    <td style="padding:3px;">{{$index+1}}</td>
+                    <td style="padding:3px;">{{t.ItemName}}</td>
+                    <td style="padding:3px;">{{t.HSNCode}}</td>
+                    <!--<td style="padding:5px;">{{t.Uom}}</td>-->
+                    <td style="padding:3px;">{{t.ShortQty}}</td>
+                    <td style="padding:3px;">{{t.DamageQty}}</td>
+                    <td style="padding:3px;">{{t.ExpiryQty}}</td>
+                    <td style="padding:3px;">{{t.Qty}}</td>
+                    <td style="padding:3px;">{{t.IRPrice| number : 2}}</td>
+                    <td style="padding:3px;">{{t.Amount| number : 2}} </td>
+                    <td style="padding:3px;">{{t.Taxablevalue| number : 2}} </td>
+                    <td style="padding:3px;">{{t.ShortQuantityDiscount| number : 2}} </td>
+                    <td style="padding:3px;">{{t.CessRate| number : 2}}</td>
+                    <td style="padding:3px;">{{t.CessAmount| number : 2}}</td>
+                    <td style="padding:3px;"> {{t.GstRate| number : 2}}</td>
+                    <td style="padding:3px;">{{t.CgstAmount| number : 2}}</td>
+                    <td style="padding:3px;">{{t.GstRate| number : 2}}</td>
+                    <td style="padding:3px;">{{t.SgstAmount| number : 2}}</td>
+
+                    <td style="padding:3px;">{{t.IgstRate| number : 2}}</td>
+
+                    <td style="padding:3px;">{{t.IgstAmount| number : 2}}</td>
+
+                    <td style="padding:3px;">{{t.TotalAmount| number : 2}}</td>
+                </tr>
+
+
+            </tbody>
+            <tfoot style="background: #eee;">
+                <tr>
+                    <td style="padding: 3px;" colspan="3"><h2>Total</h2></td>
+                    <td style="padding:3px;">{{TotalShortQty}}</td>
+                    <td style="padding:3px;">{{TotalDamageQty}}</td>
+                    <td style="padding:3px;">{{TotalExpiryQty}}</td>
+                    <td style="padding:3px;">{{TotalQty}}</td>
+                    <td style="padding:3px;">&nbsp;</td>
+                    <td style="padding:3px;">{{TotalAmountBeforeTax | number : 2 }}</td>
+                    <td style="padding:3px;">{{TotalTaxablevalue | number : 2}}</td>
+                    <td style="padding:3px;">{{TotalDiscount | number : 2}}</td>
+                    <td style="padding:3px;" colspan="2">{{TotalCessAmount| number : 2}}</td>
+                    <td style="padding:3px;" colspan="2">{{TotalCgstAmount| number : 2}}</td>
+                    <td style="padding:3px;" colspan="2">{{TotalSgstAmount| number : 2}}</td>
+                    <td style="padding:3px;" colspan="2">{{TotalIgstAmount| number : 2}}</td>
+                    <td style="padding:3px;" colspan="2">{{TotalAmountAfterTax | number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding:3px;" colspan="11"><!--Total amount in words--></td>
+                    <td style="padding:3px;" colspan="8">Total Amount before Tax</td>
+                    <td style="padding:3px;">{{TotalAmountBeforeTax| number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding:3px;background: #fff;" rowspan="4" colspan="12"><!--{{TotalAmountAfterTax | convertToWord}} Rupees only/---></td>
+                    <td style="padding:3px;" colspan="7">Add: CGST</td>
+                    <td style="padding:3px;">{{TotalCgstAmount| number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding:3px;" colspan="7">Add: SGST</td>
+                    <td style="padding:3px;">{{TotalSgstAmount| number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding:3px;" colspan="7">Add: IGST</td>
+                    <td style="padding:3px;">{{TotalIgstAmount| number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px;" colspan="7">Add: CESS</td>
+                    <td style="padding:3px;">{{TotalCessAmount| number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px;" colspan="19">Total Tax Amount</td>
+                    <td style="padding:3px;">{{TotalTaxablevalue| number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding:3px;" colspan="19">Total Amount After Tax</td>
+                    <td style="padding:3px;">{{TotalAmountAfterTax| number : 2}}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px; background: #fff;height: 50px;" colspan="20">
+
+                        Debit Note to be Signed by Vendor with Stamp.
+                    </td>
+                    <!--<td style="padding:5px;height: 100px; background: #fff" colspan="9">
+            For ShopKirana E Trading Private Limited<br>
+            Authourised Signatory
+        </td>-->
+                </tr>
+                <tr>
+                    <td style="padding:3px;" colspan="20">This auto generated Debit Note  there is no need of signature.</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div style="text-align:center;">
+        <button type="submit" value="Print" style="        background-color: #a0d468 !important;
+        border-color: #a0d468;
+        color: #fff;
+        text-align: center;" ng-click="printReciept('#tblcreditinvoice')">
+            <i class="fa fa-print" aria-hidden="true" style="        font-size: 20px"></i> Print
+        </button>
+
+    </div>
+
+</div>

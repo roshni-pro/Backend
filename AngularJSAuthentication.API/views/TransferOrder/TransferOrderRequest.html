@@ -1,0 +1,1413 @@
+﻿
+<style>
+    .modal-dialog {
+        width: auto;
+    }
+</style>
+<div class="page page-table" button-permission-binder parentName="Reports" pageName="Transfer Order Request">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>Transfer Order Master</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="site-name">Select Warehouse</label><br>
+                            <!--<select class="form-control" id="site-name" ng-model="Warehouseid" data-ng-change="getData1(pageno,true)">
+                              <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}}</option>
+                            </select>-->
+                            <div ng-dropdown-multiselect="" id="Warehouseid" options="warehouse"
+                                 selected-model="MultiWarehouseModel"
+                                 extra-settings="MultiWarehouseModelsettings"
+                                 style="width:200px">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Select Date Range</label><br />
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input name="daterange" id="dat" type='text' title="Select Date " class="form-control date-picker" />
+                                    <span class="input-group-addon ">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Select Status</label><br />
+                            <select class="form-control" ng-model="statusname">
+                                <option value="Pending"> Pending</option>
+                                <option value="Revoke">Revoke</option>
+                                <option value="Dispatched">Dispatched</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Canceled">Canceled</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <label for="site-name">&nbsp;</label><br />
+                            <!--<input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="searchdata(searchKeywords)" />-->
+                            <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" />
+                            <!--<span>
+                                Showing {{filteredStores.length}}/{{stores.length}} entries
+                            </span>-->
+
+
+                        </div>
+
+                        <br />
+                        <button type="button" class="btn btn-primary" ng-click="getData1(pageno,statusname,searchKeywords)">Search</button>
+
+                        <button type="button" class="btn btn-info" ng-click="refresh()">Refresh</button>
+
+
+                        <button type="button" class="btn btn-info" ng-click="ExportRequest(pagenoo,statusname,searchKeywords)">Export</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped table-responsive " ng-show="order">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                SNo.
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Transfer Order Id/ Type
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('OrderId')"
+                                      data-ng-class="{active: row == 'OrderId'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-OrderId')"
+                                      data-ng-class="{active: row == '-OrderId'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Req. To Warehouse Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('WarehouseName')"
+                                      data-ng-class="{active: row == 'WarehouseName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-WarehouseName')"
+                                      data-ng-class="{active: row == '-WarehouseName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Status
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Status')"
+                                      data-ng-class="{active: row == 'Status'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Status')"
+                                      data-ng-class="{active: row == '-Status'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Request Amount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Dispatch Amount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Open order details
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                TO Detail
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                History
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                EwayBillPdf
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                    <tr data-ng-repeat="trade in currentPageStores">
+
+                        <td>{{$index+1}}</td>
+                        <td>{{trade.TransferOrderId}}/{{trade.Type}}</td>
+                        <!--<td>{{trade.warehousename}}</td>-->
+                        <td>{{trade.RequestToWarehouseName}}</td>
+
+                        <td>
+                            <span class="badge ml-2 ng-binding" ng-class="trade.Status=='Delivered' ? 'badge-info' : trade.Status=='Dispatched'? 'badge-success' : trade.Status=='Pending' || trade.Status=='Canceled' ? 'badge-danger' : 'badge-info'">
+                                {{trade.Status}}
+                            </span>
+                        </td>
+                        <!--Added by Anoop on 18/2/2021-->
+                        <td>{{trade.RequestAmount | number:3}}</td>
+                        <td>{{trade.DispatchAmount | number:3}}</td>
+                        <td>{{trade.CreationDate | date:'medium'}}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" ng-click="showDetail(trade)">Open</button>
+                        </td>
+                        <td>
+                            <!--<button type="button" class="btn btn-primary" ng-disabled="trade.Status == 'Pending'" ng-click="showDetailHistory(trade)">History</button>-->
+                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#pricemodel" ng-click="TransferHistroy(trade)">History</button>
+                        </td>
+
+
+                        <td>
+                            <!--ng-click="invoice(trade)"-->
+                            <button ng-if="trade.EwaybillNumber >0" class="fa fa-file-pdf-o" style="font-size:25px" ng-click="EwayBillPDF(trade)"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                        <span>
+                            Show
+                            <select data-ng-model="selectedPagedItem"
+                                    data-ng-options="num for num in numPerPageOpt"
+                                    data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                            entries per page
+                        </span>
+                    </div>
+                    <div class="col-md-6 page-num-info">
+                        <dir-pagination-controls max-size="8"
+                                                 direction-links="true"
+                                                 boundary-links="true"
+                                                 on-page-change="getData1(newPageNumber)">
+                            //get method call every time when page changes
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </footer>
+        </div>
+</div>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myTODetailModal.html">
+    <form name="myModaldeleteOrder">
+        <div class="modal-header">
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="cancel()">×</button>
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title">Tranfer Order Warehouse to Warehouse</h4>
+        </div>
+        <div class="modal-body">
+            <div class="page page-table">
+                <section class="panel panel-default table-dynamic" ng-show="(TOMaster.Status == 'Pending')">
+                    <div class="panel-heading text-center" style="background-color:#ff6a00;color:aliceblue;">
+                        <strong>
+                            <span class="glyphicon glyphicon-th"></span>Transfer Order Details
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                            <h4 class="title">Initial Orders... </h4>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Transfer Order ID  </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="TOMasterData.TransferOrderId" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Warehouse Name</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="TOMasterData.WarehouseName" disabled />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="site-name">Shipping Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="WarehouseDetail.Address" disabled />
+                            </div>
+                            <!--<div class="form-group col-md-3">
+                                <label for="site-name"> Change Status</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.BillingAddress" disabled />
+                            </div>-->
+                            <table id="tbl" class="table table-bordered table-responsive" style="background-color:white;color:black">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                Sr No.
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item MultiMRP ID
+                                            </div>
+                                        </th>
+                                        <!--<th>
+                                            <div class="th">
+                                                Batch Code
+                                            </div>
+                                        </th>-->
+                                        <th>
+                                            <div class="th">
+                                                Item Name
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                ABC Classification
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                HSN
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                GST%
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Rate
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Quantity
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Select Batch Code
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Current Stock
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Boxes and Piece
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Edit Quantity
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <!--//implement Vinayak//-->
+                                            <div class="th">
+                                                Total amount
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="orderDetailq in TODetails" ng-style="set_color(orderDetailq)">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{orderDetailq.ItemMultiMRPId}}</td>
+                                        <!--<td>{{orderDetailq.BatchCode}}</td>-->
+                                        <td>{{orderDetailq.itemname}}</td>
+                                        <td ng-if="orderDetailq.ABCClassification!=null">{{orderDetailq.ABCClassification}} </td>
+                                        <td ng-if="orderDetailq.ABCClassification==null"> D </td>
+                                        <td>{{orderDetailq.ItemHsn}}</td>
+                                        <td>{{orderDetailq.TotalTaxPercentage}}</td>
+                                        <td>
+                                            <span ng-if="!orderDetailq.IsCnF">{{orderDetailq.NPP}}</span>
+                                            <span ng-if="orderDetailq.IsCnF">{{orderDetailq.UnitPrice}}</span>
+                                        </td>
+                                        <td>{{orderDetailq.TotalQuantity}}</td>
+                                        <td><button class="btn-sm btn-primary" ng-click="openPopupBatch(orderDetailq)">Batch code</button> </td>
+                                        <td>{{orderDetailq.CurrentStock}}</td>
+                                        <td>
+                                            {{orderDetailq.Boxes}}:Box
+                                            <span ng-if="orderDetailq.piece != 0">& {{orderDetailq.piece}}:piece</span>
+                                        </td>
+                                        <td><button class="btn-sm btn-primary" ng-disabled="!orderDetailq.IsManualButton" ng-click="edit(orderDetailq)">Manual Edit</button> </td>
+                                        <td>
+                                            <span ng-if="!orderDetailq.IsCnF">{{orderDetailq.PriceofItem |number:3}}</span>
+                                            <span ng-if="orderDetailq.IsCnF">{{orderDetailq.TotalQuantity * orderDetailq.UnitPrice |number:3}}</span>
+                                        </td>             <!--//implement Vinayak//-->
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <!--//implement Vinayak//-->
+                                    <tr>
+                                        <td colspan="10">
+                                            <div class="pull-right to-ttl">Total</div>
+                                        </td>
+                                        <td>{{TransferTotalPrice | number:2}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="site-name">Freight charges</label>
+                                    <input id="site-name" type="number" ng-disabled="!isenabled" class="form-control" ng-model="TODetails[0].fread" />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="site-name">Vehicle No.</label><span style="color:red;">*</span><br />
+                                    <input id="site-name" type="text" class="form-control" ng-model="vehicleNumber" />
+                                    <span>Please enter vehicle number in given format (e.g. AP 21 BP 7331)</span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label><b>Transport GST</b></label><br>
+                                    <div class="d-flex">
+                                        <input type="text" required="1" minlength="15" maxlength="15" name="Title" class="boxx form-control" placeholder="Transport GST" ng-model="RefNo" />&nbsp;&nbsp;&nbsp;
+
+                                    </div>
+
+
+                                </div>
+                                <!--<div class="col-md-1">
+                                    <button type="button" class="vs btn btn-success mr-2 mt-2" style="margin-top: 22px" ng-click="VarifiedCustomerGSTNO(RefNo)">verify</button>
+                                </div>-->
+
+                                <div class="col-md-3">
+                                    <label><b>Transport Name: </b></label><br>
+                                    <input type="text" name="Title" class="form-control" placeholder="Enter Transport Name" ng-model="transportername" />
+
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                    <div ng-if="isEwaybillNo==true" style="color:red;font-size:16px">
+                        <code>Please enter Ewaybill Number.</code>
+                    </div>
+                    <div ng-if="isPatternValid==true" style="color:red;font-size:16px">
+                        <code>Please enter valid pattern </code>
+                    </div>
+                </section>
+                <div ng-if="showEwayBill==true">
+                    <label style="color:red">*Eway Bill Required</label>
+                </div>
+
+                <section class="panel panel-default table-dynamic" ng-show="(TOMaster.Status == 'Dispatched' || TOMaster.Status == 'Delivered')">
+                    <div class="panel-heading text-center" style="background-color:#0094ff;color:aliceblue;">
+                        <strong>
+                            <span class="glyphicon glyphicon-th"></span> Order Dispatched ({{TOMasterData.Status}})
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                            <h4 class="title">Dispatched Order... </h4>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Transfer Order ID  </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="TOMasterData.TransferOrderId" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Warehouse Name</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="TOMasterData.WarehouseName" disabled />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="site-name">Shipping Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="WarehouseDetail.Address" disabled />
+                            </div>
+                            <!--<div class="form-group col-md-3">
+                                <label for="site-name"> Change Status</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.BillingAddress" disabled />
+                            </div>-->
+                            <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                ItemNumber
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                ItemMultiMRPId
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Batch Code
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Name
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                ABC Classification
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                HSN
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                GST%
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Rate
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Demand Quantity
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Dispatch Quantity
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <!--//implement vinayak//-->
+                                            <div class="th">
+                                                PriceOfItem
+                                            </div>
+                                        </th>
+                                        <th ng-hide="TOMasterData.Status=='Delivered' || TOMasterData.Status=='Dispatched'">
+                                            <div class="th">
+                                                Current Stock
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Boxes and Piece
+                                            </div>
+                                        </th>
+                                        <th ng-hide="TOMasterData.Status=='Delivered' || TOMasterData.Status=='Dispatched'">
+                                            <div class="th">
+                                                Edit Quantity
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="orderDetailq in TODispechedDetails" ng-style="set_color(orderDetail)">
+                                        <td>{{orderDetailq.ItemNumber}}</td>
+                                        <td>{{orderDetailq.ItemMultiMRPId}}</td>
+                                        <td>{{orderDetailq.BatchCode}}</td>
+                                        <td>{{orderDetailq.itemname}}</td>
+                                        <td ng-if="orderDetailq.ABCClassification!=null">{{orderDetailq.ABCClassification}} </td>
+                                        <td ng-if="orderDetailq.ABCClassification==null"> D </td>
+                                        <td>{{orderDetailq.ItemHsn}}</td>
+                                        <td>{{orderDetailq.TotalTaxPercentage}}</td>
+                                        <td>{{orderDetailq.NPP}}</td>
+                                        <td>{{orderDetailq.TotalQuantity}}</td>
+                                        <td>{{orderDetailq.DispatchedQty}}</td>
+                                        <td>{{orderDetailq.PriceofItem | number :3}}</td>     <!--//implement Vinayak//-->
+                                        <td ng-hide="orderDetailq.Status=='Delivered' || orderDetailq.Status=='Dispatched'">{{orderDetailq.CurrentStock | number: 2}}</td>
+                                        <td>
+                                            {{orderDetailq.Boxes}}:Box
+                                            <span ng-if="orderDetailq.piece != 0">& {{orderDetailq.piece}}:piece</span>
+                                        </td>
+                                        <td ng-hide="orderDetailq.Status=='Delivered' || orderDetailq.Status=='Dispatched'"><button class="btn-sm btn-primary" ng-click="edit(orderDetailq)">Manual Edit</button> </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <!--//Implementation Vinayak//-->
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="pull-right to-ttl">Total</div>
+                                        </td>
+                                        <td>{{TransferTotalPrice}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button class="btn-sm btn-primary" ng-show="TOMasterData.Status == 'Dispatched' || TOMasterData.Status == 'Delivered' " ng-click="showInvoice(TODetails)"> Document</button>
+                                </div>
+                                <div class="col-md-2" ng-show="TOMasterData.Status == 'Delivered' ">
+                                    <label for="site-name">Freight</label>
+                                    <input id="site-name" ng-disabled="!isdateexpired" " type="number" class="form-control" ng-model="TODetails[0].fread" />
+                                    <!--<button class="btn-sm btn-primary" ng-show="TOMasterData.Status == 'Delivered' " ng-click="showInvoice(TODetails)"> inputbox</button>-->
+                                </div>
+                                <div class="col-md-2" ng-show="TOMasterData.Status == 'Delivered' " style="margin-top:27px;">
+
+                                    <button class="btn-sm btn-primary" ng-disabled="!isdateexpired" ng-click="savechanges(TODetails[0].fread,TODetails[0].TransferOrderId)">Save Changes</button>
+                                </div>
+                                <div class="col-md-2" style="margin-top:27px;">
+                                    <button class="btn-sm btn-primary" ng-show="TOMasterData.Status == 'Pending'" ng-click="Dispeched(TODetails)"> Dispatched</button>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="TransferTotalPrice >= 50000 && TODetails[0].vehicleNumber != null && TODetails[0].EwaybillNumber == null ">
+                                {{TransferTotalPrice}}
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2" ng-show="TOMasterData.Status == 'Dispatched'">
+                                    <label for="site-name">Vehicle No.</label><span style="color:red;">*</span><br />
+                                    <input id="site-name" type="text" class="form-control" ng-model="TODetails[0].vehicleNumber" />
+                                </div>
+                                <div class="col-md-2" ng-show="TOMasterData.Status == 'Dispatched'">
+                                    <label for="site-name">Freight</label>
+                                    <input id="site-name" ng-disabled="!isenabled" type="number" class="form-control" ng-model="TODetails[0].fread" />
+                                </div>
+                                <div class="col-md-2" ng-show="TOMasterData.Status == 'Dispatched'">
+                                    <label for="site-name">EwayBill No.</label><span style="color:red;">*</span><br />
+                                    <input id="site-name" type="text" class="form-control" ng-model="TODetails.EwaybillNumber" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="site-name">&nbsp;</label><br />
+                                    <button class="btn-sm btn-primary" ng-show="TOMasterData.Status == 'Dispatched'" ng-click="Dispeched(TODetails,TODetails[0].vehicleNumber)"> Update Invoice</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="site-name">&nbsp;</label><br />
+                                </div>
+                            </div>
+
+                            <div class="row" ng-if="TransferTotalPrice >= 50000 && TODetails[0].EwaybillNumber != null ">
+                                {{TransferTotalPrice}}
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2" ng-show="TOMasterData.Status == 'Dispatched'">
+                                    <label for="site-name">Freight</label>
+                                    <input id="site-name" ng-disabled="!isenabled" type="number" class="form-control" ng-model="TODetails[0].fread" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="site-name">&nbsp;</label><br />
+                                    <button class="btn-sm btn-primary" ng-disabled="!isenabled" ng-show="TOMasterData.Status == 'Dispatched'" ng-click="savechanges(TODetails[0].fread,TODetails[0].TransferOrderId)"> Save Changes </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="site-name">&nbsp;</label><br />
+                                </div>
+                            </div>
+
+                            <div class="row" ng-if="TransferTotalPrice < 50000">
+                                {{TransferTotalPrice}}
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2" ng-show="TOMasterData.Status == 'Dispatched'">
+                                    <label for="site-name">Freight</label>
+                                    <input id="site-name" ng-disabled="!isenabled" type="number" class="form-control" ng-model="TODetails[0].fread" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="site-name">&nbsp;</label><br />
+                                    <button class="btn-sm btn-primary" ng-disabled="!isenabled" ng-show="TOMasterData.Status == 'Dispatched'" ng-click="savechanges(TODetails[0].fread,TODetails[0].TransferOrderId)"> Save Changes </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="site-name">&nbsp;</label><br />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div ng-if="isEwaybillNo==true" style="color:red;font-size:16px">
+                        <code>Please enter Ewaybill Number.</code>
+                    </div>
+                    <div ng-if="isVehicleNo==true" style="color:red;font-size:16px">
+                        <code>Please enter Vehicle Number.</code>
+                    </div>
+                    <div ng-if="isPatternValid==true" style="color:red;font-size:16px">
+                        <code>Please enter valid pattern for vehicle number </code>
+                    </div>
+                </section>
+
+
+                <section class="panel panel-default table-dynamic" ng-show="(TOMaster.Status == 'Canceled' || TOMaster.Status == 'Revoke')">
+                    <div class="panel-heading text-center">
+                        <strong style="color:red">
+                            Request Order Was Not Accepeted
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                            <h4 class="title">Initial Orders... <span style="color:red;float:right">{{TODetails[0].InternalTransferNoCN}}</span> </h4>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Transfer Order ID  </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="TOMasterData.TransferOrderId" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Warehouse Name</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="TOMasterData.WarehouseName" disabled />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="site-name">Shipping Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="WarehouseDetail.Address" disabled />
+                            </div>
+                            <!--<div class="form-group col-md-3">
+                                <label for="site-name"> Change Status</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.BillingAddress" disabled />
+                            </div>-->
+                            <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                Sr No.
+                                            </div>
+                                        </th>
+
+
+
+                                        <td>ItemMultiMRPId</td>
+                                        <th>
+                                            <div class="th">
+                                                ItemNumber
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="th">
+                                                Item Name
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                HSN
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                GST%
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Rate
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Quantity
+                                            </div>
+                                        </th>
+                                        <!--<th>
+                                            <div class="th">
+                                                Current Stock
+                                            </div>
+                                        </th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="orderDetailq in TODetails" ng-style="set_color(orderDetail)">
+
+                                        <td>{{$index+1}}</td>
+                                        <td>{{orderDetailq.ItemMultiMRPId}}</td>
+                                        <td>{{orderDetailq.ItemNumber}}</td>
+                                        <td>{{orderDetailq.itemname}}</td>
+                                        <td>{{orderDetailq.ItemHsn}}</td>
+                                        <td>{{orderDetailq.TotalTaxPercentage}}</td>
+                                        <td>{{orderDetailq.NPP}}</td>
+                                        <td>{{orderDetailq.TotalQuantity}}</td>
+                                        <!--<td>{{orderDetailq.CurrentStock | number: 2}}</td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="modal-footer" ng-if="TODetails.length>0">
+            <button class="btn-sm btn-danger" id="DispechedId" style="float:left;" ng-show="TOMasterData.Status == 'Pending'" ng-click="Revoke(TODetails)"> Cancel Or Revoke</button>
+            <button class="btn-sm btn-primary" id="DispechedId" ng-show="TOMasterData.Status == 'Pending'" ng-click="Dispeched(TODetails,vehicleNumber,RefNo,transportername)"> Dispatched</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Close</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="BatchCodeModal.html">
+    <form name="myModaldeleteOrder">
+        <div class="modal-header">
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="cancel()">×</button>
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title">Batch Code</h4>
+            <h4 class="text-center"> Item Name: <b>{{ItemName}}</b></h4>
+            <h4 class="text-center"> Required Qty: <b>{{ItemQty}}</b></h4>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            SNo.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Select Batch Code
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            BatchCode
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Batch  Qty
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Item  Qty
+                        </div>
+                    </th>-->
+                    <th>
+                        <div class="th">
+                            Created Date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Expiry Date
+                        </div>
+                    <th>
+                        <div class="th">
+                            MFG Date
+                        </div>
+                    </th>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Requred NO.of pieces
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Remove
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in GetStockBatchMastersList">
+                    <td>{{$index+1}}</td>
+                    <td><input class="form-control" type="checkbox" value="{{trade.check}}" ng-disabled="trade.selectedcheck" ng-model="trade.check" ng-click="trade.check==false;trade.Noofpics=''" /></td>
+                    <td>{{trade.BatchCode}}</td>
+                    <td>{{trade.Qty}}</td>
+                    <!--<td>{{ItemQty}}</td>-->
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td>{{trade.ExpiryDate | date:'medium'}}</td>
+                    <td>{{trade.MFGDate | date:'medium'}}</td>
+                    <td>   <input type="number" ng-disabled="(!trade.check || trade.selectedcheck)" ng-change="checkqty(trade.StockBatchMasterId,trade.Qty,ItemQty,trade.Noofpics,trade)" ng-model="trade.Noofpics" /></td>
+                    <td> <button type="button" class="btn btn-ar btn-primary" ng-click="remove(trade)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" ng-disabled="TotalQtyEablebutton" ng-click="AddDataBatchCode(TransferOrderItemData,selectedTarde)">Add</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="myTODetailModalHistory.html">
+    <h3>Actual Demand History</h3>
+    <form name="myFormSiteModal">
+        <table class="table table-bordered table-striped table-responsive ">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            SNo.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemMultiMRPId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            RequestToWarehouseName
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            TotalQuantity
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            NO.of Pices
+                        </div>
+                    </th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in TODetails">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.ItemMultiMRPId}}</td>
+                    <td>{{trade.itemname}}</td>
+                    <td>{{trade.RequestToWarehouseName}}</td>
+                    <td>{{trade.TotalQuantity}}</td>
+                    <!--<td>{{trade.RequestMinOrderQty *trade.Noofset}}</td>-->
+                    ta
+                </tr>
+                ta
+            </tbody>
+            ta
+        </table>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myModaldeleteTOrderInvoice.html">
+    <style>
+        @media print {
+            th, td {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .border {
+                border: 1px solid #000 !important;
+            }
+        }
+    </style>
+
+    <form name="myModaldeleteOrderInvoice1">
+        <div id="divtoPrint" class="client-document-container">
+            <style type="text/css">
+                @media print {
+                    .no-print {
+                        display: none !important;
+                    }
+
+                    .border {
+                        border: 1px solid #000 !important;
+                    }
+
+                    th, td {
+                        border: solid #000 !important;
+                        border-width: 0 1px 1px 0 !important;
+                        border-spacing: 0;
+                        padding: 0;
+                        text-align: center;
+                    }
+                }
+            </style>
+            <div class="containers">
+                <div class="row" style="display:inline-flex;">
+                    <div class="col-md-10" style="margin-left: 179px;">
+                        <p style="text-align: center; width: 244px; ">
+                            <strong style=" margin-left: 22px;">ShopKirana E Trading Pvt. Ltd.</strong>
+                        </p>
+                        <p ng-if="IsNotInterState == true" style="margin-left: 120px;">Tax Invoice</p>
+                        <p ng-if="IsNotInterState == true" style="margin-left: 120px;">Type: {{OrderDetailsInvoice[0].Type}}</p>
+                        <p ng-if="IsNotInterState == false" style=" margin-left: 120px;">Stock Transfer Note</p>
+
+                    </div>
+
+                    <div class="col-md-2" ng-if="IsNotInterState == true">
+                        <div style="width:10%;">
+                            <div style="font-size: 14px; margin-left: 150px;" ng-if="(!(masterdata.IRNQRCodeUrl==null || masterdata.IRNQRCodeUrl==undefined ||  masterdata.IRNQRCodeUrl=='') || !(masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL==''))">
+                                <span ng-if="!(masterdata.IRNQRCodeUrl==null || masterdata.IRNQRCodeUrl==undefined ||  masterdata.IRNQRCodeUrl=='') && (masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL=='')">
+                                    <img ngif src="{{masterdata.IRNQRCodeUrl}}" style=" margin-left: 130px;" width="150" height="150" />
+                                </span>
+
+
+                            </div>
+
+                            <div style="font-size: 14px;" ng-if="!(masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL=='')">
+                                <div style="text-align:center">
+                                </div>
+                                <span ng-if="!(masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL=='')">
+                                    <img ngif src="{{masterdata.POCIRNQRCodeURL}}" width="50" height="100" />
+                                </span>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div><span style="font-weight:600;color:black">IRNNo :  </span>{{masterdata.IRNNo}}</div>
+                <!--<div class="row">
+                    <div class="col-md-8">
+                        <p style="text-align: center; margin-left: 305px; ">
+                            <strong>ShopKirana E Trading Pvt. Ltd.</strong>
+                        </p>
+                        <p ng-if="IsNotInterState == true" style="text-align: center; margin-left: 305px; ">Tax Invoice</p>
+                        <p ng-if="IsNotInterState == true" style="text-align: center; margin-left: 305px; ">Type: {{OrderDetailsInvoice[0].Type}}</p>
+                        <p ng-if="IsNotInterState == false" style="text-align: center; margin-left: 305px; ">Stock Transfer Note</p>
+
+                    </div>
+
+                    <div class="col-md-2" ng-if="IsNotInterState == true">
+                        <div style="width:20%;margin-right:15px;">
+
+
+                            <div style="width:20%;margin-right:15px;">
+                                <div style="font-size: 14px;" ng-if="(!(masterdata.IRNQRCodeUrl==null || masterdata.IRNQRCodeUrl==undefined ||  masterdata.IRNQRCodeUrl=='') || !(masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL==''))">
+                                    IRN QR Code
+                                    <span ng-if="!(masterdata.IRNQRCodeUrl==null || masterdata.IRNQRCodeUrl==undefined ||  masterdata.IRNQRCodeUrl=='') && (masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL=='')">
+                                        <img ngif src="{{masterdata.IRNQRCodeUrl}}" width="150" height="150" />
+                                    </span>
+                                    <div style="width:50%" ><span>IRNNo:</span>{{masterdata.IRNNo}}</div>
+
+                                </div>
+
+                                <div style="font-size: 14px;" ng-if="!(masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL=='')">
+                                    <div style="text-align:center">
+                                        POC IRN QR Code
+                                    </div>
+                                    <span ng-if="!(masterdata.POCIRNQRCodeURL==null || masterdata.POCIRNQRCodeURL==undefined ||  masterdata.POCIRNQRCodeURL=='')">
+                                        <img ngif src="{{masterdata.POCIRNQRCodeURL}}" width="150" height="150" />
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+
+                    </div>
+
+                </div>-->
+
+                <div class="row">
+                    <style type="text/css">
+                        @media print {
+                            table {
+                                top: 10px !important;
+                            }
+
+                                table, table tr, table td {
+                                    border-top: #000 solid 1px !important;
+                                    border-bottom: #000 solid 1px !important;
+                                    border-left: #000 solid 1px !important;
+                                    border-right: #000 solid 1px !important;
+                                    border-spacing: 0;
+                                    padding: 0;
+                                    text-align: center;
+                                }
+                        }
+                    </style>
+                    <table class="table table-bordered" style="font-size:12px!important;" width="100%">
+                        <tbody class="border">
+                            <tr>
+                                <td colspan="12" style="text-align:center;"><strong>Transfer Order Detail</strong></td>
+                                <br />
+                            </tr>
+                            <tr>
+
+                                <td ng-if="masterdata.InternalTransferNo !=null && masterdata.ITCreatedDate !=null"><strong>Invoice No  {{masterdata.InternalTransferNo}} </strong></td>
+                                <td ng-if="masterdata.InternalTransferNo !=null && masterdata.ITCreatedDate !=null"><strong>IT Created Date {{masterdata.ITCreatedDate | date:'dd/MM/yyyy'}} </strong></td>
+                                <td ng-if="masterdata.InternalTransferNoCN !=null && masterdata.ITCNCreatedDate !=null"><strong>Internal Transfer CN No {{masterdata.InternalTransferNoCN}} </strong></td>
+                                <td ng-if="masterdata.InternalTransferNoCN !=null && masterdata.ITCNCreatedDate !=null"><strong>IT CN Created Date {{masterdata.ITCNCreatedDate | date:'dd/MM/yyyy'}} </strong></td>
+                                <td ng-if="masterdata.DeliveryChallanNo !=null && masterdata.DCCreatedDate !=null">
+                                    <strong ng-if="FromWarehouseDetail.Stateid == WarehouseDetail.Stateid">Delivery Challan No {{masterdata.DeliveryChallanNo}} </strong>
+                                    <strong ng-if="FromWarehouseDetail.Stateid != WarehouseDetail.Stateid">Invoice No {{masterdata.DeliveryChallanNo}} </strong>
+                                </td>
+                                <td ng-if="masterdata.DeliveryChallanNo !=null && masterdata.DCCreatedDate !=null"><strong>DC Created Date {{masterdata.DCCreatedDate | date:'dd/MM/yyyy'}} </strong></td>
+                                <td><strong>Voucher No {{TOMasterData[0].TransferOrderId}} </strong></td>
+                                <td><strong>Created Date: {{TOMasterData[0].CreationDate | date:'dd/MM/yyyy'}} </strong></td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" height="130" width="100">
+                                    <img width="100%" height="100%" src="../../Content/SK.png" />
+                                </td>
+                                <td height="30" colspan="2" style="text-align:center;">From Warehouse Info.</td>
+                                <td colspan="7" height="30" style="text-align:center;">To Warehouse Info.</td>
+                            </tr>
+                            <tr>
+                                <td height="30" colspan="2">
+                                    <b class="col-md-12"><strong style="font-size: 18px;"> {{FromWarehouseDetail.WarehouseName }} &nbsp; ({{FromWarehouseDetail.CityName}})</strong></b>
+                                    <br />
+                                    <b class="col-md-3">C/O:</b><span class="col-md-9">{{FromWarehouseDetail.Address}}</span>
+                                    <br />
+                                    <b class="col-md-3">Tell No:</b><strong class="col-md-9">{{FromWarehouseDetail.Phone}}</strong>
+                                    <br />
+                                    <b class="col-md-3">GSTIN No:</b><strong class="col-md-9">{{FromWarehouseDetail.GSTin}}</strong>
+                                </td>
+                                <td height="30" colspan="7">
+                                    <b class="col-md-12"><strong style="font-size: 18px;"> {{WarehouseDetail.WarehouseName}}&nbsp; ({{WarehouseDetail.CityName}})</strong></b>
+                                    <br />
+                                    <b class="col-md-3">C/O:</b><span class="col-md-9">{{WarehouseDetail.Address}}</span>
+                                    <br />
+                                    <b class="col-md-3">Tell No:</b><strong class="col-md-9">{{WarehouseDetail.Phone}}</strong>
+                                    <br />
+                                    <b class="col-md-3">GSTIN No:</b><strong class="col-md-9">{{WarehouseDetail.GSTin}}</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="th">
+                                        No.
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th">
+                                        Batch Code
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th">
+                                        Item Name
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="th">
+                                        ItemNumber
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th">
+                                        MultiMRPId
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th">
+                                        HSN
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th" ng-show="IsNotInterState == true">
+                                        IGST%
+                                    </div>
+                                    <div class="th" ng-show="IsNotInterState == false">
+                                        GST%
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th">
+                                        Rate
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th">
+                                        Dis. Qty
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="th">
+                                        Total Amount
+                                    </div>
+                                </td>
+                            </tr>
+                        <tbody class="border">
+                            <tr data-ng-repeat="orderDetailq in TOMasterData" ng-style="set_color(orderDetail)">
+                                <td>{{1+$index}}</td>
+
+
+                                <td>{{orderDetailq.BatchCode}}</td>
+                                <td>{{orderDetailq.itemname}}</td>
+                                <td>{{orderDetailq.ItemNumber}}</td>
+                                <td>{{orderDetailq.ItemMultiMRPId}}</td>
+                                <td>{{orderDetailq.ItemHsn}}</td>
+                                <td>{{orderDetailq.TotalTaxPercentage}}</td>
+                                <td>{{orderDetailq.NPP}}</td>
+                                <td>{{orderDetailq.TotalQuantity}}</td>
+                                <td>{{orderDetailq.PriceofItem | number:3}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <!--//Implementation Vinayak//-->
+                            <tr>
+                                <td colspan="7">
+                                    <div class="pull-right to-ttl">Total</div>
+                                </td>
+                                <td>{{sumofqty}}</td>
+                                <td>{{TOMasterData[0].TotalPrice | number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Vehicle Number:</td>
+                                <td>{{masterdata.VehicleNo}}</td>
+                                <td ng-if="masterdata.EwaybillNumber!=null">EwayBill Number:</td>
+                                <td>{{masterdata.EwaybillNumber}}</td>
+                                <td ng-if="masterdata.fread>0">Freight Charges</td>
+                                <td ng-if="masterdata.fread>0">{{masterdata.fread}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <br />
+                    <h4>
+                        * This is computer generated Document no signature required.(Stock Transfer Note)
+                    </h4>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 printer">
+                        <div class="row pad-top-botm">
+                            <div class="col-lg-12 col-md-12 col-sm-12 printer">
+                                <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="float:left; margin-right: 15px; margin-bottom: 10px;" onclick="javascript: printDiv('divtoPrint')" ng-If="masterdata.EwaybillNumber!=null && masterdata.Status == 'Dispatched' && TOMasterData[0].TotalPrice > 50000"> <span class="glyphicon glyphicon-print no-print"> </span> Print </button>
+                                <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="float:left; margin-right: 15px; margin-bottom: 10px;" onclick="javascript: printDiv('divtoPrint')" ng-If="masterdata.Status == 'Dispatched' && TOMasterData[0].TotalPrice < 50000"> <span class="glyphicon glyphicon-print no-print"> </span> Print </button>
+                                <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="float:left; margin-right: 15px; margin-bottom: 10px;" onclick="javascript: printDiv('divtoPrint')" ng-If="masterdata.Status != 'Dispatched'"> <span class="glyphicon glyphicon-print no-print"> </span> Print </button>
+                                <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="float:left; margin-right: 15px; margin-bottom: 10px;" onclick="javascript: printDiv('divtoPrint')" ng-If="masterdata.EwaybillNumber==null && masterdata.Status == 'Dispatched' && TOMasterData[0].TotalPrice >= 50000" ng-disabled="TODetails.EwaybillNumber.length ==undefined || masterdata.EwaybillNumber==undefined"> <span class="glyphicon glyphicon-print no-print"> </span> Print </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script>
+    function printDiv(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrint");
+        onRouteChangeOff();
+        window.location.reload();
+    }
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+</script>
+<!--for manual Quantity edit-->
+<script type="text/ng-template" id="TranferOrderQuantityedit.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Change Manual Qty In Item Detail</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Manual In qty:</label><br />
+                <!--<button type="button" ng-click="updatelineitem(OrderDetails)">-</button>-->
+                <input type="number" ng-disabled="xy" ng-change="checkqtyManualEdit(OrderDetails.TotalQuantity)" ng-model="OrderDetails.TotalQuantity" />
+                <!--<button type="button" ng-click="updatelineitem1(OrderDetails)">+</button>-->
+            </div>
+            <!--<div class="form-group">
+                <label for="site-name"> Manual In qty:</label><br />
+                <button type="button" ng-click="updatelineitem(TotalQuantity)">-</button>
+                <input type="number" ng-disabled="xy" ng-model="TotalQuantity.qty"  ng-init="valuemax = TotalQuantity.Noqty" />
+                <button type="button" ng-click="updatelineitem1(TotalQuantity)">+</button>
+            </div>-->
+            <!--<div class="form-group">
+                <input id="site-name" class="form-control" rows="3" required="" ng-model="Quantity.QtyChangeReason" placeholder="Enter Reason" />
+            </div>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="cancel()">Ok</button>
+        </div>
+    </form>
+</script>
+<!--TransferOrder History-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 50% !important;
+        margin-left: 485px;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<div class="modal fade " id="pricemodel" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Transfer Order History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <div class="th">
+                <th>TransferOrderId</th>
+                <td>{{datatransferHistrory[0].TransferOrderId}}</td>
+                <td><button class="btn-sm btn-primary" data-toggle="modal" data-target="#pricemodel1" ng-click="TransferItem(datatransferHistrory[0].TransferOrderId)">Ordered Item List</button></td>
+        </div>
+        <thead>
+            <tr class="w1-red">
+
+                <th>
+                    <div class="th">
+                        Status
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Action By
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Updated Date
+                    </div>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="trade in datatransferHistrory">
+
+                <td>{{trade.Status}}</td>
+                <td>{{trade.username}}</td>
+                <td>{{trade.CreatedDate| date:'medium'}}</td>
+            </tr>
+        </tbody>
+        </table>
+
+        <div class="modal-footer w3-red">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+<div class="modal fade " id="pricemodel1" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Item List</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr class="w1-red">
+
+                        <th>
+                            <div class="th">
+                                Number
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                ItemMultiMRPId
+                            </div>
+                        </th>
+
+
+                        <th>
+                            <div class="th">
+                                ItemName
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Ordered Quantity
+                            </div>
+
+                        </th>
+                        <th>
+                            <div class="th">
+                                Dispatched qty
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in datatransferitem">
+                        <td>{{trade.ItemNumber}}</td>
+                        <td>{{trade.ItemMultiMRPId}}</td>
+                        <td>{{trade.itemname}}</td>
+                        <td>{{trade.TotalQuantity}}</td>
+                        <td>{{trade.DispatchedQty}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

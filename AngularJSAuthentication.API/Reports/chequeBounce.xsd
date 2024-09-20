@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="chequeBounce" targetNamespace="http://tempuri.org/chequeBounce.xsd" xmlns:mstns="http://tempuri.org/chequeBounce.xsd" xmlns="http://tempuri.org/chequeBounce.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="chequeBounce" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="chequeBounce" msprop:Generator_UserDSName="chequeBounce">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="cheque_x0020_Bounce" msprop:Generator_TableClassName="cheque_BounceDataTable" msprop:Generator_TableVarName="tablecheque_Bounce" msprop:Generator_TablePropName="cheque_Bounce" msprop:Generator_RowDeletingName="cheque_BounceRowDeleting" msprop:Generator_RowChangingName="cheque_BounceRowChanging" msprop:Generator_RowEvHandlerName="cheque_BounceRowChangeEventHandler" msprop:Generator_RowDeletedName="cheque_BounceRowDeleted" msprop:Generator_UserTableName="cheque Bounce" msprop:Generator_RowChangedName="cheque_BounceRowChanged" msprop:Generator_RowEvArgName="cheque_BounceRowChangeEvent" msprop:Generator_RowClassName="cheque_BounceRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Address" msprop:Generator_ColumnVarNameInTable="columnAddress" msprop:Generator_ColumnPropNameInRow="Address" msprop:Generator_ColumnPropNameInTable="AddressColumn" msprop:Generator_UserColumnName="Address" type="xs:string" minOccurs="0" />
+              <xs:element name="Skcode" msprop:Generator_ColumnVarNameInTable="columnSkcode" msprop:Generator_ColumnPropNameInRow="Skcode" msprop:Generator_ColumnPropNameInTable="SkcodeColumn" msprop:Generator_UserColumnName="Skcode" type="xs:string" minOccurs="0" />
+              <xs:element name="ChequeNumber" msprop:Generator_ColumnVarNameInTable="columnChequeNumber" msprop:Generator_ColumnPropNameInRow="ChequeNumber" msprop:Generator_ColumnPropNameInTable="ChequeNumberColumn" msprop:Generator_UserColumnName="ChequeNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="ChequeAmt" msprop:Generator_ColumnVarNameInTable="columnChequeAmt" msprop:Generator_ColumnPropNameInRow="ChequeAmt" msprop:Generator_ColumnPropNameInTable="ChequeAmtColumn" msprop:Generator_UserColumnName="ChequeAmt" type="xs:string" minOccurs="0" />
+              <xs:element name="Orderid" msprop:Generator_ColumnVarNameInTable="columnOrderid" msprop:Generator_ColumnPropNameInRow="Orderid" msprop:Generator_ColumnPropNameInTable="OrderidColumn" msprop:Generator_UserColumnName="Orderid" type="xs:string" minOccurs="0" />
+              <xs:element name="Date" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:string" minOccurs="0" />
+              <xs:element name="PartyName" msprop:Generator_ColumnVarNameInTable="columnPartyName" msprop:Generator_ColumnPropNameInRow="PartyName" msprop:Generator_ColumnPropNameInTable="PartyNameColumn" msprop:Generator_UserColumnName="PartyName" type="xs:string" minOccurs="0" />
+              <xs:element name="ReturnComment" msprop:Generator_ColumnVarNameInTable="columnReturnComment" msprop:Generator_ColumnPropNameInRow="ReturnComment" msprop:Generator_ColumnPropNameInTable="ReturnCommentColumn" msprop:Generator_UserColumnName="ReturnComment" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

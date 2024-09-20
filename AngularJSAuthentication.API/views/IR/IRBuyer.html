@@ -1,0 +1,168 @@
+﻿<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="IR Buyer Approval">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>IR Buyer</strong>
+        </div>
+        <div class="row" style="padding:15px;">
+            <div class="form-group col-sm-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData1(pageno)">
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-1">
+                <label for="site-name">Select Status :</label>
+                <div ng-dropdown-multiselect="" options="dataselectV" selected-model="examplemodelV" extra-settings="examplesettingsV"></div>
+            </div>
+            <div class="form-group col-md-1">
+                <label for="site-name">&nbsp;</label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="getData1(pageno)">Search</button>
+            </div>
+            <div class="col-sm-1">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-dark" ng-click="refresh()" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-refresh"> </span>  Refresh Page
+                </button>
+            </div>
+
+            <!--<div class="form-group col-md-2">
+        <label for="site-name">Status Filter</label><br>
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <select class="form-control" id="site-name" ng-model="data.type" ng-change="selectedtypeChanged(data)" style="width:14pc">
+                    <option value="">--select--</option>
+                    <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                </select>
+            </div>
+        </form>
+    </div>-->
+        </div>
+        <div class="row" style="padding:15px;">
+            <div class="form-group col-md-2">
+                <label for="site-name">PurchaseOrder ID</label><br />
+                <input type="number" placeholder="Enter PurchaseOrder ID" class="form-control" ng-model="SearhIr">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Search</label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="SearchIRData(SearhIr)">Search</button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <table class="table table-bordered table-striped table-responsive ">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        SNo.
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Purchase Order Id
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        IR Id
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        IR type
+                                    </div>
+                                </th>
+                                <!--<th>
+                                    <div class="th">
+                                        Warehouse Name
+                                    </div>
+                                </th>-->
+                                <th>
+                                    <div class="th">
+                                        Supplier Name
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        IRStatus
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Approval Status
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Created Date
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Open IR Details
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                            <tr data-ng-repeat="trade in currentPageStores">
+                                <td>{{$index+1}}</td>
+                                <td>{{trade.PurchaseOrderId}}</td>
+                                <td>{{trade.IRID}}</td>
+                                <td>{{trade.IRType}}</td>
+                                <!--<td>{{trade.WarehouseName}}</td>-->
+                                <td>{{trade.SupplierName}}</td>
+                                <td  ng-style="{ 'color' : (trade.IRStatus == 'Pending from Buyer side') ? 'red' : 'green'  }" ><b>{{trade.IRStatus}}</b></td>
+                                <td ng-style="{ 'color' : (trade.IsApprove == '0') ? 'red' : 'green'  }">
+                                    <span ng-if="(trade.IsApprove == '0')">Pending for Approval</span>
+                                    <span ng-if="(trade.IsApprove == '1')">Approved</span>
+                                    <span ng-if="(trade.IsApprove == '2')">Rejected</span>
+                                </td>
+                                <td>{{trade.CreationDate | date:'medium'}}</td>
+                                <td>
+                                    <button ng-show="trade.IRStatus == 'Pending from Buyer side' || trade.IRStatus == 'Rejected from Buyer side' || trade.IRStatus == 'Approved from Buyer side'" type="button" class="btn btn-primary mb1 bg-teal btn-sm" ng-click="openIr(trade)">
+                                        <span class="glyphicon glyphicon-folder-open"></span> &nbsp;Open
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="selectedPagedItem"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 page-num-info">
+                                <dir-pagination-controls max-size="8"
+                                                         direction-links="true"
+                                                         boundary-links="true"
+                                                         on-page-change="getData1(newPageNumber)">
+                                    //get method call every time when page changes
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

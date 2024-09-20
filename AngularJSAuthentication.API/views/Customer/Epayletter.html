@@ -1,0 +1,334 @@
+﻿<style>
+    #dragandrophandler {
+        border: 2px dashed #92AAB0;
+        width: 650px;
+        height: 200px;
+        color: #92AAB0;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 0px 10px 10px;
+        font-size: 200%;
+        display: table-cell;
+    }
+</style>
+<script type="text/javascript">
+    function checkSpcialChar(event) {
+        if (!((event.keyCode >= 65) && (event.keyCode <= 90) || (event.keyCode >= 97) && (event.keyCode <= 122) || (event.keyCode = 64) && (event.keyCode <= 57))) {
+            event.returnValue = false;
+            return;
+        }
+        event.returnValue = true;
+    }
+</script>
+ <div class="page page-table" button-permission-binder parentName="Customer" pageName="Epay Letter Info">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> Epay Letter Info</strong> </div>
+       
+        <br />
+        <form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+
+            <div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select Date Range</label><br>
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-sm btn-primary skexport" ng-click="getData()" style="margin: 25px 0px 0px 0px"> <span class="glyphicon glyphicon-plus"> </span> Export All Data</button>
+            </div>
+            <div ng-hide="true">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Srno
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    SkCode
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Shop Name
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Firm Type
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Proprietor First Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Proprietor Last Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Gender
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Mobile
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Whats App Number
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Email
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Date of Birth
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Pan Number
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Country
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    State
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    City
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Pin Code
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    License Images
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    GST Images
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    FSSAI Images
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Govt. Approved Reg.No
+
+                                </div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.Skcode}}</td>
+                            <td>{{trade.ShopName}}</td>
+                            <td>{{trade.FirmType}}</td>
+                            <td>{{trade.ProprietorFirstName}}</td>
+                            <td>{{trade.ProprietorLastName}}</td>
+                            <td>{{trade.Gender}}</td>
+                            <td>{{trade.Mobile}}</td>
+                            <td>{{trade.WhatsAppNumber }}</td>
+                            <td>{{trade.Email }}</td>
+                            <td>{{trade.DOB}}</td>
+                            <td>{{trade.PAN_No}}</td>
+                            <td>{{trade.Country}}</td>
+                            <td>{{trade.State}}</td>
+                            <td>{{trade.City}}</td>
+                            <td>{{trade.PostalCode}}</td>
+                            <td><img src='{{trade.LicenseImagePath}}' ng-click="openimg(trade.LicenseImagePath)" alt="Snow" class="img-square img80_80" id="myImg" /></td>
+                            <td><img src='{{trade.GSTImagePath}}' ng-click="openAddproff(trade.GSTImagePath)" class="img-square img80_80" /></td>
+                            <td><img src='{{trade.FSSAIImagePath}}' ng-click="openBackImg(trade.FSSAIImagePath)" class="img-square img80_80" /></td>
+                            <td><img src='{{trade.GovtRegNumberImagePath}}' ng-click="openBackImg(trade.GovtRegNumberImagePath)" class="img-square img80_80" /></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="currentPage"
+                                        total-items="filteredStores.length"
+                                        max-size="4"
+                                        on-select-page="select(page)"
+                                        items-per-page="numPerPage"
+                                        rotate="false"
+                                        boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </form>
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+        </div>
+    </section>
+</div> 
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+
+</script>
+<script type="text/ng-template" id="imageView.html">
+
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Pan Image</h4>
+        </div>
+        <div class="modal-body">
+
+
+            <div class="form-group">
+                <img alt="" src="{{PanImage}}">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="Addproff.html">
+
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Address Proff Image</h4>
+        </div>
+        <div class="modal-body">
+
+
+            <div class="form-group">
+                <img alt="" src="{{AddImage}}">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="Backimage.html">
+
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Back Image</h4>
+        </div>
+        <div class="modal-body">
+
+
+            <div class="form-group">
+                <img alt="" src="{{BackImage}}">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+
+
+
+
+
+
+

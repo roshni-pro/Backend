@@ -1,0 +1,181 @@
+﻿<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="IR View">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>IR Information</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="site-name">Select Warehouse</label><br />
+                            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="GetIRDetailAll(WarehouseId)">
+                                <option value="">---SELECT---</option>
+                                <option value="{{warehouses.value}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.value"> {{warehouses.label}}</option>
+                            </select>
+                        </div>
+                        <div style="background-color:antiquewhite">
+                            <div class="form-group col-md-2">
+                                <label for="site-name">Select Date Range</label><br />
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                        <span class="input-group-addon ">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-primary" ng-click="GetIRDetail(WarehouseId)">
+                                    <span class="glyphicon glyphicon-search"> </span> Search
+                                </button>
+                            </div>
+                            <div class="col-sm-2">
+                                <label for="site-name"></label><br />
+                                <button type="button"  class="btn btn-primary" ng-click="exportData()">
+                                    <span class="glyphicon glyphicon-export"> </span> Export
+                                </button> &nbsp;
+                                <button type="button" class="btn btn-warning skexport" ng-click="exportDataDetail()">
+                                    <span class="glyphicon glyphicon-export"> </span> Export Detail
+                                </button>
+                                <!--<button type="button" ng-show="dataPeopleHistrory.ExportDetails == true" class="btn btn-warning" ng-click="exportDataDetail()">
+                                    <span class="glyphicon glyphicon-export"> </span> Export Detail
+                                </button>-->
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-2">
+                                <label for="site-name"></label><br />
+                                <input type="number" placeholder="Enter PO Id" class="form-control" data-ng-model="searchKey">
+                            </div>
+                            <div class="col-sm-1">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-primary" ng-click="GetIRDetailPoid(searchKey)" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon-search"> </span>  SearchByPoId
+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Order Id
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR ID
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR Type
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Supplier Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR Status
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Payment Status
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Approval
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                </div>
+                            </th>
+                            <!--<th>
+                                <div class="th">
+                                    Payment
+                                </div>
+                            </th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--<tr dir-paginate="trade in IrData|itemsPerPage:itemsPerPage" total-items="total_count">-->
+                        <tr data-ng-repeat="trade in IrData">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.PurchaseOrderId}}</td>
+                            <td>{{trade.IRID}}</td>
+                            <td>{{trade.IRType}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td>{{trade.SupplierName}}</td>
+                            <td>{{trade.IRStatus}}</td>
+                            <td ng-style="{ 'color' : (trade.PaymentStatus == 'Paid') ? 'green' : 'red'  }"><b>{{trade.PaymentStatus}}</b></td>
+                            <td>{{trade.BuyerName}}</td>
+                            <td><span class="label label-danger">{{trade.TotalAmount | number:2}}</span></td>
+                            <td>{{trade.CreationDate | date:'medium'}}</td>
+                            <!--<td>
+                                <button type="button" ng-disabled="trade.IRStatus != 'Approved from Buyer side' || trade.PaymentStatus == 'Paid' " class="btn btn-primary skpay" click-and-disable="paynow(trade)" >Pay</button>
+                            </td>-->
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="currentPage"
+                                        total-items="filteredStores.length"
+                                        max-size="4"
+                                        on-select-page="select(page)"
+                                        items-per-page="numPerPage"
+                                        rotate="false"
+                                        boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    .bootbox-body{
+        margin-left: 209px;
+    }
+
+</style>

@@ -1,0 +1,229 @@
+﻿
+<style>
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #fff0f0;
+    background-color: #e94b3b;
+    border: 1px solid #dddddd;
+    border-bottom-color: transparent;
+    cursor: default;
+}
+    label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+    .form-inline .form-control {
+    display: block;
+    width: 50%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #767676;
+    margin-bottom: 10px;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #cbd5dd;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    margin-bottom: 10px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+  .btn-danger {
+    color: white;
+    background-color: #f93926;
+    border-color: #ff1800;
+}  
+
+ul[dnd-list] {
+  min-height: 42px;
+  padding: 0;
+}
+
+ul[dnd-list] > li {
+  border-bottom: 1px solid #ddd;
+  display: block;
+  padding: 10px 15px;
+}
+
+ul[dnd-list] > li.dndDraggingSource {
+  display: none;
+}
+
+ul[dnd-list] > li.dndPlaceholder {
+  background-color: #ddd;
+  min-height: 42px;
+}
+
+.panel .panel-body {
+  padding: 0;
+}
+
+    .reqError {
+        color: #ff0000; /*Red Color*/
+        font-weight: bold;
+        font-size:18px;
+    }
+
+
+</style>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"><b>Add New Page</b></span>
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-md-6">
+                            <div class="col-md-12 form-inline">
+                                <label for="site-name" class="col-md-6">Page Name:<span class="reqError">*</span></label>
+                                <input id="site-name" class="form-control col-md-6" autocomplete="off" ng-model="data.PageName" placeholder="Enter PageName" />
+                            </div>
+                            <div class="col-md-12 form-inline">
+                                <label for="site-name" class="col-md-6">Nav Url:<span class="reqError">*</span></label>
+                                <input id="site-name" class="form-control col-md-6" autocomplete="off" ng-model="data.RouteName" placeholder="Enter RouteName" />
+                            </div>
+                            <div class="col-md-12 form-inline">
+                                <label for="site-name" class="col-md-6">Class Name:<span class="reqError">*</span></label>
+                                <input id="site-name" class="form-control col-md-6" autocomplete="off" ng-model="data.ClassName" placeholder="Enter ClassName" />
+                            </div>
+                            <div class="col-md-12 form-inline">
+                                <label for="site-name" class="col-md-6">Icon Class Name:</label>
+                                <input id="site-name" class="form-control col-md-6" autocomplete="off" ng-model="data.IconClassName" placeholder="Enter IconClassName" />
+                            </div>
+                            <div class="col-md-12 form-inline">
+                                <label for="site-name" class="col-md-6">Parent:<span class="reqError">*</span></label>
+                                <select class="form-control col-md-6" id="Id" ng-model="data.ParentId">
+                                    <option value="" selected>--ALL--</option>
+                                    <option value="{{Parent.Id}}" ng-repeat="Parent in Parent" data-ng-selected="data.ParentId == Parent.Id"> {{Parent.PageName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-inline">
+                                <label for="site-name" class="col-md-6">Is New Portal Url:</label>
+                                <input class="form-control col-md-6" type="checkbox" ng-model="data.IsNewPortalUrl" />
+                            </div>
+                            <div class="col-md-12 form-inline">
+                                <label for="site-name" class="col-md-6">Is Group2 Portal Url:</label>
+                                <input class="form-control col-md-6" type="checkbox" ng-model="data.IsGroup2PortalUrl" />
+                            </div>
+
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-primary" ng-click="AddDetails(data)">Save</button>
+                                <button class="btn btn-primary" ng-click="clear()">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-12" style="margin-top:25px">
+                    <tabset>
+                        <tab heading="Parent" ng-click="GetParent('parent')">
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <h3 class="panel-title">Parent Page</h3>
+                                        </div>
+                                        <div class="col-lg-6 text-right">
+                                            <button class="btn btn-primary" ng-click="UpdateList(Parentlist)">Save Page Sequence</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">                                    
+                                    <div class="col-lg-12">
+                                        <ul dnd-list dnd-drop="callback({targetList: Parentlist, targetIndex: index})">
+                                            <li ng-repeat="item in Parentlist"
+                                                dnd-draggable="null" dnd-callback="onDrop(Parentlist, $index, targetList, targetIndex)">
+                                                {{$index+1}} - {{item.PageName}}
+                                                <div class="text-right">
+                                                    <button class="btn btn-primary" ng-click="GetUpdateParent(item)">Edit</button>
+                                                    <button class="btn btn-danger"   ng-click="opendelete(item)">Remove</button>
+                                                </div>
+                                               
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </tab>
+                        <tab heading="Child">                          
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label for="site-name">Parent:</label>                                            
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <select class="form-control" id="ParentId" ng-model="trade.ParentId" ng-change="GetChaild(trade.ParentId)">
+                                                <option value="" selected>--Select--</option>
+                                                <option value="{{Parent.Id}}" ng-repeat="Parent in Parent" data-ng-selected=" trade.ParentId == Parent.Id"> {{Parent.PageName}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 text-right">
+                                            <button class="btn btn-primary" ng-click="UpdateList(Chaildlist,trade.ParentId)">Save Page Sequence</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="col-lg-12">
+                                        <ul dnd-list dnd-drop="callback({targetList: Chaildlist, targetIndex: index})">
+                                            <li ng-repeat="item in Chaildlist"
+                                                dnd-draggable="null" dnd-callback="onDropChild(Chaildlist, $index, targetList, targetIndex)">
+                                                {{$index+1}} - {{item.PageName}}
+                                                <div class="text-right">
+                                                    <button class="btn btn-primary" ng-click="GetUpdateParent(item)">Edit</button>
+                                                    <button class="btn btn-danger" ng-click="opendelete(item)">Remove</button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </tab>
+                    </tabset>
+                </div>
+
+            </div>
+           <br />
+       </div>
+    </section>
+</div>
+<script type="text/ng-template" id="myModaldelete.html">
+    <form name="myFormTaskTypeModal1">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="delete()">Yes</button>
+        </div>
+    </form>
+
+   
+</script>
+
+
+
+
+
+
+

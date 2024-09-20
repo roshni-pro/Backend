@@ -1,0 +1,295 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Sales" pageName="PDCA Details">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> PDCA Details</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select Month</label><br>
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input type="month" id="start" name="start" min="2018-03" ng-model="MonthYear" ng-change="Reload(BaseCategoryId,WarehouseId,MonthYear)" onkeydown="return false">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label for="site-name"> Warehouse:</label><br />
+                                <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getBaseCategory(WarehouseId)">
+                                    <option value="">--Select--</option>
+                                    <option value="{{a.WarehouseId}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.WarehouseId">{{a.WarehouseName}} {{a.CityName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="site-name"> Base Catogory </label><br />
+                                <select class="form-control" id="site-name" ng-model="BaseCategoryId" ng-change="selectedItemChanged(BaseCategoryId,WarehouseId,MonthYear)">
+                                    <option value="">--Select--</option>
+                                    <option value="{{a.BaseCategoryId}}" ng-repeat="a in BaseCategory">{{a.BaseCategoryName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="site-name">Percentage</label><br>
+                                <div class='input-group date'>
+                                    <input id="dshj" type="text" class="form-control" ng-model="Percentage" value="0" disabled ng-required />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="Sectiondata.AddPermission">
+                                <label for="site-name"> Amount </label><br>
+                                <div class='input-group date'>
+                                    <input id="amount" type="number" min="0" class="form-control" ng-model="CAmount" ng-required />
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="Sectiondata.AddPermission">
+                                <label for="site-name"> </label><br>
+                                <div class='input-group date'>
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="fillAmount(Sectiondata.warehousereportdetails,CAmount,Percentage)"> Calculate Amount </button>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-show="Sectiondata.AddPermission">
+                                <label for="site-name"> Base Category Amt </label><br>
+                                <div class='input-group date'>
+                                    <input id="BaseCategoryAmt" type="text" class="form-control" ng-model="BCAmt" ng-required disabled />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr bgcolor="white">
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>                            
+                            <th>
+                                <div class="th">
+                                    Category Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Percentage %
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Amount Rs
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Target
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Target Amount
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Comment
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Previous MTD
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    MTD                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    TargetAmount-MTD
+                                </div>
+                            </th>                            
+                            <th>
+                                <div class="th">
+                                    Present Target
+                                </div>
+                            </th>
+                           
+                            <th>
+                                <div class="th">
+                                    Percent
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Present MTD
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot >
+                        <tr bgcolor="white">
+                            <td></td>
+                            <td>Totals</td>
+                            <td>{{TotalPercent | number:2}}</td>
+                            <td>{{TotalPercentAmt | number:2}}</td>
+                            <td>{{TotalPercentage | number:2}}</td>
+                            <td>{{TotalPerAmt | number:2}}</td>
+                            <td></td>
+                            <td>{{TotalPreMTD | number:2}}</td>
+                            <td>{{TotalMTD | number:2}}</td>
+                            <!--<td>{{TotalDAmount | number:2}}</td>
+                            <td></td>
+                            <td>{{TotalDMTD | number:2}}</td>-->
+                            <td>{{Totalsdifrance | number:2}}</td>
+                            <td>{{TotalPresentTarget | number:2}}%</td>
+                            <td></td>
+                            <td>{{TotalPresentMTD | number:2}}%</td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr data-ng-repeat="trade in Sectiondata.warehousereportdetails">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.Categoryname}}</td>
+                            <td>{{trade.Percentage}}</td>
+                            <td>{{trade.Amount}}</td>
+                            <td><input id="Target" type="number" min="0" max="99" class="form-control" ng-model="trade.Target" ng-change="GetTargetAmount(Sectiondata.warehousereportdetails)" value="0" ng-required /></td>
+                            <td>{{trade.TargetAmount}}</td>
+                            <td><input id="Comment" type="text" class="form-control" ng-model="trade.Comment" ng-required /></td> <!--style="margin: 0px 293px 0px 0px;"-->
+                            <td>{{trade.PreviousMTD}}</td>
+                            <td>{{trade.MTD}}</td>                           
+                            <td>{{trade.TargetAmount - trade.MTD | number:2}}</td>
+                            <td>{{trade.PresentTarget | number:2}}%</td>
+                            <td ng-style="set_color1(trade)">{{trade.Percent | number:2}}%</td>
+                            <td>{{trade.PresentMTD | number:2}}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ar btn-primary" ng-show="Sectiondata.AddPermission" ng-click="AddData(Sectiondata.warehousereportdetails,WarehouseId,CAmount,MonthYear,BaseCategoryId)"> Add </button>
+                    <button type="button" class="btn btn-danger" ng-show="Sectiondata.UpdatePermission" ng-click="UpdateTarget(Sectiondata.warehousereportdetails,WarehouseId,CAmount,MonthYear,BaseCategoryId)">Update</button>
+                </div>
+
+               
+                <div class="panel-heading">
+                    <strong><span class="glyphicon glyphicon-th"></span>Preview Month Data History</strong>
+                </div>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr bgcolor="white">
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Category Name
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Percentage %
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Amount Rs
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Target1
+                                    
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Target Amount1
+                                  
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Comments1
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Target2
+                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Target Amount2
+                                   
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Comments2
+                                    
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Target3
+                                    
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Target Amount3
+                                    
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Comments3
+                                   
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in AllHistoryData">
+                            <td>{{$index+1}}</td>
+                            <td>{{item.Categoryname}}</td>
+                            <td>{{item.Percentage}}</td>
+                            <td>{{item.Amount}}</td>
+                            <td>{{item.Target}}</td>
+                            <td>{{item.TargetAmount}}</td>
+                            <td>{{item.Comment}}</td>
+                            <td>{{item.Target1}}</td>
+                            <td>{{item.TargetAmount1}}</td>
+                            <td>{{item.Comment1}}</td>
+                            <td>{{item.Target2}}</td>
+                            <td>{{item.TargetAmount2}}</td>
+                            <td>{{item.Comment2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

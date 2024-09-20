@@ -1,0 +1,210 @@
+﻿<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+
+<style>
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+</style>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="row">
+            <div class="col-lg-3">
+                <label for="site-name">Select Offer Name</label><br />
+                <select class="form-control" ng-model="OfferData.OfferId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{offer.OfferId}}" ng-repeat="offer in offers"> {{offer.OfferName}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4" style="margin-top: 25px;">
+                <button class="btn-sm btn-primary" ng-click="GetFillerOfferCustomer(OfferData)">Search</button>
+            </div>
+        </div>
+       
+    </section>
+</div>
+        <div class="page page-table">
+
+            <section class="panel panel-default table-dynamic">
+
+                <div class="panel-heading">
+                    <strong>
+                        <span class="glyphicon glyphicon-th"> </span> Offer Customer
+                    </strong>
+                </div>
+
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    S.no
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Offer Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Free ItemName
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Wallet Point
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Customer
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Offer Type
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                </div>
+                            </th>
+
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                        <tr data-ng-repeat="trade in OfferCustomer">
+                            <td>{{$index +1}}</td>
+                            <td>{{trade.OfferName}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td>{{trade.ItemName}}</td>
+                            <td>{{trade.FreeItemName}}</td>
+                            <td>{{trade.WalletPoint}}</td>
+                            <td>{{trade.Customer}}</td>
+                            <td>{{trade.OfferType}}</td>
+                            <td>{{trade.CreatedDate| date:'medium'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="currentPage"
+                                        total-items="filteredStores.length"
+                                        max-size="4"
+                                        on-select-page="select(page)"
+                                        items-per-page="numPerPage"
+                                        rotate="false"
+                                        boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+
+

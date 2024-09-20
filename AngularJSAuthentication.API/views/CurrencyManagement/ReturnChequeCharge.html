@@ -1,0 +1,671 @@
+﻿<head>
+    <style>
+        b, strong {
+            font-weight: bold;
+            color: black;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #ea210c;
+            border-color: #ff1700;
+            border-radius: 20px;
+            border-top: -31px;
+            margin-top: 9px;
+            margin-left: 10px;
+        }
+
+            .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
+                color: white;
+                background-color: #b13d31;
+                border-color: #b13d31;
+                margin-bottom: 28px;
+                /* margin-left: 82px; */
+            }
+
+        .panel-default > .panel-heading {
+            color: #767676;
+            background-color: #ffffff;
+            border-color: #61554c;
+            border-bottom: 3px solid;
+        }
+
+        .modal-body {
+            position: relative;
+        }
+
+        img.img80_80 {
+            width: 80px;
+            height: 80px;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #00a4e9;
+            border-radius: 15px;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #ffb61c;
+            border-color: #ffae02;
+            border-radius: 15px;
+        }
+
+        .btn-info {
+            color: white;
+            background-color: #2ec1cc;
+            border-color: #29adb7;
+            border-radius: 15px;
+        }
+
+        .btn-dark {
+            color: white;
+            background-color: #222533;
+            border-color: #181a24;
+            border-radius: 15px;
+        }
+
+
+
+        .btn-info.disabled, .btn-info.disabled:hover, .btn-info.disabled:focus, .btn-info.disabled:active, .btn-info.disabled.active, .btn-info[disabled], .btn-info[disabled]:hover, .btn-info[disabled]:focus, .btn-info[disabled]:active, .btn-info[disabled].active, fieldset[disabled] .btn-info, fieldset[disabled] .btn-info:hover, fieldset[disabled] .btn-info:focus, fieldset[disabled] .btn-info:active, fieldset[disabled] .btn-info.active {
+            background-color: #009a71;
+            border-color: #009a71;
+        }
+
+        .btn-info {
+            color: white;
+            background-color: #097b5c;
+            border-color: #097b5c;
+            border-radius: 15px;
+        }
+
+        .panel-success {
+            border-color: #e6a655;
+        }
+
+            .panel-success > .panel-heading {
+                color: #e6a655;
+                background-color: #f3d7b5;
+                border-color: #c79d69;
+            }
+
+
+        .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+            border-color: #229173;
+            color: #fff;
+            background-color: #229173;
+            margin-left: 0%;
+            margin-bottom: -2%;
+            margin-top: -27px;
+            border-radius: 15px;
+        }
+
+        .form-control {
+            border-width: 1px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            margin-top: 10px;
+        }
+
+        .btn-link:hover, .btn-link:focus {
+            color: #fff;
+            background-color: #229173;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #ea210c;
+            border-color: #ff1700;
+            border-radius: 20px;
+            border-top: -31px;
+            margin-top: -26px;
+            margin-left: 10px;
+        }
+
+        .btn-warning.disabled, .btn-warning.disabled:hover, .btn-warning.disabled:focus, .btn-warning.disabled:active, .btn-warning.disabled.active, .btn-warning[disabled], .btn-warning[disabled]:hover, .btn-warning[disabled]:focus, .btn-warning[disabled]:active, .btn-warning[disabled].active, fieldset[disabled] .btn-warning, fieldset[disabled] .btn-warning:hover, fieldset[disabled] .btn-warning:focus, fieldset[disabled] .btn-warning:active, fieldset[disabled] .btn-warning.active {
+            background-color: #2ec1cc;
+            border-color: #2ec1cc;
+        }
+
+        .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
+            color: white;
+            background-color: #b13d31;
+            border-color: #b13d31;
+        }
+
+        .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
+            color: #f9f9f9;
+            background-color: #ffb619;
+            border-color: #ffb619;
+        }
+
+        .btn-default {
+            color: #ffffff;
+            background-color: #ffb619;
+            border-color: #ffb619;
+            margin-left: 34%;
+            margin-top: -34%;
+            border-radius: 13px;
+            /* margin-right: 19%; */
+        }
+
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid #dddddd;
+            float: right;
+            margin: 30px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin: 10px 2px 1px;
+            margin-top: 1px \9;
+            line-height: normal;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #ffffff;
+            background-color: #01a1e4;
+            border: 1px solid #dad9d9;
+            border-bottom-color: transparent;
+            cursor: default;
+            border-radius: 28px;
+        }
+
+        .panel-default > .panel-heading {
+            color: #767676;
+            background-color: #f3f3f3;
+            border-color: #e9e9e9;
+        }
+
+
+        b, strong {
+            font-weight: bold;
+            font-family: serif;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #2ec1cc;
+            border-color: #2ec1cc;
+            border-radius: 21px;
+            margin-left: 80%;
+        }
+
+            .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open > .btn-warning.dropdown-toggle {
+                color: white;
+                background-color: #0b929c;
+                border-color: #0b929c;
+            }
+
+        .btn-danger {
+            color: white;
+            background-color: #e94b3b;
+            border-color: #e63624;
+            border-radius: 21px;
+            margin-right: 100px;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #108e66;
+            border-color: #108e66;
+            border-radius: 20px;
+            border-top: -31px;
+            margin-top: -51px;
+            margin-left: 8px;
+        }
+
+        .panel-default > .panel-heading {
+            color: #252020;
+            background-color: #ffffff;
+            border-color: #eb5a00;
+            border-bottom: solid 3px #8c8b8b;
+        }
+
+        input[type="radio"] {
+            -webkit-appearance: checkbox; /* Chrome, Safari, Opera */
+            -moz-appearance: checkbox; /* Firefox */
+            -ms-appearance: checkbox; /* not currently supported */
+        }
+
+        .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
+            color: white;
+            background-color: #026b03;
+            border-color: #026b03;
+        }
+
+        .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
+            color: white;
+            background-color: #2ec1cc;
+            border-color: #2ec1cc;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: #2ec1cc;
+            border-color: #2ec1cc;
+            border-radius: 16px;
+            margin-bottom: 26px;
+            margin-top: 0px;
+        }
+
+        .btn-danger {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #24a6e6;
+            border-radius: 21px;
+            margin-right: 100px;
+            margin-top: 7px;
+        }
+
+            .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open > .btn-danger.dropdown-toggle {
+                color: white;
+                background-color: #2ec1cc;
+                border-color: #2ec1cc;
+            }
+
+        .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+            border-color: #229173;
+            color: #fff;
+            background-color: #229173;
+            margin-left: 0%;
+            margin-bottom: 0%;
+            margin-top: 64px;
+            border-radius: 15px;
+        }
+
+        .btn-info {
+            color: white;
+            background-color: #2ec1cc;
+            border-color: #2ec1cc;
+            border-radius: 15px;
+            margin-top: 0px;
+            margin-left: 0px;
+            margin-top: 35px;
+        }
+
+        .btn-success.disabled, .btn-success.disabled:hover, .btn-success.disabled:focus, .btn-success.disabled:active, .btn-success.disabled.active, .btn-success[disabled], .btn-success[disabled]:hover, .btn-success[disabled]:focus, .btn-success[disabled]:active, .btn-success[disabled].active, fieldset[disabled] .btn-success, fieldset[disabled] .btn-success:hover, fieldset[disabled] .btn-success:focus, fieldset[disabled] .btn-success:active, fieldset[disabled] .btn-success.active {
+            background-color: #194fff;
+            border-color: #194fff;
+        }
+        .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+    border-color: #229173;
+    color: #fff;
+    background-color: #229173;
+    margin-left: 0%;
+    margin-bottom: -2%;
+    margin-top: 11px;
+    border-radius: 15px;
+    margin-right: 36px;
+}
+        .btn-link, .btn-link:active, .btn-link[disabled], fieldset[disabled] .btn-link {
+    background-color: #236100;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+    </style>
+</head>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Return Cheque Charge
+            </strong>
+        </div>
+        <br />
+        <div class="row" ng-if="Warehouseid != '0'" ngEnter="FilterData()">
+            <div class="col-lg-12">
+                <div class="form-group col-lg-3">
+                    <label for="site-name">Select Warehouse:</label><br />
+                    <select class="form-control" id="Warehouseid" ng-model="Warehouseid" ng-change="getagentpayment(Warehouseid)">
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="Warehouseid == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+
+                    <button type="button" class="btn btn-info" ng-disabled="IsAssignmentCheckSelected()" ng-click="open()">Add Payment</button>
+                    <button type="button" class="btn btn-info" ng-click="Back()">Back</button>
+                </div>
+            </div>
+            <div class="col-lg-12 ">
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr style="background-color: #ffffff;">
+                                <th>
+                                    <div class="th">
+                                        Select
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Assignment Id
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Order Id
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        HandOver AgentName
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        HandOver Date
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Cheque Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Fine
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Cheque Date
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Status
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr data-ng-repeat="data in ReturnCheque" ng-class="{'hlgt': data.StatusText == 'AppovalSent','hlghtstatus':data.StatusText =='AppovedSuccesfully','Rej':data.StatusText =='ChequeFineReject'}">
+                                <td>
+                                    <!--<input type="checkbox"  ng-click="checkAssignment(trade.Id)" data-currencycollectionid="{{trade.Id}}" ng-model="trade.check" />-->
+                                    <input class="form-control" id="chkCustomer_{{data.OrderId}}" type="checkbox" ng-model="data.check" ng-change="CheckBox_Checked(data.OrderId)" ng-disabled="data.Status==6" />
+                                </td>
+                                <td>
+                                    <b>{{data.Deliveryissueid}}</b>
+                                </td>
+                                <td>
+                                    {{data.OrderId}}
+                                </td>
+
+                                <td>
+                                    {{data.HandOverAgentName}}
+                                </td>
+
+                                <td>
+                                    {{data.HandOverDate| date:'medium'}}
+                                </td>
+
+                                <td>
+                                    <i class="fa fa-rupee"></i>{{data.ChequeAmt}}
+                                </td>
+
+                                <td>
+                                    <div class="col-md-6">
+                                        <input class="form-control width" type="text" ng-model="data.Fine" ng-disabled="data.FineDisble" />
+                                    </div>
+                                    <button type="button" class="btn btn-link" ng-show="data.Editfine" ng-click="editfine(data)" ng-disabled="data.Status==6 ||data.Status==7||data.Status==8" style="margin-left: 24px;">Edit</button>
+                                    <button type="button" class="btn btn-danger" ng-show="data.SaveFine" ng-click="savefine(data)">Save</button>
+                                    <button type="button" class="btn btn-danger" ng-show="data.Remove" ng-click="Removefine(data)">Cancel</button>
+                                    <!--{{trade.Fine}}-->
+                                </td>
+                                <td>
+                                    <i class="fa fa-rupee"></i>{{data.totalamountwithfine}}
+                                </td>
+                                <td>
+                                    {{data.ChequeDate| date:'medium'}}
+                                </td>
+                                <td>
+                                    {{data.StatusText}}
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select name="page" ng-model="vm.rowsPerPage" ng-change="onNumPerPageChange()">
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="vm.currentPage"
+                                            total-items="vm.count"
+                                            max-size="4"
+                                            on-select-page="changePage(page)"
+                                            items-per-page="vm.rowsPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+<script type="text/ng-template" id="myReturnChargeModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Cheque Details</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-6">
+                <label for="UOM">Select Payment Mod:<span style="color:red;"></span></label><br />
+                <select class="form-control" id="site-name" ng-model="data.Mod">
+                    <option value="">Select</option>
+                    <option value="1">Cash</option>
+                    <option value="2">Cheque</option>
+                    <option value="3">Online</option>
+
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="UOM">Total Amount<span style="color:red;"></span></label><br />
+                <input type="text" class="form-control ng-pristine ng-valid" ng-model="Returncheque" placeholder="Enter Total Amount" readonly style="margin-bottom:5px;">
+            </div>
+            <div class="col-md-12" style="margin-top: 15px;" ng-if="data.Mod=='1'">
+                <div class="panel-success panel div-highlight">
+                    <div class="panel-heading text-center">
+                        <h3>Cash Payment</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table table-bordered table-striped table-responsive">
+                            <thead>
+                                <tr style="background-color: #ffffff;">
+                                    <th>
+                                        <div class="th">
+                                            Denomination
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Quantity
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Amount
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td colspan="3"><b>Notes</b></td>
+                                </tr>
+                                <tr ng-repeat="trade in Denomination | filter: { currencyType: 'Notes'}">
+                                    <td>
+                                        <b> &#8377;{{trade.Title}}</b>
+                                    </td>
+                                    <td>
+                                        <input type="number" value="0" ng-model="trade.CurrencyCount">
+
+                                    </td>
+                                    <td>
+                                        &#8377;{{trade.Title * trade.CurrencyCount}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><b>Coins</b></td>
+                                </tr>
+                                <tr ng-repeat="trade in Denomination | filter: { currencyType: 'Coin'}">
+                                    <td>
+                                        <b> &#8377;{{trade.Title}}</b>
+                                    </td>
+                                    <td>
+                                        <input type="text" ng-model="trade.CurrencyCount" placeholder="">
+                                    </td>
+                                    <td>
+                                        &#8377;{{trade.Title * trade.CurrencyCount}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1"><b>Total</b></td>
+                                    <td><b>{{ Denomination |totalSingle:'CurrencyCount'}} </b></td>
+                                    <td><b>&#8377;{{ Denomination | total:'CurrencyCount':'Title' }}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="margin-top: 15px;" ng-if="data.Mod=='2'">
+                <div class="form-group col-md-6">
+                    <label for="site-name">Cheque Number</label><br />
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="data.ChequeNumber" placeholder="Enter Cheque No">
+                </div>
+                <div class="form-group col-md-6" ng-if="data.Mod=='2'">
+                    <label for="site-name">Cheque Date:</label><br />
+                    <div class="form-group">
+                        <input id="dat" type='date' title="Select Date" ng-model="data.ChequeDate" value="{{Binddata.ChequeDate}}" autocomplete="off" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-6" ng-if="data.Mod=='2'">
+                    <lable for="site-name"><b>Select Bank Name:</b></lable>
+                    <select class="form-control" id="site-name" ng-model="data.BankId">
+                        <option value="">--Select --</option>
+                        <option value="{{bankdt.Id}}" ng-repeat="bankdt in bankname">{{bankdt.BankName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6" ng-if="data.Mod=='2'">
+                    <label for="site-name">Cheque Amount</label><br />
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="data.CollectAmount" placeholder="Enter Total Amount">
+                </div>
+                <div class="form-group" ng-if="data.Mod=='2'">
+                    <label for="uploadAdvertisements">Upload File:</label>
+                    <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+
+                    <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-model="uploader.queue[0].FileUrl" ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-12" style="margin-top: 15px;" ng-if="data.Mod=='3'">
+                <div class="form-group col-md-6" ng-if="data.Mod=='3'">
+                    <label for="site-name">Online Payment Type:</label>
+                    <select class="form-control" id="site-name" ng-model="data.PaymentType">
+                        <option value="">--Select--</option>
+                        <option value="Mpos">Mpos</option>
+                        <option value="RTGS/NFT">RTGS/NFT</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6" ng-if="data.Mod=='3'">
+                    <label for="site-name">Online Date:</label><br />
+                    <div class="form-group">
+                        <input id="dat" type='date' title="Select Date" ng-model="data.ChequeDate" value="{{data.OnlineDate}}" autocomplete="off" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6" ng-if="data.PaymentType=='Mpos'">
+                    <label for="site-name">MPOS Refrence No:</label>
+                    <input type="text" class="form-control" ng-model="data.MPOSReferenceNo" placeholder="xxxx-xxxx-xx">
+                </div>
+                <div class="form-group col-md-6" ng-if="data.PaymentType=='RTGS/NFT'">
+                    <label for="site-name">Payment ReferenceNO:</label>
+                    <input type="text" class="form-control" ng-model="data.PaymentReferenceNO" placeholder="xxxx-xxxx-xx">
+                </div>
+                <div class="form-group col-md-6" ng-if="data.PaymentType=='Mpos'">
+                    <label for="site-name">Collect MPOS Amount:</label>
+                    <input type="number" class="form-control" ng-model="data.CollectAmount" placeholder="Enter Total Amount">
+                </div>
+                <div class="form-group col-md-6" ng-if="data.PaymentType=='RTGS/NFT'">
+                    <label for="site-name">Collect Payment Amount:</label>
+                    <input type="number" class="form-control" ng-model="data.CollectAmount" placeholder="Enter Total Amount">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-info" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-info" ng-disabled="Returncheque!=(Denomination | total:'CurrencyCount':'Title')+data.CollectAmount" ng-click="Addpayment(data,Denomination)">Save</button>
+        </div>
+    </form>
+</script>
+
+<style>
+    .hlgt td {
+        background-color: lightskyblue !important;
+    }
+
+    .hlghtstatus td {
+        background-color: lightgreen !important;
+    }
+
+    .Rej td {
+        background-color: lightcoral !important;
+    }
+
+    .width {
+        width: 100px;
+    }
+</style>

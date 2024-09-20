@@ -1,0 +1,280 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .modal-footer {
+            padding: 18px !important;
+            padding-right: 35px !important;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<div class="page page-table"  button-permission-binder parentName="Promo Point" pageName="My Point">
+    <section class="panel panel-default table-dynamic" ng-if="show21">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>  Supplier Master
+            </strong>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="row col-md-12">
+                <div class="form-group col-md-2">
+                    <p>Supplier :</p>
+                </div>
+            </div><br />
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S_No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Supplier Name
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                           WarehouseId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Supplier Code
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Promo Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Used Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Total Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shopkirana
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{$index + 1}}</td>
+                    <td>{{trade.SupplierName}}</td>
+                    <td>{{trade.Warehouseid}}</td>
+                    <td>{{trade.SupplierCode}}</td>
+                    <td>{{trade.Point}}</td>
+                    <td>{{trade.PromoPoint}}</td>
+                    <td>{{trade.UsedPoint}}</td>
+                    <td>{{trade.Amount}}</td>
+                    <td ng-show="(trade.Point != 0)">
+                    <button class="btn-sm btn-primary" ng-click="edit(trade)">Confirm</button>
+                     </td>
+                   
+                  
+                    <td ng-show="trade.Point == 0"><span>Confirmed</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selectedPagedItem"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>  //option for no. Items per page //this give no. of items selected to show on page entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 page-num-info">
+                    <dir-pagination-controls max-size="8"
+                                             direction-links="true"
+                                             boundary-links="true"
+                                             on-page-change="getData1(newPageNumber)">
+                        //get method call every time when page changes
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <section class="panel panel-default table-dynamic" ng-if="show12">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>  Supplier Master
+            </strong>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="row col-md-12">
+                <div class="form-group col-md-2">
+                    <p>Supplier Information</p>
+                </div>
+            </div><br />
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <strong><span>Supplier Name :{{currentPageStores[0].SupplierName}}</span></strong><br />
+                    <strong><span>Supplier SK Code :{{currentPageStores[0].SupplierCode}}</span></strong>
+                </div><br /><br />
+                <div class="panel-body col-md-12">
+                    <h4>Promotional Point </h4>
+                    <div class="col-md-6">
+                        <strong><span>Promo Point (Useble Point) :{{currentPageStores[0].PromoPoint}}</span></strong><br />
+                        <strong><span>Used Point :{{currentPageStores[0].UsedPoint}}</span></strong>
+                    </div>
+                    <div class="col-md-6">
+                        <strong><span>pormo Point (Not Confirm At SK End) :{{currentPageStores[0].Point}}</span></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="table-footer">
+            <div class="row">
+            </div>
+        </footer>
+    </section>
+</div>
+
+<style>
+    .w3-red {
+        color: #fff!important;
+        background-color: #f44336!important;
+    }
+    .w1-red {
+        color: #fff!important;
+        background-color: #4c4948!important;
+    }
+</style>
+
+<script type="text/ng-template" id="confirmSK.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Purchase Pomo Point</h4>
+        </div>
+        <div class="modal-body" style="top:20px;">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Select Supplier</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="supplier.SupplierName" readonly />
+            </div>            
+            <div class="form-group">
+                <label for="site-name"> Promo Point</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="supplier.Point" readonly/>
+            </div>    
+            <div class="form-group">
+                <label for="site-name"> Pay Amount</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="supplier.Amount" readonly />
+            </div>              
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Add()" >Confirm</button>
+        </div>
+    </form>
+</script>

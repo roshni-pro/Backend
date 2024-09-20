@@ -1,0 +1,110 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+</style>
+<div class="page page-table"  button-permission-binder parentName="StatisticalRep" pageName="Retlr Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Customer Report
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">                        
+                        <div class="form-group">
+                            <label for="site-name">Catogory Type:</label><br />
+                            <select class="form-control" id="site-name" ng-model="data.value" ng-change="selectedItemChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{a.value}}" ng-repeat="a in catType">{{a.text}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-if="data.value==1">
+                            <label for="site-name">Catogory</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                        </div>
+                        <div class="form-group" ng-if="data.value==2">
+                            <label for="site-name">SubCatogory</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="subexamplemodel" extra-settings="subexamplesettings"></div>
+
+                        </div>
+                        <div class="form-group" ng-if="data.value==3">
+                            <label for="site-name">SubSubCatogory</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="ssubexamplemodel" extra-settings="ssubexamplesettings"></div>
+
+                        </div>
+                        <div class="form-group" ng-if="data.value==4">
+                            <label for="site-name">Item</label><br />
+                            <div ng-dropdown-multiselect="" options="dataselect" selected-model="itemexamplemodel" extra-settings="itemexamplesettings"></div>
+
+                        </div> 
+                        <div class="form-group" style="margin-left:40px!important">
+                            <div class="form-group">
+                                <label for="site-name">Retailers:</label><br />
+                                <input type="text" placeholder="type retailer Sk code" ng-model="retailerskcode" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select Date Range</label><br>
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>                       
+                        <div class="form-group">
+                            <button class="btn btn-primary marButton" ng-click="genereteReport(data,'day')">
+                                <span class="glyphicon glyphicon-plus">
+                                </span> Generate Report
+                            </button>
+                        </div>
+                        <div class="form-group" style="margin-left:40px!important">
+                            <div class="form-group">
+                                <label for="site-name">Filter:</label><br />
+                                <select class="form-control" id="site-name" ng-model="type" ng-change="changeGraph(type)">
+                                    <option value="">--select--</option>
+                                    <option value="{{a.value}}" ng-repeat="a in selType">{{a.text}}</option>
+                                </select>
+                            </div>                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="chartContainer" style="height:700px!important; width: 100%;">
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+            </div>  
+            <div class="form-group col-md-4">
+                <div class="form-group col-md-2"></div>
+                <div class="form-group col-md-8">
+                    <button class="btn btn-primary marButton" ng-click="genereteReport(data,'day')">
+                        Day
+                    </button>
+                    <button class="btn btn-primary marButton" ng-click="genereteReport(data,'month')">
+                        Month
+                    </button>
+                    <button class="btn btn-primary marButton" ng-click="genereteReport(data,'year')">
+                        Year
+                    </button>
+                </div>
+                <div class="form-group col-md-2"></div>
+            </div>  
+            <div class="form-group col-md-4">
+            </div>  
+        </div>
+        <br />
+        <br />        
+    </section>
+</div>

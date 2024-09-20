@@ -1,0 +1,306 @@
+﻿
+    <div class="page page-table" >
+        <section class="panel panel-default table-dynamic" > 
+            <div class="panel-heading" >
+             <strong > <span class="glyphicon glyphicon-th" > </span > tasktypes table</strong > 
+            </div >
+            <br />
+         <div> 
+            <button class="btn btn-primary" ng-click="open()" >
+              <span class="glyphicon glyphicon-plus" > 
+                </span > New TaskType</button > 
+             <br />
+             <br />
+             <div class="form-group">
+                 <label for="uploadAdvertisements">Import TaskTypes:</label>
+                 <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                 <div ng-repeat="item in uploader.queue">
+                     <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                         <span class="glyphicon glyphicon-upload"></span> Upload
+                     </button>
+                 </div>
+             </div>
+            </div>         
+            <div class="table-filters" > 
+        <div class="row" > 
+            <div class="col-sm-4 col-xs-6" >
+             <form >
+             <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()" > 
+                </form > 
+            </div > 
+            <div class="col-sm-3 col-xs-6 filter-result-info" >
+                 <span > Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            TaskType Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Name')"
+                                  data-ng-class="{active: row == 'Name'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Name')"
+                                  data-ng-class="{active: row == '-Name'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                             Description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Desc')"
+                                  data-ng-class="{active: row == 'Desc'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Desc')"
+                                  data-ng-class="{active: row == '-Desc'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Category
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Category')"
+                                  data-ng-class="{active: row == 'Category'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Category')"
+                                  data-ng-class="{active: row == '-Category'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                   
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.Name}}</td>
+                    <td>{{trade.Desc}}</td>
+                    <td>{{trade.Category}}</td>
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                 
+                    <td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="opendelete(trade)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+    <!-- /TaskType tiles -->
+<!-- new TaskType modal -->
+<script type="text/ng-template" id="myTaskTypeModal.html">
+    <!--<div id="modal-form" class="modal fade in" aria-hidden="false" style="display: block; padding-right: 17px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6 b-r">
+                            <h3 class="m-t-none m-b">Sign in</h3>
+
+                            <p>Sign in today for more expirience.</p>
+
+                            <form role="form">
+                                <div class="form-group"><label>Email</label> <input type="email" placeholder="Enter email" class="form-control"></div>
+                                <div class="form-group"><label>Password</label> <input type="password" placeholder="Password" class="form-control"></div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>
+                                    <label> <div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div> Remember me </label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Not a member?</h4>
+                            <p>You can create an account:</p>
+                            <p class="text-center">
+                                <a href=""><i class="fa fa-sign-in big-icon"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <form name="myFormTaskTypeModal" role="form">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="
+                    " data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add TaskType</h4>
+        </div>
+        <div class="modal-body">
+         
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create TaskType  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> TaskType Already Exist  ! Please Try Another TaskType</p>
+            </div>
+            <div class="form-group">
+                <label for="TaskType-name">TaskType name:</label><br />
+                <input id="TaskType-name" type="text" class="form-control" ng-model="TaskTypeData.Name" placeholder="Enter TaskType name" required />
+            </div>
+            <div class="form-group">
+                <label for="TaskType-name">TaskType Category:</label><br />                                
+                    <select id="site-name" class="form-control" ng-model="TaskTypeData.Category">
+                        <option value="">---SELECT---</option>
+                        <option value="Billable">Billable</option>
+                        <option value="Non-Billable">Non-Billable</option>
+                    </select>
+                    <!--<select class="form-control" id="selectposition" ng-model="AD.Position" required>
+                        <option value="">---SELECT---</option>
+                        <option ng-model="AD.Position" value="{{TaskTypeData.value}}" ng-repeat="selectposition in selectposition" ng-click="showDetails   = ! showDetails"> {{selectposition.label}}</option>
+                    </select>-->              
+               
+            </div>
+            <div class="form-group">
+                <label for="TaskType-name">TaskType Description:</label><br />                
+                <textarea id="TaskType-desc" ng-model="TaskTypeData.Desc" placeholder="Enter TaskType Desc" name=""  class="form-control" rows="4"></textarea>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="addTaskType(TaskTypeData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="myTaskTypeModalUpdate.html">
+
+    <form name="myFormTaskTypeModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit TaskType</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create TaskType  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> TaskType Already Exist  ! Please Try Another TaskType</p>
+            </div>
+            <div class="form-group">
+                <label for="TaskType-name">TaskType name:</label><br />
+                <input id="TaskType-name" type="text" class="form-control" ng-model="TaskTypeData.Name" placeholder="Enter TaskType name" />
+            </div>
+            <div class="form-group">
+                <label for="TaskType-name">TaskType Category:</label><br />
+
+                <!--<span class="ui-select">-->
+                    <select id="site-name" class="form-control" ng-model="TaskTypeData.Category">
+                        <!--<option value="">---SELECT---</option>-->
+                        <option value="Billable">Billable</option>
+                        <option value="Non-Billable">Non-Billable</option>
+                    </select>
+                    <!--<select class="form-control" id="selectposition" ng-model="AD.Position" required>
+                        <option value="">---SELECT---</option>
+                        <option ng-model="AD.Position" value="{{selectposition.value}}" ng-repeat="selectposition in selectposition" ng-click="showDetails   = ! showDetails"> {{selectposition.label}}</option>
+
+                    </select>-->
+
+                <!--</span>-->
+            </div>
+            <div class="form-group">
+                <label for="TaskType-name">TaskType Description:</label><br />
+                
+                <textarea id="TaskType-desc" ng-model="TaskTypeData.Desc" placeholder="Enter TaskType Desc" name="" class="form-control" rows="4"></textarea>                
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="PutTaskType(TaskTypeData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="myTaskTypeModaldelete.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit TaskType</h4>
+        </div>
+        <div class="modal-body">            
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />                
+            </div>        
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletetasktypes(TaskTypeData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+<!-- /new TaskType modal -->

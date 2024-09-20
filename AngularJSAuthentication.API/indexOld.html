@@ -1,0 +1,691 @@
+﻿<!doctype html>
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ShopKirana - Empowering Retailers</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta HTTP-EQUIV=”refresh”>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+    <!-- needs images, font... therefore can not be part of ui.css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css">
+    <link href="App_Start/bower_components/font-awesome/css/font-awesome.minNew.css" rel="stylesheet" />
+
+    <!--<link href="styles/styles_timesheets-1c161cfbef2ca54c47143503d901cf4b.css" rel="stylesheet" />-->
+    <link href="styles/loading-bar.min.css" rel="stylesheet" />
+    <!-- end needs images -->
+
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="styles/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="styles/ui.css" rel="stylesheet" />
+    <link href="styles/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="Content/jquery.simple-dtpicker.css" rel="stylesheet" />
+    <link href="Content/ng-table.css" rel="stylesheet" />
+    <link href="Content/daterangepicker-bs3.css" rel="stylesheet" />
+    <style>
+        #loading-img {
+            background: url(../images/Velocity.gif) center center no-repeat;
+            height: 100%;
+            z-index: 20;
+        }
+
+        .overlay {
+            background: #040303;
+            display: none;
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0.5;
+        }
+
+        .overlayWait {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0, 0.9);
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .mth {
+                display: none;
+            }
+        }
+
+
+        .w3-red {
+            color: #fff !important;
+            background-color: saddlebrown;
+        }
+
+        .w1-red {
+            color: #fff !important;
+            background-color: #4c4948 !important;
+        }
+    </style>
+</head>
+<body data-ng-app="app" id="app" data-custom-background="" data-off-canvas-nav="">
+    <div class="overlay">
+        <div id="loading-img"></div>
+    </div>
+    <div data-ng-controller="AppCtrl">
+        <div data-ng-hide="isSpecificPage()" data-ng-cloak="">
+            <section data-ng-include="'views/header.html'" id="header" class="top-header"></section>
+            <aside data-ng-include="'views/nav.html'" id="nav-container"></aside>
+        </div>
+        <div class="view-container">
+            <section data-ng-view="" id="content" class="animate-fade-up"></section>
+
+            <script type="text/ng-template" id="myModalhistory.html">
+
+                <div class="modal-header w3-red">
+                    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                        <span class="icon icon-x" aria-hidden="true">
+                        </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                    <h4 class="modal-title">{{EntityHistory.AuditEntity}} History</h4>
+                </div>
+                <div class="modal-body" style="overflow-x: scroll; overflow-y: scroll;">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr class="w1-red">
+                                <th>
+                                    User
+                                </th>
+                                <th>
+                                    Audit Timestamp
+                                </th>
+                                <th data-ng-repeat="data in EntityHistory.FieldNames">{{data}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr data-ng-repeat="data in EntityHistory.AuditHistory">
+                                <td>
+                                    {{data.AuditAction}} by <b>{{data.UserName}}</b>
+                                </td>
+                                <td>
+                                    {{data.AuditDate| date:'medium'}}
+                                </td>
+                                <td data-ng-repeat="row in data.AuditFields" ng-style="data.AuditAction != 'Added' && row.NewValue!=row.OldValue && {'color':'red'} || {'color': ''}">
+                                    {{row.NewValue}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer w3-red">
+                    <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Close</button>
+                </div>
+
+            </script>
+
+
+        </div>
+    </div>
+    <script src="scripts/aes256.js"></script>
+    <script src="scripts/vendor.js"></script>
+
+
+    <script src="scripts/jquery.min.js"></script>
+
+    <script src="scripts/jquery.simple-dtpicker.js"></script>
+    <script src="scripts/angular-input-date.js"></script>
+    <script src="scripts/timepickerpop.js"></script>
+    <script src="scripts/jquery-2.1.4.js"></script>
+    <script src="scripts/moment.js"></script>
+    <script src="scripts/moment.min.js"></script>
+    <script src="scripts/vendor/angular-daterangepicker.min.js"></script>
+    <script src="scripts/vendor/daterangepicker.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/bootbox.js"></script>
+    <script src="scripts/ngBootbox.js"></script>
+
+
+    <link href="../../styles/simple-autocomplete.css" rel="stylesheet" />
+    <script src="../../scripts/simple-autocomplete.js"></script>
+    <script src="scripts/vendor/ng-table-export.js"></script>
+    <script src="scripts/vendor/animate.js"></script>
+    <script src="scripts/vendor/moment.min.js"></script>
+    <script src="scripts/vendor/circles.min.js"></script>
+    <script src="scripts/vendor/daterangepicker.js"></script>
+    <script src="scripts/vendor/bootstrap-select.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/vendor/angular-local-storage.min.js"></script>
+
+    <script src="scripts/lodash.min.js"></script>
+
+    <script src="scripts/highlight.min.js"></script>
+
+    <script src="scripts/angular-highlightjs.js"></script>
+
+    <script src="scripts/angularjs-dropdown-multiselect.js"></script>
+    <script src="scripts/dirPagination.js"></script>
+    <script src="scripts/ng-table.js"></script>
+    <script src="scripts/angular-drag-and-drop-lists.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/appmain.js"></script>
+    <script src="scripts/angular-file-upload.min.js"></script>
+    <script src="scripts/angular-file-upload.js"></script>
+    <script src="scripts/ng-text-truncate.js"></script>
+    <script src="scripts/loading-bar.min.js"></script>
+    <script src="scripts/example.js"></script>
+    <script src="scripts/xlsx.core.min.js"></script>
+    <script src="scripts/alasql.min.js"></script>
+    <!--<script src="scripts/canvasjs.js"></script>-->
+    <script src="scripts/canvasjs.min.js"></script>
+    <link href="Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="scripts/bootstrap-multiselect.js"></script>
+    <script src="scripts/ui-bootstrap-tpls.js"></script>
+    <script src="scripts/vendor/angular-daterangepicker.min.js"></script>
+    <script src="scripts/ExpandCollaps.js"></script>
+
+
+    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>-->
+    <!-- Load services -->
+    <!--add group-->
+    <script src="services/GroupSmsServices.js"></script>
+    <script src="controller/GroupSMSController.js"></script>
+    <script src="controller/CustomerGroup.js"></script>
+
+    <script src="controller/TargetAllocatonBandsListController.js"></script>
+    <script src="controller/BudgetAllocationController.js"></script>
+    <script src="controller/TargetBandAllocationController.js"></script>
+    <script src="controller/TargetDashboardController.js"></script>
+
+    <script src="controller/multipleimageController.js"></script>
+    <script src="services/CurrencyStockService.js"></script>
+    <script src="services/EditPriceService.js"></script>
+    <script src="controller/editPriceController.js"></script>
+    <script src="services/CurrentStockService.js"></script>
+    <script src="controller/FreeStockController.js"></script>
+    <script src="services/FreeStockService.js"></script>
+    <script src="services/getsetdata.js"></script>
+    <script src="services/ItemPramotionService.js"></script>
+    <script src="services/DemandService.js"></script>
+    <script src="services/authInterceptorService.js?v=2"></script>
+    <script src="services/authService.js?v=2"></script>
+    <script src="services/ordersService.js?v=2"></script>
+    <script src="services/tokensManagerService.js?v=2"></script>
+    <script src="services/projectsService.js"></script>
+    <script src="services/customerService.js"></script>
+    <script src="services/tasktypesService.js"></script>
+    <script src="services/tasksService.js"></script>
+    <script src="services/ClientProjectService.js"></script>
+    <script src="services/peoplesService.js"></script>
+    <script src="services/RoleService.js"></script>
+    <script src="services/MessageService.js"></script>
+    <script src="services/DeliveryChargeService.js"></script>
+    <script src="services/SalesService.js"></script>
+    <script src="services/Service.js"></script>
+    <script src="services/DepartmentService.js"></script>
+    <script src="services/designationservice.js"></script>
+    <!--//-------------------Anil-----------------------------//-->
+    <script src="controller/ReqServiceController.js"></script>
+    <script src="services/settingService.js"></script>
+    <script src="services/profilesService.js"></script>
+    <script src="services/InvoiceProductService.js"></script>
+    <script src="services/invoiceService.js"></script>
+    <script src="services/leavesService.js"></script>
+    <script src="services/travelRequestService.js"></script>
+    <script src="services/AssetsCategoryService.js"></script>
+    <script src="services/AssetsService .js"></script>
+    <script src="controller/OnHoldGRController.js"></script>
+    <script src="services/PurchaseOrderService.js"></script>
+    <script src="services/supplierCategoryService.js"></script>
+    <script src="services/CopyItemService.js"></script>
+    <script src="services/OrderMasterService.js"></script>
+    <script src="services/OrderDetailsService.js"></script>
+    <script src="services/supplierService.js"></script>
+    <script src="services/CustomerCategoryService.js"></script>
+    <script src="services/CategoryService.js"></script>
+    <script src="services/CityService.js"></script>
+    <script src="services/StateService.js"></script>
+    <script src="services/SubCategoryService.js"></script>
+    <script src="services/SubsubCategoryService.js"></script>
+    <script src="services/WarehouseService.js"></script>
+    <script src="services/WarehouseCategoryService.js"></script>
+    <script src="services/WarehouseSubCategoryService.js"></script>
+    <script src="services/WarehouseSubsubCategoryService.js"></script>
+    <script src="services/mappService.js"></script>
+    <script src="services/unitMasterService.js"></script>
+    <script src="services/itemMasterService.js"></script>
+    <script src="services/FinancialYearService.js"></script>
+    <script src="services/OrderMasterService.js"></script>
+    <script src="services/ItemBrandService.js"></script>
+    <script src="services/WarehouseSupplierService.js"></script>
+    <script src="services/TaxGroupDetailsService.js"></script>
+    <script src="services/TaxGroupService.js"></script>
+    <script src="services/TaxMasterService.js"></script>
+    <script src="services/PurchaseOrderListService.js"></script>
+    <script src="services/SearchPOService.js"></script>
+    <script src="services/PurchaseODetailsService.js"></script>
+    <script src="services/SliderService.js"></script>
+    <script src="services/NotificationService.js"></script>
+    <script src="services/NotificationByDeviceIdService.js"></script>
+    <script src="services/GroupNotificationService.js"></script>
+    <script src="services/DeviceNotificationService.js"></script>
+    <script src="services/BillPramotionService.js"></script>
+    <script src="services/ClusterService.js"></script>
+    <script src="services/DeliveryService.js"></script>
+    <script src="services/OfferService.js"></script>
+    <script src="services/AreaService.js"></script>
+    <script src="services/CustomerIssuesService.js"></script>
+    <script src="services/CompanyService.js"></script>
+    <script src="services/WaitIndicatorService.js"></script>
+    <script src="controller/ClusterWiseService.js"></script>
+    <script src="services/PageMasterService.js"></script>
+
+
+    <script src="services/RolePagePermissionService.js"></script>
+    <script src="controller/InventoryReportController.js"></script>
+    <script src="controller/PNLController.js"></script>
+    <script src="controller/InventoryCycleController.js"></script>">
+
+
+    <!--//-------------------Anil-----------------------------//-->
+    <!-- Load controllers -->
+    <script src="controller/DigitalSalesController.js"></script>
+    <script src="controller/NotificationDetailController.js"></script>
+    <script src="controller/NotificationUpdatedController.js"></script>
+    <script src="controller/PeopleGroup.js"></script>
+    <script src="controller/SupplierGroup.js"></script>
+    <script src="controller/CustomerGroup.js"></script>
+    <script src="controller/GroupSMSController.js"></script>
+    <script src="controller/AgentExcelController.js"></script>
+    <script src="controller/AppHomeMobileController.js"></script>
+    <script src="controller/AppHomeEditController.js"></script>
+    <script src="controller/AgentsDashboardController.js"></script>
+    <script src="controller/CreateCompanyController.js"></script>
+    <script src="controller/CurrencyStockController.js"></script>
+    <script src="controller/BankSettleController.js"></script>
+    <script src="controller/CurrencySettleController.js"></script>
+    <script src="controller/BounceCheqController.js"></script>
+    <script src="controller/DeliveryBoyHistoryController.js"></script>
+    <script src="controller/DeliveryBoyController.js"></script>
+    <script src="controller/ChangeDBoyCtrl.js"></script>
+    <script src="controller/RedispatchCtrl.js"></script>
+    <script src="controller/VehicleController.js"></script>
+    <script src="controller/basecategoryController.js"></script>
+    <script src="controller/DeliveryController.js"></script>
+    <script src="controller/SliderCtrl.js"></script>
+    <script src="controller/PurchaseOrderListController.js"></script>
+    <script src="controller/OrderSettleController.js"></script>
+    <script src="controller/CurrentStockController.js"></script>
+    <script src="controller/searchPOController.js"></script>
+    <script src="controller/SearchPODetailsController.js"></script>
+    <script src="controller/ItemPramotionController.js"></script>
+    <script src="controller/DemandController.js"></script>
+    <script src="controller/AppHomeExcludeController.js"></script>
+    <script src="controller/orderdetailsController.js"></script>
+    <script src="controller/OrderInvoiceController.js"></script>
+    <script src="controller/orderMasterController.js"></script>
+    <script src="controller/TaxGroupController.js"></script>
+    <script src="controller/TaxmasterController.js"></script>
+    <script src="controller/AddDatainOnHoldGR.js"></script>
+    <script src="controller/purchaseorderController.js"></script>
+    <script src="controller/orderMasterController.js"></script>
+    <script src="controller/CopyItemController.js"></script>
+    <script src="controller/FinancialYearController.js"></script>
+    <script src="controller/ItembrandController.js"></script>
+    <script src="controller/supplierCategoryController.js"></script>
+    <script src="controller/supplierController.js"></script>
+    <script src="controller/categoryController.js"></script>
+    <script src="controller/deliveryChargeController.js"></script>
+    <script src="controller/SalesSettlementHistoryController.js"></script>
+    <!--//-------------------Anil-----------------------------//-->
+    <script src="controller/GoodsRecivedController.js"></script>
+    <script src="controller/cityController.js"></script>
+    <script src="controller/stateController.js"></script>
+    <script src="controller/subcategoryController.js"></script>
+    <script src="controller/subsubCategoryController.js"></script>
+    <script src="controller/FilterItemsController.js"></script>
+    <script src="controller/warehouseController.js"></script>
+    <script src="controller/WarehouseCategoryController.js"></script>
+    <script src="controller/WarehousesubcategoryController.js"></script>
+    <script src="controller/WarehousesubsubCategoryController.js"></script>
+    <script src="controller/WarehouseSupplierController.js"></script>
+    <script src="controller/orderMasterController.js"></script>
+    <script src="controller/indexController.js?v=2"></script>
+    <script src="controller/homeController.js?v=2"></script>
+    <script src="controller/loginController.js?v=3"></script>
+    <script src="controller/signupController.js?v=2"></script>
+    <script src="controller/ordersController.js?v=2"></script>
+    <script src="controller/refreshController.js?v=2"></script>
+    <script src="controller/tokensManagerController.js?v=2"></script>
+    <script src="controller/associateController.js?v=2"></script>
+    <script src="controller/tasktypesController.js"></script>
+    <script src="controller/customerController.js"></script>
+    <script src="controller/projectsController.js"></script>
+    <script src="controller/tasksController.js"></script>
+    <script src="controller/peoplesController.js"></script>
+    <script src="controller/ReturnOrderdetailsController.js"></script>
+    <script src="controller/roleController.js"></script>
+    <script src="controller/BudgetAllocationListController.js"></script>
+    <script src="controller/permission/PeoplePageAccessPermissionsController.js"></script>
+    <script src="controller/permission/PageButtonPermissionController.js"></script>
+    <!--//-------------------Anil-----------------------------//-->
+    <script src="controller/WarehouseExpensePointController.js"></script>
+    <script src="controller/OrderPaymentReportController.js"></script>
+    <script src="controller/reportsController.js"></script>
+    <script src="controller/VehicleAssissmentController.js"></script>
+    <script src="controller/orderPendingController.js"></script>
+    <script src="controller/SuggetionContoller.js"></script>
+    <script src="controller/targetController.js"></script>
+    <script src="controller/IRController.js"></script>
+    <script src="controller/IRSupplierController.js"></script>
+    <script src="controller/ReturnItemCtrl.js"></script>
+    <script src="controller/RewardPointController.js"></script>
+    <script src="controller/promItemController.js"></script>
+    <script src="controller/RewardItemCtrl.js"></script>
+    <script src="controller/RedeemOrderCtrl.js"></script>
+    <script src="CRM/CRMCtrl.js"></script>
+    <script src="CRM/CRMcust4ActionCtrl.js"></script>
+    <script src="CRM/ActionController.js"></script>
+    <script src="controller/CustomerIssueController.js"></script>
+    <script src="CRM/NetprofitController.js"></script>
+    <script src="controller/PopUpController.js"></script>
+    <script src="controller/ExcelOrderCtrl.js"></script>
+    <script src="controller/customersDeviceInfoController.js"></script><!--//by Tejas 22-05-2019-->
+    <script src="controller/DboyphonedetailsController.js"></script> <!--//by Tejas 22-05-2019-->
+    <script src="controller/AgentphoneinfoController.js"></script> <!--//by Tejas 22-05-2019-->
+    <!--//------------ANIL Reports ---------------------//-->
+    <script src="ReportsControllers/ReportController.js"></script>
+    <script src="ReportsControllers/Report3Controller.js"></script>
+    <script src="ReportsControllers/RetailersReportCtrl.js"></script>
+    <script src="ReportsControllers/DashboardReportController.js"></script>
+    <script src="ReportsControllers/ComparisonCtrl.js"></script>
+    <script src="ReportsControllers/Comparison1Ctrl.js"></script>
+    <script src="ReportsControllers/DeliveryBoyReportCtrl.js"></script>
+    <script src="UnitEconomics/unitEcoController.js"></script>
+    <script src="UnitEconomics/unitEcoReportCtlr.js"></script>
+    <script src="controller/MilestonePointController.js"></script>
+    <script src="controller/NppHistoryPriceController.js"></script>
+    <script src="controller/supplierPromo.js"></script>
+    <!--//------------PDCA ---------------------//-->
+    <script src="controller/PDCABaseCategoryController.js"></script>
+    <script src="controller/PDCACategoryController.js"></script>
+    <script src="controller/PDCADetailsController.js"></script>
+    <script src="controller/PDCADataCompairController.js"></script>
+    <!--//--------------------------------------//-->
+    <script src="controller/SalesBounceController.js"></script>
+    <script src="controller/SalesSettlementController.js"></script>
+    <script src="controller/logoutController.js"></script>
+    <script src="controller/ShortageSettleController.js"></script>
+    <script src="controller/AreaMasterController.js"></script>
+
+    <script src="controller/mappController.js"></script>
+    <script src="controller/AsignDayController.js"></script>
+    <script src="controller/dashboardController.js"></script>
+    <script src="controller/menuController.js"></script>
+    <script src="controller/signupController.js"></script>
+    <script src="controller/headerController.js"></script>
+    <script src="controller/DBoyOrderReportingController.js"></script>
+    <script src="controller/TFSController.js"></script>
+    <script src="controller/invoiceController.js"></script>
+    <script src="controller/invoicemoreyeahController.js"></script>
+    <script src="controller/createRecurringInvoiceController.js"></script>
+    <script src="controller/AddInvoiceController.js"></script>
+    <script src="controller/GrowthModuleLoginController.js"></script>
+    <script src="controller/leavesController.js"></script>
+    <script src="controller/GrowthDashboardController.js"></script>
+
+    <script src="controller/travelRequestController.js"></script>
+    <script src="controller/assetsCategoryController.js"></script>
+    <script src="controller/assetsController.js"></script>
+    <script src="controller/clusterController.js"></script>
+    <script src="controller/itemMasterController.js"></script>
+    <script src="controller/ItemSupplierMappingController.js"></script>
+    <script src="scripts/ngAutocomplete.js"></script>
+    <script src="controller/OnHoldGRAddDataController.js"></script>
+    <script src="controller/OnHoldGRController.js"></script>
+    <script src="controller/customerCategoryController.js"></script>
+    <script src="controller/MessageController.js"></script>
+    <script src="controller/GroupNotificationController.js"></script>
+    <script src="controller/NotificationByDeviceIdController.js"></script>
+    <script src="controller/NotificationController.js"></script>
+    <script src="controller/CouponController.js"></script>
+    <script src="services/CouponService.js"></script>
+    <script src="services/NewsService.js"></script>
+    <script src="controller/NewsController.js"></script>
+    <script src="controller/weektimesheetController.js"></script>
+    <script src="controller/daytimesheetController.js"></script>
+    <script src="controller/monthtimesheetController.js"></script>
+    <script src="controller/calenderController.js"></script>
+    <script src="controller/typeaheadController.js"></script>
+    <script src="controller/settingController.js"></script>
+    <script src="controller/profilesController.js"></script>
+    <script src="controller/userdashboardController.js"></script>
+    <script src="controller/o365dashboardController.js"></script>
+    <script src="controller/clientdashboardController.js"></script>
+    <script src="controller/projectdashboardController.js"></script>
+    <script src="controller/weektasktimesheetController.js"></script>
+    <script src="controller/daytasktimesheetController.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="controller/BillPramotionController.js"></script>
+    <script src="controller/OfferController.js"></script>
+    <script src="controller/WalletController.js"></script>
+    <script src="controller/NotOrderedController.js"></script>
+    <!--<script src="ReportsControllers/ProductReportController.js"></script>-->
+    <script src="views/DamageStock/DamageStockController.js"></script>
+    <script src="views/DamageStock/CreateDamageOrderController.js"></script>
+    <script src="views/DamageStock/DamageorderMasterController.js"></script>
+    <script src="views/DamageStock/DamageItemApprovalController.js"></script>
+    <script src="services/DamageOrderMasterService.js"></script>
+    <script src="services/DamageOrderDetailsService.js"></script>
+    <script src="controller/DamageorderdetailsController.js"></script>
+    <script src="controller/OrderProcessReportController.js"></script>
+    <script src="controller/AssignCustomersCtrl.js"></script>
+    <script src="controller/SupplierBrandsCtrl.js"></script>
+    <!--<script src="controller/CustomerSalesmanAsign.js"></script>-->
+    <script src="controller/AssignBulkcustomersController.js"></script>
+    <script src="controller/PointInOutController.js"></script>
+    <script src="controller/AssignBrandCustomerController.js"></script>
+    <script src="controller/BrandwisepramotionController.js"></script>
+    <script src="controller/DialPointController.js"></script>
+    <script src="controller/DialValuePointController.js"></script>
+    <script src="controller/NotVisitCtrl.js"></script>
+    <script src="controller/AgentsController.js"></script>
+    <!--<script src="controller/TallyController.js"></script>-->
+    <script src="controller/PrestloanCustomerController.js"></script>
+    <script src="controller/MarginImagePromotionController.js"></script>
+    <script src="controller/TurnATimeController.js"></script>
+    <script src="controller/ExclusiveBrandController.js"></script>
+    <script src="controller/HighestDreamPointItemController.js"></script>
+    <script src="controller/CiMatrixController.js"></script>
+    <script src="controller/CategoryImageController.js"></script>
+    <script src="controller/DocumentController.js"></script>
+    <script src="controller/RedispatchCtrlAutoCanceled.js"></script>
+    <script src="controller/TransferOrderController.js"></script>
+    <script src="controller/trackuser.js"></script>
+
+    <script src="controller/DeletepeoplesController.js"></script>
+    <!--<script src="controller/WarehouseReportController.js"></script>
+    <script src="controller/WarehouseReportCategoryController.js"></script>
+    <script src="controller/WareHouseReportDetailsController.js"></script>-->
+    <script src="controller/UserAccessPermissionController.js"></script>
+    <!--<script src="controller/MOQItemMasterController.js"></script>-->
+    <script src="controller/CustomerVoiceController.js"></script>
+    <script src="controller/casecontroller.js"></script>
+    <script src="services/fileUploadDirective.js"></script>
+    <script src="services/CaseService.js"></script>
+    <script src="services/ProjectService.js"></script>
+    <script src="controller/ChangePassword.js"></script>
+    <script src="controller/AddPeopleCtrl.js"></script>
+    <script src="controller/Departmentctrl.js"></script>
+    <script src="controller/designationController.js"></script>
+    <script src="controller/SkillCtrl.js"></script>
+    <script src="controller/OrderProcessStatus.js"></script>
+    <script src="controller/AppHomeController.js"></script>
+    <script src="InActiveCustomerOrder/InActiveCustOrderMasterController.js"></script>
+    <script src="CRM/OrderDataController.js"></script>
+    <script src="controller/POapprovalController.js"></script>
+    <script src="controller/MyUdharController.js"></script>
+    <script src="controller/IRBuyerController.js"></script>
+    <script src="controller/IRDetailBuyerController.js"></script>
+    <!--Warehouse Category By Raj-->
+    <script src="controller/WarehouseBaseCategoryController.js"></script>
+    <script src="controller/PoDashboardController.js"></script>
+    <script src="controller/StatusSupplierController.js"></script>
+    <script src="controller/IRController.js"></script>
+    <script src="controller/CurrentNetStockController.js"></script>
+    <script src="controller/CaseViewController.js"></script>
+    <script src="controller/FirstTimeOrderController.js"></script>
+    <script src="controller/WalletHistoryController.js"></script>
+    <script src="controller/ViewPaymentsController.js"></script>
+    <script src="controller/QuestionController.js"></script>
+    <script src="controller/GameLevelController.js"></script>
+    <script src="controller/AppHomeMobileController.js"></script>
+    <script src="controller/IRViewController.js"></script>
+    <script src="controller/MasterOnHoldGRController.js"></script>
+    <script src="controller/OnHoldGRController.js"></script>
+    <script src="controller/CallHistoryController.js"></script>
+    <script src="controller/ClusterWiseController.js"></script>
+    <script src="controller/RejectedIRController.js"></script>
+    <script src="controller/RejectedIRDetailController.js"></script>
+    <script src="controller/IRDraftController.js"></script>
+    <!--ClusterMap By Pravesh-->
+    <script src="controller/ClusterMapController.js"></script>
+    <script src="controller/ChannelPartnerController.js"></script>
+    <script src="controller/AgentsPerformanceController.js"></script>
+
+    <!--startAssignment Proceessing by Harry-->
+    <script src="controller/CreateDeliveryAssignmentController.js"></script>
+    <script src="controller/DeliveryAssignmentController.js"></script>
+    <script src="controller/DeliveryOrderAssignmentChangeController.js"></script>
+    <script src="controller/AssignmentReportController.js"></script>
+    <script src="controller/GrowthDashboardController.js"></script>
+    <script src="controller/AdjustmentCurrentStockController.js"></script>
+    <script src="controller/ItemMovementReportController.js"></script>
+    <!--end-->
+    <script src="controller/CashManagement/WarehouseCashController.js"></script>
+    <script src="controller/CashManagement/WarehouseLiveDashboard.js"></script>
+    <script src="controller/CashManagement/WarehouseSettlement.js"></script>
+    <script src="controller/CashManagement/HQCurrencyController.js"></script>
+    <!--start by Raj-->
+    <script src="controller/PODashboardMainController.js"></script>
+    <script src="controller/AppHomeUpdatedController.js"></script>
+    <script src="controller/POTaskController.js"></script>
+    <script src="controller/IRDraftController.js"></script>
+    <!--end-->
+    <!--viewDepo BY Anushka -->
+    <!--start Purchase order by Raj-->
+    <script src="controller/BlankPOController.js"></script>
+    <script src="services/BlankPOService.js"></script>
+    <script src="controller/BlankPODetailsController.js"></script>
+    <script src="controller/BlankPOEditController.js"></script>
+    <!--end-->
+    <!--start Purchase order by Raj-->
+    <script src="controller/BlankPOController.js"></script>
+    <script src="services/BlankPOService.js"></script>
+    <script src="controller/BlankPODetailsController.js"></script>
+    <script src="controller/BlankPOEditController.js"></script>
+    <script src="controller/IRDraftController.js"></script>
+
+    <!--ClusterMap By Pravesh-->
+    <script src="controller/ClusterMapController.js"></script>
+    <!--viewDepo BY Anushka -->
+    <script src="controller/ViewDepoController.js"></script>
+    <script src="controller/IRDraftController.js"></script>
+    <!--viewDepo BY Anushka -->
+    <script src="controller/ViewDepoController.js"></script>
+    <script src="controller/PurchasePendingReportController.js"></script>
+    <!-- Trace Logs -->
+    <script src="controller/Logs/TraceLogController.js"></script>
+    <script src="controller/HealthChartController.js"></script>
+    <script src="controller/AddclusterController.js"></script>
+    <script src="controller/TurnAroundTimeCotroller.js"></script>
+    <script src="controller/CurrentStockReportController.js"></script>
+    <script src="controller/TargetDashboardController.js"></script>
+    <script src="controller/BudgetAllocationController.js"></script>
+    <script src="controller/AutoProcessorderController.js"></script>
+    <script src="controller/HubPhaseController.js"></script>  <!--Vinayak-->
+    <script src="controller/InventoryEditController.js"></script>  <!--Vinayak-->
+    <script src="controller/InventoryApprovalPagecontroller.js"></script>  <!--Vinayak-->
+    <!--<script src="controller/OrderMasterUpdateController.js"></script>-->  <!--Vinayak-->
+    <!--<script src="controller/EwayBillOrderController.js"></script>-->  <!--Vinayak-->
+    <script src="controller/PurchaseOrder/GRDraftDetailController.js"></script>  <!--Vinayak-->
+    <script src="services/InventoryPageService.js"></script>
+    <script src="controller/CityBaseCustomerRewardController.js"></script>
+    <!--Permission Module-->
+
+    <script src="controller/permission/PageMasterController.js"></script>
+    <script src="controller/permission/RolePagePermissionController.js"></script>
+    <!--end-->
+
+    <script src="controller/UnconfirmedGRController.js"></script>
+    <script src="controller/TemporaryCurrentStockController.js"></script>
+    <script src="controller/EpayLetterController.js"></script>
+    <script src="controller/UpdateVersionController.js"></script>
+    <script src="controller/OnlineTransactionDashBoardcontroller.js"></script>
+    <script src="controller/CashManagement/AgentPaymentController.js"></script>
+    <script src="controller/CashManagement/AddDeuPaymentController.js"></script>
+    <script src="services/AgentPaymentService.js"></script>
+    <script src="controller/CashManagement/CashBalanceController.js"></script>
+    <script src="controller/GRCancellationController.js"></script>
+
+    <script src="controller/warehouseSelectionController.js"></script> <!-- default Warehouse Selection-->
+    <script src="controller/LoginTokenController.js"></script>
+
+    <script type="text/javascript">
+        function showTime() {
+            var d = new Date();
+            var t = d.toLocaleTimeString();
+            if (t == '8:00:00 PM') {
+                var url = serviceBase + "api/DashboardReport";
+                $.post(url, function (data, status) {
+                });
+            }
+        }
+        $(document).ready(function () {
+            //myVar = setInterval("showTime()", 1000);
+        });
+
+    </script>
+    <script type="text/ng-template" id="PopUpModel.html">
+        <style>
+            .modal-dialog {
+                width: 30% !important;
+            }
+        </style>
+        <h1>!Alert!</h1>
+        <form name="myFormTaskTypeModal1" style="background:#cfd0bf">
+            <div class="modal-header">
+                <h4 class="modal-title" style="text-align:center"><b>ShopKirana Alert</b></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="text-align:center">
+                    <label for="TaskType-name">{{alrt.msg}}</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">OK</button>
+            </div>
+        </form>
+    </script>
+    <style>
+        .bootbox {
+            width: 35%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</body>
+</html>

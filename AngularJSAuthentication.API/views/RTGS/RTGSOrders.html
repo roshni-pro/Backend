@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        /*Here I will add some css for looks good*/
+        .tabContainer {
+            max-height: 400px;
+            overflow: auto;
+            width: 80%;
+        }
+
+        .tableData {
+            border-left: solid 1px #D8C3C3;
+            border-top: solid 1px #D8C3C3;
+            width: 100%;
+        }
+
+            .tableData tr {
+            }
+
+            .tableData td, .tableData th {
+                border-right: solid 1px #D8C3C3;
+                border-bottom: solid 1px #D8C3C3;
+                text-align: left;
+                padding: 5px;
+            }
+
+            .tableData td {
+            }
+
+            .tableData th {
+                background-color: #FAFAFA;
+                padding: 7px 5px;
+                border-bottom-color: #9C9C9C;
+            }
+
+        .odd {
+            background-color: #f3f3f3;
+        }
+
+        .even {
+            background-color: #ffffff;
+        }
+
+        tr.sub {
+            display: none;
+        }
+
+        .CX {
+            width: 35px;
+        }
+
+            .CX span {
+                font-family: fantasy;
+                font-size: 15px;
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+    </style>
+</head>
+<body>
+    <div class="modal-header">
+        RTGS/NEFT Payment List
+    </div>
+
+
+    <div class="form-group col-md-12 clear-both" ng-init="getAllWarehosues()">
+
+        <div class="form-group col-md-2 ">
+            <label for="site-name">Select Warehouse </label>
+            <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse"
+                 selected-model="MultiWarehouseModel"
+                 extra-settings="MultiWarehouseModelsettings"
+                 style="width:200px"></div>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name">SK Code</label>
+            <input type="text" placeholder="search" class="form-control" ng-model="skcode">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name">Ref No</label>
+            <input type="text" placeholder="search" class="form-control" ng-model="refno">
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name"> Payment Mode *</label><br />
+            <select id="ddlPaymentMode" ng-model="paymode" class="form-control">
+                <option value="">Select</option>
+                <option value="RTGS/NEFT">RTGS/NEFT</option>
+                <option value="mPos">mPos</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name"> Status *</label><br />
+            <select id="ddlstatus" ng-model="RTGSstatus" class="form-control">
+                <option value="">Select</option>
+                <option value="0">Pending</option>
+                <option value="1">Approved</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name"> </label>  <br />
+            <button type="button" class="accordion btn btn-dark" ng-click="GetRTGSPayList()" data-toggle="collapse" style="margin:5px 0px 0px 0px">&nbsp; Search</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="ExporttoExcel()">Export to Excel</button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!--<h4 class="title">GR Product Received Detail</h4>-->
+        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>SNo.</th>
+                    <th>Order ID</th>
+                    <th>Payment Mode</th>
+                    <th>Warehouse Name</th>
+                    <th>SK Code</th>
+                    <!--<th>Customer Name</th>
+    <th>Customer Mobile No</th>-->
+                    <th>Ref. No.</th>
+                    <th>Amount</th>
+                    <th>Payment Date</th>
+                    <th ng-if="rpttype=='1'">Approve By</th>
+
+                    <th ng-if="rpttype=='0'">Action</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="R in RTGSPayList">
+                <tr dir-paginate="trade in ordermaster|itemsPerPage:itemsPerPageRTGS" total-items="total_countRTGS">
+                <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                    <td ng-click="GetRTGSdtlsOrderidWise(R.RefNo,R.PaymentFrom)"><span class="glyphicon glyphicon-plus-sign"></span></td>
+                    <td>{{$index+1}}</td>
+                    <td>{{R.OrderId }}</td>
+                    <td>{{R.PaymentFrom}}</td>
+                    <td>{{R.WarehouseName}}</td>
+                    <td>{{R.Skcode}}</td>
+                    <!--<td>{{R.CustName}}</td>
+    <td>{{R.CustMobNo}}</td>-->
+                    <td>
+                        {{R.RefNo}}
+                    </td>
+                    <td>{{R.amount}}</td>
+                    <td>{{R.PaymentDate}}</td>
+                    <td ng-if="rpttype=='1'">{{R.ApproverName}}</td>
+                    <td ng-if="rpttype=='0'"><button type="button" ng-click="ApproveRTGS(R.RefNo)" class="accordion btn btn-danger">Approve</button></td>
+                    <td>
+                        <div ng-if="showMe" show-history></div>
+                        <button class="btn-sm btn-dark skview" ng-init="Id=R.PaymentResponseRetailerAppID;entity='PaymentResponseRetailerApp'" ng-click="showMe=true">History</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <pagination class="pagination-sm"
+                page="vmRTGS.currentPage"
+                total-items="vmRTGS.count"
+                max-size="4"
+                on-select-page="changePageRTGS(page)"
+                items-per-page="vmRTGS.rowsPerPage"
+                rotate="false"
+                boundary-links="true"></pagination>
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="RTGSModel" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Orders List </h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="modal-title">RefNo :  </h4>
+                        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                            <tbody ng-init="total = 0">
+
+                                <tr>
+                                    <th>SNo.</th>
+                                    <th>SK Code</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Mobile No</th>
+                                    <th>Order Id</th>
+                                    <th>Amount</th>
+                                    <th>Ref No</th>
+                                    <th>Approve By </th>
+                                    <th ng-if="rpttype=='0'"></th>
+                                </tr>
+                                <tr ng-repeat="L in OrderWiseList">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{L.Skcode}}</td>
+                                    <td>{{L.CustName}}</td>
+                                    <td>{{L.CustMobNo}}</td>
+                                    <td>{{L.OrderId}}</td>
+                                    <td>{{L.amount}}</td>
+                                    <td>{{L.RefNo}}</td>
+                                    <td>{{L.ApproverName}}</td>
+                                    <td ng-if="rpttype=='0'">
+                                        <input type="text" ng-model="NewRefNo" />
+                                        <span class="glyphicon glyphicon-ok" ng-click="UpdateRefNo(L.OrderId,L.RefNo,NewRefNo)"></span>
+
+                                        <span ng-click="Cancelbtn()" class="glyphicon glyphicon-remove"></span>
+                                    </td>
+                                </tr>
+                        </table>
+                        <!--<table class="tableData">
+                            <tr>
+                                <th>
+                                    Update Reference Number
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{Paygatwayid}}
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" ng-model="NewRefNo" />-->
+                                    <!--<button type="button" ng-click="UpdateRefNo(R.RefNo,NewRefNo)" class="accordion btn btn-info">Save</button>-->
+                                    <!--<span class="glyphicon glyphicon-ok" ng-click="UpdateRefNo(Paygatwayid,NewRefNo)"></span>
+
+                                    <span ng-click="Cancelbtn()" class="glyphicon glyphicon-remove"></span>
+
+                                </td>
+                            </tr>
+                        </table>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

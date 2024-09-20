@@ -1,0 +1,631 @@
+
+<style>
+
+    .is-nt-nl {
+        background-color: lightcyan;
+    }
+
+    .is-nt-n {
+        background-color: lightcoral;
+    }
+
+    .is-nt {
+        background-color: Highlight;
+    }
+
+    .is-nt-t {
+        background-color: orange;
+    }
+
+    .contentsstotalsell {
+        position: relative;
+    }
+
+    .overlaysstotalsell {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlaysstotalsell-contentsstotalsell {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+    .overlayss {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlayss-contentss {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+
+    table {
+        font-family: arial,sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 25px;
+        font-family: Arial;
+        transform: scaleX(0.95);
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    tr .no-color-change {
+        background: #F3F3F3 !important;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .notification {
+        background-color: #555;
+        color: white;
+        text-decoration: none;
+        padding: 15px 26px;
+        position: relative;
+        display: inline-block;
+        border-radius: 2px;
+    }
+
+        .notification .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+        }
+</style>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> HUB PHASE APPORCH
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-md-12 clear-both">
+                    <div class="form-group col-md-6">
+                        <!--<div class="form-group col-md-3">
+        <label for="site-name"> City</label><br>
+        <select class="form-control" id="site-name" ng-model="Demanddata.Cityid" ng-change="getWarehouse(Demanddata.Cityid)">
+            <option value="">---SELECT City---</option>
+            <option value="{{city.Cityid}}" ng-repeat="city in citys"> {{city.CityName}}</option>
+        </select>
+    </div>-->
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Zone</label><br>
+                            <select class="form-control" id="site-name" ng-model="data.ZoneId" ng-change="GetRegions(data.ZoneId)">
+                                <option value="">---Select Zone---</option>
+                                <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Region</label><br>
+                            <select class="form-control" id="site-name" ng-model="data.RegionId" ng-change="GetWarehouses(data.RegionId)">
+                                <option value="">---Select Region---</option>
+                                <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Warehouses</label><br>
+                            <select class="form-control" id="site-name" ng-model="data.WarehouseId">
+                                <option value="">---SELECT---</option>
+                                <option value="{{warehouse.value}}" ng-repeat="warehouse in warehouses">{{warehouse.label}} </option>
+                            </select>
+                        </div>
+                        <!--<div class="form-group col-md-3">
+                            <label for="site-name">Cluster</label><br>
+                            <select class="form-control" id="site-name" ng-model="ClusterId">
+                                <option value="">---Select Cluster---</option>
+                                <option value="{{cluster.ClusterId}}" ng-repeat="cluster in clusters"> {{cluster.ClusterName}}</option>
+                            </select>
+                        </div>-->
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Select Month</label><br> 
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input type="month" id="start" name="start" min="2018-03" ng-model="data.MonthYear">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="site-name">&nbsp;</label><br/>
+                        <button type="button" class="btn btn-ar btn-primary" id="Search" ng-click="getPhaseData(data)">Search</button>
+                        <!--<button type="button" class="btn btn-ar btn-primary" ng-click="exportData()">Export to Excel</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <table>
+                <tbody style="text-align:center;">
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>&nbsp;&nbsp;
+                        <td>Build the base</td>&nbsp;&nbsp;
+                        <td>Build the mix and service</td>
+                        <td>Build kisan kirana </td>
+                        <td>Build Brands</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td>Output</td>
+                        <td>Departments</td>
+                        <td>KPI's</td>
+                        <td>Unit</td>&nbsp;&nbsp;
+                        <td>Phase1</td>&nbsp;&nbsp;
+                        <td>Phase2</td>
+                        <td>Phase3</td>
+                        <td>Phase4</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td class="no-color-change" rowspan="4" style="padding-top:60px">Scale:</td>
+                        <td>Number of sign ups</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (NumberofSignup < 2000) }">1500/{{NumberofSignup}} </td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (NumberofSignup1 >= 2000) && (NumberofSignup1 < 3000)}">2000/{{NumberofSignup1}}</td>
+                        <td ng-class="{'is-nt': (NumberofSignup2 >= 3000) && (NumberofSignup2 < 4000)}">3000/{{NumberofSignup2}}</td>
+                        <td ng-class="{'is-nt-t': (NumberofSignup3 >= 4000) }">4000/{{NumberofSignup3}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td>Output</td>
+                        <td>Active Stores</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (ActiveStores < 600)}">400/{{ActiveStores}})</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (ActiveStores1 >= 600) && (ActiveStores1 < 1000)}">600/{{ActiveStores1}}</td>
+                        <td ng-class="{'is-nt': (ActiveStores2 > 1000) && (ActiveStores2 < 1500)}">1000/{{ActiveStores2}}</td>
+                        <td ng-class="{'is-nt-t': (ActiveStores3 > 1500)}">1500/{{ActiveStores3}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Sales</td>
+                        <td>Lac</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl':(Monthsale < 200)}">100/{{Monthsale | number:0}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n':(Monthsale1 >=200 ) && (Monthsale1 < 300)}">200/{{Monthsale1 | number:0}}</td>
+                        <td ng-class="{'is-nt':(Monthsale2 >=300) && (Monthsale2 < 400)}">300/{{Monthsale2 | number:0}}</td>
+                        <td ng-class="{'is-nt-t':(Monthsale3>=400)}">400/{{Monthsale3 | number:0}}</td>
+                    </tr>
+                    <!--<tr style="font-weight:400;font-size:18px">
+                    <td></td>
+                     <td>total orders</td>
+                     <td>#</td>&nbsp;&nbsp;
+                     <td ng-class="{'is-nt-nl':(TotalOrderTill < 2500)}">1250({{TotalOrderTill}})</td>&nbsp;&nbsp;
+                     <td ng-class="{'is-nt-n':(TotalOrderTill1 > 2500) && (TotalOrderTill1 < 4000)}">2500({{TotalOrderTill1}})</td>
+                     <td ng-class="{'is-nt':(TotalOrderTill2 > 4000) && (TotalOrderTill2 < 6000)}">4000({{TotalOrderTill2}})</td>
+                     <td ng-class="{'is-nt-t':(TotalOrderTill3 > 6000)}">6000({{TotalOrderTill3}})</td>
+                     </tr>-->
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Monthly orders</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (Monthorder < 2500)}">1500/{{Monthorder}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (Monthorder1 >= 2500)&& (Monthorder1 < 4500)}">2500/{{Monthorder1}}</td>
+                        <td ng-class="{'is-nt': (Monthorder2 >= 4500) && (Monthorder2 < 8000)}">4500({{Monthorder2}}</td>
+                        <td ng-class="{'is-nt-t': (Monthorder3 > 8000)}">8000/{{Monthorder3}}</td>
+
+                    </tr>
+
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td class="no-color-change" rowspan="3" style="padding-top:60px">Cost:</td>
+                        <td>Cost of sales</td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td>1</td>&nbsp;&nbsp;
+                        <td>0.8</td>
+                        <td>0.6</td>
+                        <td>0.5</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Order processing cost</td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td>2.5</td>&nbsp;&nbsp;
+                        <td>2.2</td>
+                        <td>1.8</td>
+                        <td>1.5</td>
+                    </tr>
+                    <!--<tr style="font-weight:400;font-size:18px">
+                        <td>Output</td>
+                        <td>Order delivery cost</td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td>2</td>&nbsp;&nbsp;
+                        <td>1.8</td>
+                        <td>1.5</td>
+                        <td>1.2</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Cost of purhase</td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td>0.8</td>&nbsp;&nbsp;
+                        <td>0.6</td>
+                        <td>0.4</td>
+                        <td>0.3</td>
+                    </tr>-->
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Inventory days</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl':(Inventorydays > 14)}">14/{{Inventorydays}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (Inventorydays1 > 10)&& (Inventorydays1 < 14)}">10/{{Inventorydays1}}</td>
+                        <td ng-class="{'is-nt-nl': (Inventorydays2 > 8)&& (Inventorydays2 < 10)}">8/{{Inventorydays2}}</td>
+                        <td ng-class="{'is-nt-nl': (Inventorydays3 < 8)}">6/{{Inventorydays3}}</td>
+                    </tr>
+                    <!--<tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Asset days</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td>6</td>&nbsp;&nbsp;
+                        <td>5</td>
+                        <td>5</td>
+                        <td>4</td>
+                    </tr>-->
+
+
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td class="no-color-change" rowspan="5" style="padding-top:60px">Product reliance:</td>
+                        <td>Freq of order</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (freqOrder < 4.20)}">3.8/{{freqOrder | number:1}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (freqOrder1 > 4.20)&& (freqOrder1 < 4.50)}">4.2/{{freqOrder1 | number:1}}</td>
+                        <td ng-class="{'is-nt': (freqOrder2 > 4.50)&& (freqOrder2 < 5.30)}">4.5/{{freqOrder2 | number:1}}</td>
+                        <td ng-class="{'is-nt-t': (freqOrder3 > 5.30)}">5.3/{{freqOrder3 | number:1}}</td>
+                    </tr>
+
+                    <tr style="font-weight:400;font-size:18px">
+                        <td>Output</td>
+                        <td>
+                            Key  5 category Market share
+                            &nbsp;&nbsp;<button class="btn btn-primary" ng-click="Open(trade)">open</button>
+                            <button class="btn btn-primary skview" ng-model="data." ng-click="View(data.Categoryid)">View</button>
+                            <!--<div ng-if="showMe" show-history></div>-->
+                        </td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td>5</td>&nbsp;&nbsp;
+                        <td>10</td>
+                        <td>15</td>
+                        <td>20</td>
+                    </tr>
+
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Avg order value</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (AverageOrdervalue < 5500)}">4000/{{AverageOrdervalue | number:0}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (AverageOrdervalue1 > 5500) && (AverageOrdervalue1 < 7000)}">5500/{{AverageOrdervalue1 | number:0}}</td>
+                        <td ng-class="{'is-nt': (AverageOrdervalue2 > 7000) && (AverageOrdervalue2 < 10000)}">7000/{{AverageOrdervalue2 | number:0}}</td>
+                        <td ng-class="{'is-nt-t': (AverageOrdervalue3 > 10000)}">10000/{{AverageOrdervalue3 | number:0}}</td>
+                    </tr>
+
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>`
+                        <td>Avg line items</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (AvgLineItem < 6)}">4/{{AvgLineItem | number:0}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (AvgLineItem1 > 6)&& (AvgLineItem1 < 8)}">6/{{AvgLineItem1 | number:0}}</td>
+                        <td ng-class="{'is-nt': (AvgLineItem2 > 8) && (AvgLineItem2 < 10)}">8/{{AvgLineItem2 | number:0}}</td>
+                        <td ng-class="{'is-nt-t': (AvgLineItem3 > 10)}">10/{{AvgLineItem3 | number:0}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Online order %</td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (onlineOrder < 20)}">10/{{onlineOrder | number:0}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (onlineOrder1 > 20)&& (onlineOrder1 < 30)}">20/{{onlineOrder1 | number:0}}</td>
+                        <td ng-class="{'is-nt': (onlineOrder2 > 30)&& (onlineOrder2 < 40)}">30/{{onlineOrder2 | number:0}}</td>
+                        <td ng-class="{'is-nt-t': (onlineOrder3 > 40)}">40/{{onlineOrder3 | number:0}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td class="no-color-change" rowspan="3" style="padding-top:40px">Kisan Kirana:</td>
+                        <td>Kisan Kirana Activation</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (KisanKiranaActive < 360)}">0/{{KisanKiranaActive}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (KisanKiranaActive1 > 360)&& (KisanKiranaActive1 < 600)}">360/{{KisanKiranaActive1}}</td>
+                        <td ng-class="{'is-nt': (KisanKiranaActive2 > 600)&& (KisanKiranaActive2 < 900)}">600/{{KisanKiranaActive2}}</td>
+                        <td ng-class="{'is-nt-t': (KisanKiranaActive3 > 900)}">900/{{KisanKiranaActive3}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td>Output</td>
+                        <td>Kisan kirana sale</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (KisanKiranaSale < 25)}">0/{{KisanKiranaSale |number:0}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n': (KisanKiranaSale1 > 25)&& (KisanKiranaSale1 < 75) }">25/{{KisanKiranaSale1 |number:0}}</td>
+                        <td ng-class="{'is-nt': (KisanKiranaSale2 > 75)&& (KisanKiranaSale1 < 125)}">75/{{KisanKiranaSale2 |number:0}}</td>
+                        <td ng-class="{'is-nt-t': (KisanKiranaSale3 > 125)}">125/{{KisanKiranaSale3 |number:0}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Kisan kirana Order freq</td>
+                        <td>#</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl':(KisanOrderFreq < 1.5)}">0/{{KisanOrderFreq |number:1}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n':(KisanOrderFreq1 > 1.5)&& (KisanOrderFreq1 < 2.5)}">1.5/{{KisanOrderFreq1 |number:1}}</td>
+                        <td ng-class="{'is-nt': (KisanOrderFreq2 > 2.5)&& (KisanOrderFreq2 < 3)}">2.5/{{KisanOrderFreq2 |number:1}}</td>
+                        <td ng-class="{'is-nt-t': (KisanOrderFreq3 > 3)}">3/{{KisanOrderFreq3 |number:1}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td class="no-color-change" rowspan="2" style="padding-top:30px">Service KPIs:</td>
+                        <td>Fill rate</td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td>95</td>&nbsp;&nbsp;
+                        <td>96</td>
+                        <td>97</td>
+                        <td>98</td>
+                    </tr>
+                    <!--<tr style="font-weight:400;font-size:18px">
+                        <td>output</td>
+                        <td>TAT</td>
+                        <td># of hrs</td>&nbsp;&nbsp;
+                        <td>70</td>&nbsp;&nbsp;
+                        <td>60</td>
+                        <td>55</td>
+                        <td>50</td>
+                    </tr>-->
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Cancellation %</td>
+                        <td>%</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl':(PostOrderCancel > 20)}">20/{{PostOrderCancel |number:1}} </td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n':(PostOrderCancel1 > 15) && (PostOrderCancel1 < 20)}">15/{{PostOrderCancel1 |number:1}}</td>
+                        <td ng-class="{'is-nt':(PostOrderCancel2 > 10) && (PostOrderCancel2 < 15)}">10/{{PostOrderCancel2 |number:1}}</td>
+                        <td ng-class="{'is-nt-t':(PostOrderCancel3 < 10)}">7/{{PostOrderCancel3 |number:1}}</td>
+                    </tr>                 
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td class="no-color-change" rowspan="4" style="padding-top:40px">Sourcing :</td>
+                        <td>Active articles</td>
+                        <td></td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl':(ActiveArticles < 700)}">400/{{ActiveArticles}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n':(ActiveArticles1 > 700)&& (ActiveArticles1 < 1200)}">700/{{ActiveArticles1}}</td>
+                        <td ng-class="{'is-nt':(ActiveArticles2 > 1200)&& (ActiveArticles2 < 1500)}">1200/{{ActiveArticles2}}</td>
+                        <td ng-class="{'is-nt-t':(ActiveArticles3 > 1500)}">1500/{{ActiveArticles3}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td>Input</td>
+                        <td>Sold artciles</td>
+                        <td></td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (SoldArtciles < 350)}">250/{{SoldArtciles}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n':(SoldArtciles1 > 350)&& (SoldArtciles1 < 500) }">350/{{SoldArtciles1}}</td>
+                        <td ng-class="{'is-nt': (SoldArtciles2 > 500)&& (SoldArtciles2 < 750) }">500/{{SoldArtciles2}}</td>
+                        <td ng-class="{'is-nt-t':(SoldArtciles3 > 750)}">750/{{SoldArtciles3}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Number of vendors </td>
+                        <td></td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (Numberofvendors < 30)}">20/{{Numberofvendors}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n':(Numberofvendors1 > 30)&& (Numberofvendors1 < 50) }">30/{{Numberofvendors1}}</td>
+                        <td ng-class="{'is-nt':(Numberofvendors2 > 50)&& (Numberofvendors2 < 80)  }">50/{{Numberofvendors2}}</td>
+                        <td ng-class="{'is-nt-t': (Numberofvendors3 > 80)}">80/{{Numberofvendors3}}</td>
+                    </tr>
+                    <tr style="font-weight:400;font-size:18px">
+                        <td></td>
+                        <td>Active vendors</td>
+                        <td></td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-nl': (ActiveVendors <= 21)}">14/{{ActiveVendors}}</td>&nbsp;&nbsp;
+                        <td ng-class="{'is-nt-n':(ActiveVendors1 > 21)&& (ActiveVendors1 < 35)}">21/{{ActiveVendors1}}</td>
+                        <td ng-class="{'is-nt': (ActiveVendors2 >= 35)&& (ActiveVendors2 < 56)}">35/{{ActiveVendors2}}</td>
+                        <td ng-class="{'is-nt-t':(ActiveVendor3 >= 56)}">56/{{ActiveVendors3}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+</div>
+
+<script type="text/ng-template" id="HubPhaseModel.html">
+
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Category Wise Market share</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="site-name">Select Base Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="data.Categoryid" ng-change="getpercentagedata(data.Categoryid)" required>
+                    <option value="">--select--</option>
+                    <option value="{{Cat.Categoryid}}" ng-repeat="Cat in Categories"> {{Cat.CategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">TAM:</label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="data.TAM" placeholder="Enter TAM value" />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Market Share:</label><br />
+                <input id="site-name" type="number" class="form-control" data-ng-change="result(data)" ng-model="data.share" placeholder="Enter Market Share value" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Category Percentage%:</label><br />
+                <input id="site-name" value="{{total |number:2}}" type="number" class="form-control" placeholder="Percentage is" />
+            </div>
+        </div>
+        <div class="modal-footer">
+
+            <button type="button" class="btn btn-ar btn-primary" ng-click="add(data)">Save</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+        <table class="table table-bordered table-striped table-responsive " style="font-size: 18px;">
+            <thead>
+                <tr>
+                    <th>
+                        <div>
+                            Sr No.
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            Base Category Name
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            TAM
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            Market Share
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            Percentage%
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in Categorydata">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.CategoryName}}</td>
+                    <td>{{trade.TAM}}</td>
+                    <td>{{trade.MS}}</td>
+                    <td>{{trade.Percentage | number:2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: #f44336 !important;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+
+<!-- Modal content-->
+<script type="text/ng-template" id="HubPhaseModel1.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Category Wise Market share List</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <table class="table table-bordered table-striped table-responsive " style="font-size: 18px;">
+                <thead>
+                    <tr>
+                        <th>
+                            <div>
+                                Sr No.
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                                Base Category Name
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                                TAM
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                                Market Share
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                                Percentage%
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in Categorydata">
+                        <td>{{$index+1}}</td>
+                        <td>{{trade.CategoryName}}</td>
+                        <td>{{trade.TAM}}</td>
+                        <td>{{trade.MS}}</td>
+                        <td>{{trade.Percentage | number:2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-ar btn-warning" data-dismiss="modal" ng-click="cancel()">Close</button>
+            </div>
+        </div>
+
+    </form>
+</script>

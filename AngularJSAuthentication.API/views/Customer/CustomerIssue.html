@@ -1,0 +1,198 @@
+﻿<div class="page page-table"button-permission-binder parentName="Customer" pageName="Customer Issue">   
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th">&nbsp;Customer Issues</span></strong></div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()"><span class="glyphicon glyphicon-plus"></span>Add Issues</button>
+        </div>
+        <br />
+        <!--<div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text" placeholder="search" class="from-control" data-ng-model="" data-ng-keyup="search()">
+                    </form>
+                    </div>
+            </div>
+        </div>-->
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Issue Id
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shop Name
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Mobile
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Executive
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Customer Issue
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Due Date
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Remove
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in CustomerIssues">
+                    <td>{{trade.CS_id}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.Mobile}}</td>
+                    <td>{{trade.PeopleName}}</td>
+                    <td>{{trade.Issue}}</td>
+                    <td>{{trade.Status}}</td>
+                    <td>{{trade.CompletionDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <script type="text/ng-template" id="myCustomerissuesModel.html">
+        <form name="myFormsiteCustomerissuesModel">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dissmiss="model"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only"></span></button>
+                <button aria-hidden="true" class="close" data-dissmiss="model" type="button" ng-click="ok()">x</button>
+                <h4 class="modal-title">Add Customer Issues</h4>
+            </div>
+            <div class="modal-body">
+                <div class="colasdasdasd">
+                    <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                    <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Search</label><br>
+                    <input class="form-control" ng-model="Demanddata.key" placeholder="Enter Skcode/Mobile/ShopName" />
+                </div>
+                <div class="form-group">
+                    <button type="button"  class="btn btn-primary" ng-click="Search(Demanddata)">Search</button>
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Select :</label><br />
+                    <select class="form-control" id="site-name" ng-model="data.CustomerId" required>
+                        <option value="">---SELECT---</option>
+                        <option value="{{c.CustomerId}}" ng-repeat="c in customers"> {{c.ShopName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea name="Text1" cols="40" rows="5" ng-model="data.Issue" required>Issue</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="People">People :</label>
+                    <select class="form-control" ng-model="data.PeopleID">
+                    <option value="">---SELECT---</option>
+                    <option value="{{p.PeopleID}}" ng-repeat="p in peoples">{{p.DisplayName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Due Date</label><br>
+                    <input type="date" id="dt" class="form-control" ng-model="data.CompletionDate" />
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" ng-click="Submit(data)" > SUBMIT ISSUES</button>
+
+                </div>
+                </div>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="myCustomerissuesUpdateModel.html">
+        <form name="myFormsiteCustomerissuesModel">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dissmiss="model"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only"></span></button>
+                <button aria-hidden="true" class="close" data-dissmiss="model" type="button" ng-click="ok()">x</button>
+                <h4 class="modal-title">Add Customer Issues</h4>
+            </div>
+            <div class="modal-body">
+                <div class="colasdasdasd">
+                    <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                    <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="data.ShopName" readonly>
+                </div>
+                <div class="form-group">
+                    <input class="form-control"  type="text" ng-model="data.PeopleName" readonly>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control"  cols="40" rows="5" ng-model="data.Issue">
+                    </textarea>                    
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Due Date</label><br>
+                    <input type="text" class="form-control" ng-model="data.CompletionDate" readonly/>
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Select :</label><br />
+                    <select class="form-control" id="site-name" ng-model="data.Status">
+                        <option value="{{t.name}}" ng-selected="(data.Status==t.name)" ng-repeat="t in status">{{t.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" ng-click="Update(data)"> SUBMIT ISSUES</button>
+
+                </div>
+            </div>
+        </form>
+    </script>
+
+    <script type="text/ng-template" id="myModaldeleteissue.html">
+
+        <form name="myFormTaskTypeModal1">
+
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                    <span class="icon icon-x" aria-hidden="true">
+                    </span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                <h4 class="modal-title">Delete Issue</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+                <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteIssue(data)">Yes</button>
+            </div>
+        </form>
+    </script>
+ </div> 

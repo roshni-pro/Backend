@@ -1,0 +1,20 @@
+﻿
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Multiple Images upload
+            </strong>
+        </div>
+        <br />
+        <div>
+            <input type="file" id="file" accept="application/zip" name="file" multiple 
+                   onchange="angular.element(this).scope().getFileDetails(this)" />
+
+            <input id="upload" type="button" ng-click="uploadFiles()" value="Upload" />
+
+            <!--ADD A PROGRESS BAR ELEMENT.-->
+            <p><progress id="pro" value="0"></progress></p>
+        </div>
+    </section>
+</div>

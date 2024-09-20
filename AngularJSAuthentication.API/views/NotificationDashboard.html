@@ -1,0 +1,971 @@
+﻿<form>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="NotificationDate"]').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 5,
+                timePicker12Hour: true,
+                format: 'MM/DD/YYYY h:mm A'
+            });
+        });
+    </script>
+    <hr>
+
+
+    <style>
+        h1 {
+            background-color: white;
+            color: black;
+            padding-left: 1%;
+            margin-top: -10px;
+            padding-left: 5%;
+            margin-bottom: -23px;
+        }
+
+        ul {
+            font-size: 14px;
+            text-decoration: none;
+            line-height: 20px;
+            list-style-type: none;
+            font-weight: bold;
+        }
+
+        /*#button {
+            border-radius: 45px;
+            background-color: #1eacbe;
+            border: 1px solid #1eacbe;
+            padding: 9px;
+            width: 94px;
+            height: 43px;
+            margin-left: 75%;
+            margin-bottom: 5px;
+            margin-top: -49px;
+        }*/
+
+        #contain {
+            border: 1px solid white;
+            font-size: 20px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+
+        #title {
+            font-size: 20px;
+            height: 300px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        #image {
+            width: 503px;
+            height: 200px;
+            margin-left: 18px;
+            margin-top: 1px;
+            margin-bottom: 8px;
+        }
+
+        #icon {
+            margin-top: 1px;
+            margin-left: 23px;
+            height: 44px;
+            width: 55px;
+            margin-bottom: -39px;
+        }
+
+
+        .icon {
+            background-image: url('../styles/img/Pic.PNG');
+        }
+
+        #backbtn {
+            margin-top: 2px;
+            margin-left: 26px;
+            height: 36px;
+            width: 40px;
+            margin-bottom: -27px;
+        }
+
+        #imgbut {
+            height: 214px;
+            width: 534px;
+            margin-top: 17px;
+            margin-bottom: 2px;
+            margin-left: 3px;
+        }
+
+        #input {
+            border: 1px solid#dedede;
+            background-color: white;
+            padding: 2px 3px;
+            width: 197px;
+            margin-top: 5%;
+        }
+
+        .span {
+            font-size: 11px;
+        }
+
+        .divpadding {
+            padding: 5px;
+        }
+
+        .buttons {
+            height: 24px;
+            float: right;
+            border-radius: 15px;
+            margin-left: 6px;
+            border: 1px solid #ffffff;
+        }
+
+        .buttonsDeactive {
+            height: 24px;
+            float: right;
+            border-radius: 15px;
+            margin-left: 8px;
+            background-color: white;
+            border: 1px solid red;
+        }
+
+        .background {
+            /*background-image: url('../images/itemimages/AE1012A.jpg');
+            background: url('../notificationimages/Home Care.png');*/
+            /*background-color: #3d2f2e;*/
+            position: relative;
+        }
+
+            .background::before {
+                background-color: rgba(182, 208, 212, 0.17);
+                content: '';
+                opacity: 0.8;
+                display: block;
+                height: 100%;
+                position: absolute;
+                width: 100%;
+                object-fit: cover;
+            }
+
+        .layer {
+            background-color: rgba(248, 247, 216, 0.7);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .text {
+            color: rgb(255, 255, 255);
+            font-weight: 900;
+        }
+
+        .texts {
+            color: red;
+            font-weight: 900;
+        }
+
+        .fafa {
+            font-size: 9px;
+            color: red;
+            border-width: 0px;
+            border-style: solid;
+            border-color: white;
+            background-color: white;
+            border-image: initial;
+            border-radius: 50% 50% 50% 50%;
+            padding: 5% 6% 5% 6%;
+            margin-right: 10px;
+        }
+
+        #buttonSave {
+            border-radius: 45px;
+            background-color: #1eacbe;
+            border: 1px solid #1eacbe;
+            padding: 9px;
+            width: 94px;
+            height: 43px;
+            margin-left: 75%;
+            margin-bottom: 5px;
+            margin-top: -49px;
+        }
+
+        #sendbutton {
+            border-radius: 45px;
+            background-color: white;
+            border: 1px solid #1eacbe;
+            color: seagreen;
+            width: 101px;
+            height: 37px;
+            font-size: 15px;
+            margin-left: -2px;
+            margin-top: -105px;
+            font-weight: bold;
+        }
+
+        #button:focus {
+            outline: 0
+        }
+
+        #buttonSave:focus {
+            outline: 0
+        }
+
+        #sendbutton:focus {
+            outline: 0
+        }
+
+        #imgbutforEdit {
+            height: 214px;
+            width: 534px;
+            margin-top: 17px;
+            margin-bottom: 2px;
+            margin-left: 3px;
+        }
+        .salesbtn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 2rem !important;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+        .salesbtn-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            float: left;
+            min-width: 10rem;
+            padding: 0.5rem 0;
+            margin: 0.125rem 0 0;
+            font-size: 1rem;
+            color: #212529;
+            text-align: left;
+            list-style: none;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: 0.25rem;
+            font-size: 1.5rem !important;
+        }
+    </style>
+
+
+    <div ng-show="dashboard">
+
+        <!--<input type="image" id="backbtn" src="/styles/img/backbutton.png">-->
+
+        <h1 style="padding-left: 1%">Notification Dashboard</h1>
+        <div class="row" style="float:right">
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="getSettlementdata(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+            <div class="col-md-12">
+
+
+
+                <div class="col-md-4">
+                    <span style="font-size:15px">
+                        Show
+                        <select data-ng-model="selected"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                
+                <div class="col-md-3">
+                    <!--<label for="site-name">Select Date Range</label><b style="color: red; margin-left: 10px">*</b>-->
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input placeholder="SELECT DATE RANGE" ng-click="defaultDateSet = false" ng-change="defaultDateSet = false" name="NotificationDate" id="NotificationDate" type='text' title="Select Date" class="form-control date-picker" autocomplete="off" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <span style="font-size:15px">
+                        <!--Select Warehouse-->
+                        <div>
+                            <select style="font-size:15px; border: 1px solid black" class="form-control" ng-model="WarehouseID">
+                                <option value="null">-- select warehouse --</option>
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in Assignwarehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                            </select>
+                        </div>
+                    </span>
+                </div>
+
+                <div class="col-md-1">
+                    <span style="font-size:15px">
+                        <!--Select Warehouse-->
+                        <div>
+                            <button class="btn-md btn-primary" id="button" ng-click="ExportByWarehouses()">Export</button>
+                        </div>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <!--<p id="button"></p>-->
+
+        <div style="border: 1px solid red"></div>
+        <br /><br />
+
+        <div class="container" style="margin-left:1%;max-width:1640px">
+            <div class="row">
+
+                <div class="col-md-3">
+                    <a href="#/NotificationUpdated">
+                        <div class="card" style="background: url('../notificationimages/AddNotificationTwo.png'); height:192px; width:380px">
+                            <div class="card-body" style="font-size:15px">
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-3" data-ng-repeat="trade in currentPageStores" style="">
+                    <div class="card background text" style="background-image:url({{trade.Pic}});background-size:100% 100%">
+                        <div class="col-md-12 divpadding" st>
+                            <div class="col-md-8 divpadding card-body" style="font-size: 15px; color: #00A4E9; ">
+                                <h3 ng-show="trade.GroupAssociation=='SalesApp'">Sales App Notification</h3>
+                                <span class="span" ng-show="trade.IsCRMNotification==true" style="color: black; font-size: inherit;">CRM Notification</span><br />
+                                <span class="span">Offer Name: {{trade.title}}</span><br />
+                                <span class="span">{{trade.NotificationTime | date:'EEE dd MMM yyyy'}} | {{trade.NotificationTime | date:'h:mm a'}}</span><br />
+                                <span class="span" ng-show="trade.IsCRMNotification!=true">Warehouse Name: {{trade.WarehouseName}}</span><br />
+                                <span class="span" ng-show="trade.GroupAssociation=='SalesApp'">Store Name: {{trade.StoreNames}}</span>
+
+                                <br /> <br />
+
+                            </div>
+                            <div class="col-md-4 divpadding card-body" style="font-size:15px">
+                                <button ng-show="trade.TO > dateNow" class="btn btn-success buttons text" id="button">Active</button>
+                                <button ng-show="trade.TO < dateNow" class="btn btn-success buttonsDeactive texts" id="button">Deactive</button>
+                                <br /> <br />
+
+                            </div>
+                        </div>
+                        <div class="col-md-12 divpadding">
+                            <div class="col-md-4 divpadding card-body" style="font-size: 15px; color: #00A4E9;">
+                                <span class="span"><i class="fa fa-paper-plane fafa" aria-hidden="true"></i>{{trade.TotalSent}}</span><br />
+                                <span class="span"><i class="fa fa-android fafa" aria-hidden="true"></i>{{trade.TotalReceived}}</span><br />
+                                <span class="span"><i class="fa fa-eye fafa" aria-hidden="true"></i>{{trade.TotalViews}}</span><br />
+                                <span class="span"><i class="fa fa-hand-o-up fafa" aria-hidden="true"></i>{{trade.TotalAction}}</span><br />
+                            </div>
+                            <div class="col-md-8 divpadding card-body" style="font-size:15px;margin-top:40px">
+                                <button class="btn btn-success m-t-20" id="sendbutton" ng-click="SendNotification(trade)" ng-show="trade.Sent==false && trade.IsMultiSchedule==false" ng-disabled="trade.IsCRMNotification==true">
+                                    <i style="margin-right: 8px;" class="fa fa-paper-plane"></i>Send
+                                </button>
+                                <button class="btn btn-success m-t-20" id="sendbutton" ng-click="" ng-show="trade.Sent==true && trade.IsMultiSchedule==false" style="background-color: lightgreen;">
+                                    <i style="margin-right: 8px;" class="fa fa-check"></i>Sent
+                                </button>
+                                <button class="btn buttons text" ng-show="trade.Sent==false && trade.IsMultiSchedule==true" style="background-color:red" id="button" ng-click="DisableNotification(trade.Id)">InActive</button>
+                                
+                                <button class="btn buttons text" style="background-color:orange" id="button" ng-click="getNotificationDetails(trade)">View Details</button>
+                                <button class="btn btn-success buttons text" id="button" ng-click="editNotification(trade)" ng-show="trade.Sent==false">Edit</button>
+                                <button class="btn btn-success buttons text" id="button" ng-click="editNotification(trade)" style="background-color:white;color:seagreen" ng-show="trade.Sent==true && trade.IsMultiSchedule==false">Reuse</button>
+                                <br /> <br />
+
+                            </div>
+                        </div>
+                    </div><br /> <br />
+                </div>
+            </div><br /> <br />
+
+        </div>
+    </div>
+
+
+    <div ng-show="editDashboard">
+        <input type="image" id="backbtn" src="/styles/img/backbutton.png" ng-click="gotoDashboard()">
+        <h1>Edit Notification</h1>
+        <br />
+        <br />
+        <br />
+        <!--<p id="button"></p>-->
+
+        <div style="border: 1px solid red"></div>
+        <br /><br />
+
+        <div class="container" style="margin-left:1%">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="col-md-12">
+                            <div class="card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Select Association</span>
+                                <br /> <br />
+                                <select style="font-size:20px; border: 1px solid white" class="form-control" id="notisel" name="noti_Select" ng-model="editNotificationDetails.GroupAssociation" ng-change="selectGroupforEdit(editNotificationDetails)" ng-disabled="true">
+                                    <option value="">--select--</option>
+                                    <option value="0">All</option>
+                                    <option value="{{a.text}}" ng-repeat="a in selectType" ng-selected="editNotificationDetails.GroupAssociation==a.text">{{a.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="editNotificationDetails.GroupAssociation=='Retailer'">
+                            <div class="card-body" style="font-size:15px">
+                                <span style="margin-left: 10px;">Is Crm Notification</span>
+                                <input id="IsCRMOffer" type="checkbox" style="margin-left: 10px; width: 25px;" class="form-control mt-4" ng-model="editNotificationDetails.IsCRMNotification" ng-disabled="editNotificationDetails.IsCRMNotification==true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+
+                        <div class="col-md-12" ng-show="editNotificationDetails.GroupAssociation!='SalesApp'">
+
+
+                            <div class="col-md-6 card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Select City</span>
+                                <br /> <br />
+                                <select id="cit" name="cit" style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.CityId" ng-disabled="true">
+                                    <option value="">--select--</option>
+                                    <option value="{{city.Cityid}}" ng-repeat="city in Cities"> {{city.CityName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Select WareHouse</span>
+                                <br /> <br />
+                                <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.WarehouseID" ng-change="getItemDataforEdit(editNotificationDetails)" ng-disabled="true">
+                                    <option value="0">All</option>
+                                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" ng-selected="editNotificationDetails.WarehouseID==warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Select Group</span>
+                                <br /> <br />
+                                <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.GroupID" ng-change="getGroupDataforEdit(editNotificationDetails)" ng-disabled="!editNotificationDetails.GroupAssociation || editNotificationDetails.IsCRMNotification==true">
+                                    <option value="">--select--</option>
+                                    <option value="0">All</option>
+                                    <option value="-1">WithoutKPPAndRDS</option>
+                                    <option value="-2">OnlyKPP</option>
+                                    <option value="-3">OnlyRDS</option>
+                                    <option value="-4">Level 0</option>
+                                    <option value="-5">Level 1</option>
+                                    <option value="-6">Level 2</option>
+                                    <option value="-7">Level 3</option>
+                                    <option value="-8">Level 4</option>
+                                    <option value="-9">Level 5</option>
+                                    <option value="{{v.GroupID}},{{v.GroupName}}" ng-repeat="v in selectEditGroups" ng-selected="editNotificationDetails.GroupName==v.GroupName">{{v.GroupName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="editNotificationDetails.GroupAssociation=='SalesApp'">
+                            <div class="col-md-6 card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Select City</span>
+                                <br /> <br />
+                                <select id="cit" name="cit" style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.CityId" ng-disabled="true">
+                                    <option value="">--select--</option>
+                                    <option value="{{city.Cityid}}" ng-repeat="city in Cities"> {{city.CityName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Select WareHouse</span>
+                                <br /> <br />
+                                <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.WarehouseID" ng-disabled="true">
+                                    <option value="">--select--</option>
+                                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" ng-selected="editNotificationDetails.WarehouseID==warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                </select>
+                            </div>
+                            <!--<div class="col-md-12 card-body" style="font-size:15px">
+                                <span style="color:red; font-size:17px">* </span><span>Stores</span>
+                                <br /> <br />
+                                <div ng-dropdown-multiselect="" class="salesbtn" options="Stores"
+                                     selected-model="MultiStoreModel"
+                                     extra-settings="MultiStoreModelsettings" ng-change="getMultiStoreModel(MultiStoreModel)">
+                                </div>
+                            </div>-->
+                            <div class="col-md-12 card-body" style="font-size:15px"><b>Selected Stores : </b>{{editNotificationDetails.StoreNames}}</div>
+                        </div>
+
+                            <div class="col-md-12">
+                                <div class="col-md-12 card-body" style="font-size:15px" ng-hide="editNotificationDetails.GroupAssociation=='Retailer'|| editNotificationDetails.GroupAssociation=='Retailer' || editNotificationDetails.GroupAssociation=='SalesApp'">
+                                    <span style="color:red; font-size:17px">* </span><span>Select Group</span>
+                                    <br /> <br />
+                                    <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.GroupID" ng-change="getGroupDataforEdit(editNotificationDetails)" ng-disabled="!editNotificationDetails.GroupAssociation || editNotificationDetails.IsCRMNotification==true" ">
+                                        <option value="">--select--</option>
+                                        <option value="0">All</option>
+                                        <option value="-1">WithoutKPPAndRDS</option>
+                                        <option value="-2">OnlyKPP</option>
+                                        <option value="-3">OnlyRDS</option>
+                                        <option value="-4">Level 0</option>
+                                        <option value="-5">Level 1</option>
+                                        <option value="-6">Level 2</option>
+                                        <option value="-7">Level 3</option>
+                                        <option value="-8">Level 4</option>
+                                        <option value="-9">Level 5</option>
+                                        <option value="{{v.GroupID}},{{v.GroupName}}" ng-repeat="v in selectEditGroups" ng-selected="editNotificationDetails.GroupName==v.GroupName">{{v.GroupName}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!--<div class="card-body" style="font-size:15px">
+            <span style="color:red; font-size:17px">* </span><span>Select Group</span>
+            <br /> <br />
+            <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.GroupName" ng-change="getGroupDataforEdit(editNotificationDetails)">
+                <option value="">--select--</option>
+                <option value="{{v.GroupName}}" ng-repeat="v in selectEditGroups" ng-selected="editNotificationDetails.GroupName==v.GroupName">{{v.GroupName}}</option>
+            </select>
+        </div>-->
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="container" style="margin-left:1%">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Notification Type</span>
+                            <br /> <br />
+                            <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.NotificationType" ng-change="notificationTypeSelected(editNotificationDetails)">
+                                <option value="">--select--</option>
+                                <option value="Actionable" ng-selected="editNotificationDetails.NotificationType=='Actionable'" ng-if="editNotificationDetails.GroupAssociation!='SalesApp'">Actionable</option>
+                                <option value="Non-Actionable" ng-selected="editNotificationDetails.NotificationType=='Non-Actionable'">Non-Actionable</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span>Notification Name</span>
+                            <br /><br />
+                        </div>
+                        <input type="text" name="TypeHere" id="contain" ng-model="editNotificationDetails.NotificationName" placeholder="Enter Notification Name">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <div class="container" style="margin-left:1%" ng-show="editNotificationDetails.NotificationType=='Actionable'">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Select Notification Category</span>
+                            <br /> <br />
+                                   <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.NotificationCategory" ng-change="notificationCategorySelectedEdit(editNotificationDetails)">
+                                       <option value="">--select--</option>
+                                       <option value="Item" ng-selected="editNotificationDetails.NotificationCategory=='Item'">Item</option>
+                                       <option value="Category" ng-selected="editNotificationDetails.NotificationCategory=='Category'">Category</option>
+                                       <option value="SubCategory" ng-selected="editNotificationDetails.NotificationCategory=='SubCategory'">SubCategory</option>
+                                       <option value="Brand" ng-selected="editNotificationDetails.NotificationCategory=='Brand'">Brand</option>
+                                       <option value="Flash Deal" ng-selected="editNotificationDetails.NotificationCategory=='Flash Deal'">Flash Deal</option>
+                                       <option value="Offer" ng-selected="editNotificationDetails.NotificationCategory=='Offer'">Offer</option>
+                                       <option value="home" ng-selected="editNotificationDetails.NotificationCategory=='home'">Home</option>
+                                       <option value="game" ng-selected="editNotificationDetails.NotificationCategory=='game'">Game</option>
+                                       <option value="target" ng-selected="editNotificationDetails.NotificationCategory=='target'">Target</option>
+                                       <option value="updateLanguage" ng-selected="editNotificationDetails.NotificationCategory=='updateLanguage'">Language</option>
+                                       <option value="wallet" ng-selected="editNotificationDetails.NotificationCategory=='wallet'">Wallet</option>
+                                       <option value="shoppingCart" ng-selected="editNotificationDetails.NotificationCategory=='shoppingCart'">Shopping Cart</option>
+                                       <option value="gullak" ng-selected="editNotificationDetails.NotificationCategory=='gullak'">Gullak</option>
+                                       <option value="direct" ng-selected="editNotificationDetails.NotificationCategory=='direct'">Direct</option>
+                                   </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6" ng-show="editNotificationDetails.NotificationCategory=='Item' || editNotificationDetails.NotificationCategory=='Flash Deal' || editNotificationDetails.NotificationCategory=='Offer'">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Select {{editNotificationDetails.NotificationCategory}}</span>
+                            <br /> <br />
+                            <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.ItemName" ng-change="selectedCatChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{Item.ItemId}},{{ Item.itemname }}" ng-repeat="Item in Items" ng-selected="editNotificationDetails.ItemName==Item.itemname"> {{Item.itemname}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" ng-show="editNotificationDetails.NotificationCategory=='Brand'">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Select {{editNotificationDetails.NotificationCategory}}</span>
+                            <br /> <br />
+                            <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.BrandName" ng-change="selectedCatChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{Ssubsubcats.id}},{{Ssubsubcats.Name}}" ng-repeat="Ssubsubcats in subsubcats" ng-selected="editNotificationDetails.BrandName==Ssubsubcats.Name"> {{Ssubsubcats.SubsubcategoryName}} </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" ng-show="editNotificationDetails.NotificationCategory=='Category'">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Select {{editNotificationDetails.NotificationCategory}}</span>
+                            <br /> <br />
+                            <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.Item" ng-change="selectedCatChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{Ssubsubcats.Id}},{{Ssubsubcats.Name}}" ng-repeat="Ssubsubcats in activebrands" ng-selected="editNotificationDetails.ItemName==Ssubsubcats.Name"> {{Ssubsubcats.Name}} </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" ng-show="saveData.NotificationCategory=='SubCategory'">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Select {{editNotificationDetails.NotificationCategory}}</span>
+                            <br /> <br />
+                            <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.Item" ng-change="selectedCatChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{Ssubsubcats.Id}},{{Ssubsubcats.Name}}" ng-repeat="Ssubsubcats in activebrands" ng-selected="editNotificationDetails.ItemName==Ssubsubcats.Name"> {{Ssubsubcats.Name}} </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" ng-show="saveData.NotificationCategory=='Flash Deal' || saveData.NotificationCategory=='Offer'">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <input type="hidden" ng-model="saveData.Item" value="0" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <div class="container" style="margin-left:1%">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span>Notification Media Type</span>
+                            <br /><br />
+                        </div>
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.NotificationMediaType">
+                            <option value="">--select--</option>
+                            <option value="Image" ng-selected="editNotificationDetails.NotificationMediaType=='Image'">Image</option>
+                            <option value="GIF" ng-selected="editNotificationDetails.NotificationMediaType=='GIF'" ng-if="editNotificationDetails.NotificationType=='Non-Actionable' && editNotificationDetails.GroupAssociation!='SalesApp'">GIF</option>
+                            <option value="Audio" ng-selected="editNotificationDetails.NotificationMediaType=='Audio'" ng-if="editNotificationDetails.NotificationType=='Non-Actionable' && editNotificationDetails.GroupAssociation!='SalesApp'">Audio</option>
+                            <option value="Video" ng-selected="editNotificationDetails.NotificationMediaType=='Video'" ng-if="editNotificationDetails.NotificationType=='Non-Actionable' && editNotificationDetails.GroupAssociation!='SalesApp'">Video</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <span>Notification Display Type</span>
+                            <br /><br />
+                        </div>
+                        <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="editNotificationDetails.NotificationDisplayType">
+                            <option value="">Default</option>
+                            <option value="fullScreen" ng-selected="editNotificationDetails.NotificationDisplayType=='fullScreen'" ng-if="(editNotificationDetails.NotificationMediaType=='Image'|| editNotificationDetails.NotificationMediaType=='GIF') && editNotificationDetails.notificationType=='Non-Actionable'">Image fullScreen</option>
+                            <option value="murli" ng-selected="editNotificationDetails.NotificationDisplayType=='murli'" ng-if="editNotificationDetails.NotificationMediaType=='Audio' && editNotificationDetails.NotificationType=='Non-Actionable'">murli</option>
+                            <option value="video" ng-selected="editNotificationDetails.NotificationDisplayType=='video'" ng-if="editNotificationDetails.NotificationMediaType=='Video' && editNotificationDetails.NotificationType=='Non-Actionable'">video</option>
+                            <option value="image" ng-selected="editNotificationDetails.NotificationDisplayType=='image'" ng-if="(editNotificationDetails.NotificationMediaType=='Image'|| editNotificationDetails.NotificationMediaType=='GIF') && editNotificationDetails.notificationType=='Non-Actionable'">image</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="container" style="margin-left:1%">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="card" style="height:300px">
+
+                        <div class="card-body" style="font-size:15px" ng-if="editNotificationDetails.NotificationMediaType=='Image' ">
+                            <span>Add Image<span style="color:red; font-size:12px"> (*Note:- Image Dimensions : 'A'x'B' & Image Size < 200 KB)</span></span>
+                            <br />
+                        </div>
+                        <div ng-if="editNotificationDetails.NotificationMediaType=='Image'">
+                            <div class="col-6" style="margin-left:-15px;margin-top: 5px; margin-bottom: 1px;">
+                                <div class="col-12">
+                                    <input type="text" name="ImageName" placeholder="Image Name" style="font-size:20px;  border: 1px solid white;" disabled>
+                                    <span id="spnFilePathforEdit" style="font-size: 17px;"></span>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-disabled="!uploader.queue.length|| uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    </button>
+                                    <!--<button type="button" class="btn btn-warning btn-xs" ng-click="uploader.queue[0].cancel()" ng-disabled="!uploader.queue[0].isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                        </button>-->
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.queue[0].remove()" ng-disabled="!uploader.queue.length">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" style="margin-left:-15px;margin-top: 0px; margin-bottom: 30px;">
+                                <input type="image" ng-click="ImageClick()" class="uploaderimage" id="imgbutforEdit" alt="Select File" title="Select File" src="../notificationimages/AddNotification.png" />
+                            </div>
+
+                        </div>
+
+                        <!---------------------------------GIF-------------------------->
+                        <div class="card-body" style="font-size:15px" ng-if="editNotificationDetails.NotificationMediaType=='GIF'">
+                            <span>Add GIF Image<span style="color:red; font-size:12px"> (*Note:- GIF Image : Image Size < 1 MB)</span></span>
+                            <br />
+                        </div>
+                        <div ng-if="editNotificationDetails.NotificationMediaType=='GIF'">
+                            <div class="col-6" style="margin-left:-15px;margin-top: 5px; margin-bottom: 1px;">
+                                <input type="text" name="ImageName" placeholder="GIF Name" style="width: 120px;font-size:20px;  border: 1px solid white;" disabled>
+                                <span id="spnFilePathforEdit" style="font-size: 17px;"></span> <br /> <br />
+                                <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-disabled="!uploader.queue.length|| uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                                    <span class="glyphicon glyphicon-upload"></span> Upload
+                                </button>
+                                <!--<button type="button" class="btn btn-warning btn-xs" ng-click="uploader.queue[0].cancel()" ng-disabled="!uploader.queue[0].isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel/
+                    </button>-->
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.queue[0].remove()" ng-disabled="!uploader.queue.length">
+                                    <span class="glyphicon glyphicon-trash"></span> Remove
+                                </button>
+                            </div>
+
+                            <div class="col-md-6" style="margin-left:-15px;margin-top: 0px; margin-bottom: 30px;">
+                                <input type="image" ng-click="ImageClick()" class="uploaderimage" id="imgbutforEdit" alt="Select File" title="Select File" src="../notificationimages/AddNotification.png" />
+                            </div>
+
+                        </div>
+                        <!-----------------------  Audio------------------------------->
+                        <div class="card-body" style="font-size:15px" ng-if="editNotificationDetails.NotificationMediaType=='Audio'">
+                            <span>Add Audio<span style="color:red; font-size:12px"> (*Note:- Audio : Audio Size < 2 mb)</span></span>
+                            <br />
+                        </div>
+                        <div ng-if="editNotificationDetails.NotificationMediaType=='Audio'">
+                            <div class="col-6" style="margin-left:-15px;margin-top: 5px; margin-bottom: 1px;">
+                                <input type="text" name="ImageName" placeholder="Audio Name" style="width: 120px;font-size:20px;  border: 1px solid white;" disabled>
+                                <span id="spnFilePathforEdit" style="font-size: 17px;"></span>
+                                <br /> <br />
+                                <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-disabled="!uploader.queue.length|| uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                                    <span class="glyphicon glyphicon-upload"></span> Upload
+                                </button>
+                                <!--<button type="button" class="btn btn-warning btn-xs" ng-click="uploader.queue[0].cancel()" ng-disabled="!uploader.queue[0].isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>-->
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.queue[0].remove()" ng-disabled="!uploader.queue.length">
+                                    <span class="glyphicon glyphicon-trash"></span> Remove
+                                </button>
+                            </div>
+
+                            <div class="col-md-6" style="margin-left:-15px;margin-top: 0px; margin-bottom: 30px;">
+                                <input type="image" ng-click="ImageClick()" class="uploaderimage" id="imgbutforEdit" alt="Select File" title="Select File" src="../notificationimages/AddNotification.png" />
+
+                                <audio controls autoplay id="notificationAudio" width="320" height="176">
+                                    <source id="mp4_src" src="{{logourl}}" type="video/mp4">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+
+                        </div>
+                        <!-----------------------Video------------------------------------->
+                        <div class="card-body" style="font-size:15px" ng-if="editNotificationDetails.NotificationMediaType=='Video'">
+                            <span>Add Video<span style="color:red; font-size:12px"> (*Note:- Video : Video Size < 5MB)</span></span>
+                            <br />
+                        </div>
+                        <div ng-if="editNotificationDetails.NotificationMediaType=='Video'">
+                            <div class="col-6" style="margin-left:-15px;margin-top: 5px; margin-bottom: 1px;">
+                                <input type="text" name="ImageName" placeholder="Video Name" style="width: 120px;font-size:20px;  border: 1px solid white;" disabled>
+                                <span id="spnFilePathforEdit" style="font-size: 17px;"></span> <br /> <br />
+                                <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-disabled="!uploader.queue.length|| uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                                    <span class="glyphicon glyphicon-upload"></span> Upload
+                                </button>
+                                <!--<button type="button" class="btn btn-warning btn-xs" ng-click="uploader.queue[0].cancel()" ng-disabled="!uploader.queue[0].isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>-->
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.queue[0].remove()" ng-disabled="!uploader.queue.length">
+                                    <span class="glyphicon glyphicon-trash"></span> Remove
+                                </button>
+                            </div>
+
+                            <div class="col-md-6" style="margin-left:-15px;margin-top: 0px; margin-bottom: 30px;">
+                                <input type="image" ng-click="ImageClick()" class="uploaderimage" id="imgbutforEdit" alt="Select File" title="Select File" src="../notificationimages/AddNotification.png" />
+
+                                <video controls autoplay id="notificationVideo" width="500" height="200" class="hidden">
+                                    <source id="videomp4_src" src="{{logourl}}" type="video/mp4">
+                                    Your browser does not support the audio element.
+                                </video>
+                            </div>
+
+                        </div>
+
+                        <input type="file" id="fileforEdit" style="display: block" nv-file-select="" ng-model="fileupload" uploader="uploader" class="hidden" />
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card" style="height:300px">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Text</span>
+                        </div>
+                        <input type="text" name="EnterTitle" placeholder="Enter Title" ng-model="editNotificationDetails.title" style="font-size:20px; margin-left:2.5%; border: 1px solid white;width:150px">
+                        <!--<button class="btn btn-success m-t-20" id="button" style="font-size:15px">Save</button>-->
+                        <textarea name="EnterTitle" id="title" rows="5" ng-model="editNotificationDetails.Message" placeholder="Enter Notification Details" style="border: 1px solid rgba(0,0,0,.125)" />
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="card" style="margin-top:30px">
+                        <div class="card-body" style="font-size:15px">
+                            <span style="color:red; font-size:17px">* </span><span>Notification Time</span>
+                        </div>
+
+                        <!--<div class="row" style="margin-left:2%;margin-bottom:20px">
+                <div class="col-md-5">
+                    <br />
+                    <span>Start Date</span>
+                    <input style="font-size: 15px;" type="datetime-local" name="StartDate" id="input" ng-model="editNotificationDetails.From">
+                </div>
+                <div class="col-md-5">
+                    <br />
+                    <span>End Date(with Time)</span>
+                    <input style="font-size: 15px;" type="datetime-local" name="StartDate" id="input" ng-change="compareDateRange(editNotificationDetails.From, editNotificationDetails.TO, true)" ng-model="editNotificationDetails.TO">
+                </div>
+            </div>-->
+
+                        <div class="row" style="margin-left:2%;margin-bottom:20px">
+                            <div class="col-md-5">
+                                <br />
+                                <span>Start Date</span>
+                                <input style="font-size: 15px;" type="datetime-local" name="StartDate" id="input" ng-model="editNotificationDetails.From">
+                            </div>
+                            <div class="col-md-5">
+                                <br />
+                                <span>End Date(with Time)</span>
+                                <input style="font-size: 15px;" type="datetime-local" name="StartDate" id="input" ng-change="compareDateRange(editNotificationDetails.From, editNotificationDetails.TO, false)" ng-model="editNotificationDetails.TO">
+                            </div>
+                            <!--<div class="col-md-2" ng-show="saveData.IsMultiSchedule==true">
+                    <br />
+                    <button class="btn btn-primary" ng-click="AddScheduleDate()"> Save</button>
+                    <button class="btn btn-primary" ng-click="ClearScheduleDate()"> clear</button>
+                </div>-->
+                        </div>
+                        <div class="row" style="margin-left:2%;margin-bottom:20px" ng-show="editNotificationDetails.IsMultiSchedule==true">
+                            <div class="col-md-12">
+
+                                <table width="100%" border="1">
+                                    <tr>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <!--<th>Action</th>-->
+                                    </tr>
+                                    <tr ng-repeat="notificationScheduler in editNotificationDetails.NotificationSchedulers">
+                                        <td>{{notificationScheduler.StartDate | date :  "short" }}</td>
+                                        <td>{{notificationScheduler.EndDate| date :  "short"  }}</td>
+                                        <!--<td>
+                                <button class="btn btn-primary" ng-click="EditScheduleDate(notificationScheduler,$index)"> Edit</button>
+                                <button class="btn btn-primary" ng-click="DeleteScheduleDate(notificationScheduler,$index)"> Delete</button>
+                            </td>-->
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="card-body d-flex" style="font-size: 15px; margin-top: 74px;">
+                        <span style="font-size: large; margin-top: 17px; ">Dismiss-Notification</span>
+                        <input id="ischeck" type="checkbox" style="margin-left: 10px; width: 25px; " class="form-control mt-4" ng-model="editNotificationDetails.IsEnabledDismissNotification" />
+                    </div>
+                </div>
+                <div class="col-md-3 margin-left">
+                    <div class="col-md-3 margin-left">
+                        <button class="btn btn-success m-t-20" ng-disabled="saved == true" id="buttonSave" style="font-size:15px; margin-top:90px" ng-click="Update(editNotificationDetails)">Save</button>
+                    </div>
+                </div>
+
+
+                    <div class="container" style="margin-top:30px">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body" style="font-size:15px">
+                                        <span style="color:red; font-size:17px">* </span><span>Sent Via</span>
+                                        <div class="container" style="margin-top:20px" ng-show="editNotificationDetails.GroupAssociation!='SalesApp'">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" value="" ng-model="shopkirana" ng-click="sentViaShopkirana()" ng-checked="sentVia=='Shopkirana App'">
+                                                <img src="../notificationimages/retailer_sk_orange_bg_logo.png" style="height:19px; width:20px; margin-bottom:5px; margin-left:5px" />&nbsp;Shopkirana
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" value="" ng-model="SKDistributor" ng-click="sentViaSkDistributor()" ng-checked="sentVia=='Distributor App'" ng-disabled="editNotificationDetails.IsCRMNotification==true">
+                                                <img src="../notificationimages/retailer_sk_orange_bg_logo.png" style="height:19px; width:20px; margin-bottom:5px; margin-left:5px" />&nbsp;SKDistributor
+                                            </label>
+                                            <label class="checkbox-inline" style="margin-left: 50px">
+                                                <input type="checkbox" value="" ng-model="textMessage" ng-click="sentViaTextMessage()" ng-checked="sentVia=='Text Message'" ng-disabled="editNotificationDetails.IsCRMNotification==true">
+                                                <img src="https://img.icons8.com/metro/26/000000/sms.png" style="height:17px; width:20px; margin-bottom:5px; margin-left:5px" />&nbsp;Text Message
+                                            </label>
+                                            <label class="checkbox-inline" style="margin-left: 40px">
+                                                <input type="checkbox" value="" ng-model="whatsApp" ng-click="sentViaWhatsApp()" ng-checked="sentVia=='Whats App'" ng-disabled="editNotificationDetails.IsCRMNotification==true">
+                                                <img src="https://img.icons8.com/color/48/000000/whatsapp.png" style="height:22px; width:22px; margin-bottom:5px" />&nbsp;WhatsApp
+                                            </label>
+                                        </div>
+                                        <div class="container" style="margin-top:20px" ng-show="editNotificationDetails.GroupAssociation=='SalesApp'">
+                                            <label class="checkbox-inline" style="margin-left: 10px">
+                                                <input type="checkbox" value="" ng-model="salesApp" ng-click="sentViaSalesApp()" ng-checked="sentVia=='Sales App'">
+                                                <!--<img src="" style="height:22px; width:22px; margin-bottom:5px" />-->
+                                                &nbsp;SalesApp
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <br />
+        <br /><br />
+        <br />
+
+
+    </div>
+
+
+</form>

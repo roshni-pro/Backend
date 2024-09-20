@@ -1,0 +1,421 @@
+﻿<style>
+    .modal-dialog {
+        width: 70% !important;
+    }
+</style>
+<style>
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+    .badge-success {
+    background-color: #025d20;
+}
+
+    }
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+</style>
+
+<div class="page page-table" button-permission-binder parentName="Order" pageName="Order Settle">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>Order Delivered Master(Settle)</strong>
+        </div>
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="form-group col-md-12 clear-both">
+
+                    <!--| filter:{Cityid:Demanddata.Cityid}   data-ng-disabled="!Demanddata.Warehouseid" -->
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getWarehousebyId(WarehouseId)">
+                            <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Delivery boys</label><br>
+                        <select class="form-control" id="site-name" ng-model="db" >
+                            <option value="">-Select-</option>
+                            <option value="{{db}}" ng-repeat="db in DBoys"> {{db.DisplayName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Enter OrderId</label><br />
+
+                        <input type="text" placeholder="search" class="form-control" ng-model="OrderId">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Date Range</label><br />
+                        <div class="form-group">
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Enter Assignment Id</label><br />
+                        <input type="text" placeholder="search" class="form-control" ng-model="DeliveryIssuanceIdOrderDeliveryMaster">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Search</label><br />
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="Search(db)">Search</button>
+                        <button type="button" class="btn btn-ar btn-dark skexport" ng-click="exportData(db)">Export to Excel</button>
+
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Refresh</label><br />
+                        <button type="button" class="btn btn-ar btn-success" ng-click="getData(1,'','','','')">Refresh</button>
+                    </div>
+                </div>
+
+
+                <div style="float: left;">
+                    <span ng-if="(HQICExecutive.rolenames.indexOf('HQ Master login')>-1 || HQICExecutive.rolenames.indexOf('HQ IC Executive')>-1)">
+
+                        <button type="button" class="btn btn-ar btn-danger skclick" ng-click="selectedsettled()" data-dismiss="modal">Click to Selected Settle </button>
+                        <br /><br />
+                    </span>
+                </div>
+                <table class="table table-bordered table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    <!--<input type="checkbox" class="form-control" ng-model="selectedAll" ng-click="checkAll()" />-->
+                                    Select
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Name
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    AssigmentNo.
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    OrderId
+
+                                </div>
+                            </th>
+                           
+                            <th>
+                                <div class="th">
+                                    Order Amount
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Discount Amount
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Cash Amount
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Cheque Number
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Cheque Amount
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Gullak Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Online Amount
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    eMpos Amount
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    EpayLater Amount
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Settle
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Delivery Boy
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Settled payment  & Reason
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Order Date
+
+                                </div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in listMaster|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade in listMaster | filter:Searchtext" style="color:black">
+                            <td>{{$index+1}}</td>
+                            <td>
+
+                                <span ng-hide="trade.DeliveryIssuanceStatus== 'Payment' ||trade.DeliveryIssuanceStatus== 'Pending'||trade.DeliveryIssuanceStatus== 'Submitted'">
+                                    <input id="cst{{trade.OrderId}}" type="checkbox" class="form-control" value="{{trade.check}}" ng-model="trade.check" ng-disabled="!((trade.RecivedAmount ==(trade.CashAmount+trade.CheckAmount+trade.EpayLater+trade.Online+trade.GullakAmount+trade.Empos)-trade.DiscountAmount)&& trade.Status =='Delivered')" />
+                                </span>
+
+                                <span style="color:red;" ng-if="(trade.DeliveryIssuanceStatus== 'Submitted' || trade.DeliveryIssuanceStatus== 'Payment' || trade.DeliveryIssuanceStatus== 'Pending')">
+                                    Assignment Under {{trade.DeliveryIssuanceStatus}}
+                                </span>
+                            </td>
+                            <td>{{trade.CustomerName}}</td>
+                            <td>{{trade.DeliveryIssuanceIdOrderDeliveryMaster}}</td>
+                            <td>{{trade.OrderId}}</td>
+                          
+                            <td>
+                                <span class="badge badge-primary ml-2 ng-binding"> {{trade.GrossAmount}}</span><br />
+                                <span class="badge badge-danger ml-2 ng-binding" ng-if="trade.Fine > 0">Fine: {{trade.Fine}}</span>
+                                <span class="badge badge-success ml-2 ng-binding" ng-if="trade.ChangeFine > 0">NewFine: {{trade.ChangeFine}}</span>
+                            </td>
+                            <td><input type="number" value="{{trade.DiscountAmount}}" ng-change="DicountCalculate1(trade)" min="-1000" ng-disabled="(trade.GrossAmount== trade.RecivedAmount)" ng-model="trade.DiscountAmount" style="width:60px;" /></td>
+
+                            <td><input type="number" value="{{trade.CashAmount}}" ng-model="trade.CashAmount" style="width:60px;" ng-disabled="true" /></td>
+                            <td><input type="text" value="{{trade.TransRefNo}}" ng-model="trade.TransRefNo" style="width:60px;" ng-disabled="true" /></td>
+                            <td><input type="number" value="{{trade.CheckAmount}}" ng-model="trade.CheckAmount" style="width:60px;" ng-disabled="true" /></td>
+                            <td><input type="number" value="{{trade.GullakAmount}}" ng-model="trade.GullakAmount" style="width:60px;" ng-disabled="true" /></td>
+
+                            <td>
+                                <input type="number" value="{{trade.Online}}" ng-model="trade.Online" style="width:60px;" ng-disabled="true" /> <br />
+                                <i style="font-size:12px">
+                                    Ref:
+                                    <input type="text" value="{{trade.BasicPaymentDetails[5].TransRefNo}}" ng-disabled="true">
+                                </i>
+
+                                <!--<i style="font-size:12px"> {{trade.BasicPaymentDetails[4].TransRefNo ?'Ref: ' + trade.BasicPaymentDetails[4].TransRefNo:''}} </i>-->
+                            </td>
+                            <td>
+                                <input type="number" value="{{trade.Empos}}" ng-model="trade.Empos" style="width:60px;" ng-disabled="true" /> <br />
+                                <i style="font-size:12px">
+                                    Ref:
+                                    <input type="text" value="{{trade.BasicPaymentDetails[4].TransRefNo}}" ng-disabled="true">
+                                </i>
+
+                                <!--<i style="font-size:12px">{{trade.BasicPaymentDetails[4].TransRefNo ?'Ref: ' + trade.BasicPaymentDetails[3].TransRefNo:''}}</i>-->
+                            </td>
+                            <td>
+                                <input type="number" value="{{trade.EpayLater}}" ng-model="trade.EpayLater" style="width:60px;" ng-disabled="true" /> <br />
+
+                                <i style="font-size:12px">
+                                    Ref:
+                                    <input type="text" value="{{trade.BasicPaymentDetails[2].TransRefNo}}" ng-disabled="true">
+                                </i>
+                                <!--<i style="font-size:12px">{{trade.BasicPaymentDetails[2].TransRefNo ?'Ref: ' + trade.BasicPaymentDetails[2].TransRefNo:''}}</i>-->
+                            </td>
+
+
+
+                            <td>
+
+                                <input type="number" value="{{ trade.RecivedAmount=trade.CashAmount+ trade.CheckAmount+trade.EpayLater+trade.Online+trade.GullakAmount+trade.Empos-trade.DiscountAmount}}" ng-model="trade.RecivedAmount" style="width:60px;" readonly />
+
+                            </td>
+
+                            <!--<td>{{trade.Status}}</td>-->
+
+                            <td>{{trade.DboyName}}</td>
+                            <td>
+                                <span ng-hide="trade.DeliveryIssuanceStatus== 'Payment Accepted' ||trade.DeliveryIssuanceStatus== 'Pending'||trade.DeliveryIssuanceStatus== 'Submitted'">
+                                    <span ng-if="(HQICExecutive.rolenames.indexOf('HQ Master login')>-1 || HQICExecutive.rolenames.indexOf('HQ IC Executive')>-1)">
+                                        <button id="st{{trade.OrderId}}" type="button" class="btn btn-primary" ng-disabled="!((trade.GrossAmount+trade.Fine) ==(trade.CashAmount+trade.CheckAmount+trade.EpayLater+trade.Online+trade.Empos+trade.GullakAmount)-(trade.DiscountAmount))&&trade.Status =='Delivered')" ng-click="hub(trade)">Settled</button>
+
+                                    </span>
+                                    <!--<span ng-if="trade.Status =='Delivered'">
+                //make order pending
+                <select class="form-control input-sm" id="orderStatus" ng-if="(trade.Status == 'Delivered')" ng-model="trade.ReasonCancle">
+                    <option value="Refund through DreamPoint">Refund through DreamPoint</option>
+                    <option value=" Refund to Customer Bank Account"> Refund to Customer Bank Account</option>
+                    <option value="Other">Other</option>
+                </select>
+            </span>-->
+                                </span>
+
+                                <span style="color:red;" ng-if="(trade.DeliveryIssuanceStatus== 'Submitted' || trade.DeliveryIssuanceStatus== 'Payment Accepted' || trade.DeliveryIssuanceStatus== 'Pending')">
+                                    Assignment Under {{trade.DeliveryIssuanceStatus}}
+                                </span>
+                            </td>
+                            <!--<td>
+        <button type="button" class="btn btn-primary saveBtn" ng-click="Sattled2(trade)" disabled>Save</button>
+        <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
+    </td>-->
+                            <td>{{trade.CreatedDate | date:'medium'}}</td>
+                            <!--<td>{{trade.Reason}}</td>-->
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <dir-pagination-controls max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true"
+                                         on-page-change="getData(newPageNumber)">
+                    //get method call every time when page changes
+                </dir-pagination-controls>
+            </form>
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selected"//this give no. of items selected to show on page
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page
+                        entries per page
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<script type="text/ng-template" id="sattledReason.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">X</button>
+            <h3 class="modal-title" style="text-align: center;">settled Reason</h3>
+        </div>
+
+        <div class="row">
+            <div class="modal-body" id="myModal">
+                <div class="form-group  col-md-4">
+                    <label class='control-label' for="site-name">Select Reason</label><br />
+                    <select class="form-control input-sm" id="cst{{trade.OrderId}}" ng-model="trade.Reason">
+                        <option value="Refund through DreamPoint">Refund through DreamPoint</option>
+                        <option value=" Refund to Customer Bank Account"> Refund to Customer Bank Account</option>
+                        <option value="Other">Other</option>
+                        <textarea class="form-control" id="txtcomment" name="comment" ng-if="trade.Reason=='Other'" type="text" form="usrform" ng-model="OrderData.comments" placeholder="Type the Comment"></textarea>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+           
+         <button type="button" id="cst{{trade.OrderId}}" class="btn btn-ar btn-primary"   ng-click="Sattled(trade.Reason)">Save</button>
+
+                                    
+            <!--<button type="button" class="btn btn-ar btn-primary" ng-disabled="!((trade.RecivedAmount ==(trade.CashAmount+trade.CheckAmount+trade.EpayLater+trade.Online+trade.Empos)-(trade.DiscountAmount)) &&trade.ReasonCancle != null &&trade.Status =='Delivered')"  ng-click="Sattled(trade)">Save</button>-->
+        </div>
+
+
+
+    </form>
+</script>

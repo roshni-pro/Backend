@@ -1,0 +1,201 @@
+﻿
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    #page-wrap {
+        margin: auto 0;
+    }
+
+    .treeview {
+        margin: 10px 0 0 20px;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .treeview li {
+        background: url(http://jquery.bassistance.de/treeview/images/treeview-default-line.gif) 0 0 no-repeat;
+        padding: 2px 0 2px 16px;
+    }
+
+    .treeview > li:first-child > label {
+        /* style for the root element - IE8 supports :first-child
+    but not :last-child ..... */
+    }
+
+    .treeview li.last {
+        background-position: 0 -1766px;
+    }
+
+    .treeview li > input {
+        height: 16px;
+        width: 16px;
+        /* hide the inputs but keep them in the layout with events (use opacity) */
+        opacity: 0;
+        filter: alpha(opacity=0); /* internet explorer */
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)"; /*IE8*/
+    }
+
+    .treeview li > label {
+        background: url(https://www.thecssninja.com/demo/css_custom-forms/gr_custom-inputs.png) 0 -1px no-repeat;
+        /* move left to cover the original checkbox area */
+        margin-left: -20px;
+        /* pad the text to make room for image */
+        padding-left: 20px;
+    }
+
+    /* Unchecked styles */
+
+    .treeview .custom-unchecked {
+        background-position: 0 -1px;
+    }
+
+        .treeview .custom-unchecked:hover {
+            background-position: 0 -21px;
+        }
+
+    /* Checked styles */
+
+    .treeview .custom-checked {
+        background-position: 0 -81px;
+    }
+
+        .treeview .custom-checked:hover {
+            background-position: 0 -101px;
+        }
+
+    /* Indeterminate styles */
+
+    .treeview .custom-indeterminate {
+        background-position: 0 -141px;
+    }
+
+        .treeview .custom-indeterminate:hover {
+            background-position: 0 -121px;
+        }
+</style>
+<div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>People Page Permission</strong> </div>
+<!--<div class="page page-table">-->
+    <section class="panel panel-default table-dynamic">
+        <div class="form-group required col-md-3">
+            <label for="site"> Warehouse</label><br>
+            <select class="form-control" id="site-name" ng-model="Warehouseid" ng-change="GetWarehousePeople(Warehouseid)">
+                <option value="">--Select Warehouse--</option>
+                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>               
+            </select>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="site"> Role</label><br>
+            <select class="form-control" id="site" ng-model="roleid.Id" ng-change="getPeopledata(roleid.Id)">
+                <option value="">Select Role</option>
+                <option value="{{r.Id}}" ng-repeat="r in roles"> {{r.Name}}</option>
+            </select>
+        </div>
+       
+        <div class="form-group col-md-3">
+            <label for="site"> People</label><br>
+            <select class="form-control" id="site" ng-model="PeopleId" ng-change="getRolePage()">
+                <option value="">--Select--</option>
+                <option value="{{a.PeopleId}}" ng-repeat="a in Peoples" >{{a.displayName}} </option>
+            </select>
+        </div>
+        <br />
+        <br />
+        <div id="page-wrap">
+            <h2> </h2><br />
+            <br />
+            <ul class="treeview-new">
+                <li data-id="{{rolePage.PageMasterId}}" ng-repeat="rolePage in rolePageList">
+                    <i ng-if="rolePage.OverrideRolePagePermissionDcs && rolePage.OverrideRolePagePermissionDcs.length > 0"
+                       ng-class="{'fa': true, 'fa-caret-down':rolePage.IsShow, 'fa-caret-right': !rolePage.IsShow, 'fa-lg': true}"
+                       aria-hidden="true" ng-click="onClickRolePage(rolePage)"></i>
+                    <input class="inpt {{rolePage.OverrideRolePagePermissionDcs.length == 0? 'mr-13': ''}}"
+                           type="checkbox" name="p{{$index}}" id="p{{$index}}" ng-model="rolePage.IsChecked" ng-change="onCheckeUncheckParent(rolePage)">
+                    <label class="dv-nm" for="p{{$index}}">{{rolePage.PageName}}</label>
+                    <ul ng-if="rolePage.IsShow">
+                        <li data-id="{{childPage.PageMasterId}}" class="inner-cl" ng-repeat="childPage in rolePage.OverrideRolePagePermissionDcs">
+                            <input class="inpt custom-unchecked" ng-model="childPage.IsChecked"
+                                   ng-change="onCheckeUncheckChild(rolePage, childPage)"
+                                   type="checkbox" name="p{{$index}}a" id="p{{$index}}a">
+                            <label class="dv-nm" for="p{{$index}}a">{{childPage.PageName}}</label>
+                        </li>
+                    </ul>
+
+
+                </li>
+
+            </ul>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="pr-dv" *ngFor="let rolePage of  rolePageList; let pindex = index;">
+                        <a href="javascript:void(0);" (click)="collapseParent(role)" *ngIf="role.ChildRolePagePermissionDcs && role.ChildRolePagePermissionDcs.length >0">
+                            <i *ngIf="!role.IsVisible" class="fa fa-caret-right fa-lg mr-10" aria-hidden="true"></i>
+                            <i *ngIf="role.IsVisible" class="fa fa-caret-down fa-lg mr-10" aria-hidden="true"></i>
+                        </a>
+                        <p-checkbox [ngClass]="{'nt-pr': !(role.ChildRolePagePermissionDcs && role.ChildRolePagePermissionDcs.length >0) }" name="pchk{{pindex}}" [label]="role.PageName" [(ngModel)]="role.IsChecked"
+                                    binary="true" (click)="onParentPageClick(role)"></p-checkbox>
+                        <div *ngIf="role.IsVisible && role.ChildRolePagePermissionDcs && role.ChildRolePagePermissionDcs.length >0;">
+                            <div class="ch-div" *ngFor="let page of  role.ChildRolePagePermissionDcs; let cindex = index;">
+                                <p-checkbox (click)="onChildPageClick(role)" name="cchk{{cindex}}" [label]="page.PageName" [(ngModel)]="page.IsChecked"
+                                            binary="true"></p-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+
+
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="saveRole(rolePageList)">Save</button>
+                </div>
+            </div>
+
+</section>
+</div>
+
+<style>
+    .treeview-new {
+        margin-left: 25px;
+    }
+
+        .treeview-new li {
+            padding: 5px;
+        }
+
+        .treeview-new .fa-caret-right, .treeview-new .fa-caret-down {
+            margin-right: 4px;
+            vertical-align: 21% !important;
+        }
+
+        .treeview-new .inpt {
+            height: 20px;
+            width: 20px;
+        }
+
+        .treeview-new .dv-nm {
+            position: absolute;
+            padding-left: 9px;
+            margin-top: 2px;
+            font-size: 16px;
+        }
+
+        .treeview-new .fa-caret-down {
+            margin-left: -3px;
+        }
+
+        .treeview-new .mr-13 {
+            margin-left: 13px;
+        }
+
+        .treeview-new .inner-cl {
+            padding-left: 46px;
+        }
+</style>

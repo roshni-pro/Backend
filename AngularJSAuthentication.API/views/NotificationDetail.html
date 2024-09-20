@@ -1,0 +1,362 @@
+﻿<form>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <hr>
+
+
+    <style>
+        h1 {
+            background-color: white;
+            color: black;
+            padding-left: 5%;
+            margin-top: -10px;
+            margin-bottom: -23px;
+        }
+
+        ul {
+            font-size: 14px;
+            text-decoration: none;
+            line-height: 20px;
+            list-style-type: none;
+            font-weight: bold;
+        }
+
+        #button {
+            border-radius: 45px;
+            background-color: #1eacbe;
+            border: 1px solid #1eacbe;
+            padding: 9px;
+            width: 94px;
+            height: 43px;
+            margin-left: 75%;
+            margin-bottom: 5px;
+            margin-top: -49px;
+        }
+
+        #contain {
+            border: 1px solid white;
+            font-size: 20px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+
+        #title {
+            font-size: 20px;
+            height: 300px;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        #image {
+            width: 503px;
+            height: 200px;
+            margin-left: 18px;
+            margin-top: 1px;
+            margin-bottom: 8px;
+        }
+
+        #icon {
+            margin-top: 1px;
+            margin-left: 23px;
+            height: 44px;
+            width: 55px;
+            margin-bottom: -39px;
+        }
+
+
+        .icon {
+            background-image: url('../styles/img/Pic.PNG');
+        }
+
+        #backbtn {
+            margin-top: 2px;
+            margin-left: 26px;
+            height: 36px;
+            width: 40px;
+            margin-bottom: -27px;
+        }
+
+        #imgbut {
+            height: 212px;
+            width: 535px;
+            margin-top: -118px;
+            margin-bottom: 2px;
+            margin-left: 1px;
+        }
+
+        #input {
+            border: 1px solid#dedede;
+            background-color: white;
+            padding: 2px 3px;
+            width: 197px;
+            margin-top: 5%;
+        }
+        .h6 {
+            color: gray;
+            
+        }
+
+        .line {
+            border: 0.5px solid lightgray;
+            width: 484px;
+            margin-left: 11px;
+        }
+        .group {
+            margin-bottom: 0.5rem;
+            border: groove;
+            border-radius: 50px 50px 50px 50px;
+            width: fit-content;
+            border-color: #7cebae;
+            text-align: center;
+            color: #7cebae;
+            height: 29px;
+            padding: 2px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .analysis {
+            color: gray;
+            text-align:center;
+        }
+        .fafa {
+            font-size: 25px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: #eb9849;
+            background-color: #eb9849;
+            border-image: initial;
+            border-radius: 50% 50% 50% 50%;
+            padding: 6% 9% 6% 9%;
+        }
+    </style>
+
+
+
+    <a href="#/NotificationDashboard"><input type="image" id="backbtn" src="/styles/img/backbutton.png"></a>
+    <h1>Notification Details</h1>
+    <br />
+    <br />
+    <br />
+    <!--<p id="button"></p>-->
+
+    <div style="border: 1px solid red"></div>
+    
+    <br />
+
+    <div class="container" style="margin-left:1%">
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <h5>Details</h5>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="card">
+                        <div class="card-body" style="font-size:15px">
+                            <h6 class="h6">Notification Type</h6>
+
+                            <h3>{{notificationDetails.NotificationType}}</h3>
+
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div class="card-body" style="font-size:15px">
+                            <h6 class="h6">Notification Name</h6>
+
+                            <h3>{{notificationDetails.NotificationName}}</h3>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div class="card-body" style="font-size:15px">
+                            <h6 class="h6">Image</h6>
+                            <br />
+                            <img src="{{notificationDetails.Pic}}" style="max-width:481px;max-height:200px"/>
+                        </div>
+
+
+                        <div class="line"></div>
+
+                        <div class="card-body" style="font-size:15px">
+                            <h6 class="h6">Text</h6>
+
+                            <h3>{{notificationDetails.title}}</h3>
+                            <h3 style="color: gray">{{notificationDetails.Message}}</h3>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div class="card-body" style="font-size:15px">
+                            <h6 class="h6">Notification Time</h6>
+                        </div>
+
+                        <div class="row" style="margin-left:2%;margin-bottom:20px">
+                            <input type="checkbox" name="" ng-model="notificationDetails.IsMultiSchedule" value="Is Schedule Notification" /> Is Schedule Notification
+                            <br />
+                            <div ng-show="notificationDetails.IsMultiSchedule==false">
+                                <h3>{{notificationDetails.From | date:'medium'}} - </h3>
+                                <h3>{{notificationDetails.TO | date:'medium'}}</h3>
+                            </div>
+                            <div class="row" style="margin-left:2%;margin-top:20px" ng-show="notificationDetails.IsMultiSchedule==true">
+                                <div class="col-md-12">
+
+                                    <table width="100%" border="1">
+                                        <tr>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Sent Status</th>
+                                        </tr>
+                                        <tr ng-repeat="notificationScheduler in notificationDetails.NotificationSchedulers">
+                                            <td>{{notificationScheduler.StartDate | date :  "short" }}</td>
+                                            <td>{{notificationScheduler.EndDate| date :  "short"  }}</td>
+                                            <td>{{notificationScheduler.Sent}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="line"></div>
+
+                        <div class="card-body" style="font-size:15px">
+                            <h6 class="h6">Sent Via</h6>
+                            <div class="container" style="margin-top:20px" ng-if="notificationDetails.SentVia == 'Whats App'">
+                                <img src="https://img.icons8.com/color/48/000000/whatsapp.png" style="height:22px; width:22px; margin-bottom:5px" />&nbsp;{{notificationDetails.SentVia}}
+
+                            </div>
+                            <div class="container" style="margin-top:20px" ng-if="notificationDetails.SentVia == 'Distributor App'">
+                                <img src="../notificationimages/retailer_sk_orange_bg_logo.png" style="height:22px; width:22px; margin-bottom:5px" />&nbsp;{{notificationDetails.SentVia}}
+
+                            </div>
+                            <div class="container" style="margin-top:20px" ng-if="notificationDetails.SentVia == 'Shopkirana App'">
+                                <img src="../notificationimages/retailer_sk_orange_bg_logo.png" style="height:22px; width:22px; margin-bottom:5px" />&nbsp;{{notificationDetails.SentVia}}
+
+                            </div>
+                            <div class="container" style="margin-top:20px" ng-if="notificationDetails.SentVia == 'Text Message'">
+                                <img src="https://img.icons8.com/metro/26/000000/sms.png" style="height:22px; width:22px; margin-bottom:5px" />&nbsp;{{notificationDetails.SentVia}}
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="col-md-6">
+
+                <div class="col-md-12">
+                    <h5>Sent to Group</h5>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+
+                        <div class="card-body" style="font-size:15px">
+                            <h4 class="group">{{notificationDetails.GroupName}}</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <br /><br />
+                    <h5>Analysis</h5>
+                </div>
+
+                <div class="col-md-3 analysis">
+                    <div class="card">
+
+                        <div class="card-body" style="font-size:15px">
+                            <div class="col-md-12">
+                                <br />
+                                <i class="fa fa-paper-plane fafa" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-12">
+                                <br /><br />
+                                <h4 class="analysis">Total Sent</h4>
+                                <h2>{{notificationDetails.TotalSent}}</h2>
+                                <br />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 analysis">
+                    <div class="card">
+
+                        <div class="card-body" style="font-size:15px">
+                            <div class="col-md-12">
+                                <br />
+                                <i class="fa fa-android fafa" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-12">
+                                <br /><br />
+                                <h4 class="analysis">Total Rec</h4>
+                                <h2>{{notificationDetails.TotalReceived}}</h2>
+                                <br />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 analysis">
+                    <div class="card">
+
+                        <div class="card-body" style="font-size:15px">
+                            <div class="col-md-12">
+                                <br />
+                                <i class="fa fa-eye fafa" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-12">
+                                <br /><br />
+                                <h4 class="analysis">Total Views</h4>
+                                <h2>{{notificationDetails.TotalViews}}</h2>
+                                <br />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 analysis">
+                    <div class="card">
+
+                        <div class="card-body" style="font-size:15px">
+                            <div class="col-md-12">
+                                <br />
+                                <i class="fa fa-hand-o-up fafa" aria-hidden="true"></i>
+                            </div>
+                            <div class="col-md-12">
+                                <br /><br />
+                                <h4 class="analysis">Total Action</h4>
+                                <h2>{{notificationDetails.TotalAction}}</h2>
+                                <br />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <br />
+    <br /><br />
+    <br />
+</form>

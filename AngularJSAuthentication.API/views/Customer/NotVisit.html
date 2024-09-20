@@ -1,0 +1,123 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+</style>
+<!--<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
+<div class="page page-table"  button-permission-binder parentName="StatisticalRep" pageName="SalesMan Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>SalesMan Visit Reports
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">
+
+                        <div class="form-group">
+                            <label for="site-name">People </label><br />
+                            <div ng-dropdown-multiselect="" style="min-width:75px;" options="dataselect" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select:</label><br />
+
+                            <select ng-model="selection" ng-change="selectedtypeChanged(selection)">
+                                <option value="">--select--</option>
+                                <option value="1">Date</option>
+                                <option value="2">Day</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group" ng-show="selection=='1'">
+                            <label for="site-name">Select Date Range</label><br>
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group " ng-show="selection=='2'">
+
+                            <label for="site-name">Select Day</label>
+                            <select class="form-control" ng-model="Day" id="SPDay" name="Selectday" ng-change="selectedDayChanged(Day)">
+                                <option value="" class="option2">--Select--</option>
+
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary marButton" ng-click="genereteReport()">
+                                <span class="glyphicon glyphicon-plus">
+                                </span> Generate Report
+                            </button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+            <!--<div class="row" style="margin-top:10px;">
+                <div class="col-md-2">
+                    <label  for="site-name"><b>Total Retailer:</b></label>
+                    <label for="site-name">
+                        {{Totalretailar}}
+                    </label>
+                </div>
+                <div class="col-md-2">
+
+                    <label for="site-name"><b>Active retailer:</b></label>
+                    <label for="site-name">
+                        {{Activeret}}
+                    </label>
+
+                </div>
+                <div class="col-md-2">
+
+                    <label for="site-name"><b>Total order:</b></label>
+                    <label for="site-name">
+                        {{order}}
+                    </label>
+
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"><b>Total cost:</b></label>
+                    <label for="site-name">
+                        {{Totalretailar}}
+                    </label>
+                </div>
+            </div>-->
+            <div class="row" style="padding-left: 10px; padding-top: 10px;">
+                Total
+                <div class="col-md-12" id="pierows"></div>
+            </div>
+            <div class="row" style="padding-left: 10px; padding-top: 1px;">
+                Total Visited
+                <div class="col-md-12" id="TotalVisitedpierows"></div>
+            </div>
+            <div class="row" style="padding-left: 10px; padding-top: 1px">
+                Total NotVisited
+                <div class="col-md-12" id="TotalNotVisitedpierows"></div>
+            </div>
+
+        </div>
+
+
+    </section>
+</div>

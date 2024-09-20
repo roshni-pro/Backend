@@ -1,0 +1,635 @@
+﻿
+
+
+<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="View Purchase Order">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>Purchase Order Master</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-primary skadd" ng-click="openmodel()" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-plus"> </span>Add PO
+                            </button>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="site-name">Select Warehouse</label><br />
+                            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData1(pageno)">
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="site-name">Select Export Warehouses</label>
+                            <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                        </div>
+                        <div style="background-color:antiquewhite">
+                            <div class="col-sm-3">
+                                <label for="site-name">Select Date Range</label><br />
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                        <span class="input-group-addon ">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-primary skexport" ng-click="exportData(WarehouseId)">
+                                    <span class="glyphicon glyphicon-export"> </span> Export
+                                </button>
+                            </div>
+                            <!--<div class="col-sm-1">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-primary skexport" ng-click="downloadexcelformat()">
+                                    <span class="glyphicon glyphicon-export"> </span>Excel Format
+                                </button>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="site-name"></label><br />
+                            <input type="text" placeholder="Enter PO Id/SupplierName" class="form-control" data-ng-model="searchKey">
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-primary" ng-click="searchData()" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-search"> </span>  Search By PO Number
+                            </button>
+                        </div>
+                        <div class="col-sm-1">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-dark" ng-click="refresh()" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-refresh"> </span>  Refresh Page
+                            </button>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="site-name"></label><br />
+                            <form>
+                                <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                            </form>
+                        </div>
+                        <div class="col-sm-2 filter-result-info">
+                            <label for="site-name"></label><br />
+                            <span>
+                                Showing {{filteredStores.length}}/{{stores.length}} Entries
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-responsive " ng-show="order">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Order Id
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('OrderId')"
+                                          data-ng-class="{active: row == 'OrderId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-OrderId')"
+                                          data-ng-class="{active: row == '-OrderId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('WarehouseName')"
+                                          data-ng-class="{active: row == 'WarehouseName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-WarehouseName')"
+                                          data-ng-class="{active: row == '-WarehouseName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Supplier Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('SupplierName')"
+                                          data-ng-class="{active: row == 'SupplierName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-SupplierName')"
+                                          data-ng-class="{active: row == '-SupplierName'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Status
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Status')"
+                                          data-ng-class="{active: row == 'Status'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Status')"
+                                          data-ng-class="{active: row == '-Status'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' CreatedDate')"
+                                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CreatedDate')"
+                                          data-ng-class="{active: row == '-CreatedDate'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PO Progress
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' CreatedDate')"
+                                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CreatedDate')"
+                                          data-ng-class="{active: row == '-CreatedDate'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Open Details
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PO Invoice
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Good Recived
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    History
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Checker
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.PurchaseOrderId}}</td>
+                            <td>{{trade.WarehouseName}}&nbsp;({{trade.WarehouseCity}}) </td>
+                            <td>{{trade.SupplierName}}</td>
+                            <td>{{trade.Status}}</td>
+                            <td>{{trade.CreationDate | date:'medium'}}</td>
+                            <td>
+                                <b>{{trade.progress}}&nbsp;%</b>
+                                <!--<progressbar class="progressbar-xs progress-bar-animated no-margin" style="margin-top:10px;" value="trade.progress"></progressbar>-->
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary  btn-sm skopen" ng-click="open(trade)">
+                                    <span class="glyphicon glyphicon-eye-open "></span> Open
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-warning  btn-sm skpoinvoice" ng-disabled="trade.Status == 'Draft'||trade.Status == 'Rejected'" ng-click="invoice(trade)">
+                                    <span class="glyphicon glyphicon-list-alt "></span> PO Invoice
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" ng-disabled="trade.Status == 'Draft'||trade.Status == 'Rejected'||trade.Status == 'Send for Approval'||trade.Status == 'pending'|| trade.Status == 'Closed'" class="btn btn-primary mb1 bg-teal btn-sm skgoodrecieved" ng-click="goodrecived(trade)">
+
+                                    <span class="glyphicon glyphicon-shopping-cart  "></span> Good Recived
+                                </button>
+                            </td>
+                            <td>
+
+                                <!--"trade.purDetails.recCount==1 || ||trade.Gr1Status == 'Rejected'-->
+                                <button type="button" ng-disabled="trade.Status == 'Draft' ||trade.Status =='pending' || trade.Status =='Send for Approval' || trade.Status == 'Self Approved' || trade.Status == 'Closed' || (trade.Gr1Status == null && trade.Gr1Status == 'RejectGR') || (trade.Gr1Status=='Pending for Checker Side')" class="btn btn-danger btn-sm skir" ng-click="IRrecived(trade)">IR</button>
+
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm skhistory" ng-disabled="trade.Status == 'Draft'" data-toggle="modal" data-target="#PoHistory" ng-click="PoHistroy(trade)">
+                                    <span class="glyphicon glyphicon-header"></span> History
+                                </button>
+                            </td>
+                            <td>
+                                <span ng-if="UserRoleBackend.rolenames.indexOf('HQ Master login')>-1 || UserRoleBackend.rolenames.indexOf('WH Master login')>-1 || UserRoleBackend.rolenames.indexOf('WH Service lead')>-1 || UserRoleBackend.rolenames.indexOf('WH delivery planner')>-1 || UserRoleBackend.rolenames.indexOf('HQ CS EXECUTIVE')>-1">
+
+                                    <button class="btn btn-primary " ng-show="(UserRoleBackend.rolenames.indexOf('WH Service lead')>-1 || UserRoleBackend.rolenames.indexOf('Hub service lead')>-1)  && (trade.Gr1Status=='Pending for Checker Side' || trade.Gr2Status=='Pending for Checker Side' || trade.Gr3Status=='Pending for Checker Side' || trade.Gr4Status=='Pending for Checker Side' || trade.Gr5Status=='Pending for Checker Side')" data-toggle="modal" ng-click="Pochecker()">
+                                        GRChecker
+                                    </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="selectedPagedItem"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 page-num-info">
+                            <dir-pagination-controls max-size="8"
+                                                     direction-links="true"
+                                                     boundary-links="true"
+                                                     on-page-change="getData1(newPageNumber)">
+                                //get method call every time when page changes
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+</div>
+<script type="text/ng-template" id="mySearchModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Search Model</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <select class="form-control" id="site-name" ng-model="data.WarehouseId" ng-disabled="data.WarehouseId">
+                            <option value=""> -Select-</option>
+                            <option value="{{warehousespo.WarehouseId}}" ng-repeat="warehousespo in warehouseAddPO"> {{warehousespo.WarehouseName}} {{warehousespo.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="site-name">Is Cash Purchase</label>
+                        <input id="site-name" type="checkbox" class="form-control" ng-model="data.IsCashPurchase" />
+                    </div>
+                    <div class="col-md-12">
+                        <label for="site-name">Search Supplier</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input id="site-name" type="text" class="form-control" ng-model="data.supplier" ng-disabled="supplierData1" placeholder="Enter Supplier Name or code for search" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="SearchSupplier(data)">
+                            <span class="glyphicon glyphicon-search"> </span> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <select class="form-control ng-pristine ng-valid" id="site-name" ng-disabled="supplierData" ng-model="data.SupplierId" ng-change="GetDepo(data.SupplierId)">
+                    <option value="{{s.SupplierId}}" ng-repeat="s in Suppliers">{{s.SupplierName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input id="site-name" type="text" class="form-control" ng-model="data.CashPurchaseName" ng-show="data.IsCashPurchase" placeholder="Enter Cash Purchase Supplier Name" />
+            </div>
+            <!-- by Anushka  start-->
+            <div class="form-group">
+                <label for="site-name">Select Depo</label><br />
+                <select class="form-control" ng-model="data.DepoId" ng-options="Depos.DepoId as Depos.DepoName for Depos in datadepomaster"></select>
+            </div>
+            <!-- by Anushka end-->
+
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label for="site-name">Buyer</label><br />
+                    <select class="form-control ng-pristine ng-valid" ng-model="data.PeopleId" id="site-name" ng-disabled="buyerdata">
+                        <option value="0">--Select--</option>
+                        <option value="{{ppl.PeopleId}}" ng-repeat="ppl in Buyer" data-ng-selected="ppl.PeopleId == currentBuyerId"> {{ppl.DisplayName}} </option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="site-name">Excel upload</label><br />
+                    <input class="form-control" type="checkbox" id="site-name" name="site-name-9475" ng-modal="vm.Excelupload" ng-click="Excelupdata()">
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="vm.Excelupload == true">
+                <div class="col-md-6">
+                    <div class="col-md-6">
+                        <label for="site-name">&nbsp;</label><br />
+                        <input type="file" ngf-select="SelectFile($file)" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="site-name">&nbsp;</label><br />
+                        <input type="button" class="btn btn-ar btn-primary" value="Upload" ng-click="Upload()" />
+                    </div>
+                </div>
+            </div>
+            <br /> <br />
+            <div class="form-group" ng-show="vm.Excelupload == false">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="site-name">Search Item</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input id="site-name" type="text" class="form-control" ng-model="key" placeholder="Enter item Name/Number for search" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="Search(key)">
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group  " ng-show="vm.Excelupload == false">
+                <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="data.ItemId" ng-change="Minqtry(data.ItemId)">
+                    <option value="{{s.ItemId}}" ng-repeat="s in itemData">{{s.itemname}}=({{s.SellingSku}}) => MinQty ({{s.PurchaseMinOrderQty}}) => PORate ({{s.PurchasePrice}})   </option>
+                </select>
+            </div>
+            <div class="form-group " ng-show="vm.Excelupload == false">
+                <label for="site-name">MOQ </label><br />
+                <select class="form-control ng-pristine ng-valid" id="site-name" ng-change="enNumSet()" ng-model="data.PurchaseMinOrderQty">
+                    <option value="">Select</option>
+                    <option value="{{ss.PurchaseMinOrderQty}}" ng-repeat="ss in itmdata">{{ss.PurchaseMinOrderQty}}</option>
+                </select>
+                <!--<input id="site-name" type="number" class="form-control" ng-model="data.quantity" />
+                <option value="{{s.ItemId}}" ng-repeat="s in itemData">{{s.itemname}}</option>-->
+            </div>
+            <div class="form-group " ng-show="vm.Excelupload == false">
+                <label for="site-name">Number Of Set</label><br />
+                <input id="site-name" type="number" ng-disabled="Ecount == 0" class="form-control" ng-model="data.Noofset" />
+            </div>
+            <div class="form-group " ng-show="vm.Excelupload == false">
+                <label for="site-name">Advance Amount</label><br />
+                <input id="site-name" type="number" placeholder="Enter Advance Amount" class="form-control" ng-model="data.Advance_Amt" />
+            </div>
+            <div class="form-group">
+                <button type="button" style="float:right;" class="btn btn-ar btn-primary" ng-click="AddData(data)"><span class="glyphicon glyphicon-plus"> </span> Add</button>
+            </div>
+            <br /><br />
+            <div class="form-group">
+                <br /><br />
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Name
+                                </div>
+                            </th>
+
+
+                            <th>
+                                <div class="th">
+                                    Noofset
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PurchaseMOQ
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    No of Pices
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    SupplierId
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    DepoId
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Delete
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in POdata">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.Itemname}}</td>
+
+                            <td>{{trade.Noofset}}</td>
+                            <td>{{trade.PurchaseMinOrderQty}}</td>
+                            <td>{{trade.PurchaseMinOrderQty *trade.Noofset}}</td>
+                            <td>{{trade.SupplierId}}</td>
+                            <td>{{trade.DepoId}}</td>
+                            <td><a class="btn glyphicon glyphicon-trash" ng-click="remove(trade)"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-danger" ng-click="cancel()" data-dismiss="modal">
+                <span class="glyphicon glyphicon-remove-circle"> </span> Cancel
+            </button>
+            <button type="button" class="btn btn-ar btn-warning" ng-disabled="count == 1" ng-click="Draftsave()">
+                <span class="glyphicon glyphicon-folder-close"> </span> Save as draft
+            </button>
+            <button type="button" class="btn btn-ar btn-primary" ng-disabled="count == 1" ng-click="Searchsave()">
+                <span class="glyphicon glyphicon-plus"> </span>Save & Send to approver
+            </button>
+        </div>
+    </form>
+</script>
+<!--PO Histroy  model-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 50% !important;
+        margin-left: 485px;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<div class="modal fade " id="PoHistory" role="dialog">
+    <div class="modal-dialog1">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Order History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th>PurchaseOrderId</th>
+                    <td>{{datapomasterHistrory[0].PurchaseOrderId}}</td>
+                    <td><button class="btn-sm btn-primary" data-toggle="modal" data-target="#PoItemDetail" ng-click="PoitemHistroy(datapomasterHistrory[0].PurchaseOrderId)">PoItemDetails</button></td>
+                </tr>
+                </thead>
+                <thead>
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Status
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Amount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                EditBy
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                CreatedDate
+                            </div>
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in datapomasterHistrory">
+                        <td>{{trade.Status}}</td>
+                        <td>{{trade.Amount}}</td>
+                        <td>{{trade.EditBy}}</td>
+                        <td>{{trade.UpdatedDate| date:'medium'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /site tiles -->
+<div class="modal fade " id="PoItemDetail" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Po Item History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Item Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Supplier Name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                No.Pieces
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                CurrentStock
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Old Price
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                New Price
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Item Number
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Item Type
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in dataPoitemDetail">
+                        <td>{{trade.ItemName}}</td>
+                        <td>{{trade.SupplierName}}</td>
+                        <td>{{trade.NOOfPieces}}</td>
+                        <td>{{trade.CurrentStock}}</td>
+                        <td>{{trade.oldprice}}</td>
+                        <td>{{trade.newprice}}</td>
+                        <td>{{trade.ItemNumber}}</td>
+                        <td>{{trade.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

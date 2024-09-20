@@ -1,0 +1,386 @@
+﻿<head>
+    <style>
+
+        .panel-danger > .panel-heading {
+    color: #843830;
+    background-color: #ffb6b1;
+    border-color: #d8848e;
+}
+        .panel-success {
+    border-color: #12ff91;
+}
+.panel-success > .panel-heading {
+    color: #187159;
+    background-color: #73ffd5;
+    border-color: #0ae681;
+}
+
+
+.panel-warning > .panel-heading {
+    color: #865b00;
+    background-color: #ecc77d;
+    border-color: #ad5b0a;
+}
+
+        .btn-primary {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #00a4e9;
+            border-radius: 15px;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #ffb61c;
+            border-color: #ffae02;
+            border-radius: 15px;
+        }
+        .panel-default > .panel-heading {
+            color: #060606;
+            background-color: #fdfdfd;
+            border-color: #d2d2d2;
+        } 
+
+
+      .btn-success {
+      color: white;
+      background-color: #2ec1cc;
+      border-color: #2ec1cc;    
+      border-radius: 15px;
+      }
+      body {
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #000000;
+    /* background-color: #f3f3f3; */
+      }
+
+      .form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #040404;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #cbd5dd;
+   border-radius: 15px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+      .form-group {
+    margin-bottom: 15px;
+    margin-left: 50px;
+}
+      h4, .h4, h5, .h5, h6, .h6 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 60px;
+}
+    </style>
+</head>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Cash Managment Balance
+            </strong>
+        </div>
+        <br />
+        
+        <div class="clearfix"></div>
+        <table>
+            <tr>
+                <td class="text-right">                   
+                        <button type="button" class="btn btn-success" ng-click="CashBalanceHistory()">History</button>
+                        <button type="button" class="btn btn-warning" ngEnter="Back()" ng-click="Back()">Back</button>                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   
+                    <div class="row" ng-if="Warehouseid != '0'">
+                        <div class="form-group col-md-12">
+                            <!--<div class="form-group col-md-4">
+     <label for="site-name">HUB Name</label><br />
+        {{peoples.DisplayName}}
+    </div>-->
+                            <div class="form-group col-lg-3">
+                                <label for="site-name">HUB Name</label><br />
+                                <select class="form-control" id="Warehouseid" ng-model="CashBalancehistory.Warehouseid">
+                                    <option value="{{CashBalancehistory.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="CashBalancehistory.Warehouseid == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Date Ending</label><br />
+                                {{WarehouseLiveDeshboard.previousDate| date:'medium'}}
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary" ng-click="GetStartActionBtn(true)" ng-show="ButtonShowStart == true">Start</button>
+                                <button class="btn btn-primary" ng-click="GetStartActionBtn(true)" ng-show="ButtonShowStop == true">Stop</button>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <!--<button class="btn btn-primary" ng-click="CMSPageStartAccess(1,true)">Start</button>
+        <button class="btn btn-primary" ng-click="CMSPageStopAccess(2,true)">Stop</button>                                                                                                                                                                                           >Stop</button>
+        <button class="btn btn-primary" ng-click="CMSPageStartAccess(1,true)" ng-show="ButtonShowStart">Start</button>
+        <button class="btn btn-primary" ng-click="CMSPageStopAccess(2,true)" ng-show="ButtonShowStop">Stop</button>-->
+                           
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <p>
+                                <h4>This is to certify that the cash balance at End Of Day on <b>{{WarehouseLiveDeshboard.previousDate| date:'medium'}}</b> at closing hours of business is INR..<u><b> &#8377;{{ Denomination | total:'CurrencyCount':'Title' }}</b></u></h4>
+                            </p>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <p>
+                                &nbsp;<h4><b>{{peoples.DisplayName}}</b> &nbsp; &nbsp; confirm that following denomination of Cash Balance is held at hub: </h4>
+                            </p>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-lg-12 ">
+                            <div class="col-lg-4">
+                                <div class="panel-success panel div-highlight">
+                                    <div class="panel-heading text-center">
+                                        <h4>Cash Management Balance</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-striped table-responsive">
+                                            <tbody>
+                                                <tr>
+                                                    <th> Denomination </th>
+                                                    <th> Quantity</th>
+                                                    <th> Amount</th>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><b>Notes</b></td>
+                                                </tr>
+                                                <tr ng-repeat="trade in WarehouseClosingCash | filter: { CashCurrencyType: 'Notes'}">
+                                                    <td>
+                                                        &#8377;{{trade.CurrencyDenominationTitle}}
+                                                    </td>
+                                                    <td>
+                                                        {{trade.CurrencyCount}}
+                                                    </td>
+                                                    <td>
+                                                        {{trade.CurrencyDenominationTotal | noFractionCurrency : "&#8377;"}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><b>Coins</b></td>
+                                                </tr>
+                                                <tr ng-repeat="trade in WarehouseClosingCash | filter: { CashCurrencyType: 'Coins'}">
+                                                    <td>
+                                                        {{trade.CurrencyDenominationTitle}}
+                                                    </td>
+                                                    <td>
+                                                        {{trade.CurrencyCount}}
+                                                    </td>
+                                                    <td>
+                                                        {{trade.CurrencyDenominationTotal | noFractionCurrency : "&#8377;"}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><b>Total</b></td>
+                                                    <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{ WarehouseClosingCash | totalSingle:'CurrencyDenominationTotal' | noFractionCurrency : "&#8377;"}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel-danger panel div-highlight">
+                                    <div class="panel-heading text-center">
+                                        <h4>Actual Cash</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr style="background-color: #ffffff;">
+                                                    <th>
+                                                        <div class="th">
+                                                            Denomination
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="th">
+                                                            Quantity
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="th">
+                                                            Amount
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="3"><b>Notes</b></td>
+                                                </tr>
+                                                <tr ng-repeat="data in Denomination | filter: { currencyType: 'Notes'}">
+                                                    <td>
+                                                        &#8377;{{data.Title}}
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" ng-model="data.CurrencyCount" min="0" ng-change="denominationdiff(data)" placeholder="0">
+
+                                                    </td>
+                                                    <td>
+                                                        &#8377;{{data.Title * data.CurrencyCount}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><b>Coins</b></td>
+                                                </tr>
+                                                <tr ng-repeat="data in Denomination | filter: { currencyType: 'Coin'}">
+                                                    <td>
+                                                        &#8377;{{data.Title}}
+                                                    </td>
+                                                    <td>
+                                                        <input type="number"  ng-model="data.CurrencyCount" min="0" ng-change="denominationdiff(data)" placeholder="0">
+                                                    </td>
+                                                    <td>
+                                                        &#8377;{{data.Title * data.CurrencyCount}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="1"><b>Total</b></td>
+                                                    <td>{{ Denomination |totalSingle:'CurrencyCount'}}</td>
+                                                    <td>&#8377;{{ Denomination | total:'CurrencyCount':'Title' }}</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="panel-warning panel div-highlight">
+                                    <div class="panel-heading text-center">
+                                        <h4>Difference Cash</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-striped table-responsive">
+                                            <thead>
+                                                <tr style="background-color: #ffffff;">
+                                                    <th>
+                                                        <div class="th">
+                                                            Denomination
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="th">
+                                                            Quantity
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="th">
+                                                            Amount
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="3"><b>Notes</b></td>
+                                                </tr>
+                                                <tr ng-repeat="diff in DenominationDiff | filter: { currencyType: 'Notes'}">
+                                                    <td>
+                                                        &#8377;{{diff.Title}}
+                                                    </td>
+                                                    <td>
+                                                        {{diff.CurrencyCount}}
+
+                                                    </td>
+                                                    <td>
+                                                        &#8377;{{diff.Title * diff.CurrencyCount}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3"><b>Coins</b></td>
+                                                </tr>
+                                                <tr ng-repeat="diff in DenominationDiff | filter: { currencyType: 'Coin'}">
+                                                    <td>
+                                                        &#8377;{{diff.Title}}
+                                                    </td>
+                                                    <td>
+                                                        {{diff.CurrencyCount}}
+                                                    </td>
+                                                    <td>
+                                                        &#8377;{{diff.Title * diff.CurrencyCount}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="1"><b>Total</b></td>
+                                                    <td>{{ DenominationDiff |totalSingle:'CurrencyCount'}}</td>
+                                                    <td>&#8377;{{ DenominationDiff | total:'CurrencyCount':'Title' }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 ">
+                            <div class="col-md-6">
+                                <label for="site-name"><b>Reason for Cash Diffrence:</b></label>
+                                <textarea name="Note" ng-model="data.Reason" cols="100" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-6 ">
+                                <button type="button" class="btn btn-ar btn-success" ng-click="AddDetails(data,Denomination)" ng-disabled="ButtonShowStart == true" ng-if="!alreadySubmitted" >Submit</button>
+                               
+                            </div>
+
+                        </div>
+
+                        <div class="row" ng-if="Warehouseid == '0'">
+                            <div class="col-lg-12">
+                                <span> You are not authorize person to access warehouse dashboard</span>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+      
+    </section>
+</div>
+
+<script type="text/javascript">
+    var timer;
+    jQuery(document).ready(function () {
+        $("#todayspan").text(new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, '-'));
+    });
+</script>
+
+<style>
+    .div-highlight {
+        width: 100%;
+        float: left;
+        box-shadow: 0px 0px 5px #222 !important;
+    }
+</style>

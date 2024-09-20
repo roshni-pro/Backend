@@ -1,0 +1,208 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<div class="page page-table"  button-permission-binder parentName="Current Stock" pageName="Empty Item Stock">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Empty Stock Item
+            </strong>
+        </div>
+        <br />
+        <div class="form-group col-md-3">
+            <button type="button" class="btn btn-ar btn-success sksubmit" ng-click="getselected(Getstock)">Submit</button>
+        </div>
+   
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            <input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemNumber
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingSku')"
+                                  data-ng-class="{active: row == 'SellingSku'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SKUCode')"
+                                  data-ng-class="{active: row == '-SellingSku'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CurrentInventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventory')"
+                                  data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventory')"
+                                  data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                   
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td><input class="form-control" type="checkbox" value="{{trade.check}}" ng-checked="trade.IsEmptyStock" ng-model="trade.check" /></td>
+                    <td>{{trade.ItemNumber}}</td>
+                    <td>{{trade.ItemName}}</td>
+                    <td>{{trade.CurrentInventory}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.CreationDate| date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!--price model-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: #171616 !important;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+
+<!--for manual inventory-->
+

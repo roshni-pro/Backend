@@ -1,0 +1,330 @@
+﻿<style>
+    .btn-primary {
+    color: white;
+    background-color: #00a4e9;
+    border-color: #00a4e9;
+    border-radius: 15px;
+}
+    .panel-default > .panel-heading {
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #717171;
+}
+   .form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #767676;
+    background-color: white;
+    background-image: none;
+    border: 1px solid #cbd5dd;
+    border-radius: 15px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+</style>
+<div class="page page-table"  button-permission-binder parentName="Cash Management" pageName="HQ Dashboard">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Live HQ Currency Dashboard
+            </strong>
+     </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <div class="col-lg-3">
+                        Select Warehouse :
+                    </div>
+                    <div class="col-lg-5">
+                        <select class="form-control" id="Warehouseid" ng-model="Warehouseid" data-ng-change="getWarehouseLiveDeshboardData()">
+                            <option value="" selected>--ALL--</option>
+                            <option value="{{warehouses.value}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.value"> {{warehouses.label}} </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-12 text-right">
+                    <button type="button" class="btn btn-ar btn-primary" ng-disabled="IsDisablebutton" ng-click="MTDCollectionClicked()">MTD Collection</button>
+                    <button type="button" class="btn btn-ar btn-primary sktoday'scollection" ngEnter="TodayCollectionclicked()" ng-click="TodayCollectionclicked()">Today's Collection</button>
+                    <button type="button" class="btn btn-ar btn-primary skbankdepositdetails" ngEnter="CashHistory()" ng-click="BankDepositHistory()">Bank Deposit Details</button>
+                    <button type="button" class="btn btn-ar btn-primary skcashdetails" ngEnter="CashHistory()" ng-click="CashHistory()">Cash Details</button>
+                    <button type="button" class="btn btn-ar btn-primary skchequebounce" ngEnter="ReturnCheque()" ng-click="ReturnCheque()">Cheque Bounce</button>
+                    <button type="button" class="btn btn-ar btn-primary skcashexchangedetails" ngEnter="CashHistory()" ng-click="CashExchangeHistory()">Cash Exchange Details</button>
+                    <button type="button" class="btn btn-ar btn-primary skagentpayment" ngEnter="HQChequeDetails()" ng-click="HQChequeDetails()">HQ Cheque History</button>
+                    <button type="button" class="btn btn-ar btn-primary skcashbalancedetails" ngEnter="HQCashBalanceHistory()" ng-click="HQCashBalanceHistory()">HQ CashCertificate History</button>
+                    <button type="button" class="btn btn-ar btn-primary skcashbalancedetails" ngEnter="HQChequeFineAppoved()" ng-click="HQChequeFineAppoved()">Cheque Fine Appoved</button>
+                    <button type="button" class="btn btn-ar btn-primary skcashbalancedetails" ngEnter="HQRejectChequeFineStatus()" ng-click="HQRejectChequeFineStatus()">Reject Cheque Fine Status</button>
+                    <button type="button" class="btn btn-ar btn-primary skcashbalancedetails" ngEnter="AgentPaymentHistoryclicked()" ng-click="AgentPaymentHistoryclicked()">Agent Payment History</button>
+                </div>  
+            </div>
+            <hr />
+            <div class="clearfix"></div>
+            <div class="col-lg-12 ">
+                <div class="col-lg-3">
+                    <div class="panel-success panel div-highlight">
+                        <div class="panel-heading text-center">
+                            <h4>Opening Balance</h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped table-responsive ">
+                                <tbody>
+                                    <tr>
+                                        <th> Denomination </th>
+                                        <th> Quantity</th>
+                                        <th> Amount</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"><b>Notes</b></td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseOpeningCash | filter: { CashCurrencyType: 'Notes'}">
+                                        <td>
+                                           &#8377;{{cash.CurrencyDenominationTitle}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyCount}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyDenominationTotal| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Coins</td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseOpeningCash | filter: { CashCurrencyType: 'Coins'}">
+                                        <td>
+                                            &#8377; {{cash.CurrencyDenominationTitle}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyCount}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyDenominationTotal| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Notes</b></td>
+                                        <td><p ng-show="WarehouseLiveDeshboard != undefined ">{{totalCurrency('Notes', WarehouseOpeningCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Coins</b></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalCurrency('Coins', WarehouseOpeningCash)| noFractionCurrency : "&#8377;"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Total</b></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{ WarehouseOpeningCash | totalSingle:'CurrencyDenominationTotal' | noFractionCurrency : "&#8377;"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-3">
+                    <div class="panel-warning panel div-highlight">
+                        <div class="panel-heading text-center">
+                            <h4>Cash Collection<span id="todayspan"></span> </h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tbody>
+                                    <tr>                                        
+                                        <th> Quantity</th>
+                                        <th> Amount</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Notes</b></td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseTodayCash | filter: { CashCurrencyType: 'Notes'}">                                        
+                                        <td>
+                                            {{cash.CurrencyCount}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyDenominationTotal| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Coins</td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseTodayCash | filter: { CashCurrencyType: 'Coins'}">                                       
+                                        <td>
+                                            {{cash.CurrencyCount}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyDenominationTotal| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"><b>Notes</b></td>
+                                        <td> <p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalCurrency('Notes',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"><b>Coins</b></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalCurrency('Coins',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"><b>Total</b></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{ WarehouseTodayCash | totalSingle:'CurrencyDenominationTotal' | noFractionCurrency : "&#8377;"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="panel-info panel div-highlight">
+                        <div class="panel-heading text-center">
+                            <h4>Bank/Exchange Detail</h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tbody>
+                                    <tr>                                        
+                                        <th>Bank Deposit</th>
+                                        <th>Ex-In</th>
+                                        <th>Ex-Out</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"><b>Notes</b></td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseTodayCash  | filter: { CashCurrencyType: 'Notes'}">                                      
+                                        <td>
+                                            {{(cash.BankDepositCurrencyCount * cash.CurrencyDenominationValue) | noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{(cash.ExchangeInCurrencyCount>0? cash.ExchangeInCurrencyCount * cash.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{(cash.ExchangeOutCurrencyCount<0? (-1) * cash.ExchangeOutCurrencyCount * cash.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Coins</td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseTodayCash  | filter: { CashCurrencyType: 'Coins'}">
+                                      
+                                        <td>
+                                            {{(cash.BankDepositCurrencyCount * cash.CurrencyDenominationValue)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{(cash.ExchangeInCurrencyCount>0? cash.ExchangeInCurrencyCount * cash.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{(cash.ExchangeOutCurrencyCount<0? (-1) * cash.ExchangeOutCurrencyCount * cash.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">&nbsp;</td>
+                                    </tr>
+                                    <tr>                                       
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalBankDeposit('Notes',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalExchangeIn('Notes',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalExchangeOut('Notes',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                    <tr>                                        
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalBankDeposit('Coins',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalExchangeIn('Coins',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalExchangeOut('Coins',WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                    <tr>                                       
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalAllBankDeposit(WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalAllExchangeIn(WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalAllExchangeOut(WarehouseTodayCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-3">
+                    <div class="panel-danger panel div-highlight">
+                        <div class="panel-heading text-center">
+                            <h4>Closing Balance</h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tbody>
+                                    <tr>                                        
+                                        <th> Quantity</th>
+                                        <th> Amount</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Notes</b></td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseClosingCash  | filter: { CashCurrencyType: 'Notes'}">                                       
+                                        <td>
+                                            {{cash.CurrencyCount}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyDenominationTotal| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Coins</td>
+                                    </tr>
+                                    <tr ng-repeat="cash in WarehouseClosingCash  | filter: { CashCurrencyType: 'Coins'}">                                       
+                                        <td>
+                                            {{cash.CurrencyCount}}
+                                        </td>
+                                        <td>
+                                            {{cash.CurrencyDenominationTotal| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"><b>Notes</b></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalCurrency('Notes',WarehouseClosingCash)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"><b>Coins</b></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{totalCurrency('Coins',WarehouseClosingCash)| noFractionCurrency : "&#8377;"}}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1"><b>Total</b></td>
+                                        <td><p ng-show="{{WarehouseLiveDeshboard != undefined }}">{{ WarehouseClosingCash | totalSingle:'CurrencyDenominationTotal' | noFractionCurrency : "&#8377;"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--<div class="row" ng-if="Warehouseid == '0'">
+            <div class="col-lg-12">
+                <span> You are not authorize person to access warehouse dashboard</span>
+            </div>
+        </div>-->
+    </section>
+</div>
+
+<script type="text/javascript">
+    var timer;
+    jQuery(document).ready(function () {
+        $("#todayspan").text(new Date().toLocaleDateString('en-GB', {  day: 'numeric', month: 'short', year: 'numeric'}).replace(/ /g, '-'));
+    });
+</script>
+
+<style>
+    .div-highlight {
+        width: 100%;
+        float: left;
+        box-shadow: 0px 0px 5px #222 !important;
+    }
+</style>

@@ -1,0 +1,201 @@
+﻿<head>
+    <style>
+        .btn-primary {
+    color: white;
+    background-color: #00a4e9;
+    border-color: #00a4e9;
+    border-radius: 15px;
+}
+        .btn-warning {
+    color: white;
+    background-color: #ffb61c;
+    border-color: #ffae02;
+    border-radius: 15px;
+}
+    .btn-info {
+    color: white;
+    background-color: #2ec1cc;
+    border-color: #29adb7;
+    border-radius: 15px;
+}
+    .form-control {
+    border-width: 1px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-radius: 15px;
+}
+    </style>
+</head>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Exchange History
+            </strong>
+        </div>
+        <br />
+        <div class="row" ng-if="Warehouseid != '0'">
+            <div class="col-lg-12">
+                <div class="form-group col-lg-3">
+                    <select class="form-control" id="Warehouseid" ng-model="Warehousehistory.Warehouseid" data-ng-change="FilterData()">
+                        <option value="0" selected>--All--</option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="Warehousehistory.Warehouseid == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <div class="form-group">
+                        <input id="dat" type='date' title="Select Date" ng-model="Warehousehistory.FilterDate" autocomplete="off" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                   
+                    <button type="button" class="btn btn-ar btn-info" ngEnter="FilterData()" ng-click="FilterData()">Search</button>
+                    <button type="button" class="btn btn-warning" ngEnter="Back()" ng-click="Back()">Back</button>                  
+                </div>
+            </div>
+            <hr />
+            <div class="clearfix"></div>
+            <div class="col-lg-12 ">              
+                <div class="col-lg-6">
+                    <div class="panel-info panel div-highlight">
+                        <div class="panel-heading text-center">
+                            <h3>Bank/Exchange Detail</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <th> Denomination </th>
+                                        <!--<th>Bank Deposit</th>-->
+                                        <th>Ex-In</th>
+                                        <th>Ex-Out</th>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"><b>Notes</b></td>
+                                    </tr>
+                                    <tr ng-repeat="trade in WarehouseLiveDeshboard.hubCashCollectionDcs | filter: { CashCurrencyType: 'Notes'}">
+                                        <td>
+                                            &#8377;{{trade.CurrencyDenominationTitle}}
+                                        </td>
+                                        <!--<td>
+                                            {{(trade.BankDepositCurrencyCount * trade.CurrencyDenominationValue )| noFractionCurrency : "&#8377;"}}
+                                        </td>-->
+                                        <td>
+                                            {{(trade.ExchangeInCurrencyCount>0? trade.ExchangeInCurrencyCount * trade.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{(trade.ExchangeOutCurrencyCount<0? (-1) * trade.ExchangeOutCurrencyCount * trade.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"><b>Coins</b></td>
+                                    </tr>
+                                    <tr ng-repeat="trade in WarehouseLiveDeshboard.hubCashCollectionDcs | filter: { CashCurrencyType: 'Coins'}">
+                                        <td>
+                                            &#8377;{{trade.CurrencyDenominationTitle}}
+                                        </td>
+                                        <!--<td>
+                                            {{(trade.BankDepositCurrencyCount * trade.CurrencyDenominationValue)| noFractionCurrency : "&#8377;"}}
+                                        </td>-->
+                                        <td>
+                                            {{(trade.ExchangeInCurrencyCount>0? trade.ExchangeInCurrencyCount * trade.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{(trade.ExchangeOutCurrencyCount<0? (-1) * trade.ExchangeOutCurrencyCount * trade.CurrencyDenominationValue: 0)| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Notes</b></td>
+                                        <!--<td><p>{{totalBankDepositByDenomination('Notes',WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p> </td>-->
+                                        <td><p>{{totalExchangeInByDenomination('Notes',WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                        <td><p>{{totalExchangeOutByDenomination('Notes',WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                    <tr>
+                                        <td ><b>Coins</b></td>
+                                        <!--<td><p>{{totalBankDepositByDenomination('Coins',WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p></td>-->
+                                        <td><p>{{totalExchangeInByDenomination('Coins',WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                        <td><p>{{totalExchangeOutByDenomination('Coins',WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Total</b></td>                                       
+                                        <!--<td><p>{{totalBankDeposit(WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p></td>-->
+                                        <td><p>{{totalExchangeIn(WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                        <td><p>{{totalExchangeOut(WarehouseLiveDeshboard.hubCashCollectionDcs)| noFractionCurrency : "&#8377;"}}</p> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel-danger panel div-highlight">
+                        <div class="panel-heading text-center">
+                            <h3>Exchange Details</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <th>warehouse name</th>
+                                        <th>Date</th>
+                                        <th>Total In Amount</th>
+                                        <th>Total Out Amount</th>
+                                        <th>Comment</th>
+                                    </tr>
+                                    <tr ng-repeat="trade in WarehouseLiveDeshboard.ExchangeCommentDcs" >
+                                        <td>
+                                            {{trade.WarehouseName}}
+                                        </td>
+                                        <td>
+                                            {{trade.ExchangeDate| date:'medium'}}
+                                        </td>
+                                        <td>
+                                            {{trade.TotalInAmount| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{trade.TotalOutAmount| noFractionCurrency : "&#8377;"}}
+                                        </td>
+                                        <td>
+                                            {{trade.comment}}
+                                        </td>
+                                    </tr>
+                                                                  
+                                    <tr>
+                                        <td colspan="5">&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="Warehouseid == '0'">
+            <div class="col-lg-12">
+                <span> You are not authorize person to access warehouse dashboard</span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/javascript">
+    var timer;
+    jQuery(document).ready(function () {
+        $("#todayspan").text(new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, '-'));
+    });
+</script>
+
+<style>
+    .div-highlight {
+        width: 100%;
+        float: left;
+        box-shadow: 0px 0px 5px #222 !important;
+    }
+</style>

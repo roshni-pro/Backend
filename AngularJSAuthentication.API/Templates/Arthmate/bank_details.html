@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>bank_details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+
+        .main-Panel {
+            padding: 80px;
+            line-height: 20px;
+        }
+
+        input {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            margin: 0px 5px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        h6 {
+            text-align: center !important;
+            font-weight: 700 !important;
+            padding: 30px;
+            font-size: 18px;
+        }
+
+        h3 {
+            font-size: 18px;
+        }
+
+        .agreement_section h3 {
+            text-align: left;
+            font-size: 20px;
+            display: block;
+            margin: 25px 0px;
+            font-weight: 700;
+        }
+
+        .agreement_section h2 {
+            text-align: center;
+            font-size: 25px;
+            display: block;
+            margin: 25px 0px;
+            font-weight: 700;
+        }
+
+        .agreement_section h1 {
+            font-size: 20px;
+            display: block;
+            margin: 25px 0px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 30px;
+        }
+
+        table tr > td {
+            border: 1px solid #ccc;
+            padding: 10px 20px !important;
+        }
+
+            table tr > td:first-child {
+                width: auto;
+                min-width: 250px;
+                max-width: 550px;
+            }
+        .table th, .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border: 1px solid #dee2e6 !important;
+        }
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: solid 1px gray;
+        }
+
+        .gstSpan-box {
+            display: inline-block;
+        }
+
+            .gstSpan-box input {
+                border: 1px solid #ccc;
+                width: 35px;
+                margin: 0px;
+                padding: 2px;
+            }
+
+        .notedtedPoint {
+            border: 1px solid #ccc;
+            padding: 10px;
+            line-height: 35px;
+        }
+        .image {
+            margin-top: 45px;
+            margin-left: 150px;
+            height: 50px;
+            width: 120px;
+        }
+        img {
+            text-align: center !important;
+            justify-content: center !important;
+            margin-left: 40% !important;
+        }
+        .image_ratio {
+            height: 112px !important;
+            width: 200px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container main-Panel">
+        <form>
+            <header class="text-center">
+                <h2>MOST IMPORTANT TERMS & CONDITIONS (MITC)</h2>
+                <h3>Please read carefully before confirming</h3>
+                <h2>ACKNOWLEDGEMENT FORM</h2><br>
+
+                <p>Date : [CreatedDate]
+            </header><br>
+
+            <section class="topInputContent">
+                <p>
+                    I/We refer to Application Reference No. [LeadNo] for grant of Credit Facility for INR
+                    [CreditLimit]
+                    and the Agreement
+                    executed by me / us in favour of Shop Kirana E-Trading Pvt. Ltd. I/We have been provided the
+                    following
+                    information and
+                    agree with the same and have accordingly filled up the attached Document:
+                </p>
+            </section>
+            <section class="mt-5">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td>Name of the Customer</td>
+                            <td>:</td>
+                            <td>[Name]</td>
+                        </tr>
+                        <tr>
+                            <td>GST No.(if applicable)</td>
+                            <td>:</td>
+                            <td>
+                                <!--<div class="gstSpan-box">
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+                <span><input type="text"></span>
+            </div>-->
+                                [GSTNo]
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Credit Amount (Credit Limit)</td>
+                            <td>:</td>
+                            <td>INR [CreditLimit]/- (In words - [CreditAmountWord] )</td>
+                        </tr>
+                        <tr>
+                            <td>Validity of the Credit Limit (in Months)</td>
+                            <td>:</td>
+                            <td>12 Months</td>
+                        </tr>
+                        <tr>
+                            <td>Convenience Fees on the Transaction Amount</td>
+                            <td>:</td>
+                            <td>[TransactionConvenienceFeeRate] % per transaction amount + GST</td>
+                        </tr>
+                        <tr>
+                            <td>Processing Fee Inclusive of GST</td>
+                            <td>:</td>
+                            <td>[ProcessingFeeWithGST] INR</td>
+                        </tr>
+                        <tr>
+                            <td>Discount on PF inclusive of GST</td>
+                            <td>:</td>
+                            <td>[DiscountAmount] INR</td>
+                        </tr>
+                        <tr>
+                            <td>Net PF inclusive of GST</td>
+                            <td>:</td>
+                            <td>[NetPF] INR</td>
+                        </tr>
+                        <tr>
+                            <td>Late Fees (applicable for payment default)</td>
+                            <td>:</td>
+                            <td>[DelayPenaltyFeeRate]% per month accrued on daily basis applicable on the unpaid amount.</td>
+                        </tr>
+                        <tr>
+                            <td>Bounce Charges</td>
+                            <td>:</td>
+                            <td>[BounceCharge] + GST</td>
+                        </tr>
+                        <tr>
+                            <td>Place of arbitration and jurisdiction</td>
+                            <td>:</td>
+                            <td>Indore, Madhya Pradesh</td>
+                        </tr>
+                        <tr>
+                            <td>Taxes & Levies</td>
+                            <td>:</td>
+                            <td>
+                                All the charges indicated above or elsewhere in the Agreement shall be exclusive of all
+                                taxes and statutory levies as
+                                may be applicable on same including without limitation tax on goods and services with
+                                cess.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Additional Terms and
+                                conditions
+                            </td>
+                            <td>:</td>
+                            <td>
+                                Covenants mentioned in Agreement For Supply Of Goods On Credit shall be applicable in
+                                addition to the terms mentioned in
+                                this MITC applicable to the Customer for availing Credit Facility. Covenants mentioned
+                                in Agreement For Supply Of Goods
+                                On Credit shall prevail in case of inconsistency.
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </section>
+
+            <section class="notedtedPoint">
+                <ul>
+                    <li>Please do not sign the above document, if blank.</li>
+                    <li>
+                        Please do not pay cash to anyone for the processing of your application or payments towards the
+                        outstanding. In case
+                        you are asked, please refuse and contact the head office of the company.
+                    </li>
+                    <li>
+                        For all payments made to any representative of the company towards any fee / charges, please ask
+                        for valid receipt.
+                    </li>
+                    <li>
+                        If any verbal communication made to you is in contradiction to the above terms & conditions,
+                        please contact us at
+                        7828112112 (mon-sat 11:00 a.m. To 7:00 p.m. (except public holidays) or write to us at
+                        Info@shopkirana.com
+                    </li>
+                </ul>
+            </section>
+            <img src="[img]" class="image" />
+            <br />
+            <br />
+            <br /><br />
+            <section>
+                <h6>CHARGES SHEET</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <td>Processing Fee</td>
+                            <td>[ProcessingFeeRate] % + GST (Non Refundable)</td>
+                        </tr>
+                        <tr>
+                            <td>Convenience  Fees</td>
+                            <td>[TransactionConvenienceFeeRate] %+ GST</td>
+                        </tr>
+                        <tr>
+                            <td>Late Payment Charges</td>
+                            <td>[DelayPenaltyFeeRate] % Per Month</td>
+                        </tr>
+                        <tr>
+                            <td>Bounce Charges</td>
+                            <td>[BounceCharge] + GST</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <p>
+                    I acknowledge and understand that all the terms and conditions mentioned in MITC and Agreement for
+                    Supply of Goods on
+                    Credit are applicable on me/us and I/we have read and understood the same before marking my/our
+                    signatures.
+                </p>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <label>Customer's Name:</label>
+                        [Name]
+                    </div>
+
+                    <!--<div class="col-md-6 col-sm-6 col-12 text-right">
+                Signature [Signature]
+            </div>-->
+                </div><br>
+                <p>(Name of Authorised Signatory for Proprietorship, Partnership & Companies)</p>
+
+            </section>
+
+            <section class="agreement_section">
+                <h2>AGREEMENT FOR SUPPLY OF GOODS ON CREDIT</h2>
+                <p>
+                    THIS AGREEMENT FOR SUPPLY OF GOODS ON CREDIT (THE "AGREEMENT") MADE ON  Date : [CreatedDate]
+                    <!--THIS <b>Insert Date</b> Day of
+            <b>
+                Month
+                & Year
+            </b>-->
+                    between Shop
+                    Kirana E-Trading Pvt. Ltd., a Company incorporated under the Companies Act, 1956, having its
+                    Registered Office at Office
+                    1501,15th Floor, SKYE Corporate Park,Plot No 25, Scheme No 78, Part II,Sector B Indore 452010,
+                    Madhya Pradesh.
+                </p>
+
+
+                <p>
+                    (hereinafter referred to as THE COMPANY and/or SELLER and/or PARTY TO THE FIRST PART, which
+                    expression shall, unless
+                    repugnant to the context or meaning thereof, be deemed to include its successors and permitted
+                    assigns) of the ONE PART <br>
+
+                    AND
+                </p>
+
+                <p>
+                    Shri/SMT/MS/MRS [Name] son/ daughter of [FatherName], an individual/sole
+                    proprietor/, of Indian Inhabitant
+                    currently residing at [Address]
+                </p>
+
+                <p>
+                    (Hereinafter called as CUSTOMER and/or PARTY TO THE SECOND PART, which expression shall include his
+                    / her heirs,
+                    executors, administrator, its successors and permitted assigns in law) of the OTHER PART:
+                </p>
+                <p>
+                    The Company and the Customer hereinafter referred to individually as "Party" and collectively as
+                    "Parties" <br>
+                    Whereas, the Company is engaged, inter-alia, in the business of manufacturing, sale, distribution,
+                    marketing and supply
+                    of grocery items under the brand name "ShopKirana". The Company is also engaged, inter-alia, in the
+                    business of sale,
+                    distribution, marketing and supply of grocery items of various other companies who has exclusive
+                    right to prepare,
+                    package and sell the goods and exclusive right to manufacture and sell grocery and other products
+                    under the Trademarks
+                    owned by them. Hereinafter, referred to as the GOODS.
+                </p>
+                <p>
+                    Whereas the Party to the Second Part is a customer of the Company and has applied to the Company for
+                    the provision of
+                    credit in respect of the payment of Goods supplied to the Customer by the Company.<br>
+                    Whereas, The Customer agrees to be bound by the attached Terms and Conditions of the Agreement and on such
+                    promise the Company
+                    is ready and willing to provide the customer the Goods on credit.<br>
+                    Whereas, the Customer is aware that the Company may alter the Terms and Conditions of the Agreement in
+                    accordance with the Terms
+                    and Conditions of Trade in which event the Customer agrees that the varied terms shall apply to
+                    Goods supplied after notification. The Customer further
+                    acknowledges that he/she has read this Agreement and the Terms and Conditions of Trade and has
+                    received copy of this document.
+                    <br />
+                    <!--<img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                    <img src="[img]" class="image"/>
+                    <br /><br /><br />
+                    Now Therefore, in consideration of the mutual covenants and promises contained herein and for good
+                    and valuable
+                    consideration, the parties hereto having the intention to be legally bound, agrees as follows:
+                </p>
+                <h1>1. BASIS OF CONTRACT</h1>
+                <p>
+                    1.1. These Conditions apply to the Contract to the exclusion of any other terms that the Customer
+                    seeks to impose or
+                    incorporate, or which are implied by trade, custom, practice or course of dealing. For the avoidance
+                    of doubt, these
+                    conditions supersede all previous terms and conditions and shall replace any terms and conditions
+                    previously notified to
+                    the Customer.<br>
+                    1.2. The order constitutes an offer by the Customer to purchase the Goods and/or Services in
+                    accordance with these
+                    Conditions. The Customer is responsible for ensuring that the terms of the Order and any applicable
+                    Specification are
+                    complete and accurate.<br>
+                    1.3. Orders placed by Customer leading to a contract which are not expressed to be subject to these
+                    conditions shall
+                    still be subject to them.<br>
+                    1.4. The order shall only be deemed to be accepted when the Company issues a written acceptance of
+                    the Order, at which
+                    point the Contract shall come into existence.
+                    <br />
+                    1.5. The Agreement constitutes the entire agreement between the Parties. The Customer acknowledges
+                    that it has not relied
+                    on any statement, promise or representation made or given by or on behalf of the Company which is
+                    not set out in the
+                    Agreement.<br>
+                    1.6. Any samples, drawings, descriptive matter, or advertising produced by the Company and any
+                    descriptions or
+                    illustrations contained in the Company's catalogues or brochures are produced for the sole purpose
+                    of giving an
+                    approximate idea of the Goods described in them. They shall not form part of the Agreement or have
+                    any contractual force.
+                    <br />
+                    1.7. A quotation for the Goods given by the Company is not binding or capable of acceptance and
+                    shall not constitute an
+                    offer.<br>
+                    1.8. Any application for a Credit by the Customer, Agreement for the Supply of Goods on Credit
+                    entered into by the
+                    Customer or any other written or verbal instructions received by the Company from the Customer for
+                    the purchase of Goods
+                    and/or the Customer's acceptance of Goods supplied by the Company shall constitute acceptance of the
+                    Terms and
+                    Conditions of Agreement contained herein as they may be updated from time to time.
+
+                </p>
+                <h3>2. PLACEMENT AND ACCEPTANCE OF ORDERS AND ENTITLEMENT TO CREDIT</h3>
+                <p>
+                    2.1. Orders will be on such forms as the Company may require from time to time.<br>
+                    2.2. The Company may terminate Credit supply pursuant to these Terms and Conditions of Trade at any
+                    time by written
+                    notice. Such termination shall not release the Customer from any obligation already incurred at the
+                    time of termination
+                    or any further liability in respect of that obligation.<br>
+                    2.3. The Company may at any time refuse to accept any Order by the Customer or decline any request
+                    for a Credit supply
+                    to the Customer (whether by way of termination of Credit supply or not) and shall not be required to
+                    specify any reason.
+
+                </p>
+                <h3>3. CREDIT LIMIT AND DURATION</h3>
+                <p>
+                    3.1. The Company may set a credit limit for the Customer. Changes in the Customer's credit limit may
+                    be made from time
+                    to time and will be notified to the Customer<br>
+                    3.2. The Customer understands and agrees that the credit is provided for the period of not more than
+                    14day(s), unless
+                    otherwise provided by the Company. The Customer is liable to pay for the goods supplied on or before
+                    the end of credit
+                    period.<br>
+                    3.3. The Company may refuse to accept orders for Goods or may suspend or withhold delivery of Goods
+                    if the Customer has exceeded its credit limit or if the completion of a Contract for such Goods would result in the
+                    Customer exceeding its credit limit <br />
+                    <!--<img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                    <img src="[img]" class="image" />
+                </p>
+
+                <br /><br />
+                <h3>4. SECURITY</h3>
+                <p>
+                    Without prejudice to such other rights as the Company may have pursuant to these Terms and
+                    Conditions of Trade, the
+                    Company reserves the right to request from the Customer such security as the Company may from time
+                    to time think
+                    desirable to secure to the Company all sums due to the Company and may refuse to supply further to
+                    the Customer until
+                    such security is given.
+                </p>
+                <h3>5. TERMS OF PAYMENT</h3>
+                <p>
+                    5.1. Unless otherwise specified in writing by the Company payment for all Goods shall be made no
+                    later than 14 days from
+                    the date of transaction.<br>
+                    5.2. The Company may, at its sole discretion, require payment of a deposit by the Customer prior to
+                    processing of any
+                    Order or Delivery of any Goods.<br>
+                    5.3. In addition to the cost of the Goods the Customer agrees to pay to the Company convenience Fees
+                    to avail the credit
+                    facility. The convenience Fees shall be 0.75% of the transaction amount excluding applicable GST as
+                    agreed between the
+                    Parties. The Customer acknowledges that this fee is not the interest amount charged for availing the
+                    credit facility of
+                    the Company.<br>
+                    5.4. Late fees shall be charged on any monies not paid by the due date at the rate of 2.5% per month
+                    excluding applicable GST as agreed between the Parties which will be
+                    calculated and charged on a daily basis until payment is made in full.
+                    <br>5.5. All costs incurred by the Company, as a result of a default by the Customer including but
+                    not
+                    limited to
+                    administration charges, debt collection costs and legal costs as between solicitor and client, shall
+                    be payable by the
+                    Customer in addition to any other charges pursuant to this clause 4.
+                    <br>5.6. Payment shall be made by ECS (Direct Debit from Bank Account) or by any other method as the
+                    Company may deem fit
+                    from time to time. The Customer understands that all ECS (Direct Debit from Bank Account)
+                    instructions are irrevocable
+                    and there is no facility for giving stop payment instruction in respect of such remittances.
+                    <br> 5.7. The Customer shall also be charged with NACH bounce charges as applicable in case of
+                    bounce
+                    payments.<br>
+                    5.8. The Company may notify the Customer at any time regarding the fact that it is going to stop
+                    supplying Goods to the
+                    Customer on credit. This shall be without prejudice to the Customer's obligation to pay amounts
+                    owing to the Company.
+                </p>
+                <h3>6. TAXES AND DUTIES</h3>
+                <p>
+                    6.1 Unless expressly included in any Quotation, GST and other taxes and duties assessed or levies in
+                    connection with the
+                    supply of the Goods;<br>
+                    i. are not included in the price of the Goods;<br>
+                    ii. shall be paid in addition to the price of the Goods; and shall be the responsibility of the
+                    Customer.<br>
+                    iii. Where the payment of any taxes, duties or levies is the responsibility of the Company at law,
+                    the price of Goods
+                    shall be increased by the amount of such taxes or duties.
+                </p>
+                <h3>7. DELIVERY OF GOODS</h3>
+                <p>
+                    7.1 Transportation
+                    <br />
+                    (a) Delivery of the Goods shall take place at the time of dispatch or collection from the Company's
+                    Premises unless the
+                    Company agrees in writing to deliver the Goods to the Customer's Premises in which case Delivery
+                    shall take place at the
+                    time of delivery to the Customer's Premises.<br>
+                    <!--<img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                    <img src="[img]" class="image" />
+                    <br /><br /><br />
+                    (b) If the Company agrees to deliver the Goods to the Customer's Premises then the costs of delivery
+                    shall be in
+                    addition to the consideration of the Agreement unless delivery is specified to be included in the Price. The Customer shall
+                    make all arrangements
+                    necessary to take possession of the Goods at the Customer's Premises and if the Customer is unable
+                    to take delivery of
+                    the Goods the Company shall be entitled to charge a reasonable fee for re-delivery.
+                    <br> (c) Delivery of the Goods to the Customer's Premises is deemed to be delivery to the Customer.
+                    <br> (d) If the Company delivers Goods to the Customer then unless delivery is included in the Price
+                    of
+                    the Goods the
+                    delivery fee shall be invoiced by the Company and paid for by the Customer in accordance with the
+                    provisions in these
+                    Terms and Conditions of the Agreement.
+                    <br> (e) The Company may at its discretion charge the Customer for delivery costs incurred by the
+                    Carrier
+                    and these charges
+                    may be subject to change.
+                    <br> (f) The Customer shall have no right of action against the Company in respect of any loss
+                    sustained
+                    by reason of any
+                    delivery occasioned by delays in transit or delays caused by accidents, strikes or any other event
+                    or occurrence outside
+                    of the Company's reasonable control.
+                    <br> (g) Time shall in no case be of the essence in respect of the delivery of Goods. The Company
+                    shall
+                    not be responsible
+                    for any delay in the delivery of Goods and the Customer shall not be entitled to cancel orders
+                    because of any such
+                    delay. Dates for delivery of Goods are given in good faith and are not to be treated as a condition
+                    of sale or purchase.
+                    Delivery of Goods by the Company to a Carrier is deemed to be delivery to the Customer.
+                    <br />
+                    7.2. Inspection
+                    <br />
+                    (a) The Customer must inspect the Goods upon arrival and reports the errors in shipment promptly.
+                    <br> (b) If the Customer fails to notify the Company of any such defects, the shipment shall be
+                    deemed
+                    accepted.
+
+                </p>
+                <h3>8. PASSING OF RISK</h3>
+                <p>
+                    Risk in the Goods passes to the Customer upon the earlier of:<br>
+                    (a) delivery of the Goods to the Customer; or<br>
+                    (b) collection of the Goods from the Company or agent of the Company by the Customer's agent,
+                    carrier or courier.
+                </p>
+                <h3>9. RETENTION OF TITLE</h3>
+                <p>
+                    9.1. The Goods delivered by the Company to the Customer remains the sole and absolute property of
+                    the Company as legal
+                    and equitable owner until all money due to the Company under this Agreement has been paid by the
+                    Customer, but the Goods
+                    will be at the Customer's risk from the time of delivery to it;
+                    <br> 9.2. The Customer acknowledges that it is in possession of all the Goods as bailee for the
+                    Company
+                    under the terms of
+                    this Agreement until such time as title in the Goods passes to the Customer and that this bailment
+                    continues in relation
+                    to each item of the Goods until the Price has been paid in full;
+                    <br> 9.3. The Customer's right to possession of the Goods will cease if it does anything or fails to
+                    do
+                    anything which would
+                    result in an Insolvency event in relation to the Customer including any act or omission which would
+                    entitle a receiver
+                    or any other person to take possession of any assets or which would entitle any person to present a
+                    petition for the
+                    winding up of the Customer.
+                    <br> 9.4. The Company may for the purpose of examination or recovery of the Goods enter upon any
+                    premises where the Goods are
+                    located or where it is reasonably thought to be located and the Customer agrees to indemnify the
+                    Company for any, cost,
+                    loss or damage incurred by the Company as a result of entry onto such premises;
+                    <br> 9.5. The Customer warrants that at the time of entering into this Agreement no Criminal
+                    proceedings
+                    are pending and no
+                    Insolvency Event has occurred in relation to the Customer and it knows of no circumstances which
+                    would entitle any
+                    creditor to appoint a receiver or to petition for winding up or to exercise any other rights over or
+                    against its assets.<br />
+                    <!--<img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                    <img src="[img]" class="image" />
+                </p>
+
+                <br />
+                <h3>10. SALE OF GOODS BY THE CUSTOMER</h3>
+                <p>
+                    10.1 Where Goods in respect of which title has not passed to the Customer are sold by the Customer
+                    in the ordinary
+                    course of business, the book debt created on the sale and the proceeds of sale when received shall
+                    be held by the
+                    Customer for the Company.
+                    <br> 10.2 Where any proceeds of sale are placed in the Customer's bank account, the funds in the
+                    Customer's bank account
+                    shall be deemed to be held on trust for the Company to the extent of proceeds of sale.
+                    <br> 10.3 Where any payments are made from the Customer's bank account otherwise than to the Company
+                    payment shall be deemed
+                    to have been made from all other funds in the Customer's bank account and not from funds held on
+                    trust for the Company.
+                    <br> 10.4 The trust obligation imposed by this clause and the Company's entitlements under this
+                    clause
+                    10 shall continue for
+                    so long as the Company is unpaid for all Goods supplied to the Customer.
+                </p>
+                <h3>11. PAYMENT ALLOCATION</h3>
+                <p>
+                    The Company may, in its discretion, allocate any payment received from the Customer towards any
+                    invoice that the Company
+                    determines and may do so at the time of receipt or at any time afterwards. On any default by the
+                    Customer the Company
+                    may re-allocate any payments previously received and allocated. In the absence of any payment
+                    allocation by the Company,
+                    payment shall be deemed to be allocated in such manner as preserves the maximum value of the
+                    Company's purchase money
+                    security interest in the Goods.
+                </p>
+                <h3>12. CUSTOMER'S WARRANTY, UNDERTAKING & DECLARATION</h3>
+                <p>
+                    (a) The Customer hereby warrants the correctness of each and every statement and particulars herein
+                    contained and
+                    undertake to carry out the proposals herein set forth.
+                    <br> (b) The Customer hereby warrants that his/her CIBIL score is satisfactory and grants an
+                    exclusive
+                    right to the Company to
+                    check his/her past credit history for the purpose of this agreement.
+                    <br> (c) The Customer agrees and undertakes to notify the Company in writing of any circumstances
+                    affecting the correctness of
+                    any particulars set forth in the agreement immediately after the occurrence of any such
+                    circumstances.
+                    <br> (d) The Customer shall upon request of the Company, allow the Company and any nominee, servant
+                    or
+                    agent of the Company to
+                    inspect the Customer's premises and vehicles and other assets and the Customer's books of accounts
+                    for ensuring that the
+                    Customerhas duly complied with the terms of the agreement.
+                    <br> (e) The Customer will furnish the Company with all such information as the Company may
+                    reasonably
+                    require for the
+                    Company's satisfaction as due compliance with the terms of this agreement and all such periodical
+                    reports and
+                    information at such times, in such form and containing such particulars as the Company may call for.
+                    <br />
+                    (f) During the currency of this agreement, the Customer shall not, without the prior permission
+                    in
+                    writing of the
+                    Company-
+                    <br />
+                    i. Effect any change in the Customer's capital structure;<br>
+                    ii. Formulate any Scheme of Amalgamation or Reconstruction;<br>
+                    iii. Implement any Scheme of Expansion/Diversification/Modernisation other than incurring routine
+                    capital expenditure;<br>
+                    iv. Make any corporate investments or investment by way of share capital or debentures or lend or
+                    advance funds to or
+                    place deposits with, any other concern except give normal trade credits or place on security
+                    deposits in the normal
+                    course of business or make advances to employees, provided that the Customer may make such
+                    investments by way of
+                    deposits or advances that are required statutorily to be made as per the existing laws of the
+                    country or the rules or
+                    regulations or guidelines issued from time to time by the Authorities concerned.
+                    <br> v. Undertake guarantee obligation on behalf of any third party or any other company/firm etc.
+                    <!-- <img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                    <img src="[img]" class="image" />
+                    <br /><br />
+                    (g) The Customer agrees that it will maintain adequate Books of Accounts which would correctly
+                    reflect its financial
+                    position and scale of operations and would not radically change the Accounting System without prior
+                    consent of the
+                    Company.<br>
+                    (h) Save and except to the extent already disclosed in writing by the Customer to the Company, the
+                    Customer hereby
+                    warrants and undertakes as follows:
+                    i. The Customerhas obtained all necessary statutory permission/sanction to avail the credit facility
+                    from the Company.<br>
+                    ii. There are no mortgages, charges, lispendens or liens or other encumbrances on Customer.
+                    <br> iii. The Customer is not a party to litigation of a material character and that the Customer is
+                    not
+                    aware of any facts
+                    likely to give rise to such litigation or to material claims against the Customer.
+                    <br> iv. The Customer shall carry on the business efficiently, properly and profitably and such
+                    business
+                    shall be continued
+                    to such activity as have been notified to the Company and shall keep all the licenses, leases,
+                    contracts, engagements
+                    essential for carrying on the activity, renewed from time to time and shall not allow any
+                    interruptions or disturbances
+                    to happen to the business.
+                    <br> v. The Customer shall maintain proper books of accounts and such other registers, books,
+                    documents,
+                    relating to the
+                    business as may be statutorily required or as may be required by the Company or as may be necessary
+                    and/or generally
+                    kept in the business of the kind carried on by the Customer and shall get the accounts, books duly
+                    audited. The Customer
+                    shall, if so required by the Company, allow the Company to inspect such books duly audited.
+
+                </p>
+                <h3>13. EVENTS AND CONSEQUENCES OF DEFAULT</h3>
+                <p>
+                    13.1 All amounts payable in respect of any credit supply (s) shall become immediately due to the
+                    Company and the Company
+                    may at its option cancel any Order, suspend or terminate these Terms and Conditions of Trade and/or
+                    exercise any of the
+                    remedies available to it under these Terms and Conditions of Trade in the event that:
+                    <br> i. the Customer fails to pay any monies to the Company on due date or breaches any other
+                    obligation
+                    herein; or
+                    <br> ii. a receiver is appointed over any of the assets or undertaking of the Customer
+                    <br> iii. an application for the appointment of a liquidator is filed against the Customer or any of
+                    the
+                    conditions necessary
+                    to render the Customer liable to have a liquidator exist, or a liquidator is appointed;
+                    <br> iv. the Customer suspends payments to its creditors or makes or attempts to make an arrangement
+                    or
+                    composition or scheme
+                    with its creditors; or
+                    <br> v. the Customer becomes insolvent or is presumed to be unable to pay its debts as they fall due
+                    or
+                    commits any act of
+                    bankruptcy; or
+                    <br> vi. the Customer defaults in any payment or commits any act of bankruptcy or any act which
+                    would
+                    render it liable to be
+                    wound up or if a resolution is passed or proceedings are filed for the winding up of the Customer.
+                    <br> vii. All costs incurred by the Company as a result of any breach by the Customer of any
+                    obligation
+                    of the Customer
+                    pursuant to these Terms and Conditions of Trade including, but not limited to, administration
+                    charges, debt collection
+                    costs and legal costs (on a solicitor/client basis) shall be payable by the Customer.
+
+                </p>
+                <h3>14. CONFIDENTIALITY</h3>
+                <p>
+                    14.1 If a separate Non-disclosure agreement is in effect between the Company and the Customer, the
+                    terms of such
+                    Non-disclosure agreement will govern in the event of any conflict between such agreement and this
+                    provision. During the
+                    term of this Agreement and at all times thereafter, (a) the Customer will hold in trust, keep
+                    confidential, and not
+                    disclose, directly or indirectly, to any third party or make any use of Confidential Information (as
+                    defined below) for
+                    any purpose, except as required by law or as may be necessary in the performance of the Customer's
+                    duties and
+                    obligations under this Agreement, and (b) all Confidential Information will remain the exclusive
+                    property of the
+                    Company, and will not be removed from the premises of Company or its customers, or be duplicated by
+                    any means, without
+                    the prior written consent of the Company.
+                    <!--<img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                    <img src="[img]" class="image" />
+                    <br /><br />
+                    For purposes of this Agreement, the term "CONFIDENTIAL
+                    INFORMATION" means any and all information that the Customer may
+                    receive from the Company: (i) relating to the technology
+                    embodied in the
+                    Goods, (ii) regarding the business, finances and/or operations of the Company, or (iii) any
+                    information marked or
+                    labelled "Confidential" or "Proprietary" by Company prior to its
+                    transmittal to, or receipt by, the
+                    Customer. All such
+                    information (as referenced above in this Section 14.1) to which the Customer had access prior to the
+                    execution of this
+                    Agreement is also included in Confidential Information. These obligations shall survive the
+                    expiration or termination of
+                    this Agreement.
+                    <br />
+                    14.2 Upon the termination of this Agreement (regardless of the reason for termination), the Customer
+                    will immediately:
+                    (i) return to the Company or destroy all Confidential Information (including copies), and any other
+                    material (including
+                    handwritten or computer-generated notes), made or derived from Confidential Information, which is in
+                    the Customer's
+                    possession or which the Customer has delivered to others, and (ii) destroy any Confidential
+                    Information stored on
+                    magnetic, optical or other medium after providing this Confidential Information to the Company.
+                </p>
+                <h3>15. NON-SOLICITATION; CONFLICTING ACTIVITIES</h3>
+                <p>
+                    15.1 Non-solicitation. As a material inducement for the Company to enter into this Agreement, the
+                    Customer covenants
+                    that during the Term and for a period of eighteen (18) months immediately following the termination
+                    of this agreement
+                    for any reason, whether with or without cause, the Customer shall not either directly or indirectly
+                    solicit, induce,
+                    recruit or encourage any of Company's employees or independent contractors to leave their employment
+                    or engagements with
+                    the Company, or take away such employees or independent contractors, or attempt to solicit, induce,
+                    recruit, encourage
+                    or take away Company's employees or independent contractors, either for the benefit of the Customer
+                    or for any other
+                    person or entity.<br>
+                    15.2 Conflicting Activities. In addition, as a material inducement for the Company to enter into
+                    this Agreement, the
+                    Customer agrees that during the Term of this agreement, it will not directly or indirectly,
+                    individually, in partnership
+                    or in conjunction with any person, association or company, in any capacity whatsoever directly or
+                    indirectly, (i)
+                    promote, deliver, sell or solicit orders for any products which, in the opinion of the Company, are
+                    in competition with
+                    the Goods, or (ii) otherwise engage in business activities that are in competition with the business
+                    of the Company
+                    ("CONFLICTING ACTIVITIES"). The Customer also agrees to immediately disclose to the Company in
+                    writing all details
+                    regarding the occurrence and nature of any Conflicting Activities. The provisions of this Section
+                    will survive the
+                    termination of this agreement and will bind the Customer, its successors, and it's permitted
+                    assigns.
+                </p>
+                <h3>16. INDEMNITY</h3>
+                <p>
+                    16.1 The Customer hereby agrees to indemnify, defend and hold harmless the Company, its affiliates
+                    and all officers,
+                    directors, employees and agents thereof (hereinafter referred to as "Indemnities") from all
+                    liabilities, claims,
+                    damages, losses, costs, expenses, demands, suits and actions (including without limitation
+                    attorneys' fees, expenses and
+                    settlement costs) (collectively, "Damages") arising out of or related to the conduct of the
+                    Customer's operations,
+                    including without limitation damages arising out of or related to damage or injury to property or
+                    persons, or to any
+                    representations of the Customer not authorized hereunder.<br>
+                    16.2 The Customer shall indemnify (and keep indemnified) the Company, its board members, employees,
+                    contractors and
+                    agents in respect of all claims, demands, actions, suits and damages for loss, damage or injury
+                    (including indirect or
+                    consequential loss) resulting from:
+                    <br> (a) any acts of the Customer, including any unlawful or wilfully wrong act or omission;
+                    <br>(b) any breach of this agreement and any tort or negligence by the Customer in connection with
+                    this
+                    agreement;
+                    <br> (c) all breaches of Intellectual Property Rights by the Customer or any third party to whom the
+                    Customer provided access
+                    either deliberately or inadvertently; and
+                    <br> (d) any legal costs, charges and expenses arising in respect of paragraphs (a) - (d) above,
+                    <!--<img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                    <img src="[img]" class="image" />
+                    <br /><br />
+                    16.3 The Customer shall indemnify and keep the Company indemnified against any breach of the
+                    conditions contained herein
+                    and against all loss, harm, damage, injury and all costs, charges and expenses that the Company may
+                    bear, suffer or
+                    incur on account of any breach or non-observation or non-performance of any of the terms and
+                    conditions contained in
+                    this agreement.<br>
+                    16.4 The Customer shall at all times indemnify and keep indemnified the Company against all actions
+                    proceedings claims
+                    and demands made against it by the central and/or state government and/or municipal/ local and/or
+                    other authorities
+                    and/or by any customer of the Good and/or any other third party as a result of or in consequence of
+                    any act or omission
+                    of whatsoever nature of the Customer, his servants or agents, including, without prejudice to the
+                    generality of the
+                    forgoing, any accident or loss or damage arising out of the storage, handling and/or delivery of the
+                    Good whether or not
+                    such act or omission or accident or loss or damage was due to any negligence, want of care or skill
+                    or any misconduct of
+                    the Customer, his servants or his agents.<br>
+                    16.5 This clause will survive termination of this Agreement.
+                </p>
+                <h3>17. GOVERNING LAW AND DISPUTE RESOLUTION</h3>
+                <p>
+                    17.1 Any dispute, controversy or claim arising out of or in relation to this agreement, or the
+                    breach, termination or
+                    invalidity thereof, shall be settled amicably by negotiation between the Parties.
+                    <br> 17.2 Any and all controversies, claims, or disputes arising out of, relating to, or resulting
+                    from
+                    this Agreement shall
+                    be subject to binding arbitration according to Indian Law. Any arbitration will be administered by
+                    such dispute shall be
+                    resolved pursuant to the Indian Arbitration and Conciliation Act, 1996 and any amendments of it
+                    thereof.
+                    <br>17.3 The terms of this Agreement have been executed and delivered and shall be interpreted,
+                    construed and enforced in
+                    accordance with the laws of India. The venue for arbitration shall be Indore, Madhya Pradesh.
+                    <br> 17.4 Any party to the dispute shall be entitled to serve a notice invoking this clause and
+                    making a
+                    reference to a sole
+                    arbitrator, which shall be appointed by the Company. Each party shall bear its own costs and
+                    expenses, including
+                    attorney's fees, incurred in connection with any Arbitration. The decision of the arbitrator shall
+                    be binding and in
+                    writing.
+                </p>
+
+                <h3>18. NOTICE</h3>
+                <p>
+                    18.1 Notice or Communication. Any notice or communication required or permitted hereunder (other than
+                    Administrative
+                    Notice) shall be in writing and shall be sent by registered mail, return receipt requested, postage
+                    prepaid and
+                    addressed to the addresses set forth below or to such changed address as any party entitled to
+                    notice shall have
+                    communicated in writing to the other party. Notices and communications to Company shall be sent to:
+                </p>
+                <strong>
+                    ShopKirana E Trading Pvt Ltd, 1501,15th Floor, SKYE Corporate Park, Plot No 25, Scheme No 78, Part II,
+                    Sector B Indore 452010, Madhya Pradesh.
+                </strong>
+                <p>
+                    Notices and communications to the Customer shall be sent to address shown on first page of this
+                    Agreement. Any notices or
+                    communications to either party hereunder shall be deemed to have been given when deposited in the
+                    mail, addressed to the
+                    then current address of such party.<br>
+                    18.2 Date of Effectiveness. Any such notice or communication so mailed shall be deemed delivered and
+                    effective
+                    seventy-two (72) hours after mailing.
+                </p>
+                <h3>19. WAIVER</h3>
+                <p>
+                    Failure by either Party to insist in any one or more instances on a strict performance of any of the
+                    provisions of this
+                    Agreement shall not constitute a waiver or relinquishment of the right to enforce the provisions of
+                    this Agreement in
+                    future instances, but this right shall continue and remain in full force and effect.
+                </p>
+                <!-- <img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+                <img src="[img]" class="image" />
+                <br /><br />
+                <h3>20.	SEVERABILITY</h3>
+                <p>
+                    If any part of this agreement is found to be invalid or unenforceable, that part will be severed from
+                    this agreement and the remainder of the agreement shall remain in full force
+                </p>
+                <h3>21. ENTIRETY</h3>
+                <p>
+                    This Agreement and any Annexes embody the entire agreement between the Parties and supersede all
+                    prior agreements and
+                    understandings, if any, relating to the subject matter of this Agreement.
+                </p>
+
+                <h3>22. FINAL CLAUSES</h3>
+                <p>
+                    22.1 This agreement will enter into force upon signature by both Parties and shall remain in force
+                    until completion of
+                    all obligations of the Parties under this Agreement.<br>
+                    22.2 Amendments to this agreement may be made by mutual agreement in writing between the Parties.
+                </p>
+
+                <h3>23. COUNTERPARTS</h3>
+                <p>
+                    This Agreement may be executed in one or more counterparts, each of which shall be deemed an
+                    original, but all of which
+                    together shall constitute one and the same instrument.
+                </p>
+                <p>
+                    <b>IN WITNESS WHEREOF</b> the parties hereto have hereunto set and subscribed their respective hands
+                    the day and year first hereinabove written.
+                </p>
+                <p>
+                    <b>SIGNED AND DELIVERED</b> by within named
+                    THE COMPANY,
+                    Party to the Second Part,
+                    <b>SHOPKIRANA E TRADING COMPANY PVT.LTD.</b>
+                    through, Its Legal Officer
+                    <b>MR. ANAND MEENA</b>
+                </p>
+                <p>AND</p>
+                <p>
+                    <b>SIGNED AND DELIVERED</b> by within named
+                    THE CUSTOMER,
+                    Party to the Second Part,
+                    Mr./Ms./Mrs. [Name]
+
+                </p>
+            </section>
+            <br /><br />
+            <!--<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />-->
+            <!--<img src="[img]" style="margin-top:45px;margin-left:150px;height:50px;width:120px;" />-->
+            <img src="[img]" class="image" />
+            <!--<div style="position:relative;">
+       <img src="D:\Project\SKCreditLending\CL_service\trunk\SkCreditLending\Templates\DirectLogo.gif" style="margin-top:45px;margin-left:150px;height:50px;width:120px;position:absolute;right:50px;bottom:10px;" />
+    </div>-->
+        </form>
+    </div>
+</body>
+
+</html>

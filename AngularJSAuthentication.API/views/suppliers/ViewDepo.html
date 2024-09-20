@@ -1,0 +1,558 @@
+﻿
+<head>
+    <style>
+
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Depo Master
+            </strong>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' S.No')"
+                                  data-ng-class="{active: row == ' S.No'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- S.No')"
+                                  data-ng-class="{active: row == '- S.No'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            s
+                            Depo Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DepoName')"
+                                  data-ng-class="{active: row == 'DepoName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DepoName')"
+                                  data-ng-class="{active: row == '-DepoName'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Depo Code
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DepoCode')"
+                                  data-ng-class="{active: row == 'DepoCode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DepoCode')"
+                                  data-ng-class="{active: row == '-DepoCode'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            State
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('State')"
+                                  data-ng-class="{active: row == 'State'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-State')"
+                                  data-ng-class="{active: row == '-State'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            City
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('City')"
+                                  data-ng-class="{active: row == 'City'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-City')"
+                                  data-ng-class="{active: row == '-City'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Supplier Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Supplier Name')"
+                                  data-ng-class="{active: row == 'SupplierName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SupplierName')"
+                                  data-ng-class="{active: row == '-SupplierName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Supplier Code
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SupplierCode')"
+                                  data-ng-class="{active: row == 'SupplierCode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SupplierCode')"
+                                  data-ng-class="{active: row == '-SupplierCode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            GST No.
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('GSTNo.')"
+                                  data-ng-class="{active: row == 'GSTNo'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-GSTNo')"
+                                  data-ng-class="{active: row == '-GSTNo'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Address
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Address.')"
+                                  data-ng-class="{active: row == 'Address'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Address')"
+                                  data-ng-class="{active: row == '-Address'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Email
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Email.')"
+                                  data-ng-class="{active: row == 'Email'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Email')"
+                                  data-ng-class="{active: row == '-Email'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Phone Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="PhoneNumber"
+                                  data-ng-class="{active: row == 'PhoneNumber'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PhoneNumber')"
+                                  data-ng-class="{active: row == '-PhoneNumber'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Contact Person
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="ContactPerson"
+                                  data-ng-class="{active: row == 'ContactPerson'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ContactPerson')"
+                                  data-ng-class="{active: row == '-ContactPerson'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            UpdateDate
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="UpdateDate"
+                                  data-ng-class="{active: row == 'UpdateDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UpdateDate')"
+                                  data-ng-class="{active: row == '-UpdateDate'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            GST Image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="UpdateDate"
+                                  data-ng-class="{active: row == 'UpdateDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UpdateDate')"
+                                  data-ng-class="{active: row == '-UpdateDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Pancard Image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="UpdateDate"
+                                  data-ng-class="{active: row == 'UpdateDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UpdateDate')"
+                                  data-ng-class="{active: row == '-UpdateDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            FSSAI Image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="UpdateDate"
+                                  data-ng-class="{active: row == 'UpdateDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UpdateDate')"
+                                  data-ng-class="{active: row == '-UpdateDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CancelCheque Image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="UpdateDate"
+                                  data-ng-class="{active: row == 'UpdateDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UpdateDate')"
+                                  data-ng-class="{active: row == '-UpdateDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            IsActive
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="trade in DepoDetaildata">
+                    <td>
+                        {{1+$index}}
+                    </td>
+
+                    <td>
+                        {{trade.DepoName}}
+                    </td>
+                    <td>
+                        {{trade.DepoCodes}}
+                    </td>
+                    <td>
+                        {{trade.StateName}}
+                    </td>
+                    <td>
+                        {{trade.CityName}}
+                    </td>
+
+                    <td>
+                        {{trade.SupplierName}}
+                    </td>
+                    <td>
+                        {{trade.SupplierCode}}
+                    </td>
+                    <td>
+                        {{trade.GSTin}}
+                    </td>
+                    <td>
+
+                        {{trade.Address}}
+                    </td>
+                    <td>
+                        {{trade.Email}}
+                    </td>
+                    <td>
+                        {{trade.Phone}}
+
+                    </td>
+                    <td>
+                        {{trade.ContactPerson}}
+
+                    </td>
+                    <td>
+                        {{trade.UpdatedDate| date:'medium'}}
+                    </td>
+                    <td>
+                        <img src={{trade.GstImage}} class="img-square img80_80" />
+
+                    </td>
+                    <td>
+                        <img src={{trade.FSSAIImage}} class="img-square img80_80" />
+                    </td>
+                    <td>
+                        <img src={{trade.PanCardImage}} class="img-square img80_80" />
+                    </td>
+                    <td>
+                        <img src={{trade.CancelCheque}} class="img-square img80_80" />
+
+
+                    </td>
+
+                    <td ng-if="trade.IsActive == false"><button class="btn-sm btn-primary" ng-click="ActiveDepo(trade)">Activate</button> </td>
+                    <td ng-if="trade.IsActive == true"><button class="btn-sm btn-danger" ng-click="ActiveDepo(trade)">Deactivate</button> </td>
+                    <td><button class="btn-sm btn-primary" ng-click="EditDepo(trade)">Edit</button> </td>
+
+                </tr>
+
+         </tbody>
+            
+
+         </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"
+                                data-ng-init="POListChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>
+
+<script type="text/ng-template" id="myDepoModalPut.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Depo</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Depo Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="EditDepo.DepoName" placeholder="Enter Depo name" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="EditDepo.SupplierName" placeholder="Enter Depo name" ng-required disabled />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Codes:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="EditDepo.SupplierCode" placeholder="Enter SalesCode" ng-required disabled />
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">GST:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="EditDepo.GSTin" placeholder="Enter GSTIN" ng-required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="site-name" ng-model="EditDepo.Stateid" ng-change="GetDepoEdit(EditDepo.Stateid)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{state.Stateid}}" ng-repeat="state in states" ng-selected="(EditDepo.Stateid == state.Stateid)"> {{state.StateName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" ng-model="EditDepo.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citys" ng-selected="(EditDepo.Cityid == city.Cityid)"> {{city.CityName}}</option>
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name"> Phone Number:</label><br />
+                <input id="site-name" class="form-control" ng-model="EditDepo.Phone" placeholder="Enter Phone Number" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Address:</label><br />
+                <textarea id="site-name" class="form-control" rows="3" required="" ng-model="EditDepo.Address " placeholder="Enter Address "></textarea>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Email:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="EditDepo.Email" placeholder="Enter EmailId" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">ContactPerson:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="EditDepo.ContactPerson" placeholder="Enter ContactPerson" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">FSSAI:</label><br />
+                <input id="FSSAIname" name="ADDFSSAIname" type="text" class="form-control" ng-model="EditDepo.FSSAI" placeholder="Enter FSSAI Number" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">City Pincode:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter City Pincode " ng-model="EditDepo.CityPincode" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Name:</label><br />
+                <input id="Bankname" name="ADDbankname" type="text" class="form-control" ng-model="EditDepo.Bank_Name" placeholder="Enter Bank name" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Account No:</label><br />
+                <input type="text" class="form-control" ng-model="EditDepo.Bank_AC_No" placeholder="Enter Bank Account Number" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Address</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Bank Address " ng-model="EditDepo.BankAddress" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">IFSC code:</label><br />
+                <input id="ifscname" name="ADD_IFSCname" type="text" class="form-control" ng-model="EditDepo.Bank_Ifsc" placeholder="Enter IFSC code" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Pin Code :</label><br />
+                <input type="number" class="form-control" ng-model="EditDepo.BankPinCode" placeholder="Enter Bank Pin Coder" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">PAN Card No:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter PAN Card No " ng-model="EditDepo.PANCardNo" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Opening Hours:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Opening Hours " ng-model="EditDepo.OpeningHours" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">PRPOStop After Value:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter PRPOStop After Value" ng-model="EditDepo.PRPOStopAfterValue"  />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="PutDepo(EditDepo)">Save</button>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myactiveDepomodal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit OnlineItems </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="ActiveData.IsActive" />
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="ActDepo(ActiveData)">Set</button>
+        </div>
+    </form>
+</script>

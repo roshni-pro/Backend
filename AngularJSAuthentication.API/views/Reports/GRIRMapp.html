@@ -1,0 +1,251 @@
+﻿<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+<div class="client-document-container">
+    <div class="containers">
+        <br />
+        <div class="p-3 mb-2 bg-primary ">
+            <div class="panel-heading"> <h4> <strong> <span class="glyphicon glyphicon-th"> </span>GR IR settlement</strong> </h4></div>
+        </div>
+        <br />
+        <div class="row" style="padding:10px;">
+            <div class="col-sm-2">
+                <label for="site-name"></label><br />
+                <input type="number" placeholder="Enter Purchase Order ID" class="form-control" data-ng-model="searchKey">
+            </div>
+            <div class="col-sm-2">
+
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-primary" ng-click="searchData(searchKey)" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-search"> </span>  Search
+                </button>
+            </div>
+        </div>
+        <br />
+        <div class="row" style="padding:10px;">
+            <div class="col-md-6">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead><tr> <th colspan="11">GR Settled Detail <span style="color:red; font-size:medium;"> {{Message}}</span></th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Qty 1</th>
+                            <th>Qty 2</th>
+                            <th>Qty 3</th>
+                            <th>Qty 4</th>
+                            <th>Qty 5</th>
+                            <th>IR 1</th>
+                            <th>IR 2</th>
+                            <th>IR 3</th>
+                            <th>IR 4</th>
+                            <th>IR 5</th>
+                        </tr>
+                    </thead>
+                    <tr data-ng-repeat="p in SettledData">
+                        <td>{{p.ItemName}}</td>
+                        <td>{{p.QtyRecived1}}</td>
+                        <td>{{p.QtyRecived2}}</td>
+                        <td>{{p.QtyRecived3}}</td>
+                        <td>{{p.QtyRecived4}}</td>
+                        <td>{{p.QtyRecived5}}</td>
+                        <td ng-show="p.Q1Settled != null">{{p.Q1Settled}}</td>
+                        <td ng-show="p.Q1Settled == null"><span style="color:red; font-size:medium;">-</span></td>
+                        <td ng-show="p.Q2Settled != null">{{p.Q2Settled}}</td>
+                        <td ng-show="p.Q2Settled == null"><span style="color:red; font-size:medium;">-</span></td>
+                        <td ng-show="p.Q3Settled != null">{{p.Q3Settled}}</td>
+                        <td ng-show="p.Q3Settled == null"><span style="color:red; font-size:medium;">-</span></td>
+                        <td ng-show="p.Q4Settled != null">{{p.Q4Settled}}</td>
+                        <td ng-show="p.Q4Settled == null"><span style="color:red; font-size:medium;">-</span></td>
+                        <td ng-show="p.Q5Settled != null">{{p.Q5Settled}}</td>
+                        <td ng-show="p.Q5Settled == null"><span style="color:red; font-size:medium;">-</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" style="padding:10px;">
+            <div class="col-md-6">
+                <!--<table class="table table-striped table-bordered table-hover">
+                    <tr><td colspan="2">GR</td></tr>
+                    <tr data-ng-repeat="p in PurchaseOrder.GRIdsObj">
+                        <td>{{p.GrNumber}}</td>
+                        <td><input type="checkbox" ng-model="p.IsSelected" /></td>
+                    </tr>
+                </table>-->
+
+                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th colspan="4">GR Detail</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>SNo.</th>
+                            <th>GR.No.</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="O in PurchaseOrder.GRIdsObj">
+                        <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                            <td class="CX"><span style="color: red;">+</span></td>
+                            <td>{{$index+1}}</td>
+                            <td>{{O.GrNumber}}</td>
+                            <td><input type="checkbox" ng-model="O.IsSelected" style="width: 20px;height: 20px;" /></td>
+                        </tr>
+                        <tr class="sub">
+                            <td></td>
+                            <td colspan="5">
+                                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>Itemnumber</th>
+                                        <th>ItemName</th>
+                                        <th>Quantity</th>
+                                        <th>Select</th>
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.gritem" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.Itemnumber}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.Quantity}}</td>
+                                        <td><input type="checkbox" ng-model="PurchaseorderDetail.IsSelected" /></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="col-md-6">
+                <!--<table class="table table-striped table-bordered table-hover">
+                    <tr><td colspan="2">IR</td></tr>
+                    <tr data-ng-repeat="p in PurchaseOrder.IRIdsObj">
+                        <td>{{p.IrType}} / {{p.IrNumber}}</td>
+                        <td><input type="checkbox" ng-model="p.IsSelected" /></td>
+                    </tr>
+                </table>-->
+                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th colspan="4">IR Detail</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>SNo.</th>
+                            <th>IR Type / IR Number</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="O in PurchaseOrder.IRIdsObj">
+                        <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                            <td class="CX"><span style="color: red;">+</span></td>
+                            <td>{{$index+1}}</td>
+                            <td>{{O.IrType}} / {{O.IrNumber}}</td>
+                            <td><input type="checkbox" ng-model="O.IsSelected" style="width: 20px;height: 20px;" /></td>
+                        </tr>
+                        <tr class="sub">
+                            <td></td>
+                            <td colspan="5">
+                                <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <th>SNo.</th>
+                                        <th>ItemName</th>
+                                        <th>Quantity</th>
+                                        <!--<th>Select</th>-->
+                                    </tr>
+                                    <tr ng-repeat="PurchaseorderDetail in O.Iritem" ng-class-even="'even'" ng-class-odd="'odd'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{PurchaseorderDetail.ItemName}}</td>
+                                        <td>{{PurchaseorderDetail.Quantity}}</td>
+                                        <!--<td><input type="checkbox" ng-model="p.IsSelected" /></td>-->
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <button style="float:right; margin-right:10px;" type="button" class="btn btn-primary" ng-click="Settled(PurchaseOrder)" data-dismiss="modal">
+            Settled Selected GR
+        </button>
+        <button style="float:right; margin-right:10px;" type="button" class="btn btn-danger" ng-click="UnSettled(PurchaseOrder)" data-dismiss="modal">
+            Unsettled All GR
+        </button>
+    </div>
+</div>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>

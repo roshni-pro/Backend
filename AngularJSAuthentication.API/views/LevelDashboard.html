@@ -1,0 +1,423 @@
+﻿<head>
+    <style>
+
+    .nav-tabs {
+    border-bottom: 1px solid #dddddd;
+    float: right;
+    margin: 30px;
+}
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #ffffff;
+    background-color: #01a1e4;
+    border: 1px solid #dad9d9;
+    border-bottom-color: transparent;
+    cursor: default;
+    border-radius: 28px;
+}
+    .panel-default > .panel-heading {
+    color: #767676;
+    background-color: #f3f3f3;
+    border-color: #e9e9e9;
+}
+  .btn-primary {
+    color: white;
+    background-color: #00a4e9;
+    border-color: #00a4e9;
+    border-radius: 16px;
+}
+  b, strong {
+    font-weight: bold;
+    font-family: serif;
+}
+.btn-warning {
+    color: white;
+    background-color: #2ec1cc;
+    border-color: #2ec1cc;
+    border-radius: 21px;
+    margin-right: 5px;
+}
+  .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open > .btn-warning.dropdown-toggle {
+    color: white;
+    background-color: #0b929c;
+    border-color: #0b929c;
+}
+  .btn-danger {
+    color: white;
+    background-color: #e94b3b;
+    border-color: #e63624;
+    border-radius: 21px;
+    margin-right: 100px;
+}
+
+ </style>
+
+</head>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Level  Dashboard
+            </strong>
+        </div>
+        <br />
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label for="site-name">Select City</label><br />
+                  <select class="form-control" id="site-name" ng-model="data.Cityid" data-ng-change="getWarehouse(data.Cityid)">
+                   <option value="">-Select-</option>
+                    <option value="{{city.CityName}}" ng-repeat="city in citys"> {{city.CityName}} {{city.StateName}} </option>
+                  </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="data.WarehouseId" data-ng-change="getLevelData(data.WarehouseId)">
+                    <option value="">-Select-</option>
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+                </select>
+            </div>
+            <tabset>
+                
+                <tab heading="InProgress">
+                    <table class="table table-bordered table-striped table-responsive">
+
+                        <thead>
+                            <tr style="background-color: #ffffff;">
+                                <th>
+                                    <div class="th">
+                                        Select
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        DeliveryBoy
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Delivery Amount
+
+                                    </div>
+
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Case
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Chaque
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Total Online Amount
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Total Collection Amount
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Deu Amount
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Created Date
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr data-ng-repeat="trade in currentPageStores">
+                                <td width="30" style="text-align: center" data-title-text=" ">
+                                    <input type="checkbox" class="ng-valid ng-dirty">
+                                </td>
+                                <td style="color: #eb5a00;  font-size: 150%;">
+                                    <b>{{trade.DBoyPeopleName}}</b><br />
+
+                                </td>
+                                <td style="color: #eb5a00;  font-size: 150%;"><i class="fa fa-rupee"></i>{{trade.TotalDeliveryissueAmt}}</td>
+                                <td style="color: #eb5a00;  font-size: 150%;">
+                                    <i class="fa fa-rupee"></i>
+                                    <b>{{trade.TotalCashAmt}}</b><br />
+                                    <button type="button" class="btn btn-primary" ng-click="opencash(trade.Id)">View</button>
+                                </td>
+                                <td style="color: #eb5a00;  font-size: 150%;">
+                                    <i class="fa fa-rupee"></i>
+                                    <b>{{trade.TotalCheckAmt}}</b><br />
+                                    <button type="button" class="btn btn-primary" ng-click="openCheck({{trade.Id}})">View</button>
+                                </td>
+                                <td style="color: #eb5a00;  font-size: 150%;">
+                                    <i class="fa fa-rupee"></i>
+                                    <b>{{trade.TotalOnlineAmt}}</b><br />
+                                    <button type="button" class="btn btn-primary" ng-click="openonline({{trade.Id}})">View</button>
+                                </td>
+                                <td style="color: #eb5a00;  font-size: 150%;"><i class="fa fa-rupee"></i><b>{{trade.TotalCollectionAmt}}</b></td>
+                                <td style="color: #eb5a00;  font-size: 150%;"><i class="fa fa-rupee"></i>{{trade.TotalDueAmt}}</td>
+                                <td>{{trade.CreatedDate| date:'medium'}}</td>
+
+
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ar btn-warning">Settlement</button>
+                        <button type="button" class="btn btn-ar btn-danger">Decline</button>
+                    </div>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="currentPage"
+                                            total-items="filteredStores.length"
+                                            max-size="4"
+                                            on-select-page="select(page)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+
+                </tab>
+                <tab heading="Settlement">
+                    <table id="allitems" class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr style="background-color: #ffffff;">
+                                <th>
+                                    <div class="th">
+                                        S.No
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        DeliveryBoy
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Delivery Amount
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Case
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Chaque
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Total Online Amount
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Total Collection Amount
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Deu Amount
+
+                                    </div>
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="trade in currentPageStores">
+                                <td>{{trade.TGrpName}}</td>
+                                <td>{{trade.TGrpAlias}}</td>
+                                <td>{{trade.TGrpDiscription}}</td>
+                                <td>{{trade.CreatedDate | date:'medium'}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="currentPage"
+                                            total-items="filteredStores.length"
+                                            max-size="4"
+                                            on-select-page="select(page)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+
+                </tab>
+                <tab heading="Decline">
+                    <table id="allitems" class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr style="background-color: #ffffff;">
+                                <th>
+                                    <div class="th">
+                                        S.No
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        DeliveryBoy
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Delivery Amount
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Case
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Chaque
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Total Online Amount
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Total Collection Amount
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Total Deu Amount
+
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr data-ng-repeat="trade in currentPageStores">
+
+                                <td>{{trade.Warehouseid}}</td>
+
+                                <td>{{trade.DBoyPeopleId}}</td>
+
+                                <td>{{trade.TotalCashAmt}}</td>
+
+                                <td>{{trade.CreatedDate | date:'medium'}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="currentPage"
+                                            total-items="filteredStores.length"
+                                            max-size="4"
+                                            on-select-page="select(page)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </tab>
+            </tabset>
+        </div>
+    </section>
+</div>
+
+
+
+
+           
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+     

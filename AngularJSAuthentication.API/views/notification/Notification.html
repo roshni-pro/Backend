@@ -1,0 +1,197 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+</style>
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Notification">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Notification Report
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label for="site-name">Select:</label><br />
+                            <select class="form-control" id="notisel"  name="noti_Select" ng-model="data.type" ng-change="selectedtypeChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" ng-if="data.type==2">
+                            <label for="site-name">Hub</label><br />
+                            <select class="form-control" id="site-name" ng-model="data.WarehouseId" ng-change="selectedWareChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{v.WarehouseId}}" ng-repeat="v in selecthub">{{v.WarehouseName}} {{v.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-if="data.type==3">
+                            <label for="site-name">City</label><br />
+                            <select class="form-control" id="site-name" ng-model="data.Cityid" ng-change="selectedCityChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{ct.Cityid}}" ng-repeat="ct in selectcity">{{ct.CityName}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" ng-if="data.type==5">
+                            <label for="site-name">Cluster</label><br />
+                            <select class="form-control" id="site-name" ng-model="data.ClusterId" ng-change="selectedClusterChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{cl.ClusterId}}" ng-repeat="cl in selectcluster">{{cl.ClusterName}}</option>
+                            </select>
+                        </div>
+
+
+                          <div class="form-group" ng-if="data.type==1">
+                            <label for="site-name">Comp Type:</label><br />
+                            <select class="form-control" id="site-name" ng-model="data.value" ng-change="selectedItemChanged(data)">
+                                <option value="">--select--</option>
+                                <option value="{{a.value}}" ng-repeat="a in catType">{{a.text}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-if="data.value==1">
+                            <label for="site-name">Catogory</label><br />
+                            <select class="form-control" ng-model="data.id" ng-change="selectedCatChanged(data)">
+                                <option value="">---SELECT---</option>
+                                <option value="{{a.Categoryid}}" ng-repeat="a in dataselect1"> {{a.CategoryName}}</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="site-name">Retailer</label><br />
+                            <div ng-dropdown-multiselect="" options="cust" id = "notiretai"  name = "NOTI_Retailer" selected-model="examplemodel" id="notiretai"  name="NOTI_Retailer" extra-settings="examplesettings"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="site-name">Select Date Range</label><br>
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="site-name">Title:</label><br />
+                            <input class="form-control" ng-model="saveData.title" id="not_TTL"  name="NOTITital" />
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Message:</label><br />
+                            <textarea class="form-control" rows="5" ng-model="saveData.Message" id="Notimsg"  name="noti_message"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="uploadAdvertisements">Upload Image:</label>
+                            <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                            <div ng-repeat="item in uploader.queue">
+                                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                    <span class="glyphicon glyphicon-upload"></span> Upload
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-ar btn-primary sksend" id="notipass"  name="NOTISEND" ng-click="Add(saveData)">Send</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+        <br />
+        <br />
+    </section>
+</div>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Notification
+            </strong>
+        </div>
+        <div class="">
+
+            <div class="col-xs-12 col-md-12">
+                <h3>Notification Detail</h3>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Message
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Message') "
+                                          data-ng-class="{active: row == 'Message'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Message') "
+                                          data-ng-class="{active: row == '-Message'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Notification Time
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('NotificationTime') "
+                                          data-ng-class="{active: row == 'NotificationTime'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-NotificationTime') "
+                                          data-ng-class="{active: row == '-NotificationTime'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Image
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Image') "
+                                          data-ng-class="{active: row == 'Image'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Image') "
+                                          data-ng-class="{active: row == '-Image'}"></span>
+                                </div>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{trade.Message}}</td>
+                            <td>{{trade.NotificationTime | date:'medium'}}</td>
+                            <td><img src={{trade.Pic}} class="img-square img80_80" /></td>
+
+                            <!--<td><img alt="" src="/notificationimages/{{trade.Pic}}" class="img-square img80_80"></td>-->
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <dir-pagination-controls max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true"
+                                         on-page-change="getSettlementdata(newPageNumber)">
+                    //get method call every time when page changes
+                </dir-pagination-controls>
+                <div class="col-md-6 text-right pagination-container">
+                    <div class="col-md-6 page-num-info">
+                        <span>
+                            Show
+                            <select data-ng-model="selected"//this give no. of items selected to show on page
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page
+                            entries per page
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

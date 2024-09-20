@@ -1,0 +1,129 @@
+﻿<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 25px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Agent Dashboard">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> Agents Dashboard</strong> </div>
+        <br />
+
+        <div class="row">
+            <div class="col-md-2">
+
+                <div class="form-group">
+                    <label for="People-name">Select Agent:</label><br />
+                    <select id="site-name" class="form-control" ng-model="DeliveryboyData.AgentCode" ng-change="agentchange(DeliveryboyData)">
+                        <option value="">---SELECT---</option>
+                        <option value="{{Agent.AgentCode}}" ng-repeat="Agent in getAgent">{{Agent.DisplayName}}</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <!--<div class="form-group col-md-3 pull-right">
+            <button type="button" class="btn btn-ar btn-success" ng-click="PostDashData()" data-dismiss="modal">Agent report</button>
+        </div>-->
+
+       <br />
+          
+        <div class="row">
+            <div class="col-md-12">
+
+                <table>
+                    <tr>
+                        <th class="col-md-5"></th>
+                        <th>Total</th>
+                        <th>Last Month</th>
+                        <th>This Month</th>
+                        <th>Yesterday</th>
+                        <th>Today</th>
+                    </tr>
+                    <tr>
+                        <td>New Customers (in Number)</td>
+                        <td>{{CustomerTotal}}</td>
+                        <td>{{TotalCustomersInMonth}}</td>
+                        <td>{{TotalCustomerslMonth}}</td>
+                        <td>{{TotalCustomersyDay}}</td>
+                        <td>{{TotalCustomersToday}}</td>
+
+                    </tr>
+                    <tr>
+                        <td>Active Customers (in Number)</td>
+                        <td>{{TotalActive}}</td>
+                        <td>{{TotalActiveCustomerlMonth}}</td>
+                        <td>{{TotalActiveCustomerInMonth}}</td>
+                        <td>{{TotalActiveCustomerYDay}}</td>
+                        <td>{{TotalActiveCustomerToday}}</td>
+                    </tr>
+                    <tr>                                                     
+                        <td>Sale <i class="fa fa-rupee"></i></td>
+                        <td>{{Totalsell|number:2}}</td>
+                        <td></td>
+                        <td>{{TotalCostInMonthsell|number:2}}</td>
+                        <td>{{TotalCostYDaysell|number:2}}</td>
+                        <td>{{TotalCostTodaysell|number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Cancel/Delivered Customer (in Number)</td>
+                        <td>{{TotalStatusCanceled}}\{{TotalStatusdelivered}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+
+                    </tr>
+                    <tr>
+                        <td>In Active Customer (in Number)</td>
+                        <td>{{TotalInActives}}</td>
+                        <td></td>
+                        <td>{{TotalInActiveCustomerInMonth}}</td>
+                        <td>{{TotalInActiveCustomerYDay}}</td>
+                        <td>{{TotalInActiveCustomerToday}}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>No. of Order  (in Number)</td>
+                        <td>{{TotalOrders}}</td>
+                        <td></td>
+                        <td>{{TotalOrdersInmonth}}</td>
+                        <td>{{TotalOrdersyDay}}</td>
+                        <td>{{TotalOrdersToday}}</td>
+                    </tr>
+                    <tr>
+                        <td>Commission <i class="fa fa-rupee"></i></td>
+                        <td></td>
+                        <td>-</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                  
+
+
+                </table>
+
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+

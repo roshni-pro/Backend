@@ -1,0 +1,247 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Delivery" pageName="Change Delivery Boy">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Change Delivery Orders
+            </strong>
+        </div>
+        <br />
+        <!--<div>-->
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-2 ">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getWarehousebyId(WarehouseId)">
+                    <option value="">-Select-</option>
+                    <option value="{{warehouses.value}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.value"> {{warehouses.label}} </option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Delivery boy</label><br>
+                <select class="form-control" id="site-name" ng-model="Mobile" ng-change="getdborders(Mobile)">
+                    <option value="">-Select-</option>
+                    <option value="{{db}}" ng-repeat="db in DBoys"> {{db.DisplayName}}</option>
+                </select>
+            </div>
+            <!--<div class="form-group col-md-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData(WarehouseId)">
+                    <option value="">-Select-</option>
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                </select>
+            </div>-->
+
+            <div class="form-group col-md-2">
+                <label for="site-name">Change to Delivery boy</label><br>
+                <select class="form-control" id="site-name" ng-model="db2" ng-change="d2(db2)">
+                    <option value="">-Select-</option>
+                    <option value="{{db1}}" ng-repeat="db1 in DBoys"> {{db1.DisplayName}}</option>
+                </select>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            <!--<input type="checkbox" value="all" ng-checked="selectall()"/>-->
+                            Select Order
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Order Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shop Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CityName')"
+                                  data-ng-class="{active: row == 'CityName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CityName')"
+                                  data-ng-class="{active: row == '-CityName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cluster Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CityName')"
+                                  data-ng-class="{active: row == 'CityName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CityName')"
+                                  data-ng-class="{active: row == '-CityName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delivery Address
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CityName')"
+                                  data-ng-class="{active: row == 'CityName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CityName')"
+                                  data-ng-class="{active: row == '-CityName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delivery Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Details
+                        </div>
+                    </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in DBoyorders">
+                    <td>
+                        <span ng-if="!trade.IsClusterStoppedManualAssignment">
+                            <input type="checkbox" value="{{trade.check}}" ng-model="trade.check" />
+                        </span>
+                        <span ng-if="trade.IsClusterStoppedManualAssignment">
+                            <level style="color:crimson;"> <b> Dboy Change </b> <br /> stopped at Warehouse level.</level>
+                        </span>
+                    </td>
+                    <td>{{trade.OrderId}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.ClusterName}}</td>
+                    <td>{{trade.BillingAddress}}</td>
+                    <td>{{trade.Deliverydate| date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="open(trade)">Details</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-success skChangeDeliveryBoy" ng-click="ChangeDB()" data-dismiss="modal">Change Delivery Boy</button>
+                <br /><br />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </section>
+
+</div>
+
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myCDboyModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Order Details</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Product Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    QTY
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Unit Price
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Total Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Size Per Unit
+                                </div>
+                            </th>
+
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in orderdetails">
+                            <td>{{trade.itemname}}</td>
+                            <td>{{trade.qty}}</td>
+                            <td>{{trade.UnitPrice}}</td>
+                            <td>{{trade.TotalAmt}}</td>
+                            <td>{{trade.SizePerUnit}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Ok</button>
+        </div>
+    </form>
+</script>
+
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- dialog body -->
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                Confirm change delivery boy
+            </div>
+            <!-- dialog buttons -->
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" ng-click="chnge()" class="btn btn-primary">OK</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" data-dismiss="modal" ng-click="cncel()" class="btn btn-primary">Cancel</button>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>

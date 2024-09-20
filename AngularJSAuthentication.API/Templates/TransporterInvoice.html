@@ -1,0 +1,160 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div style="width:95%; max-width:1450px; margin:0px auto;">
+        <div style="text-align:center;">
+            <h3 style="background:#eee; padding:5px 0px;font-weight: 600;">SHOPKIRANA E-TRADING PVT. LTD.</h3>
+            <h4 style="margin:5px 0px;font-weight: 600;">Invoice</h4>
+        </div>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+                    <tr>
+                        <td style="padding:3px 5px;">Invoice No.</td>
+                        <td style="padding:3px 5px;">@InvoiceNo</td>
+                        <td style="padding:3px 5px;">Invoice Date:</td>
+                        <td style="padding:3px 5px;">@InvoiceDate</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <br>
+
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+                    <tr>
+                        <td style="padding:3px 5px;" >Vendor Name</td>
+                        <td colspan="3">@VendorName</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Address</td>
+                        <td style="padding:3px 5px;">@TransporterAddress</td>
+                        <td style="padding:3px 5px;">City</td>
+                        <td style="padding:3px 5px;">@TransporterCity</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">State</td>
+                        <td style="padding:3px 5px;">@TransporterState</td>
+                        <td style="padding:3px 5px;">PAN Number</td>
+                        <td style="padding:3px 5px;">@TransporterPAN</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">GSTIN</td>
+                        <td style="padding:3px 5px;">@TransporterGSTIN</td>
+                        <td style="padding:3px 5px;">RCM</td>
+                        <td style="padding:3px 5px;">@TransporterRCM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <br>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+                    <tr>
+                        <td style="padding:3px 5px;" >Bill To</td>
+                        <td style="padding:3px 5px;" colspan="3">SHOPKIRANA E TRADING PVT LTD</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Address</td>
+                        <td style="padding:3px 5px;">Plot No. 25, 15th Floor, Skye Corporate Park, Scheme No. 78, Part II, Sector B, AB Road, Indore, Indore, Madhya Pradesh, 452010
+                        </td>
+                        <td style="padding:3px 5px;">Hub Location</td>
+                        <td style="padding:3px 5px;">@HubAddress</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">State</td>
+                        <td style="padding:3px 5px;">@HubState</td>
+                        <td style="padding:3px 5px;">PAN Number</td>
+                        <td style="padding:3px 5px;">@HubPAN</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">GSTIN</td>
+                        <td style="padding:3px 5px;">@HubGSTIN</td>
+                        <td style="padding:3px 5px;">Code</td>
+                        <td style="padding:3px 5px;">23</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <br>
+
+        <div style="width: 100%; overflow-x: auto;">
+            <table width="100%" border="1" cellpadding="0" cellspacing="0" style="margin:5px 0px;">
+                <tbody>
+                    <tr>
+                        <td style="padding:3px 5px;">Sr. No.</td>
+                        <td style="padding:3px 5px;">Description of Services</td>
+                        <td style="padding:3px 5px;">SAC Code</td>
+                        <td style="padding:3px 5px;">Amount</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">1</td>
+                        <td style="padding:3px 5px;">@TransporterName</td>
+                        <td style="padding:3px 5px;">9965</td>
+                        <td style="padding:3px 5px;">@UtilAmount</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">2</td>
+                        <td style="padding:3px 5px;">Extra Km Charges</td>
+                        <td style="padding:3px 5px;">9965</td>
+                        <td style="padding:3px 5px;">@ExtraKmCharges</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">3</td>
+                        <td style="padding:3px 5px;">Other Charges</td>
+                        <td style="padding:3px 5px;">9965</td>
+                        <td style="padding:3px 5px;">@OtherCharges</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;"></td>
+                        <td style="padding:3px 5px;"></td>
+                        <td style="padding:3px 5px;">Taxable Amount</td>
+                        <td style="padding:3px 5px;">@TaxableAmount</td>
+                    </tr>
+                    @TaxRowsForFCM
+                    <tr>
+                        <td style="padding:3px 5px;"></td>
+                        <td style="padding:3px 5px;"></td>
+                        <td style="padding:3px 5px;">Total</td>
+                        <td style="padding:3px 5px;">@TotalAmountNumber</td>
+                    </tr>
+
+                    @TaxRowsForRCM
+                    <tr>
+                        <td style="padding:3px 5px;" colspan="4">Total invoice amount in words </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Rs.</td>
+                        <td style="padding:3px 5px;" colspan="3">@TotalAmountInWords</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:3px 5px;">Remark</td>
+                        <td style="padding:3px 5px;" colspan="3"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        
+
+    </div>
+
+</body>
+
+</html>

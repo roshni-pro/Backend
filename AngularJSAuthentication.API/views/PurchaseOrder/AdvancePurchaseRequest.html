@@ -1,0 +1,287 @@
+﻿
+
+<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="View Purchase Order">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>Advance Purchase Order Request</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-primary skadd" ng-click="openmodel()" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-plus"> </span>Advance PR
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="site-name"> </label><br />
+                            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData1(pageno)">
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="site-name"></label><br />
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                    <span class="input-group-addon ">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-primary skexport" ng-click="exportData(WarehouseId)">
+                                <span class="glyphicon glyphicon-export"> </span> Export
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="site-name"></label><br />
+                            <input type="text" placeholder="Enter PO Id/SupplierName" class="form-control" data-ng-model="searchKey">
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-primary" ng-click="searchData()" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-search"> </span>  Search By PO No.
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!--<div class="col-md-2">
+                            <label for="site-name">Select Export Warehouses</label><br/>
+                            <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                        </div>
+                        <div style="background-color:antiquewhite">-->
+
+
+                        <div class="col-md-2">
+                            <label for="site-name"></label><br />
+                            <form>
+                                <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                            </form>
+                        </div>
+                        <div class="col-md-2 filter-result-info">
+                            <label for="site-name"></label><br />
+                            <span>
+                                Showing {{filteredStores.length}}/{{stores.length}} Entries
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-responsive " ng-show="order">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PR Order #
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse
+
+                                </div>
+                            </th>
+                            <th ng-hide="Role == true">
+                                <div class="th">
+                                    Supplier Name
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Status
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PR Type
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Edit
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Details
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PRCancel
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Advance Payment Status
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Clone
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{$index+1}}</td>
+                            <td>
+                                {{trade.PurchaseOrderId}}
+                                <br />
+                                <span ng-if="(trade.PoType == 'Auto PR')" class="label label-danger ng-binding">{{trade.PoType}} </span>
+                            </td>
+                            <td>{{trade.WarehouseName}}&nbsp;({{trade.WarehouseCity}}) </td>
+                            <td ng-hide="Role == true">{{trade.SupplierName}}</td>
+                            <td>
+                                <span ng-if="(trade.PRStatus == '0')">PR Draft</span>
+                                <span ng-if="(trade.PRStatus == '1')">PR Send For Approval</span>
+                                <span ng-if="(trade.PRStatus == '2')">PR Cancel</span>
+                                <span ng-if="(trade.PRStatus == '3')">PR Payment Approval Pending</span>
+                                <span ng-if="(trade.PRStatus == '4')">PR Rejected by Approver</span>
+                                <span ng-if="(trade.PRStatus == '5')">PR Payment Approved</span>
+                                <span ng-if="(trade.PRStatus == '6')">PR Payment Rejected</span>
+                                <span ng-if="(trade.PRStatus == '7')">Auto Closed</span>
+                            </td>
+                            <td>{{trade.CreationDate | date:'medium'}}</td>
+                            <td>
+                                <span ng-if="(trade.PRPaymentType == 'AdvancePR')" class="label label-info ng-binding">Advance PR</span>
+                                <span ng-if="(trade.PRPaymentType == 'CreditPR')" class="label label-success ng-binding">Credit PR</span>
+                                <br />
+                                <br />
+                                <span ng-if="(trade.IsAdjustmentPo == true)" class="badge badge-primary">Adjustment Po</span>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-info  btn-sm skopen" ng-click="open(trade)" ng-disabled="trade.PRStatus == '2'  ">
+                                    <span class="glyphicon glyphicon-eye-open "></span> Edit
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary  btn-sm skopen" ng-click="openDetails(trade)">
+                                    <span class="glyphicon glyphicon-eye-open"></span> Details
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger  btn-sm skopen" ng-click="CancelModel(trade)" ng-disabled="trade.PRStatus == '2' || trade.PRStatus=='5'">
+                                    <span class="glyphicon glyphicon-eye-open "></span> PRCancel
+                                </button>
+                            </td>
+                            <td>
+                                <span ng-if="(trade.IsAdvancePayment == true && trade.PRPaymentType == 'AdvancePR')" class="label label-success ng-binding">Paid</span>
+                                <span ng-if="(trade.IsAdvancePayment == false && trade.PRPaymentType == 'AdvancePR')" class="label label-danger ng-binding">UnPaid</span>
+                            </td>
+                            <td><button class="btn btn-danger" ng-show="trade.PRStatus == '7'" style="float:right; margin-right: 15px;" ng-disabled="IRMasterDc.IRStatus == 'Rejected from Buyer side' || IRMasterDc.IRStatus == 'Approved from Buyer side' || userapprove == true" ng-click="OpenClone(trade)"><span class="glyphicon glyphicon-ok"></span>&nbsp;Clone PR</button>&nbsp;&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="selectedPagedItem"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 page-num-info">
+                            <dir-pagination-controls max-size="8"
+                                                     direction-links="true"
+                                                     boundary-links="true"
+                                                     on-page-change="getData1(newPageNumber)">
+                                //get method call every time when page changes
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script type="text/ng-template" id="myCancelModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Cancel Purchase Request</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-6">
+                <label for="site-for">Why PR Cancel ? Please Enter Comment<span style="color:red;"></span></label><br />
+                <textarea type="text" class="form-control ng-pristine ng-valid" maxlength="500" ng-model="data.Comment" placeholder="Please Enter Comment"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-info" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-info" ng-click="CancelPR(data)">Save</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="PRClone.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">PR Clone</h4>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="site-name">Do you want to Clone this PR ?</label><br />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">PR ID</label><br />
+                    <input class="form-control" ng-model="saveData.PurchaseOrderId" disabled />
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Clone(saveData)">Yes</button>
+        </div>
+    </form>
+</script>
+
+
+

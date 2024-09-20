@@ -1,0 +1,144 @@
+2023-09-18 16:31:45.0323|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-09-18 16:31:45.0853|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-09-18 16:32:03.3881|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-09-18 16:32:03.3881|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-09-18 16:32:23.5839|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-09-18 16:32:23.5839|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-09-18 16:32:40.1871|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-09-18 16:32:40.1871|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-09-18 16:32:59.0409|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-09-18 16:32:59.0409|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-09-18 16:34:51.9696|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-18 16:35:00.7926|INFO|AngularJSAuthentication.API.Controllers.CityController|start City: 
+2023-09-18 16:35:00.7926|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-09-18 16:35:00.7926|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-09-18 16:35:04.1638|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-09-18 16:35:56.7149|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 16:36:22.2325|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 16:38:16.2291|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 16:38:28.7997|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-09-18 16:38:28.7997|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2023-09-18 16:38:28.8577|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-09-18 16:38:39.2582|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-09-18 16:38:39.2582|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2023-09-18 16:38:39.3132|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-09-18 16:38:51.1575|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 17:23:05.0278|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-18 18:37:42.4124|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 18:38:35.9406|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-18 18:46:44.9691|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 18:47:34.2351|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 18:48:30.1291|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 18:51:45.3035|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 18:53:16.1502|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 
+2023-09-18 18:53:29.6837|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|edit price get ItemMaster: 

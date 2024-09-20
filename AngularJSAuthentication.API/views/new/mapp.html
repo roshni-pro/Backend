@@ -1,0 +1,58 @@
+﻿<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Mapping</strong></div>
+        <div class="panel-body">
+            <input type="text" ng-model="cat.t">
+            <div>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="mapp(t)">Mapp</button>
+               </div>
+            </div>
+
+        <!--<textarea id="site-name" class="form-control" rows="10"></textarea>-->
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Warehouse Category Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'StateName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-StateName')"
+                                  data-ng-class="{active: row == '-StateName'}"></span>
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Warehouse SubCategory Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'StateName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-StateName')"
+                                  data-ng-class="{active: row == '-StateName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse SubsubCategory Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'StateName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-StateName')"
+                                  data-ng-class="{active: row == '-StateName'}"></span>
+                        </div>
+                    </th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.WhCategoryName}}</td>
+                    <!--<td>{{trade.WhSubcategoryName}}</td>
+                    <td>{{trade.WhSubsubcategoryName}}</td>-->
+                </tr>
+</table>
+</section>
+ </div>

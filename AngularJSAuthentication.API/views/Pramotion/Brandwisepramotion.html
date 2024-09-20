@@ -1,0 +1,180 @@
+﻿<div class="page page-table">
+    <div class="modal-header">
+        <h4 class="modal-title">Add Pramotional Brand Item</h4>
+    </div>
+    <section class="panel panel-default table-dynamic">
+        <form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+            <div class="form-group col-md-12">
+                <div class="form-group col-md-4">
+
+                    <div class="form-group">
+                        <label for="site-name">Select State:</label><br />
+                        <select class="form-control" id="site-name" ng-model="branddata.Stateid">
+                            <option value="">---SELECT---</option>
+                            <option value="{{state.Stateid}}" ng-repeat="state in states"> {{state.StateName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="form-group">
+                        <label for="site-name">Select City:</label><br />
+                        <select class="form-control" id="site-name" data-ng-disabled="!branddata.Stateid" ng-model="branddata.Cityid">
+                            <option value="">---SELECT---</option>
+                            <option value="{{city.Cityid}}" ng-repeat="city in cities|filter:{Stateid:branddata.Stateid}"> {{city.CityName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="site-name">Warehouses</label><br>
+                    <select class="form-control" id="site-name" data-ng-disabled="!branddata.Cityid" ng-model="branddata.WarehouseId" ng-change="showsubcategory()">
+                        <option value=""> ---SELECT--- </option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse | filter:{Cityid:branddata.Cityid}"> {{warehouses.WarehouseName}}</option> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3">
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="site-name">Select Brand:</label><br />
+                <select class="form-control" id="site-name" data-ng-disabled="!branddata.WarehouseId" ng-model="branddata.SubsubCategoryid" ng-change="showBrandWise()">
+                    <option value="">---SELECT---</option>
+                    <option value="{{subsubcategorys.SubsubCategoryid}}" ng-repeat="subsubcategorys in subsubcategory"> {{subsubcategorys.SubsubcategoryName}}=>{{subsubcategorys.CategoryName}}</option>
+                </select>
+            </div>
+
+            <div ng-show="tableshow">
+                <div class="form-group col-md-12">
+                    <table class="table table-bordered table-striped table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">Item Id</div>
+                                </th>
+                                <th>
+                                    <div class="th">Brand Name</div>
+                                </th>
+                                <th>
+                                    <div class="th">Category Name</div>
+                                </th>
+                                <th>
+                                    <div class="th">SubCategory Name</div>
+                                </th>
+
+                                <th>
+                                    <div class="th">Supplier Name</div>
+                                </th>
+                                <th>
+                                    <div class="th">Item Name</div>
+                                </th>
+                                <th>
+                                    <div class="th">Purchase Sku</div>
+                                </th>
+                                <th>
+                                    <div class="th">Selling Sku</div>
+                                </th>
+                                <th>
+                                    <div class="th">Warehouse</div>
+                                </th>
+                                <th>
+                                    <div class="th">Is Pramotional </div>
+                                </th>                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="sub in subcategory">
+                                <td><input id={{sub.ItemId}} type="text" value="sub.SortOrder" class="form-control" style="width:50px;" ng-model="sub.SortOrder" placeholder="0" required /></td>
+                                <td> <label id={{sub.SubsubcategoryName}} ng-model="sub.ItemId">{{sub.SubsubcategoryName}}</label></td>
+                                <td> <label id={{sub.CategoryName}} ng-model="sub.ItemId">{{sub.CategoryName}}</label></td>
+                                <td> <label id={{sub.SubcategoryName}} ng-model="sub.ItemId">{{sub.SubcategoryName}}</label></td>
+
+                                <td> <label id={{sub.SupplierName}} ng-model="sub.ItemId">{{sub.SupplierName}}</label></td>
+                                <td> <label id={{sub.itemname}} ng-model="sub.SubcategoryName">{{sub.itemname}}</label></td>
+                                <td> <label id={{sub.PurchaseSku}} ng-model="sub.SubcategoryName">{{sub.PurchaseSku}}</label></td>
+                                                              
+                                <td> <label id={{sub.SellingSku}} ng-model="sub.SubcategoryName">{{sub.SellingSku}}</label></td>
+                                <td> <label id={{sub.WarehouseName}} ng-model="sub.WarehouseName">{{sub.WarehouseName}}</label></td>
+                                <td><input id={{sub.ItemId}} type="checkbox" value="" class="form-control" ng-model="sub.IsPramotionalItem" /></td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-3">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="UpdateItemMaster(subcategory)">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </form>
+    </section>
+    <section class="panel panel-default table-dynamic">
+    
+          <br>
+            <div class="form-group col-md-12">
+                <h4 style="background-color: palegreen;font-size: 26px;"> Brand Item Pramotional</h4>
+                <table class="table table-bordered table-striped table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">Item Id</div>
+                            </th>
+                            <th>
+                                <div class="th">Brand Name</div>
+                            </th>
+                            <th>
+                                <div class="th">Category Name</div>
+                            </th>
+                            <th>
+                                <div class="th">SubCategory Name</div>
+                            </th>
+                            <th>
+                                <div class="th">Supplier Name</div>
+                            </th>
+                            <th>
+                                <div class="th">Item Name</div>
+                            </th>
+                            <th>
+                                <div class="th">Purchase Sku</div>
+                            </th>
+                            <th>
+                                <div class="th">Selling Sku</div>
+                            </th>
+                            <th>
+                                <div class="th">Warehouse</div>
+                            </th>
+                            <!--<th>
+                                <div class="th">Is Pramotional </div>
+                            </th>-->
+                            <th>
+                                <div class="th">Is Pramotional</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="sub in asignData">
+                            <td><input id={{sub.ItemId}} type="text" value="sub.SortOrder" class="form-control" style="width:50px;" ng-model="sub.SortOrder" placeholder="0" required /></td>
+                            <td> <label id={{sub.SubsubcategoryName}} ng-model="sub.ItemId">{{sub.SubsubcategoryName}}</label></td>
+                            <td> <label id={{sub.CategoryName}} ng-model="sub.ItemId">{{sub.CategoryName}}</label></td>
+                            <td> <label id={{sub.SubcategoryName}} ng-model="sub.ItemId">{{sub.SubcategoryName}}</label></td>
+
+                            <td> <label id={{sub.SupplierName}} ng-model="sub.ItemId">{{sub.SupplierName}}</label></td>
+                            <td> <label id={{sub.itemname}} ng-model="sub.SubcategoryName">{{sub.itemname}}</label></td>
+                            <td> <label id={{sub.PurchaseSku}} ng-model="sub.SubcategoryName">{{sub.PurchaseSku}}</label></td>
+                            <td> <label id={{sub.SellingSku}} ng-model="sub.SubcategoryName">{{sub.SellingSku}}</label></td>
+                           
+                            <td> <label id={{sub.WarehouseName}} ng-model="sub.WarehouseName">{{sub.WarehouseName}}</label></td>
+                            <!--<td><input id={{sub.ItemId}} type="checkbox" value="" class="form-control" ng-model="sub.IsPramotionalItem" /></td>-->
+                            <td ng-if="sub.IsPramotionalItem == false"><button class="btn-sm btn-primary" ng-click="SetActive(sub)">Activate</button> </td>
+                            <td ng-if="sub.IsPramotionalItem == true"><button class="btn-sm btn-danger" ng-click="SetActive(sub)">Deactivate</button> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        
+        </section>
+
+</div>

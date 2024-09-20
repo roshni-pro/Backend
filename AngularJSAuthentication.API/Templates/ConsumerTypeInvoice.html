@@ -1,0 +1,338 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .border {
+                border: 1px solid #000 !important;
+            }
+
+            th, td, table {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+                border-spacing: 0;
+                column-gap: initial;
+                padding: 0;
+                text-align: center;
+            }
+
+            box {
+                box-sizing: border-box;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            td, th {
+                padding: 5px 15px;
+                text-align: left;
+            }
+
+            table, th, td {
+                border: 1px solid #000;
+            }
+
+            .invoice {
+                margin-right: 1em !important
+            }
+
+            .font-face {
+                font-family: 'Ek Mukta', sans-serif;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="divtoPrint" class="client-document-container" style="font-size: 12px;position: relative;margin-top:10%">
+
+        <div class="containers invoice" style="margin-top:5%">
+
+            <center>
+                <h3 style="padding-top: 5%;"><bold>TAX INVOICE</bold></h3>
+            </center>
+
+            <table style="width:100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;padding-left:10px;vertical-align:top; width:30%;">
+                            <br/>
+                            <img src="../Content/ZilaPicture.png" width="216px" height="98px" />
+                            
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        
+                        <td style="text-align:left;padding-left:10px;vertical-align:top; width:25%;">
+                            <strong style="font-size: 18px;">[FromWarehouseDetail.CompanyName]</strong>
+                            <br />
+                            <span style="font-size: 14px;"><b>CIN: </b></span>U51109MP2014PTC033534<br />
+                            <span style="font-size: 14px;"><b>GSTN Number: </b></span>[FromWarehouseDetail.GSTin] <br />
+                            <span style="font-size: 14px;"><b>FSSAI Number: </b></span>[FromWarehouseDetail.FSSAILicenseNumber] <br />
+                            <span style="font-size: 14px;width:70%"><b>Address :</b> [FromWarehouseDetail.Address]</span><br />
+                            <span style="font-size: 14px;">[FromWarehouseDetail.StateName] ,India </span><br />
+                            <span style="font-size: 14px;"><b>Contact Number : </b> [FromWarehouseDetail.Phone]</span>
+                        </td>
+                    </tr>
+                    <!--<tr ng-if="![[OrderData1.IRNNo]==null || [OrderData1.IRNNo]==undefined ||  [OrderData1.IRNNo]==''] && [OrderData1.POCIRNNo]==null || [OrderData1.POCIRNNo]==undefined ||  [OrderData1.POCIRNNo]=='']">
+                        <td style="padding:15px">
+                            <b>IRN No.:</b><strong> [OrderData1.IRNNo]</strong>
+                        </td>
+                    </tr>
+                    <tr ng-if="![[OrderData1.POCIRNNo]==null || [OrderData1.POCIRNNo]==undefined ||  [OrderData1.POCIRNNo]=='']">
+                        <td style="padding:15px">
+                            <b>POC IRN No.:</b><strong>[OrderData1.POCIRNNo]</strong>
+                        </td>
+                    </tr>-->
+                </tbody>
+            </table>
+            <br />
+
+            <div style="border:none;border-bottom:none">
+
+            </div>
+            <br />
+            <table style="width:100%;">
+                <tr>
+                    <td style="text-align:left;padding-left:10px;vertical-align:top; width:30%;">
+                        <strong style="font-size: 14px;">Bill To:</strong>
+                        <br />
+                        <strong style="font-size: 12px;"><b>Receiver's Name :</b> [OrderData1.ShopName]</strong><br />
+                        <span style="font-size: 14px;"><b>Address : </b> [OrderData1.BillingAddress]</span><br />
+                        <span style="font-size: 14px;"><b>GSTN Number :</b> [OrderData1.Tin_No]</span><br />
+                        <span style="font-size: 14px;"><b>Customer Name : </b>[OrderData1.CustomerName]</span><br />
+                        <span style="font-size: 14px;"><b>SKCode :</b> <strong>[OrderData1.Skcode]</strong></span><br />
+                        <span style="font-size: 14px;"><b>Mobile : </b>[OrderData1.Customerphonenum]</span><br />
+                        <span style="font-size: 14px;"><b>Place of Supply : </b>[OrderData1.BillingStateName]</span><br />
+                        <span style="font-size: 14px;"><b>Code : </b>[OrderData1.BillingStateCode]</span>
+
+                        <!--<span style="color:red;" ng-if="[[OrderData1.IsPrimeCustomer]!=False]">
+                            "* Fayda Club "
+
+                        </span>-->
+                        <!--<span style="color:red;" ng-if="[[OrderData1.IsPrimeCustomer]==False]">
+                            "  "
+
+                        </span>
+                        <span ng-i-->
+                        <!--f="OrderData1.IsFirstOrder"> <strong style="font-size: 14px;">* 1st Order</strong> </span>-->
+
+                    </td>
+                    <td style="text-align:left;padding-left:10px;vertical-align:top;width:25%;">
+                        <strong style="font-size: 14px;">Ship To:</strong>
+                        <br />
+                        <span style="font-size: 14px;"><b>Address : </b> [OrderData1.ShippingAddress]</span><br />
+                        <span style="font-size: 14px;"><b>Place of Supply : </b>[OrderData1.shippingStateName]</span><br />
+                        <span style="font-size: 14px;"><b>Code : </b>[OrderData1.shippingStateCode]</span><br />
+                    </td>
+                    <td style="text-align:left;padding-left:10px;vertical-align:top; width:25%;">
+                        <span style="font-size: 14px;"><b>Invoice No.:</b><strong> [OrderData1.invoice_no]</strong></span><br />
+                        <span style="font-size: 14px;"><b>Invoice Date : </b>[OrderData1.CreatedDate]</span><br />
+                        <span style="font-size: 14px;"><b>Order Id: </b>[OrderData1.OrderId]</span><br />
+                        <span style="font-size: 14px;"><b>Order Date : </b>[OrderData1.OrderedDate]</span><br />
+                        <span style="font-size: 14px;"><b>Eway Bill Number : </b>[OrderData1.EwayBillNumber]</span><br />
+                        <!--<span style="font-size: 14px;" ng-if="OrderData1.PocCreditNoteNumber"><b>Credit note No.:</b><strong> [OrderData1.PocCreditNoteNumber]</strong></span><br />
+                        <span style="font-size: 14px;" ng-if="OrderData1.PocCreditNoteDate"><b>Credit note Date.:</b><strong> [OrderData1.PocCreditNoteDate]</strong></span>-->
+                    </td>                    
+                </tr>
+                <tr>
+            </table>
+
+            <table style="width:100%;">
+                <tr>
+                    <td colspan="3">
+                        <div class="table-responsive">
+                            <div class="table-responsive">
+                                <table style="font-size:12px!important;" width="100%">
+                                    <thead style="border-bottom:none !important;">
+
+                                        <tr>
+                                            <td style"><strong>S.No.</strong></td>
+                                            <td style="width:21%"><strong>Item Name</strong></td>
+                                            <td style="width:3%"><strong>MRP</strong></td>
+                                            <td style="width:8%"><strong>Unit Price</strong></td>
+                                            <td style="width:12%"><strong>Total Qty(pcs)</strong></td>
+                                            <td style="width:0%"><strong>Taxable Value</strong></td>
+                                            <td class="border" style="width:10%"><strong>HSN Code</strong></td>
+                                            <!--<td class="border" ng-if="[OrderData1.IsIgstInvoice== true]" style="width:15%"><strong>IGST%</strong></td>
+                                            <td class="border" ng-if="[OrderData1.IsIgstInvoice== true]" style="width:15%"><strong>IGST</strong></td>-->
+                                            <td class="border" ng-if="[OrderData1.IsIgstInvoice== false]" style="width:8%"><strong>SGST%</strong></td>
+                                            <td class="border" ng-if="[OrderData1.IsIgstInvoice== false]" style="width:0%"><strong>SGST</strong></td>
+                                            <td class="border" ng-if="[OrderData1.IsIgstInvoice== false]" style="width:5%"><strong>CGST%</strong></td>
+                                            <td class="border" ng-if="[OrderData1.IsIgstInvoice== false]" style="width:5%"><strong>CGST</strong></td>
+                                            <!--//cess-->
+                                            <!--<td class="border" ng-if="[HideCessColumn == true && OrderData1.IsIgstInvoice== false]" style="width:15%"><strong>Cess%</strong></td>
+                                            <td class="border" ng-if="[HideCessColumn == true && OrderData1.IsIgstInvoice== false]" style="width:10%"><strong>Cess</strong></td>-->
+                                            <td class="border" style="width:15%"><b>TotalAmt (Inc.Tax)</b></td>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody class="border">
+                                        ##OrderDataRows##
+                                        <tr>
+                                            <td><b></b></td>
+                                            <td><strong>Total: </strong></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><b>[TotalDetailQty]</b></td>
+                                            <td><b>[totalTaxableValue]</b></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><b>[totalSGST]</b></td>
+                                            <td></td>
+                                            <td><b>[totalCGST]</b></td>
+                                            <td><b>[TotalIOverall]</b></td>
+                                        </tr>
+                                        <!--##getOrderDataRows##-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="no-print">
+                <hr />
+            </div>
+
+
+            <table style="width:100%;">
+                <tr>
+                    <td colspan="3">
+                        <div class="table-responsive">
+                            <div class="table-responsive">
+                                <table style="font-size:12px!important;" width="100%">
+                                    <thead style="border-bottom: none !important;padding:0 5px;">
+                                        <tr>
+                                            <td><strong>HSN Summary</strong></td>
+                                            <td><strong>Taxable Value</strong></td>
+                                            <td class="border" ng-if="[OrderData1.IsIgstInvoice== false]"><strong>CGST</strong></td>
+                                            <td class="border" ng-if="[OrderData1.IsIgstInvoice== false]"><strong>SGST</strong></td>
+                                            <!--<td class="border" ng-if="[OrderData1.IsIgstInvoice== true]"><strong>IGST</strong></td>-->
+                                            <!--//cess-->
+                                            <!--<td class="border"><strong>Cess</strong></td>-->
+                                            <td><strong>Total</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="border">
+                                        ##SumDataHSNROWS##
+                                        <tr>
+                                            <td><strong> Total:</strong></td>
+                                            <td><b>[totalTaxableValue]</b></td>
+                                            <!--<td ng-if="([OrderData1.IsIgstInvoice]== true)"><b>[totalIGST]</b></td>-->
+                                            <td ng-if="([OrderData1.IsIgstInvoice]== false)"><b>[totalCGST]</b></td>
+                                            <td ng-if="([OrderData1.IsIgstInvoice]== false)"><b>[totalSGST]</b></td>
+
+                                            <!--<td><b>[totalCess]</b></td>-->
+                                            <td>
+                                                <b>[TotalIOverall]</b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="no-print">
+                <hr />
+            </div>
+            <table style="width:100%;">
+                <tr>
+                    <td style="text-align:left;padding-left:10px;vertical-align:top;width:100%;">
+                        <table border="0" style="font-size:14px">
+
+                            <tr ng-if="[OrderData1.deliveryCharge]>0">
+                                <td><b>Delivery Charge:</b>  </td>
+                                <td>[OrderData1.deliveryCharge]&nbsp;₹ /- </td> <!--<span ng-if="[OrderData1.OrderType]==4 && [OrderData1.paymentThrough]=='Cash'">(Included COD Charges)</span>-->
+                            </tr>
+                            <tr ng-if="OrderData1.WalletAmount>0">
+                                <td><b>Wallet Amount: </b></td>
+                                <td>[OrderData1.WalletAmount]&nbsp;₹ /-</td>
+                            </tr>
+                            <tr ng-if="OrderData1.BillDiscountAmount>0">
+                                <td><b>Bill Discount Amount: </b> <br /><b>Offer Code:</b></td>
+                                <td>[OrderData1.BillDiscountAmount]&nbsp;<i class="fa fa-inr"></i> <br />[OrderData1.offertype]</td>
+                            </tr>
+                            <!--<tr ng-if="[InvoiceOrderOffer.BillDiscountAmount]>0">
+                                <td><b>Post Offer Code: </b></td>
+                                <td>[InvoiceOrderOffer.OfferCode]</td>
+                            </tr>-->
+                            <tr ng-if="[InvoiceOrderOffer.BillDiscountAmount]>0 ">
+                                <td><b>Post Wallet Amount:</b></td>
+                                <td>[InvoiceOrderOffer.BillDiscountAmount]<i class="fa fa-inr"></i></td>
+                            </tr>
+                            <!--<tr ng-if="[OrderData1.TCSAmount]>0">
+                                <td> <b>TCS Charge ([TCSPercent]%):</b> </td>
+                                <td> [OrderData1.TCSAmount]&nbsp;₹ /-</td>
+                            </tr>-->
+                            <tr>
+                                <td><b>Invoice Amount:</b> </td>
+                                <td>[InvoiceAmt] &nbsp;₹ /-&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><b>Payment Mode:</b></td>
+                                <td>
+                                    [PaymentAmtFrom]
+                                    <!--<span>
+                                    <span>[PaymentFrom]</span>
+                                    <span>&nbsp;</span>
+                                    <span>
+                                        [amount]&nbsp;₹ /--->
+                                    <!--([IsOnline])-->
+                                    <!--</span>-->
+                                    <!--</span>-->
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align:left">
+                        <span style="font-size: 14px;text-align:left;margin-left:11px;"><strong><b><u>Terms & conditions</u></b></></strong></span><br />
+                        <span style="font-size: 12px; margin-right:5px;">&nbsp;&nbsp;&nbsp;<b>1).</b> Post WalletPoint  will be credited after delivery of order</span><br />
+                        <span style="font-size: 12px;margin-right: 5px;color: red">&nbsp;&nbsp;&nbsp;<b>2).</b>* All Amount in Rupee(₹ )</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left">
+                        [KYCNote]
+                        <!--<span style="font-size: 14px;">
+                            <strong>Note:-Please complete your KYC. You are eligible for  [OrderLimit] more orders. Current Order Count = [CurrentorderCount].</strong>
+                        </span>-->
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <table>
+                <tr>
+                    <td>
+
+                        <span>
+                            This is computer generated invoice no signature required
+                        </span>
+                        <br />
+                        <span>* The courts at Indore alone will have jurisdiction in respect of all disputes arising with regard to the goods sold under this invoice.</span>
+                        <br />
+
+                        <!--<p style="color:red;border:1px dotted black" ng-if="[CustomerCriticalInfo] != " "">
+                            *[CustomerCriticalInfo]
+                        </p>-->
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

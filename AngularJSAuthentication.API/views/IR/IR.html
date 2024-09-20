@@ -1,0 +1,1212 @@
+﻿ <!--Extra page contant-->
+<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<!--Wait Indicator CSS-->
+<style type="text/css">
+    /*body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+    .modal {
+        position: fixed;
+        z-index: 999;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: Black;
+        filter: alpha(opacity=60);
+        opacity: 0.6;
+        -moz-opacity: 0.8;
+    }*/
+    .center {
+        z-index: 1000;
+        margin: 300px auto;
+        padding: 10px;
+        width: 130px;
+        filter: alpha(opacity=100);
+        opacity: 1;
+    }
+
+    .overlaywt {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        background-color: rgba(0,0,0,0.5); /*dim the background*/
+    }
+</style>
+<!--End extra page contant-->
+<style>
+    #cover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 5;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    #loginScreenIR {
+        min-height: 216px;
+        width: 765px;
+        margin: 100px auto;
+        position: relative;
+        z-index: 10;
+        display: block;
+        background: white;
+        border: 3px solid white;
+        border-radius: 7px;
+        margin-left: 612px;
+    }
+
+    .collapsible {
+        background-color: #00a4e9;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 8%;
+        height: 40px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        padding: 10px;
+        box-shadow: 5px 5px 8px gray;
+    }
+
+    .Viewcollapsible {
+        background-color: #00a4e9;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 8%;
+        height: 40px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        padding: 10px;
+        padding-left: 15px;
+        box-shadow: 5px 5px 8px gray;
+    }
+
+    .active, .collapsible:hover {
+        background-color: #555;
+    }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+</style>
+
+<style>
+    div.ex1 {
+        background-color: lightblue;
+        min-height: 300px;
+        max-height: 500px;
+        overflow: scroll;
+    }
+
+    div.ex2 {
+        background-color: lightblue;
+        width: 110px;
+        height: 150px;
+        overflow: hidden;
+    }
+
+    div.ex3 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        overflow: auto;
+    }
+
+    div.ex4 {
+        background-color: lightblue;
+        width: 110px;
+        height: 110px;
+        overflow: visible;
+    }
+</style>
+
+<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+<style>
+    .accordion {
+        background-color: #03A9F4;
+        color: #fff;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 20px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div id="cover" ng-show="IRconfirmshow">
+    <div id="loginScreenIR">
+        <div class="modal-header">
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="cancelConfirmbox()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <form name="myFormSiteModal">
+                <div class="form-group">
+                    <label>Are are sure confirm this IR </label>
+                    <br>
+                    Due Days:<input type="number" value="0" min="0" ng-model="PurchaseorderDetail.DueDays">
+                    Freight Amount:<input type="number" value="0" min="0" ng-model="PurchaseorderDetail.FreightAmount">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger  btn-br" style="float: right;margin-right: 15px;" ng-click="cancelConfirmbox()">
+                        &nbsp;Cancel
+                    </button>
+                    <button id="btnSave" class="btn btn-warning btn-br" style="margin-right: 15px;float: right;" ng-click="saveIrDetails(PurchaseorderDetail)">
+                        &nbsp;Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="divtoPrint" class="client-document-container">
+    <div class="containers">
+        <div class="containers overlaywt" ng-if="myVar">
+            <div class="center">
+                <!--<img alt="" src="http://103.39.134.250:8888/loader.gif" />-->
+            </div>
+        </div>
+        <hr />
+        <br />
+
+
+
+        <div class="row">
+            <table class="table table-bordered" style="font-size:14px!important;" width="100%">
+                <tbody class="border">
+                    <tr>
+                        <td colspan="3" style="text-align:center;font-size:large;"> <strong style="text-align:center;">Purchase Order Detail</strong></td>
+                    </tr>
+                    <tr>
+                        <td height="60" width="33%"> <img src="./images/logo.PNG" style="padding-bottom:20px;" /> <br /></td>
+                        <td height="60" width="33%">
+                            <p style="font-size:large;">
+                                <strong> ShopKirana E Trading Pvt. Ltd.</strong> <br />
+                                <span> Address:&nbsp; 96 , Brijeshwari Annex,</span> <br />
+                                <span> Near Bangali Square, Indore,</span><br />
+                                <span> Madhya Pradesh.</span>
+                            </p>
+                        </td>
+                        <td height="60" width="33%">
+                            <p style="padding:3px;">
+                                <span style="float:left"> {{PurchaseOrderData.WarehouseName}}</span><br />
+                                <span style="float:left">C/O:  {{WhAddress}}</span><br />
+                                <span style="float:left">City: {{WhCityName}}</span><br />
+                                <span style="float:left">Tel.No: {{WhPhone}}</span><br />
+                                <span style="float:left">GSTIN: {{WhGst}}</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="33%" style="color:orangered; text-align:center;"><b>PO Information</b></td>
+                        <td width="33%" style="color:orangered ;text-align:center;"><b>Supplier Information</b></td>
+                        <td width="33%" style="color:orangered; text-align:center;"><b>Depo Information</b></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                <span style="float:left">PO.No: {{PurchaseOrderData.PurchaseOrderId}} </span> <br />
+                                <span style="float:left">Created Date: {{PurchaseOrderData.CreationDate | date}} </span> <br />
+                                <span style="float:left">PO Creater: {{PurchaseOrderData.CreatedBy}} </span> <br />
+                                <span style="float:left">Buyer: {{PurchaseOrderData.BuyerName}}</span>
+                            </p>
+                        </td>
+                        <td>
+                            <p style="padding:3px;">
+                                <span style="float:left">{{PurchaseOrderData.SupplierName}}</span><br />
+                                <span style="float:left">C/O:  {{supaddress}}</span><br />
+                                <span style="float:left">Tel.No: {{supMobileNo}}</span><br />
+                                <span style="float:left">GSTIN: {{SupGst}}</span>
+                            </p>
+                        </td>
+                        <td>
+                            <p style="padding:3px;">
+                                <span style="float:left"> {{PurchaseOrderData.DepoName}}</span><br />
+                                <span style="float:left">C/O:  {{depoaddress}}</span><br />
+                                <span style="float:left">Tel.No: {{depoMobileNo}}</span><br />
+                                <span style="float:left">GSTIN: {{depoGSTin}}</span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6"> <button type="button" class="accordion btn btn-info" ng-click="getgrdata()" data-toggle="collapse" data-target="#demoA">&nbsp; GR Product Received Detail..</button> </div>
+                <div class="col-md-6"><button type="button" class="accordion btn btn-info" ng-click="getIrdata()" data-toggle="collapse" data-target="#demo">&nbsp; IR Detail..</button></div>
+                <!--<button class="collapsible" ng-click="getIrdata()"><span class="glyphicon glyphicon-th-list"> </span> IR Detail..</button>-->
+                <div id="demoA" class="collapse">
+                    <div class="container-fluid">
+                        <h4 class="title">GR Product Received Detail</h4>
+                        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>SNo.</th>
+                                    <th>GR.No.</th>
+                                    <th>GR PersonName</th>
+                                    <th>GR Status</th>
+                                    <th>GR Date</th>
+                                    <th>GR Amount</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Vehicle Number</th>
+                                    <th>GR Draft</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="O in Master">
+                                <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                                    <td class="CX"><span style="color: red;">+</span></td>
+                                    <td>{{$index+1}}</td>
+                                    <td>{{O.GrNumber}}</td>
+                                    <td>{{O.GrPersonName}}</td>
+                                    <td ng-style="{ 'color' : (O.Status == 'Approved') ? 'black' : 'red'  }">{{O.Status}}</td>
+                                    <td>{{O.GrDate | date : format : medium}}</td>
+                                    <td style="        color: red;">{{O.GrAmount | number : 2}}</td>
+                                    <td ng-show="O.VehicleType != null">{{O.VehicleType}}</td>
+                                    <td ng-show="O.VehicleType == null"><span style="        color: red;">-</span></td>
+                                    <td ng-show="O.VehicleType != null">{{O.VehicleNumber }}</td>
+                                    <td ng-show="O.VehicleType == null"><span style="        color: red;">-</span></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-br" ng-click="MoveGRDraft(O)" data-dismiss="modal">View</button>
+                                    </td>
+                                </tr>
+                                <tr class="sub">
+                                    <td></td>
+                                    <td colspan="5">
+                                        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <th>SNo.</th>
+                                                <th>Item Name.</th>
+                                                <th>HSN</th>
+                                                <th>Batch.No.</th>
+                                                <th>MFG Date</th>
+                                                <th>Total Quantity</th>
+                                                <th>Qty Received</th>
+                                                <th>Dam Received</th>
+                                                <th>Exp Received</th>
+                                                <th>Price</th>
+                                                <th>Total Amount</th>
+                                            </tr>
+                                            <tr ng-repeat="PurchaseorderDetail in O.Detail" ng-class-even="'even'" ng-class-odd="'odd'">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                                <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                                <td>{{PurchaseorderDetail.BatchNo}}</td>
+                                                <td>{{PurchaseorderDetail.MFG | date : format : medium}}</td>
+                                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                                <td>{{PurchaseorderDetail.DamagQtyRecived}}</td>
+                                                <td>{{PurchaseorderDetail.ExpQtyRecived}}</td>
+                                                <td>{{PurchaseorderDetail.Price}}</td>
+                                                <td>{{PurchaseorderDetail.Price * PurchaseorderDetail.QtyRecived | number : 2}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="demo" class="collapse">
+                    <div class="row">
+                        <div class="form-group col-md-6"><h4 class="title" style=" margin:15px; float:left;">IR product received detail</h4></div>
+                        <!--<div class="form-group col-md-6"><button class="btn btn-warning" ng-disabled="Irprice1 == 0" style=" margin:15px; float:right;" ng-click="view(PurchaseOrderData)"><span class="glyphicon glyphicon-picture"> </span> view receipt..</button></div>-->
+                        <div class="col-md-12" ng-show="Irprice1 == 0">
+                            <h4 class="title" style=" margin:15px; color: red; text-align: center;">Currently IR data not exist.</h4>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>SNo.</th>
+                                    <th>IRID</th>
+                                    <th>IR Type</th>
+                                    <th>Status</th>
+                                    <th>Created By</th>
+                                    <th>Create Date</th>
+                                    <th>TotalAmount</th>
+                                    <th>Discount</th>
+                                    <th>Upload IR</th>
+                                    <th>Send for approval</th>
+                                    <th>View Receipt</th>
+                                    <th>Edit</th>
+                                    <th>Reject Reasion</th>
+
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="O in MasterIr">
+                                <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                                    <td class="CX"><span style="color:red;">+</span></td>
+                                    <td>{{$index+1}}</td>
+                                    <td>{{O.IRID}}</td>
+                                    <td>{{O.IRType}}</td>
+                                    <td style="color:red;">{{O.IRStatus}}</td>
+                                    <td>{{O.CreatedBy}}</td>
+                                    <td>{{O.CreationDate | date : format : medium}}</td>
+                                    <td>{{O.TotalAmount | number:2}}</td>
+                                    <td>{{O.Discount | number:2}}</td>
+                                    <td>
+                                        <button class="btn btn-primary" ng-disabled="O.IRStatus != 'IR Posted'" ng-click="AddIR(O)">
+                                            <span class="glyphicon glyphicon-upload"></span>&nbsp;&nbsp;Upload IR
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger" ng-disabled="O.IRStatus != 'IR Uploaded'" ng-click="sendforapproval(O)">
+                                            <span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;Send
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-warning" ng-click="view(O)">
+                                            <span class="glyphicon glyphicon-picture"></span>&nbsp;&nbsp;view
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button ng-disabled="O.IRStatus == 'IR Posted' || O.IRStatus == 'IR Uploaded' || O.IRStatus == 'Approved from Buyer side' || O.IRStatus =='Pending from Buyer side' " class="btn btn-danger" ng-click="Edit(O)">
+                                            <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
+                                        </button>
+                                    </td>
+                                    <td ng-if="O.RejectedComment!=null">{{O.RejectedComment}}</td>
+                                    <td ng-if="O.RejectedComment==null" style="text-align:center">-</td>
+                                </tr>
+                                <tr class="sub">
+                                    <td></td>
+                                    <td colspan="5">
+                                        <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR1'" cellpadding="0">
+                                            <tr>
+                                                <th>SNo.</th>
+                                                <th>Item Name.</th>
+                                                <th>HSN</th>
+                                                <th>No of Pieces</th>
+                                                <th>Qty Recived</th>
+                                                <th>Recive</th>
+                                                <th>Price</th>
+                                                <th>Disc</th>
+                                                <th>GST Tsx Amt</th>
+                                                <th>Cess Tax Amt</th>
+                                                <th>Amt</th>
+                                                <th>Total Amt</th>
+                                            </tr>
+                                            <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                                <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                                <th>{{PurchaseorderDetail.QtyRecived1}}</th>
+                                                <th>{{PurchaseorderDetail.Price1 | number:2}}</th>
+                                                <th>{{PurchaseorderDetail.dis1 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1 | number:2}}</th>
+                                                <th>{{((((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.TotalTaxPercentage)/100) +((((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived1 * PurchaseorderDetail.Price1) - PurchaseorderDetail.dis1) | number:2}}  </th>
+
+                                            </tr>
+
+                                        </table>
+                                        <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR2'" cellpadding="0">
+                                            <tr>
+                                                <th>SNo.</th>
+                                                <th>Item Name.</th>
+                                                <th>HSN</th>
+                                                <th>No of Pieces</th>
+                                                <th>Qty Recived</th>
+                                                <th>Recive</th>
+                                                <th>Price</th>
+                                                <th>Disc</th>
+                                                <th>GST Tax Amt</th>
+                                                <th>Cess Tax Amt</th>
+                                                <th>Amt</th>
+                                                <th>Total Amt</th>
+                                            </tr>
+                                            <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                                <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                                <th>{{PurchaseorderDetail.QtyRecived2}}</th>
+                                                <th>{{PurchaseorderDetail.Price2 | number:2}}</th>
+                                                <th>{{PurchaseorderDetail.dis2 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2 | number:2}}</th>
+                                                <th>{{((((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived2 * PurchaseorderDetail.Price2) - PurchaseorderDetail.dis2) | number:2}}  </th>
+                                            </tr>
+                                        </table>
+                                        <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR3'" cellpadding="0">
+                                            <tr>
+                                                <th>SNo.</th>
+                                                <th>Item Name.</th>
+                                                <th>HSN</th>
+                                                <th>No of Pieces</th>
+                                                <th>Qty Recived</th>
+                                                <th>Recive</th>
+                                                <th>Price</th>
+                                                <th>Disc</th>
+                                                <th>GST Tax Amt</th>
+                                                <th>Cess Tax Amt</th>
+                                                <th>Amt</th>
+                                                <th>Total Amt</th>
+                                            </tr>
+                                            <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                                <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                                <th>{{PurchaseorderDetail.QtyRecived3}}</th>
+                                                <th>{{PurchaseorderDetail.Price3 | number:2}}</th>
+                                                <th>{{PurchaseorderDetail.dis3 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3 | number:2}}</th>
+                                                <th>{{((((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived3 * PurchaseorderDetail.Price3) - PurchaseorderDetail.dis3) | number:2}}  </th>
+                                            </tr>
+                                        </table>
+                                        <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR4'" cellpadding="0">
+                                            <tr>
+                                                <th>SNo.</th>
+                                                <th>Item Name.</th>
+                                                <th>HSN</th>
+                                                <th>No of Pieces</th>
+                                                <th>Qty Recived</th>
+                                                <th>Recive</th>
+                                                <th>Price</th>
+                                                <th>Disc</th>
+                                                <th>GST Tax Amt</th>
+                                                <th>Cess Tax Amt</th>
+                                                <th>Amt</th>
+                                                <th>Total Amt</th>
+                                            </tr>
+                                            <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                                <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                                <th>{{PurchaseorderDetail.QtyRecived4}}</th>
+                                                <th>{{PurchaseorderDetail.Price4 | number:2}}</th>
+                                                <th>{{PurchaseorderDetail.dis4 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4 | number:2}}</th>
+                                                <th>{{((((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived4 * PurchaseorderDetail.Price4) - PurchaseorderDetail.dis4) | number:2}}  </th>
+                                            </tr>
+                                        </table>
+                                        <table class="tableData" border="0" cellspacing="0" ng-show="O.IRType == 'IR5'" cellpadding="0">
+                                            <tr>
+                                                <th>SNo.</th>
+                                                <th>Item Name.</th>
+                                                <th>HSN</th>
+                                                <th>No of Pieces</th>
+                                                <th>Qty Recived</th>
+                                                <th>Recive</th>
+                                                <th>Price</th>
+                                                <th>Disc</th>
+                                                <th>GST Tax Amt</th>
+                                                <th>Cess Tax Amt</th>
+                                                <th>Amt</th>
+                                                <th>Total Amt</th>
+                                            </tr>
+                                            <tr ng-repeat="PurchaseorderDetail in O.purDetails" ng-class-even="'even'" ng-class-odd="'odd'">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                                <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                                <th>{{PurchaseorderDetail.QtyRecived5}}</th>
+                                                <th>{{PurchaseorderDetail.Price5 | number:2}}</th>
+                                                <th>{{PurchaseorderDetail.dis5 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.TotalTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.CessTaxPercentage)/100 | number:2}}</th>
+                                                <th>{{(PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5 | number:2}}</th>
+                                                <th>{{((((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.TotalTaxPercentage)/100) + ((((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) * PurchaseorderDetail.CessTaxPercentage)/100) + ((PurchaseorderDetail.QtyRecived5 * PurchaseorderDetail.Price5) - PurchaseorderDetail.dis5) | number:2}}  </th>
+                                            </tr>
+                                        </table>
+
+                                        <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                            <tr> <th colspan="4" style="color:red; text-align:center;">IR Amount Bifurcation</th></tr>
+                                            <tr>
+                                                <th>Discount Amount</th>
+                                                <th>Expense Amount ({{O.ExpenseAmountType}})</th>
+                                                <th>Other Amount ({{O.OtherAmountType}})</th>
+                                                <th>Round Off Amount ({{O.RoundoffAmountType}})</th>
+                                            </tr>
+
+                                            <tr>
+                                                <td>{{O.Discount}}</td>
+                                                <td>{{O.ExpenseAmount}}</td>
+                                                <td>{{O.OtherAmount}}</td>
+                                                <td>{{O.RoundofAmount}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <hr style="border-top: dotted 4px;" ng-show="Irprice1 != 0" />
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6 form-group">
+                        <label for="site-name" style="color:red;">IR Type:</label><br />
+                        <input readonly class="form-control" ng-model="PurchaseOrderData.IRType" />
+                        <!--<select ng-disabled="Isdesable" class="form-control" id="site-name" ng-model="PurchaseOrderData.IRType">
+                            <option ng-selected="PurchaseOrderData.IRType == undefined" value="">--Select--</option>
+                            <option ng-disabled="ConfirmIr[0].IR1ID != null" value="1">--IR 1--</option>
+                            <option ng-disabled="ConfirmIr[0].IR2ID != null" value="2">--IR 2--</option>
+                            <option ng-disabled="ConfirmIr[0].IR3ID != null" value="3">--IR 3--</option>
+                            <option ng-disabled="ConfirmIr[0].IR4ID != null" value="4">--IR 4--</option>
+                            <option ng-disabled="ConfirmIr[0].IR5ID != null" value="5">--IR 5--</option>
+                        </select>-->
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="site-name">Invoice Number:</label><br />
+                        <input class="form-control" ng-model="PurchaseOrderData.IRID" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>SNo.</th>
+                                <th>Item Name</th>
+                                <th>HSN</th>
+                                <th>Tax %</th>
+                                <th>Cess Tax %</th>
+                                <th>Qty Recived</th>
+                                <th>IR Qty</th>
+                                <th>Recive Qty</th>
+                                <th>Price</th>
+                                <th width="175px">Disc Type</th>
+                                <th>Cash Disc</th>
+                                <th>Taxable Amt</th>
+                                <th>(GST R.) GST Amt</th>
+                                <th ng-if="!PurchaseOrderData.IsIgstIR">(GST R.) SGST Amt</th>
+                                <th ng-if="!PurchaseOrderData.IsIgstIR">(GST R.) CGST Amt</th>
+                                <th ng-if="PurchaseOrderData.IsIgstIR">(GST R.) IGST Amt</th>
+                                <th>Cess Tax Amt</th>
+                                <th>Total Amt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="p in PurchaseorderDetail.purDetails">
+                                <td>{{$index+1}}</td>
+                                <td>{{p.ItemName}}</td>
+                                <td>{{p.HSNCode}}</td>
+                                <td>{{p.TotalTaxPercentage}}</td>
+                                <td>{{p.CessTaxPercentage}}</td>
+                                <td>{{p.QtyRecived}}</td>
+                                <td>{{p.IRQuantity}}</td>
+                                <td>
+                                    <input type="number" ng-disabled="p.QtyRecived == p.IRQuantity" ng-change="AmountCalculation(PurchaseorderDetail)" ng-model="p.Qty" style="width:60px; height: 33px;" min="0" />
+                                </td>
+                                <td>
+                                    <input type="number" ng-disabled="p.QtyRecived == p.IRQuantity" ng-change="AmountCalculation(PurchaseorderDetail)" ng-model="p.Price" style="width:60px; height: 33px;" min="0" />
+                                </td>
+                                <td>
+                                    <span>
+                                        <select class="form-control" style="float:left; width: 80px;font-size: smaller; padding-left: 1px;" ng-model="p.distype" data-ng-change="cleardisdata()" required>
+                                            <option value="">-SELECT-</option>
+                                            <option value="Percent">Percent</option>
+                                            <option value="Amount">Amount</option>
+                                        </select>
+                                        <input style="width:70px; height: 33px; margin-left: 5px;" ng-show="p.distype == 'Percent'" type="number" placeholder="Percent" ng-change="ItemPercentCalculation(p)" ng-model="p.DesP" min="0" />
+                                        <input style="width:70px; height: 33px; margin-left: 5px;" ng-show="p.distype == 'Amount'" type="number" placeholder="Amount" ng-change="ItemAmountCalculation(p)" ng-model="p.DesA" min="0" />
+                                    </span>
+                                    <!--<button id="btnSave" class="btn btn-danger" ng-click="setitemdisc(p)"> <span class="glyphicon glyphicon-plus"></span>&nbsp;Set Discount</button>-->
+                                </td>
+                                <td>{{p.discount | number: 2}}</td>
+                                <td>{{p.taxableamt | number: 2}}</td>
+                                <td>({{p.TotalTaxPercentage}}%)&nbsp;{{ p.gstamt | number: 2}}</td>
+                                <td ng-if="!PurchaseOrderData.IsIgstIR">({{p.TotalTaxPercentage/2}}%)&nbsp;{{ p.Cgstamt | number: 2}}</td>
+                                <td ng-if="!PurchaseOrderData.IsIgstIR">({{p.TotalTaxPercentage/2 }}%)&nbsp;{{ p.Sgstamt | number: 2}}</td>
+                                <td ng-if="PurchaseOrderData.IsIgstIR">({{p.TotalTaxPercentage}}%)&nbsp;{{ p.gstamt | number: 2}}</td>
+                                <td>{{p.cessamt | number: 2}} </td>
+                                <td>{{p.TtlAmt | number: 2}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="18">
+                                    <div class="col-md-2">
+                                        <label for="site-name">Discount type:</label>
+                                        <select class="form-control" ng-model="PurchaseorderDetail.totaldistype">
+                                            <option value="">---SELECT---</option>
+                                            <option value="Percent">Percent</option>
+                                            <option value="Amount">Amount</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="site-name">Disc(%)/Amt</label>
+                                        <input class="form-control" type="number" ng-change="fntdistype(PurchaseorderDetail)" ng-model="PurchaseorderDetail.discounttc" min="0" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="site-name">Discount Amt</label>
+                                        <input class="form-control" type="number" ng-model="PurchaseorderDetail.discountt" min="0" />
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="10">
+                                    Other: <input type="number" ng-model="PurchaseorderDetail.OtherAmount" min="0" />
+                                    <input type="text" placeholder="Remark" ng-model="PurchaseorderDetail.OtherAmountRemark" />
+                                    <button id="btnSave" class="btn btn-primary" ng-click="calOtheramountAdd(PurchaseorderDetail)"> <span class="glyphicon glyphicon-plus"></span>&nbsp;ADD (+)</button>
+                                    <button id="btnSave" class="btn btn-danger" ng-click="calOtheramountMinus(PurchaseorderDetail)"> <span class="glyphicon glyphicon-minus"></span>&nbsp;Minus (-)</button>
+                                </td>
+                                <td colspan="8">
+                                    Expense: <input type="number" ng-model="PurchaseorderDetail.ExpenseAmount" min="0" />
+                                    <input type="text" placeholder="Remark" ng-model="PurchaseorderDetail.ExpenseAmountRemark" />
+                                    <button id="btnSave" class="btn btn-primary" ng-click="calExpenseamountAdd(PurchaseorderDetail)"> <span class="glyphicon glyphicon-plus"></span>&nbsp;ADD (+)</button>
+                                    <button id="btnSave" class="btn btn-danger" ng-click="calExpenseamountMinus(PurchaseorderDetail)"> <span class="glyphicon glyphicon-minus"></span>&nbsp;Minus (-)</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="14">
+                                    Round Off: <input type="number" ng-model="PurchaseorderDetail.RoundofAmount" min="0" />
+                                    <button id="btnSave" class="btn btn-primary" ng-click="calRoundOffAdd(PurchaseorderDetail)"> <span class="glyphicon glyphicon-plus"></span>&nbsp;ADD (+)</button>
+                                    <button id="btnSave" class="btn btn-danger" ng-click="calRoundOffMinus(PurchaseorderDetail)"> <span class="glyphicon glyphicon-minus"></span>&nbsp;Minus (-)</button>
+                                    Due Days:<input type="number" value="0" min="0" ng-model="PurchaseorderDetail.DueDays" disabled>
+                                    Freight Amount:<input type="number" value="0" min="0" ng-model="PurchaseorderDetail.FreightAmount" disabled>
+                                    <!--Due Days:
+                                    <input type="number" lebel="Due Da" ng-model="PurchaseorderDetail.DueDays" />-->
+                                </td>
+
+                                <td colspan="4">
+                                    <h4 style="color:darkblue; float:right"> <button type="button" class="btn btn-danger" ng-click="calitemamont(PurchaseorderDetail)"> <span class="glyphicon glyphicon-repeat"></span></button> <strong>Bill Amount : {{totalfilterprice | number:2}}&nbsp;<i class="fa fa-inr" style=""></i></strong> </h4>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <!--<div style="display:inline-block;padding-left:30px!important" class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-md-5">
+                        <label for="site-name">Discount type:</label>
+                        <select class="form-control" ng-model="PurchaseorderDetail.totaldistype">
+                            <option value="">---SELECT---</option>
+                            <option value="Percent">Percent</option>
+                            <option value="Amount">Amount</option>
+                        </select>
+                        <label for="site-name">Disc(%)/Amt</label>
+                        <input class="form-control" type="number" ng-change="fntdistype(PurchaseorderDetail)" ng-model="PurchaseorderDetail.discounttc" min="0" />
+                        <label for="site-name">Discount Amt</label>
+                        <input type="number" class="form-control" ng-model="PurchaseorderDetail.discountt" min="0" />
+                    </div>
+                </div>-->
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row pad-top-botm">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <hr style="border-top: dotted 4px;" />
+                                <button id="btnSave" ng-disabled="Isdesable" style="float:right; margin-right:10px;" class="btn btn-primary" ng-click="savegr(PurchaseOrderData)"><span class="glyphicon glyphicon-ok" disabled></span>&nbsp;Post IR</button>
+                                <button id="btnSave" ng-disabled="PurchaseorderDetail.purDetails[0].QtyRecived == PurchaseorderDetail.purDetails[0].IRQuantity" style="float:right; margin-right:10px;" class="btn btn-danger" ng-click="saveIRasDraft(PurchaseOrderData)"><span class="glyphicon glyphicon-ok" disabled></span>&nbsp;Save as draft</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script type="text/ng-template" id="addIR.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Invoice Received</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12"></div>
+            <!--<div class="form-group">
+                <label for="site-name" style="color:red;">IR Type:</label><br />
+                <select id="site-name" ng-model="saveData.IRID">
+                    <option value="0">--Select--</option>
+                    <option value="1">--IR 1--</option>
+                    <option value="2">--IR 2--</option>
+                    <option value="3">--IR 3--</option>
+                </select>
+            </div>-->
+            <div class="form-group">
+                <label for="site-name">Purchase Order Id:</label><br />
+                <input class="form-control" ng-model="saveData.PurchaseOrderId" readonly />
+            </div>
+            <!--<div class="form-group">
+                <label for="site-name">Particular :</label><br />
+                <input class="form-control" ng-model="saveData.Perticular" />
+            </div>-->
+            <div class="form-group">
+                <label for="site-name">Invoice Number:</label><br />
+                <input class="form-control" ng-model="saveData.InvoiceNumber" readonly />
+            </div>
+            <div class="form-group">
+                <label for="site-name">IR Amount:</label><br />
+                <label class="form-control" for="site-name">{{saveData.TotalAmount | number:2}}</label><br />
+                <!--<input type="number" min="0" class="form-control" ng-model="saveData.TotalAmount" />-->
+            </div>
+            <div class="form-group">
+                <label for="site-name">IR Date:</label><br />
+                <input type="date" class="form-control" ng-model="saveData.IRDate" />
+            </div>
+            <div class="md-form">
+                <label for="site-name">Remark:</label><br />
+                <textarea id="form7" class="md-textarea form-control" ng-model="saveData.Remark" rows="3"></textarea>
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="uploadAdvertisements">Upload IR Receipt:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-disabled="count == 1" ng-click="AddIRUpload(saveData)">Save</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="MoveGRDraft.html">
+    <style>
+        .imgWth {
+            width: 100% !important;
+        }
+    </style>
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">GR Draft</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <br />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">
+                        Invoice Number: {{DraftedtGR.GrNumber }}
+                    </label><br /><br />
+                    <img alt="" src="{{baseurl}}{{DraftedtGR.ImagePath}}" class="imgWth"><br />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Is Correct:</label>
+                <input type="checkbox" class="form-control" ng-model="DraftedtGR.IsCorrect" />
+            </div>
+            <div class="row" style="padding:15px;" ng-show="DraftedtGR.IsCorrect">
+                <div class="form-group">
+                    <label for="site-name">Select Invoice Number</label>
+                    <select class="form-control" id="site-name" ng-model="DraftedtGR.IRID">
+                        <option value="{{ir.IRID}}" ng-repeat="ir in InvoicNumbers"> {{ir.IRID}} </option>
+                    </select>
+                </div>
+                <!--<div class="form-group">
+                    <label for="site-name">IR Amount:</label>
+                    <input type="number" class="form-control" ng-model="DraftedtGR.TotalAmount" />
+                </div>-->
+                <div class="form-group">
+                    <label for="site-name">IR Date:</label>
+                    <input type="date" class="form-control" ng-model="DraftedtGR.IRDate" />
+                </div>
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" ng-show="DraftedtGR.IsCorrect" ng-click="moveGRtoIR(DraftedtGR)">Move GR Draft To IR Invoice</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+<!--Discount for item amount-->
+<script type="text/ng-template" id="setitemdiscView.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Set item discount</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12"></div>
+            <div class="form-group">
+                <label for="site-name">Item Name:</label><br />
+                <input class="form-control" ng-model="saveData.ItemName" readonly />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="site-name">Taxable price:</label><br />
+                <input class="form-control" ng-model="saveData.Price" readonly />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="site-name">Recive Quantity:</label><br />
+                <input class="form-control" ng-model="saveData.Qty" readonly />
+            </div>
+            <!--<div class="form-group col-md-3">
+                <label for="site-name">Total Amount:</label><br />
+                <input class="form-control" ng-model="saveData.PriceRecived" readonly/>
+                <label class="form-control" for="site-name">{{saveData.PriceRecived | number: 2}} </label>
+            </div>-->
+            <div class="form-group col-md-4">
+                <label for="site-name">
+                    Total Amt:
+                </label><br />
+
+                <!--<input class="form-control" ng-model="saveData.wta" readonly />-->
+                <label class="form-control" for="site-name">{{saveData.wta | number: 2}} </label>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Discount type:</label><br />
+                <select class="form-control" ng-model="saveData.distype" data-ng-change="cleardisdata()" required>
+                    <option value="">---SELECT---</option>
+                    <option value="Percent">Percent</option>
+                    <option value="Amount">Amount</option>
+                </select>
+            </div>
+            <div class="form-group" ng-show="saveData.distype == 'Percent'" ng-disabled="saveData.distype == 'Amount'">
+                <label for="site-name">Discount Percent:</label><br />
+                <input class="form-control" min="0" type="number" ng-change="PercentCalculation()" ng-model="saveData.disPerc" />
+            </div>
+            <div class="form-group" ng-show="saveData.distype == 'Amount'" ng-disabled="saveData.distype == 'Percent'">
+                <label for="site-name">Discount Amount:</label><br />
+                <input class="form-control" min="0" ng-change="AmountCalculation()" type="number" ng-model="saveData.disAmt" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Cash Disc:</label>
+                <!--<input class="col-md-3" ng-model="saveData.discount" readonly/>-->
+                <label class="form-control" style="color:red;" for="site-name">{{saveData.discount | number: 2}} </label>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Ok()">Ok</button>
+        </div>
+    </form>
+</script>
+<!--Discount for whole amount-->
+<script type="text/ng-template" id="setdiscView.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Set discount on total amount</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12"></div>
+            <div class="form-group">
+                <label for="site-name">Total Amount:</label><br />
+                <input class="form-control" ng-model="{{totalfilterprice}}" readonly />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Discount type:</label><br />
+                <select class="form-control" ng-model="dt.distype" required>
+                    <option value="">---SELECT---</option>
+                    <option value="Percent">Percent</option>
+                    <option value="Amount">Amount</option>
+                </select>
+            </div>
+            <div class="form-group" ng-show="dt.distype == 'Percent'" ng-disabled="dt.distype == 'Amount'">
+                <label for="site-name">Discount Percent:</label><br />
+                <input class="form-control" ng-change="PercentCalculation()" type="number" ng-model="dt.disPerc" />
+            </div>
+            <div class="form-group" ng-show="dt.distype == 'Amount'" ng-disabled="dt.distype == 'Percent'">
+                <label for="site-name">Discount Amount:</label><br />
+                <input class="form-control" ng-change="AmountCalculation()" type="number" ng-model="dt.disAmt" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-3" for="site-name">Amount after discount:</label>
+                <input class="col-md-3" style="color:red;" ng-model="discount" readonly />
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="setitemdisc(dt)">Ok</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="imageView.html">
+    <style>
+        .imgWth {
+            width: 100% !important;
+        }
+    </style>
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Invoice Receipt</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <br />
+                </div>
+                <div class="form-group" data-ng-repeat="trad in IrRec">
+                    <label for="site-name">
+                        Invoice Number: {{trad.InvoiceNumber }}
+                    </label><br />
+                    <img alt="" src="{{baseurl}}{{trad.IRLogoURL}}" class="imgWth"><br />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+<script type="text/javascript">
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
+

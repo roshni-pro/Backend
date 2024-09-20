@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BE31BA5E-3648-4DE1-8CAE-630B29AA2855}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AngularJSAuthentication.DataContracts</RootNamespace>
+    <AssemblyName>AngularJSAuthentication.DataContracts</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elasticsearch.Net, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elasticsearch.Net.7.11.1\lib\net461\Elasticsearch.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=2.10.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoDB.Bson.2.10.2\lib\net452\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="Nest, Version=7.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\NEST.7.11.1\lib\net461\Nest.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.7.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.4.7.1\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AgentCommission\CityWiseActivationConfigurationDc.cs" />
+    <Compile Include="APIParams\BookExpenseDc.cs" />
+    <Compile Include="APIParams\BookExpenseDetailDc.cs" />
+    <Compile Include="APIParams\BookExpensePageDc.cs" />
+    <Compile Include="APIParams\BookExpensePager.cs" />
+    <Compile Include="APIParams\BuyerDashboardParams.cs" />
+    <Compile Include="APIParams\ConnsentDetailsVM.cs" />
+    <Compile Include="APIParams\CustomerLedgerConsentMsgSendDC.cs" />
+    <Compile Include="APIParams\CustomerLedgerConsentPageDC.cs" />
+    <Compile Include="APIParams\CustomerLedgerConsentPager.cs" />
+    <Compile Include="APIParams\CustomerLedgerConsentPagerList.cs" />
+    <Compile Include="APIParams\CustomerLedgerMessagePager.cs" />
+    <Compile Include="APIParams\DropDown.cs" />
+    <Compile Include="APIParams\ExpenseChecker.cs" />
+    <Compile Include="APIParams\ExpenseDc.cs" />
+    <Compile Include="APIParams\ExpenseDetailDc.cs" />
+    <Compile Include="APIParams\ExpenseListDC.cs" />
+    <Compile Include="APIParams\GetClusterMapDataParams.cs" />
+    <Compile Include="APIParams\GetItemsParams.cs" />
+    <Compile Include="APIParams\HubPnLPostParams.cs" />
+    <Compile Include="APIParams\ItemDealPriceQtyAddParam.cs" />
+    <Compile Include="APIParams\MurliPager.cs" />
+    <Compile Include="APIParams\PrimeNgDropDown.cs" />
+    <Compile Include="APIParams\ResponseWrapper.cs" />
+    <Compile Include="APIParams\RTVPaginatorDc.cs" />
+    <Compile Include="APIParams\SalesAppRouteParam.cs" />
+    <Compile Include="APIParams\SalesIntentItemResponse.cs" />
+    <Compile Include="APIParams\SupplierPaymentExportDc.cs" />
+    <Compile Include="APIParams\VendorDC.cs" />
+    <Compile Include="APIParams\VendorPageDC.cs" />
+    <Compile Include="APIParams\VendorPager.cs" />
+    <Compile Include="Arthmate\AdharDigiLocker.cs" />
+    <Compile Include="Arthmate\ArthMatePostDc.cs" />
+    <Compile Include="Arthmate\AScoreResponseDc.cs" />
+    <Compile Include="Arthmate\CashfreeDc.cs" />
+    <Compile Include="Arthmate\CeplrPostDc.cs" />
+    <Compile Include="Arthmate\CompositeDisbursementWebhookDc.cs" />
+    <Compile Include="Arthmate\CompositeDisbursementDc.cs" />
+    <Compile Include="Arthmate\CompositeDrawDownDc.cs" />
+    <Compile Include="Arthmate\eAadhaarDigilockerRequestDc.cs" />
+    <Compile Include="Arthmate\eSignAgreementDc.cs" />
+    <Compile Include="Arthmate\eSignDc.cs" />
+    <Compile Include="Arthmate\eSignDocumentDc.cs" />
+    <Compile Include="Arthmate\FirstAadharDc.cs" />
+    <Compile Include="Arthmate\ArthmateLoanDc.cs" />
+    <Compile Include="Arthmate\LoanDocumentDc.cs" />
+    <Compile Include="Arthmate\LoanNachAPIDc.cs" />
+    <Compile Include="Arthmate\PanOcrResDc.cs" />
+    <Compile Include="Arthmate\RepaymentScheduleResponseDc.cs" />
+    <Compile Include="Arthmate\RequestConsentDc.cs" />
+    <Compile Include="Arthmate\SecondAadharDc.cs" />
+    <Compile Include="BackEndItem\BackEndItemDc.cs" />
+    <Compile Include="BatchCode\BatchCodeElastic.cs" />
+    <Compile Include="BatchCode\BatchCodeSubject.cs" />
+    <Compile Include="BatchCode\CurrentStockBatchMasterDC.cs" />
+    <Compile Include="BatchCode\NonSellableStocksDC.cs" />
+    <Compile Include="BatchCode\StockBatchMasterDc.cs" />
+    <Compile Include="BatchCode\StockTxnTypeMasterDc.cs" />
+    <Compile Include="BillDiscount\BillDiscountDC.cs" />
+    <Compile Include="ClearanceStockNonSaleable\ClearanceNonSaleableDC.cs" />
+    <Compile Include="ClusterHoliday\ClusterHolidayDc.cs" />
+    <Compile Include="Consumer\ConsumerDC.cs" />
+    <Compile Include="CRM\CustomerProfileDc.cs" />
+    <Compile Include="CRM\CustomerRawDataForCsvDC.cs" />
+    <Compile Include="CustomerGroup\CustomerGroupCriteria.cs" />
+    <Compile Include="CustomerReferralDc\CustomerReferralDc.cs" />
+    <Compile Include="DeliveryCapacityOptimization\DeliveryCapacityOptimizationDC.cs" />
+    <Compile Include="DeliveryOptimization\DboyPerformaceOutputDc.cs" />
+    <Compile Include="DeliveryOptimization\DboyPerformanceInputDC.cs" />
+    <Compile Include="DeliveryOptimization\TripReportInputDc.cs" />
+    <Compile Include="DeliveryOptimization\TripReportOverviewDc.cs" />
+    <Compile Include="DeliveryOptimization\TripSummaryReportCostDc.cs" />
+    <Compile Include="DeliveryOptimization\TripSummaryReportInputDc.cs" />
+    <Compile Include="DeliveryOptimization\TripSummaryReportLineChartDc.cs" />
+    <Compile Include="DeliveryOptimization\TripSummaryReportSummaryDc.cs" />
+    <Compile Include="DeliveryOptimization\TripTouchPoint.cs" />
+    <Compile Include="DeliveryOptimization\VehiclePerformanceInputDc.cs" />
+    <Compile Include="DeliveryOptimization\VehiclePerformanceOutputDc.cs" />
+    <Compile Include="ElasticSearch\ConsumarElasticSearchItem.cs" />
+    <Compile Include="ElasticSearch\ElasticLanguageData.cs" />
+    <Compile Include="ElasticSearch\ElasticSearchItem.cs" />
+    <Compile Include="ElasticSearch\ElasticSearchResult.cs" />
+    <Compile Include="ElasticSearch\QueryToPostElasticsearch.cs" />
+    <Compile Include="ElasticSearch\skorderdata.cs" />
+    <Compile Include="EwayBill\EwaybillByIRNDc.cs" />
+    <Compile Include="EwayBill\InternalTransferEwaybillDc.cs" />
+    <Compile Include="External\ApphomeBottomCallDc.cs" />
+    <Compile Include="External\ChatbotDc.cs" />
+    <Compile Include="External\CRM\SalesGroupSegmentDc.cs" />
+    <Compile Include="External\CustomerSalesPersons.cs" />
+    <Compile Include="External\FranchiseDetail.cs" />
+    <Compile Include="External\GamificationDc.cs" />
+    <Compile Include="External\ManageBidDc.cs" />
+    <Compile Include="External\MobileExecutiveDC\MobileExecutiveDCs.cs" />
+    <Compile Include="External\MobileTicketResponse.cs" />
+    <Compile Include="External\NextETADate.cs" />
+    <Compile Include="External\Razorpay\CustomerCreateRequest.cs" />
+    <Compile Include="External\Razorpay\CustomerCreateResponse.cs" />
+    <Compile Include="External\Razorpay\RazorPayWebHookResponse.cs" />
+    <Compile Include="External\Razorpay\VirtualAccountRequest.cs" />
+    <Compile Include="External\Razorpay\VirtualAccountResponse.cs" />
+    <Compile Include="External\Razorpay\WebHookDbResponse.cs" />
+    <Compile Include="External\RetailerAppDC.cs" />
+    <Compile Include="External\SalesAppDc\AttendanceConfigCityDC.cs" />
+    <Compile Include="External\SalesAppDc\BeatDc.cs" />
+    <Compile Include="External\SalesAppDc\BeatEditDC.cs" />
+    <Compile Include="External\SalesAppDc\ItemForSalesAppDc.cs" />
+    <Compile Include="External\SalesAppDc\ProductCatalogDc.cs" />
+    <Compile Include="External\SalesAppDc\ResetEditBeatDC.cs" />
+    <Compile Include="External\SalesAppDc\SalesIncentiveItemClassification.cs" />
+    <Compile Include="External\SalesAppDc\SalesItemForNotificationDC.cs" />
+    <Compile Include="External\SalesAppDc\SalesPersonKPIDC.cs" />
+    <Compile Include="External\SalesPersonCommission.cs" />
+    <Compile Include="External\SpillOverOrderDC.cs" />
+    <Compile Include="External\TradeItemMasterDc.cs" />
+    <Compile Include="External\UserRatingDc.cs" />
+    <Compile Include="External\ZipCodeResponseDc.cs" />
+    <Compile Include="FileUpload\Uploader.cs" />
+    <Compile Include="ForCast\BuyerForeCastDC.cs" />
+    <Compile Include="ForCast\BuyersSummaryDC.cs" />
+    <Compile Include="ForCast\BuyerSummary.cs" />
+    <Compile Include="ForCast\ItemForeCastDetails.cs" />
+    <Compile Include="ForCast\SalesIntentApprovalDC.cs" />
+    <Compile Include="InventoryProvisioning\InventoryProvisioningGraphInputDc.cs" />
+    <Compile Include="InventoryProvisioning\InventoryProvisioningInputDc.cs" />
+    <Compile Include="InventoryProvisioning\ItemFrontMarginClosingDc.cs" />
+    <Compile Include="InvoiceReceipt\InvoiceReceiptImageDC.cs" />
+    <Compile Include="JustInTime\CalculatePurchasePriceDc.cs" />
+    <Compile Include="JustInTime\JITConfigurationDc.cs" />
+    <Compile Include="JustInTime\JITLiveItemDc.cs" />
+    <Compile Include="KPPApp\CustomerGullakTransaction.cs" />
+    <Compile Include="KPPApp\CustomerKPPDc.cs" />
+    <Compile Include="LPReport\LPReportDc.cs" />
+    <Compile Include="MapApi\GeocodeApiResult.cs" />
+    <Compile Include="MapApi\PlaceApiResult.cs" />
+    <Compile Include="Masters\AddUpdateConsumerItemDc.cs" />
+    <Compile Include="Masters\AdjustmentPoDataDC.cs" />
+    <Compile Include="Masters\AppBannerRequestDc.cs" />
+    <Compile Include="Masters\AppHomeSectionsDc.cs" />
+    <Compile Include="Masters\AssignmentListDC.cs" />
+    <Compile Include="Masters\AssignmentOrderListPayDC.cs" />
+    <Compile Include="Masters\AssignmentTATReport.cs" />
+    <Compile Include="Masters\BaseCategoryMinDc.cs" />
+    <Compile Include="BatchCode\BatchDc.cs" />
+    <Compile Include="Masters\BlockBrandDc.cs" />
+    <Compile Include="Masters\BrandBuyerDc.cs" />
+    <Compile Include="Masters\BrandMinDc.cs" />
+    <Compile Include="Masters\BrandStoreRequestDc.cs" />
+    <Compile Include="Masters\CategoryMinDc.cs" />
+    <Compile Include="Masters\CityMinDc.cs" />
+    <Compile Include="Masters\ClearanceLiveItemDc.cs" />
+    <Compile Include="Masters\ClearancePickerDc.cs" />
+    <Compile Include="Masters\CMSReportDataDC.cs" />
+    <Compile Include="Masters\CODLimitCustomerDc.cs" />
+    <Compile Include="Masters\ConfigureNotifyDc.cs" />
+    <Compile Include="Masters\CurrentStockMinDc.cs" />
+    <Compile Include="Masters\CustomerAddressDc.cs" />
+    <Compile Include="Masters\CustomerAddressOperationRequestVM.cs" />
+    <Compile Include="Masters\CustomerAddressRequestDc.cs" />
+    <Compile Include="Masters\CustomerDelightDc.cs" />
+    <Compile Include="Masters\CustomerExport.cs" />
+    <Compile Include="Masters\CustomerSearch.cs" />
+    <Compile Include="Masters\ClusterMinDc.cs" />
+    <Compile Include="Masters\DealItemDc.cs" />
+    <Compile Include="Masters\DeliveryRedispatchChargeConfDc.cs" />
+    <Compile Include="Masters\ExecBeattargetPostDc.cs" />
+    <Compile Include="Masters\FlashDealExcelImageDC.cs" />
+    <Compile Include="Masters\FlashDealItemsDc.cs" />
+    <Compile Include="Masters\FlashDealRequestDc.cs" />
+    <Compile Include="Masters\FlashDealUploadDc.cs" />
+    <Compile Include="Masters\GenerateClearanceOrderDc.cs" />
+    <Compile Include="Masters\GrowBusinessHistoryDc.cs" />
+    <Compile Include="Masters\gstCustomer50.cs" />
+    <Compile Include="Masters\GstTCS.cs" />
+    <Compile Include="Masters\gstTDS.cs" />
+    <Compile Include="Masters\gstvender50.cs" />
+    <Compile Include="Masters\GullakCashBackDc.cs" />
+    <Compile Include="Masters\ItemMinDc.cs" />
+    <Compile Include="Masters\ItemSchemeExcelUploaderMasterDc.cs" />
+    <Compile Include="Masters\ItemSchemeMasterDc.cs" />
+    <Compile Include="Masters\LiveBrandDataForMetaBaseDC.cs" />
+    <Compile Include="Masters\MonthEnd\MonthEndReportDc.cs" />
+    <Compile Include="Masters\MurliRequestDc.cs" />
+    <Compile Include="Masters\NotificationRequestDc.cs" />
+    <Compile Include="Masters\OnWarehouseSarthiTransferDeliveredDc.cs" />
+    <Compile Include="Masters\OnWarehouseSarthiTransferDispatchDC.cs" />
+    <Compile Include="Masters\OrderConcernDc.cs" />
+    <Compile Include="Masters\PaymentRefund\ChqbookRefundDc.cs" />
+    <Compile Include="Masters\PaymentRefund\PaymentRefundRequestDc.cs" />
+    <Compile Include="Masters\PaymentRefund\UpdatePaymentRefundDc.cs" />
+    <Compile Include="Masters\PeopleSubCatMappingDc.cs" />
+    <Compile Include="Masters\RetailerOrderPaymentDc.cs" />
+    <Compile Include="Masters\SalesAppDashboardDc.cs" />
+    <Compile Include="Masters\SalesRegisterReportDC.cs" />
+    <Compile Include="Masters\SearchOrderMaster.cs" />
+    <Compile Include="Masters\Seller\CompanySale.cs" />
+    <Compile Include="Masters\Seller\SellerDc.cs" />
+    <Compile Include="Masters\Seller\SellerLedgerDc.cs" />
+    <Compile Include="Masters\Seller\SellerOfferDc.cs" />
+    <Compile Include="Masters\Seller\SellerOrderMasteDC.cs" />
+    <Compile Include="Masters\ShoppingCartBODc.cs" />
+    <Compile Include="Masters\MurliAudioDc.cs" />
+    <Compile Include="Masters\NotificationSendTo.cs" />
+    <Compile Include="Masters\BillDiscountOfferDc.cs" />
+    <Compile Include="Masters\OldAssignmentPayDC.cs" />
+    <Compile Include="Masters\KppOrderDetailDc.cs" />
+    <Compile Include="Masters\PeopleMinDc.cs" />
+    <Compile Include="Masters\OrderDispatchedDetailDc.cs" />
+    <Compile Include="Masters\PurchaseOrderDc.cs" />
+    <Compile Include="Masters\StoreMinOrderDc.cs" />
+    <Compile Include="Masters\Store\ClusterExecutive.cs" />
+    <Compile Include="Masters\Store\ClusterStoreBeatMappingDc.cs" />
+    <Compile Include="Masters\Store\CustomerExecutiveMappingDc.cs" />
+    <Compile Include="Masters\Store\ClusterStoreExecutiveDc.cs" />
+    <Compile Include="Masters\Store\ExecutiveCustomer.cs" />
+    <Compile Include="Masters\Store\SelectItemDc.cs" />
+    <Compile Include="Masters\Store\StoreBrandDc.cs" />
+    <Compile Include="Masters\Store\StoreBrandViewModel.cs" />
+    <Compile Include="Masters\Store\StoreOwnerDc.cs" />
+    <Compile Include="Masters\Store\StoreViewModel.cs" />
+    <Compile Include="Masters\SubCategoryDTO.cs" />
+    <Compile Include="Masters\SubCategoryMinDc.cs" />
+    <Compile Include="Masters\SubCategoryRes.cs" />
+    <Compile Include="Masters\SuppliersPaymentDC.cs" />
+    <Compile Include="Masters\TDSBILLtoBill.cs" />
+    <Compile Include="Masters\TransferWHOrderDetailsDC.cs" />
+    <Compile Include="Masters\TransferWHOrderDispachedDC.cs" />
+    <Compile Include="Masters\TransferWHOrderMasterDC.cs" />
+    <Compile Include="Masters\TransferWHOrderSubmitDC.cs" />
+    <Compile Include="Masters\UnitEconomicDc.cs" />
+    <Compile Include="Masters\UPIPayment\UPIPaymentDc.cs" />
+    <Compile Include="Masters\UserRoleDc.cs" />
+    <Compile Include="Masters\VehicleMaster\DBoyMasterDc.cs" />
+    <Compile Include="Masters\VehicleMaster\DriverMasterDc.cs" />
+    <Compile Include="Masters\WarehouseMinDc.cs" />
+    <Compile Include="Masters\SupplierMasterDc.cs" />
+    <Compile Include="Masters\WarehouseMurliAudioDc.cs" />
+    <Compile Include="Mongo\ArthMateWebhookResponse.cs" />
+    <Compile Include="Mongo\AssignmentDirection.cs" />
+    <Compile Include="Mongo\AutoNotification.cs" />
+    <Compile Include="Mongo\BatchCodePendingTransaction.cs" />
+    <Compile Include="Mongo\BlockBrands.cs" />
+    <Compile Include="Mongo\BlockGullakAmount.cs" />
+    <Compile Include="Mongo\CategoryMaster.cs" />
+    <Compile Include="Mongo\ComboOrderItemDc.cs" />
+    <Compile Include="Mongo\CustomerItemNotifyMe.cs" />
+    <Compile Include="Mongo\CustomerOtp.cs" />
+    <Compile Include="Mongo\CustomersTargets.cs" />
+    <Compile Include="Mongo\CustomerUpdateRequest.cs" />
+    <Compile Include="Mongo\DeliveryCapacityMongo.cs" />
+    <Compile Include="Mongo\DeliveryOptimization.cs" />
+    <Compile Include="Mongo\ElasticSearchQuery.cs" />
+    <Compile Include="Mongo\ExecutiveAttendanceLog.cs" />
+    <Compile Include="Mongo\ExecutiveBeats.cs" />
+    <Compile Include="Mongo\CustomerBucketGames.cs" />
+    <Compile Include="Mongo\InventoryWarehouse.cs" />
+    <Compile Include="Mongo\ItemLimitValidation.cs" />
+    <Compile Include="Mongo\LedgerQueueIndex.cs" />
+    <Compile Include="Mongo\NotificationReceiveMongo.cs" />
+    <Compile Include="Mongo\OrdersToSync.cs" />
+    <Compile Include="Mongo\RdCancellationConfiguration.cs" />
+    <Compile Include="Mongo\RetailerMinOrder.cs" />
+    <Compile Include="Mongo\SalesReturnConfiguration.cs" />
+    <Compile Include="Mongo\SMSTemplate.cs" />
+    <Compile Include="Mongo\TCSConfig.cs" />
+    <Compile Include="Mongo\TemplateMaster.cs" />
+    <Compile Include="Mongo\TreeStructure.cs" />
+    <Compile Include="Mongo\UdharRequestResponse.cs" />
+    <Compile Include="Mongo\UPIcallBackResMongo.cs" />
+    <Compile Include="Mongo\WorkingCapitalCalander.cs" />
+    <Compile Include="Mongo\ComplaintTickets.cs" />
+    <Compile Include="Mongo\MakerChecker.cs" />
+    <Compile Include="Mongo\MonthlyCustomerLevel.cs" />
+    <Compile Include="Mongo\ZilaOrderProcess.cs" />
+    <Compile Include="NonRevenueOrderDc\NonRevenueOrderDc.cs" />
+    <Compile Include="PageListDC.cs" />
+    <Compile Include="PageVisitDC.cs" />
+    <Compile Include="PeopleNotification\PeopleSentNotificationDc.cs" />
+    <Compile Include="ProductPerformanceDash\ProductPerformanceDC.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingMaster\RatingMasterDc.cs" />
+    <Compile Include="RazorPay\POS\ErrorCodes.cs" />
+    <Compile Include="RazorPay\POS\NotificationResponse.cs" />
+    <Compile Include="RazorPay\POS\RazorPayRequest.cs" />
+    <Compile Include="RazorPay\RazorpayPaymentResponse.cs" />
+    <Compile Include="ROC\RocDC.cs" />
+    <Compile Include="ScaleUp\ScaleUpDc.cs" />
+    <Compile Include="ScaleUp\ScaleUpTokenDc.cs" />
+    <Compile Include="ServiceRequestParam\ResponseMetaData.cs" />
+    <Compile Include="ServiceRequestParam\TraceLog.cs" />
+    <Compile Include="Shared\AccountMISDc.cs" />
+    <Compile Include="Shared\AppVisits.cs" />
+    <Compile Include="Shared\BuyerEditPriceItem.cs" />
+    <Compile Include="Shared\BuyerSupWarBrandDC.cs" />
+    <Compile Include="Shared\CFR_DFR_DashboardDc.cs" />
+    <Compile Include="Shared\CustFavoriteItemDc.cs" />
+    <Compile Include="Shared\CustomerShoppingCartDc.cs" />
+    <Compile Include="Shared\CustomerStateGst.cs" />
+    <Compile Include="Shared\CustomerWarehouseLtlng.cs" />
+    <Compile Include="Shared\DiscountOfferDTO.cs" />
+    <Compile Include="Shared\AccountErrorLog.cs" />
+    <Compile Include="Shared\FilteredOrderDto.cs" />
+    <Compile Include="Shared\InOutDbResult.cs" />
+    <Compile Include="Shared\IRMasterViewDc.cs" />
+    <Compile Include="Shared\ItemClassificationDC.cs" />
+    <Compile Include="Shared\ItemDealPriceQtyDC.cs" />
+    <Compile Include="Shared\ItemLedgerExport.cs" />
+    <Compile Include="Shared\ItemPTRSchemeDc.cs" />
+    <Compile Include="Shared\ItemWithUOM.cs" />
+    <Compile Include="Shared\Msg91MsgBody.cs" />
+    <Compile Include="Shared\OfferResponseDC.cs" />
+    <Compile Include="Shared\OrderForPDF.cs" />
+    <Compile Include="Shared\PageVisits.cs" />
+    <Compile Include="Shared\SortedAssignmentOrders.cs" />
+    <Compile Include="SMSTemplateDc.cs" />
+    <Compile Include="TemplateMasterDc.cs" />
+    <Compile Include="Transaction\Accounts\AgentCommissionPager.cs" />
+    <Compile Include="Transaction\Accounts\AgentCommissionPaymentDc.cs" />
+    <Compile Include="Transaction\Accounts\AgentPaymentSettlementDc.cs" />
+    <Compile Include="Transaction\Accounts\AssignmentCommissionDc.cs" />
+    <Compile Include="Transaction\Accounts\AssignmentCommissionPager.cs" />
+    <Compile Include="Transaction\AgentChequeBounceInfo.cs" />
+    <Compile Include="Transaction\AutoNotification\ANFrequencyMasterVM.cs" />
+    <Compile Include="Transaction\AutoNotification\ANScheduleMasterVM.cs" />
+    <Compile Include="Transaction\AutoNotification\AutoNotificationConditionVM.cs" />
+    <Compile Include="Transaction\AutoNotification\AutoNotificationList.cs" />
+    <Compile Include="Transaction\AutoNotification\AutoNotificationVM.cs" />
+    <Compile Include="Transaction\AutoNotification\FcmNotificationMaster.cs" />
+    <Compile Include="Transaction\BackendOrder\BackendItem.cs" />
+    <Compile Include="Transaction\ClearTax\ClearTaxResponseDc.cs" />
+    <Compile Include="Transaction\ClusterDashboard\ClusterMapData.cs" />
+    <Compile Include="Transaction\ClusterDashboard\ClusterRefreshRequestDc.cs" />
+    <Compile Include="Transaction\Customer\CustomerAddressVM.cs" />
+    <Compile Include="Transaction\Customer\CustomerBillingAddressDc.cs" />
+    <Compile Include="Transaction\Customer\CustomerStatusUpdateDc.cs" />
+    <Compile Include="Transaction\Customer\CustomerVerifyRequestVM.cs" />
+    <Compile Include="Transaction\Customer\TrackingCustomerDocumentDc.cs" />
+    <Compile Include="Transaction\DeliveryMapping.cs" />
+    <Compile Include="Transaction\DeviceNotificationDc.cs" />
+    <Compile Include="Transaction\ExpenseTDSDc.cs" />
+    <Compile Include="Transaction\Expense\BookExpensePaymentDc.cs" />
+    <Compile Include="Transaction\Expense\BookExpenseViewDc.cs" />
+    <Compile Include="Transaction\InventoryCycle\InvetoryCycleItemsForBatch.cs" />
+    <Compile Include="Transaction\Ledger\CustomerLedgerConsentDC.cs" />
+    <Compile Include="Transaction\Ledger\CustomerLedgerConSentDetailsDC.cs" />
+    <Compile Include="Transaction\GullakDc.cs" />
+    <Compile Include="Transaction\Ledger\CustomerOTPVerification.cs" />
+    <Compile Include="Transaction\Ledger\IRPayementRevertDc.cs" />
+    <Compile Include="Transaction\Ledger\ItemLedger\InQueue.cs" />
+    <Compile Include="Transaction\Ledger\ItemLedger\OutQueue.cs" />
+    <Compile Include="Transaction\Ledger\ItemLedger\StackData.cs" />
+    <Compile Include="Transaction\Mongo\BuyerDashboard\ItemSaleVsInventoryData.cs" />
+    <Compile Include="Transaction\Mongo\BuyerDashboard\ItemSaleVsSPandPPData.cs" />
+    <Compile Include="Transaction\Mongo\BuyerDashboard\ItemsClosing.cs" />
+    <Compile Include="Transaction\Mongo\MongoPickerOrderMaster.cs" />
+    <Compile Include="Transaction\OnlineTxnDC.cs" />
+    <Compile Include="Transaction\OrderForORToolVM.cs" />
+    <Compile Include="Transaction\OrderProcess\CustomerTripData.cs" />
+    <Compile Include="Transaction\OrderProcess\GeneratePickerAutoPickDc.cs" />
+    <Compile Include="Transaction\OrderProcess\MyOrderDetailDc.cs" />
+    <Compile Include="Transaction\OrderProcess\OrderAutoPickResp.cs" />
+    <Compile Include="Transaction\OrderProcess\OrdersForAutoPick.cs" />
+    <Compile Include="Transaction\Picker\PickerDc.cs" />
+    <Compile Include="Transaction\PurchaseOrder\POCloseDetial.cs" />
+    <Compile Include="Transaction\PurchaseOrder\PORequestPaymentDc.cs" />
+    <Compile Include="Transaction\PurchaseOrder\POReturnRequestDc.cs" />
+    <Compile Include="Transaction\PurchaseOrder\POReturnRequestPager.cs" />
+    <Compile Include="Transaction\PurchaseOrder\PurchaseOrderNewDc.cs" />
+    <Compile Include="Transaction\PurchaseOrder\PurchaseOrderReturnDc.cs" />
+    <Compile Include="Transaction\PurchaseRequest\PurchaseRequestSettlementContainerDc.cs" />
+    <Compile Include="Transaction\PurchaseRequest\PurchaseRequestSettlementFilterDc.cs" />
+    <Compile Include="Transaction\PurchaseRequest\PurchaseRequestSettlementPageDc.cs" />
+    <Compile Include="Transaction\PurchaseRequest\RemainingIRAmountDc.cs" />
+    <Compile Include="Transaction\Reports\AchievedBrandDataDc.cs" />
+    <Compile Include="Transaction\Reports\AchievedOverallSummaryDc.cs" />
+    <Compile Include="Transaction\Reports\AchievedStoreDataDc.cs" />
+    <Compile Include="Transaction\Reports\AchievedWarehouseDataDc.cs" />
+    <Compile Include="Transaction\Reports\CancellationReportDc.cs" />
+    <Compile Include="Transaction\Reports\GstReportData.cs" />
+    <Compile Include="Transaction\Reports\HopReportData.cs" />
+    <Compile Include="Transaction\Reports\MISReportDc.cs" />
+    <Compile Include="Transaction\Reports\MISReportFilterDc.cs" />
+    <Compile Include="Transaction\Reports\OrderColorDc.cs" />
+    <Compile Include="Transaction\Reports\YesterdayDemandDC.cs" />
+    <Compile Include="Transaction\RTGSOrderDetailsDC.cs" />
+    <Compile Include="Transaction\SaleIncentiveDC.cs" />
+    <Compile Include="Transaction\Stocks\ClearanceLiveItemDC.cs" />
+    <Compile Include="Transaction\Stocks\ClearanceStockDC.cs" />
+    <Compile Include="Transaction\Stocks\MultiStockEntryDc.cs" />
+    <Compile Include="Transaction\Stocks\StockConfigDc.cs" />
+    <Compile Include="Transaction\Stocks\StockHistoryPagerVM.cs" />
+    <Compile Include="Transaction\Stocks\StockNameDc.cs" />
+    <Compile Include="Transaction\Stocks\StockTypeTableNames.cs" />
+    <Compile Include="Transaction\Stocks\TransferToFreeStockDC.cs" />
+    <Compile Include="Transaction\supplier\IrOutstandingViewDC.cs" />
+    <Compile Include="Transaction\TestMQ.cs" />
+    <Compile Include="Transaction\TripPlanner\ShipmentManifestDc .cs" />
+    <Compile Include="Transaction\TripPlanner\TripMasterForDropDown.cs" />
+    <Compile Include="Transaction\TripPlanner\TripOrderDetail.cs" />
+    <Compile Include="Transaction\TripPlanner\TripPlannerAppDashboardDC.cs" />
+    <Compile Include="Transaction\TripPlanner\TripPlannerConfirmedMasterVM.cs" />
+    <Compile Include="Transaction\TripPlanner\TripPlannerConfirmedOrderVM.cs" />
+    <Compile Include="Transaction\TripPlanner\TripPlannerOrderPager.cs" />
+    <Compile Include="Transaction\TripPlanner\TripPlannerVehicle.cs" />
+    <Compile Include="Transaction\TripPlanner\TripTouchPoint.cs" />
+    <Compile Include="Transaction\TripPlanner\TripWayPoint.cs" />
+    <Compile Include="Transaction\WhatsappGroupNotifDc.cs" />
+    <Compile Include="Transaction\WhatsAppTemplateDc.cs" />
+    <Compile Include="Transaction\WhatsAppTemplateDetailDc.cs" />
+    <Compile Include="Transaction\WhatsAppTemplateExcelDc.cs" />
+    <Compile Include="Transaction\WorkingCapitalCalanderDc.cs" />
+    <Compile Include="Transaction\comboDC.cs" />
+    <Compile Include="Transaction\CpMatrixProductDetailDc.cs" />
+    <Compile Include="Transaction\CustomerTarget\CustomerTargetDispatchDataViewModel.cs" />
+    <Compile Include="Transaction\Customer\CustomerGst.cs" />
+    <Compile Include="Transaction\EpayLater\EpayLaterRefundRequestDc.cs" />
+    <Compile Include="Transaction\EpayLater\EpayLaterRefundResponseDc.cs" />
+    <Compile Include="Transaction\Ledger\ChequeBounceVM.cs" />
+    <Compile Include="Transaction\MasterExport\MasterExportRequestDC.cs" />
+    <Compile Include="Transaction\MessageQueue\OrderUpdateQueue.cs" />
+    <Compile Include="Transaction\Mongo\BuyerDashboard\BuyerDashboardData.cs" />
+    <Compile Include="Transaction\Mongo\BuyerDashboard\BuyerDashboardSalesData.cs" />
+    <Compile Include="Transaction\Mongo\BuyerDashboard\ExportData.cs" />
+    <Compile Include="Transaction\Mongo\BuyerDashboard\ItemLedger.cs" />
+    <Compile Include="Transaction\Mongo\CpMatrix\CpMatrixGroupedItems.cs" />
+    <Compile Include="Transaction\Mongo\CpMatrix\CustomerProductMatrix.cs" />
+    <Compile Include="Transaction\Mongo\MongoOrderMaster.cs" />
+    <Compile Include="Transaction\Reports\DailyOrderInventoryData.cs" />
+    <Compile Include="Transaction\Reports\GrButNoIrReportDc.cs" />
+    <Compile Include="Transaction\Reports\HubAvgInventory.cs" />
+    <Compile Include="Transaction\Reports\OrderStatusAmount.cs" />
+    <Compile Include="Transaction\Reports\TownhallDataDc.cs" />
+    <Compile Include="Transaction\RequestAccess\RequestAccessDataViewModel.cs" />
+    <Compile Include="Transaction\ServeyModule\ServeyModuleDC.cs" />
+    <Compile Include="Transaction\ShoppingCart\CustomersCart.cs" />
+    <Compile Include="Transaction\supplier\IrOutstandingDC.cs" />
+    <Compile Include="Transaction\supplier\IrOutstandingPaginator.cs" />
+    <Compile Include="Transaction\supplier\IRPaymentDetailsDC.cs" />
+    <Compile Include="Transaction\supplier\IRPaymentSummaryBankReceipt.cs" />
+    <Compile Include="Transaction\supplier\IRPaymentSummariesDC.cs" />
+    <Compile Include="Transaction\supplier\SupplierOutstandingamtDC.cs" />
+    <Compile Include="Transaction\TradeApp\TradeCustomerDc.cs" />
+    <Compile Include="Transaction\Zila\OperationCapacity\ZilaDeliveryAppDC.cs" />
+    <Compile Include="TripBlockedOrderVM.cs" />
+    <Compile Include="TripPlanner\ReadyToPickOrderDc.cs" />
+    <Compile Include="TripPlanner\TripMilometerDc.cs" />
+    <Compile Include="TripPlanner\TripPlannerApprovalRequestDc.cs" />
+    <Compile Include="TripPlanner\TripPlannerVechicleAttandanceDc.cs" />
+    <Compile Include="TripPlanner\VehicleHistoryVM.cs" />
+    <Compile Include="UdharCreditLending\UdharCreditLendingDc.cs" />
+    <Compile Include="UserRating\UserRatingBackendDC.cs" />
+    <Compile Include="VAN\VANResponse.cs" />
+    <Compile Include="WarehouseUtilization\LMDDashboardDc.cs" />
+    <Compile Include="WarehouseUtilization\WarehouseUtilizationDc.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Transaction\ComboItemDC\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AngularJSAuthentication.Model\AngularJSAuthentication.Model.csproj">
+      <Project>{33141331-a9f8-4419-9fd2-9d52ec18043b}</Project>
+      <Name>AngularJSAuthentication.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

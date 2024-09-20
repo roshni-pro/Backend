@@ -1,0 +1,10 @@
+2023-09-06 16:01:32.8611|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 19:48:45.0834|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 19:49:27.1061|ERROR|AngularJSAuthentication.API.Controllers.ProfilesController|Error in getting Company The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2023-09-06 19:52:38.2913|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 20:02:31.7889|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 20:03:02.6669|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 20:05:10.0019|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 20:08:28.7296|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 20:10:14.4348|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-09-06 20:17:18.6241|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 

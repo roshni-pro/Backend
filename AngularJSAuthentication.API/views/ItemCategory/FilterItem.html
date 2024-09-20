@@ -1,0 +1,413 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        img.img80_80 {
+            width: 60px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>Item table</strong> </div>
+        <br />
+        <div>
+            <!--<button class="btn btn-primary" ng-click="open()"> <span class="glyphicon glyphicon-plus"> </span> Select Source Warehouse</button>-->
+            <!--<button class="btn btn-primary" ng-click="open()"> <span class="glyphicon glyphicon-plus"> </span> Select Destination Warehouse</button>-->
+        </div>
+        <div class="form-group col-md-3">
+            <label for="site-name">Select Category</label><br />
+        </div>
+        <div class="form-group col-md-3">
+            <label for="site-name">Select Sub Category</label><br />
+        </div>
+        <div class="form-group col-md-3">
+            <label for="site-name">Select Sub Sub Category</label><br />
+        </div>
+        <div class="form-group col-md-3">
+            <label for="site-name">Select Warehouse</label><br />
+        </div>
+        <div class="form-group col-md-3">
+            <select class="form-control" id="site-name" ng-model="itemMasterData.Warehouseid" data-ng-change="getWareitemMaster(itemMasterData)">
+                <option value="">---SELECT---</option>
+                <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <select class="form-control" id="site-name" ng-model="itemMasterData.Warehouseid" data-ng-change="getWareitemMaster(itemMasterData)">
+                <option value="">---SELECT---</option>
+                <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <select class="form-control" id="site-name" ng-model="itemMasterData.Warehouseid" data-ng-change="getWareitemMaster(itemMasterData)">
+                <option value="">---SELECT---</option>
+                <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <select class="form-control" id="site-name" ng-model="itemMasterData.Warehouseid" data-ng-change="getWareitemMaster(itemMasterData)">
+                <option value="">---SELECT---</option>
+                <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+            </select>
+        </div>
+        <!--<div class="form-group col-md-1"></div>
+        <div class="form-group col-md-3">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AdditemMoveWarehouse(WarehouseFilterData,trade.selected)">Move Data</button>
+        </div>
+
+        <div class="form-group col-md-4">
+
+            <select class="form-control" id="site-name" ng-model="itemMasterData.Warehouseid">
+                <option value="">---SELECT---</option>
+                <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse  "> {{warehouses.WarehouseName}}</option>
+            </select>
+        </div>-->
+
+        <!--<div class="table-filters">
+            <div class="row">
+                <div class="col-sm-3 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div> <div class="col-sm-2 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>-->
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+
+                    <th>
+                        <div class="th">
+                            Item Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('itemname')"
+                                  data-ng-class="{active: row == 'itemname'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-itemname')"
+                                  data-ng-class="{active: row == '-itemname'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Category Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CategoryName')"
+                                  data-ng-class="{active: row == 'CategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CategoryName')"
+                                  data-ng-class="{active: row == '-CategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub Category
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubcategoryName')"
+                                  data-ng-class="{active: row == 'SubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubcategoryName')"
+                                  data-ng-class="{active: row == '-SubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub2 Category
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubsubcategoryName')"
+                                  data-ng-class="{active: row == 'SubsubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubsubcategoryName')"
+                                  data-ng-class="{active: row == '-SubsubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Images
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="trade in WarehouseFilterData">
+
+                    <td>{{trade.ItemId}}</td>
+                    <td>{{trade.itemname}}</td>
+                    <td>{{trade.CategoryName}}</td>
+                    <td>{{trade.SubcategoryName}}</td>
+                    <td>{{trade.SubsubcategoryName}}</td>
+                    <td>{{trade.price}}</td>
+                    <td>
+                        <div class="form-group">
+                            <img alt="" src="{{trade.LogoUrl}}" class="img-square img80_80">
+                        </div>
+                    </td>
+
+                    <!--<td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>-->
+                    <!--<td><button class="btn-sm btn-danger" ng-click="opendelete(trade)">Remove</button> </td>-->
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="WarehouseModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Item </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <!--<div class="form-group">
+                <label for="site-name">Please select your source Ware House Name</label><br />
+            </div>-->
+
+            <div class="form-group">
+                <!--<label for="site-name">Warehouse</label><br />-->
+                <select class="form-control" id="site-name" ng-model="itemMasterData.Warehouseid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+                </select>
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddWareitemMaster(itemMasterData)" data-dismiss="modal">Show Data</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </form>
+</script>
+
+
+<!--Update Customer-->
+
+<script type="text/ng-template" id="myitemMasterPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Item</h4>
+
+            <div class="form-group">
+                <label for="site-name">Item Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Item Name " ng-model="itemMasterData.itemname" />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Select Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.Categoryid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{categorys.Categoryid}}" ng-selected="itemMasterData.CategoryName" ng-repeat="categorys in category"> {{itemMasterData.CategoryName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Select Sub Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.SubCategoryId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{subcategorys.SubCategoryId}}" ng-selected="itemMasterData.SubCategoryId" ng-repeat="subcategorys in subcategory|filter:{Categoryid:itemMasterData.Categoryid}"> {{subcategorys.SubcategoryName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">SelectSub Sub Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.SubsubCategoryid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{subsubcategorys.SubsubCategoryid}}" ng-selected="itemMasterData.SubsubCategoryid" ng-repeat="subsubcategorys in subsubcategory|filter:{SubCategoryId:itemMasterData.SubCategoryId}"> {{subsubcategorys.SubsubcategoryName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Price</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Item Price " ng-model="itemMasterData.price" />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Item code</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Item code " ng-model="itemMasterData.itemcode" />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Unit Name</label><br />
+
+                <select class="form-control" id="site-name" ng-model="itemMasterData.UnitId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{unitmasters.UnitId}}" ng-selected="itemMasterData.UnitId" ng-repeat="unitmasters in unitmaster"> {{unitmasters.UnitName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">VAT Tax</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter VAT Tax " ng-model="itemMasterData.VATTax" />
+            </div>
+            <div class="form-group">
+                <label for="uploadAdvertisements">Upload Image:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutitemMaster(itemMasterData)">Save</button>
+        </div>
+    </form>
+</script>
+
+

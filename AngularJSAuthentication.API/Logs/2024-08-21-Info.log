@@ -1,0 +1,35 @@
+2024-08-21 10:59:54.0111|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|Get Item multiprice  
+2024-08-21 17:47:55.9818|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 17:47:56.0289|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 17:48:16.5112|ERROR|AngularJSAuthentication.API.Controllers.ItemMasterController|Error in ItemMaster The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2024-08-21 17:48:16.5112|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  ItemMaster: 
+2024-08-21 17:48:54.7798|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 17:48:57.9478|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 17:49:55.5962|ERROR|AngularJSAuthentication.API.Controllers.ItemMasterController|Error in ItemMaster The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2024-08-21 17:49:55.6492|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  ItemMaster: 
+2024-08-21 17:50:21.3351|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 17:50:21.3361|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 17:50:55.8463|ERROR|AngularJSAuthentication.API.Controllers.ItemMasterController|Error in ItemMaster The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2024-08-21 17:51:03.3021|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  ItemMaster: 
+2024-08-21 18:00:43.1951|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 18:00:43.4601|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 18:01:25.7367|ERROR|AngularJSAuthentication.API.Controllers.ItemMasterController|Error in ItemMaster The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2024-08-21 18:01:35.5110|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  ItemMaster: 
+2024-08-21 18:04:02.6107|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 18:04:02.6416|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 18:05:09.6242|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-21 18:06:04.5445|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 18:06:04.5445|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 18:06:51.9934|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-21 18:07:04.0918|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 18:07:04.0918|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 18:07:14.0995|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-21 18:25:12.5656|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 18:25:12.5982|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 18:26:01.0088|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-21 18:26:21.0869|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 18:26:26.4078|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-21 18:27:36.7716|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-21 18:29:13.6437|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-21 18:29:17.9211|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 4
+2024-08-21 18:29:21.6077|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 

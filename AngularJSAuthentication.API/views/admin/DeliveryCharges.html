@@ -1,0 +1,226 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Delivery" pageName="Delivery Charge">
+    <section class="panel panel-default table-dynamic">
+            <div class="col-lg-12" >
+                <div class="form-group col-md-2">
+                    <button class="btn btn-primary skadd" ng-click="open()" id="del_addcha" name="DELADDCHRG" style="margin-top: 34px;" > <span class="glyphicon glyphicon-plus"> </span>Add Delivery Charges</button>
+                </div>
+        <br />
+        <div class="form-group col-md-2">
+
+            <label for="site-name">Select Warehouse</label><br />
+            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData(WarehouseId)">
+                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+            </select>
+        </div>
+                </div>
+        <br />
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Index
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('id')"
+                                  data-ng-class="{active: row == 'id'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-id')"
+                                  data-ng-class="{active: row == '-id'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Delivery Charge
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('del_Charge')"
+                                  data-ng-class="{active: row == 'del_Charge'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-del_Charge')"
+                                  data-ng-class="{active: row == '-del_Charge'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Minimum Amount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('min_Amount')"
+                                  data-ng-class="{active: row == 'min_Amount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-min_Amount')"
+                                  data-ng-class="{active: row == '-min_Amount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Maximun Amount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('max_Amount')"
+                                  data-ng-class="{active: row == 'max_Amount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-max_Amount')"
+                                  data-ng-class="{active: row == '-max_Amount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            WareHouse
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('warhouse_Name')"
+                                  data-ng-class="{active: row == 'warhouse_Name'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-warhouse_Name')"
+                                  data-ng-class="{active: row == '-warhouse_Name'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Is Distributor
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('IsDistributor')"
+                                  data-ng-class="{active: row == 'IsDistributor'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Is_Distributor')"
+                                  data-ng-class="{active: row == '-Is_Distributor'}"></span>
+                        </div>
+                    </th>
+                    <!--<th>
+        <div class="th">
+            Cluster
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('cluster_Name')"
+                  data-ng-class="{active: row == 'cluster_Name'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-cluster_Name')"
+                  data-ng-class="{active: row == '-cluster_Name'}"></span>
+        </div>
+    </th>-->
+                    <th>
+                        <div class="th">
+                            Iactive
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.id}}</td>
+                    <td>{{trade.del_Charge}}</td>
+                    <td>{{trade.min_Amount}}</td>
+                    <td>{{trade.max_Amount}}</td>
+                    <td>{{trade.warhouse_Name}}</td>
+                    <td>{{trade.IsDistributor}}</td>
+                    <!--<td>{{trade.cluster_Name}}</td>-->
+                    <td>
+                        <span ng-if="trade.IsActive==true" class="label label-info">{{trade.IsActive}}</span>
+                        <span ng-if="trade.IsActive==false" class="label label-danger">{{trade.IsActive}}</span>
+
+                    </td>
+
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td>
+                        <button class="btn-sm btn-primary skhistory" ng-init="Id=trade.id;entity='DeliveryCharge'" ng-click="showMe=true">History</button>
+                        <div ng-if="showMe" show-history></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="muDeliveryAdd.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Delivery charge</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="site-name">Delivery Charge:</label><br />
+                <input type="number" id="ADDDELChrg" name="ADDdel_charge" class="form-control" ng-model="DeliveryData.del_Charge" placeholder="Enter Delivery Charge Amount" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Minimum Amount:</label><br />
+                <input id="Adcminamnt" name="ADDMA" class="form-control" type="number" required="" ng-model="DeliveryData.min_Amount" placeholder="Enter Minimum Delivery Amount" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Maximum Amount:</label><br />
+                <input id="ADCmaxAMNT" name="Addmaximumamnt" class="form-control" type="number" required="" ng-model="DeliveryData.max_Amount" placeholder="Enter Maximum Delivery Amount" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select warehouse:</label><br />
+                <select class="form-control" ng-model="DeliveryData.WarehouseId" id="selectWarehouse" name="selectw">
+                    <option value="">---SELECT---</option>
+                    op
+                    <!--<option value="{{w.Warehouseid}}"  ng-selected="DeliveryData.warhouse_Id==w.Warehouseid" ng-repeat="w in warehouse"> {{w.WarehouseName}}</option>-->
+                    <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse" ng-selected="DeliveryData.WarehouseId==w.WarehouseId"> {{w.WarehouseName}} {{w.CityName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Select StoreId:</label><br />
+                <select class="form-control" ng-model="DeliveryData.storeId" id="selectStoreId" name="selectStoreId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{store.Id}}" ng-repeat="store in storeList" ng-selected="DeliveryData.storeId==store.Id"> {{store.Name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="DeliveryData.IsActive" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Is Distributor</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="DeliveryData.IsDistributor" />
+            </div>
+
+
+            <!--<div class="form-group">
+        <label for="site-name">Select Cluster:</label><br />
+        <select class="form-control" ng-model="DeliveryData.cluster_Id">
+            <option value="">---SELECT---</option>
+            <option value="{{w.clusterId}}" ng-repeat="w in Cluster"> {{w.ClusterName}}</option>
+        </select>
+    </div>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" id="ADCCancel" name="ADCclose" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" id="ADCSave"  name="ADCconfirm" ng-click="AddDeliveryCharge(DeliveryData)">Save</button>
+        </div>
+    </form>
+</script>

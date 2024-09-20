@@ -1,0 +1,318 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<div class="page page-table" ng-init="getWarehosues()"  button-permission-binder parentName="Order" pageName="TurnATime">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Order Turn Around Time
+            </strong>
+        </div>
+        <br />
+        <div id="chartContainer111" style="height: 360px; width: 100%;"></div>
+        <div>
+            <div class="form-group col-md-12 clear-both">
+                <div class="form-group col-md-2">
+                    <label for="site-name">Select Warehouse</label><br>
+                    <select class="form-control" id="site-name" ng-model="WarehouseId">
+                        <option value="">-Select-</option>
+                        <option value="{{db.WarehouseId}}" ng-repeat="db in warehouse"> {{db.WarehouseName}}  {{db.CityName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name">Select Date Range</label><br>
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"></label><br>
+                    <button class="btn-sm btn-primary sksubmit" ng-click="GetData()">Submit</button>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name"></label><br>
+                    <button class="label label-danger skexport" style="float:right;" ng-click="exportData1()">Export</button>
+                </div>
+                <div class="form-group col-md-3">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            No.
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('index')"
+                                  data-ng-class="{active: row == 'index'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-index')"
+                                  data-ng-class="{active: row == '-index'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            OrderId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderId')"
+                                  data-ng-class="{active: row == 'OrderId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderId')"
+                                  data-ng-class="{active: row == '-OrderId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Status')"
+                                  data-ng-class="{active: row == 'Status'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Status')"
+                                  data-ng-class="{active: row == '-Status'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Pending to Dispatched(hrs)
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ReadytoDdiffhours')"
+                                  data-ng-class="{active: row == 'ReadytoDdiffhours'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ReadytoDdiffhours')"
+                                  data-ng-class="{active: row == '-ReadytoDdiffhours'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Dispatched to Deliverd(hrs)
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ReadytoDelivereddiffhours')"
+                                  data-ng-class="{active: row == 'ReadytoDelivereddiffhours'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ReadytoDelivereddiffhours')"
+                                  data-ng-class="{active: row == '-ReadytoDelivereddiffhours'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Orderded to Delivered(hrs)
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Deliverydiffhours')"
+                                  data-ng-class="{active: row == 'Deliverydiffhours'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Deliverydiffhours')"
+                                  data-ng-class="{active: row == '-Deliverydiffhours'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CustomerName')"
+                                  data-ng-class="{active: row == 'CustomerName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CustomerName')"
+                                  data-ng-class="{active: row == '-CustomerName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Skcode
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Skcode')"
+                                  data-ng-class="{active: row == 'Skcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Skcode')"
+                                  data-ng-class="{active: row == '-Skcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            TotalAmount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('GrossAmount')"
+                                  data-ng-class="{active: row == 'GrossAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-GrossAmount')"
+                                  data-ng-class="{active: row == '-GrossAmount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Address
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ShippingAddress')"
+                                  data-ng-class="{active: row == 'ShippingAddress'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ShippingAddress')"
+                                  data-ng-class="{active: row == '-ShippingAddress'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            SalesPerson
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SalesPerson')"
+                                  data-ng-class="{active: row == 'SalesPerson'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SalesPerson')"
+                                  data-ng-class="{active: row == '-SalesPerson'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td><span class="badge">{{$index+1}}</span></td>
+                    <td>{{trade.OrderId}}</td>
+
+                    <td>
+                        <span class="label label-primary ng-binding">{{trade.Status}}</span>
+                    </td>
+                    <!--<td ng-if="(trade.Status=='Ready to Dispatch')">
+                    <span class="label label-success ng-binding">{{trade.Status}}</span>
+                </td>
+                <td ng-if="(trade.Status=='Issued'||trade.Status=='Shipped'||trade.Status=='Delivery Redispatch'||trade.Status=='sattled'||trade.Status=='Partial settled'||trade.Status=='Account settled' trade.Status=='Partial receiving -Bounce')">
+                    <span class="label label-info ng-binding">{{trade.Status}}</span>
+                </td>
+                <td ng-if="(trade.Status=='Delivery Canceled'||trade.Status=='Order Canceled')">
+                    <span class="label label-danger ng-binding">{{trade.Status}}</span>
+                </td>-->
+                    <td>{{trade.ReadytoDdiffhours | number : 2}}</td>
+                    <td>{{trade.ReadytoDelivereddiffhours | number : 2}}</td>
+                    <td>{{trade.Deliverydiffhours| number : 2}}</td>
+                    <td>{{trade.CustomerName}}</td>
+                    <td>{{trade.Skcode}}</td>
+                    <td>{{trade.GrossAmount}}</td>
+                    <td>{{trade.ShippingAddress}}</td>
+                    <td>{{trade.SalesPerson}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 page-num-info">
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    page="currentPage"
+                                    total-items="filteredStores.length"
+                                    max-size="4"
+                                    on-select-page="select(page)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+
+
+

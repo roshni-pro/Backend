@@ -1,0 +1,153 @@
+﻿<div class="page page-table" button-permission-binder parentName="Account" pageName="Sale Target">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Sales Target
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="table-filters">
+                <div class="row ">
+                    <button class="btn btn-primary skadd" ng-click="open()">
+                        <span class="glyphicon glyphicon-plus">
+                        </span> Add TargetName
+                    </button>                    
+                    <div class="col-sm-2 col-xs-6 filter-result-info pull-right">
+                        <span>
+                            Showing {{news.length}} entries
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Index Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Id')"
+                                  data-ng-class="{active: row == 'Id'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Id')"
+                                  data-ng-class="{active: row == '-Id'}"></span>
+                        </div>                       
+                    </th>
+                    <th>
+                        <div class="th">
+                            Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('name')"
+                                  data-ng-class="{active: row == 'name'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-name')"
+                                  data-ng-class="{active: row == '-name'}"></span>
+                        </div>                                
+                    </th>                       
+                    <th>
+                        <div class="th">
+                           Daily Target
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('value')"
+                                  data-ng-class="{active: row == 'value'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-value')"
+                                  data-ng-class="{active: row == '-value'}"></span>
+                        </div>        
+                    </th>
+                    <th>
+                        <div class="th">
+                            Monthly Traget
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('monthValue')"
+                                  data-ng-class="{active: row == 'monthValue'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-monthValue')"
+                                  data-ng-class="{active: row == '-monthValue'}"></span>
+                        </div>        
+                    </th>
+                    <th>
+                        <div class="th">Edit</div>
+                    </th>
+                    <th>
+                        <div class="th">Delete</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in News">
+                    <td>{{trade.Id}}</td>
+                    <td>{{trade.name}}</td>
+                    <td>{{trade.value}}</td>
+                    <td>{{trade.monthValue}}</td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>                    
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">            
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myADDModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add or Edit Target</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.name" placeholder="Enter Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Daily Sales:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.value" placeholder="Enter value"/>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Monthly Sales:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.monthValue" placeholder="Enter value" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="Add()">Save</button>
+        </div>
+    </form>    
+</script>
+
+<script type="text/ng-template" id="mydeletemodal.html">
+    <form name="myFormdeleteModal1">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="delete(saveData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

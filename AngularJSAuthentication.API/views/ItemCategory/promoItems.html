@@ -1,0 +1,445 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .modal-footer {
+            padding: 18px !important;
+            padding-right: 35px !important;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<div class="page page-table"  button-permission-binder parentName="Promo Point" pageName="PromoItems">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>  Item Master
+            </strong>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="row col-md-12">
+                <div class="form-group col-md-1" ng-if="supShow">
+                    <p>Supplier :</p>
+                </div>
+                <div class="form-group col-md-3" ng-if="supShow">
+                    <select class="form-control" id="site-name" ng-model="SupplierCode" data-ng-change="getSupplierStores(SupplierCode)">
+                        <option value="">----Filter Supplier---</option>
+                        <option value="{{s.SUPPLIERCODES}}" ng-repeat="s in supplier" data-ng-selected="SupplierCode == s.SUPPLIERCODES">{{s.Name}}-({{s.SUPPLIERCODES}})</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="form-group col-md-6">
+                    <button type="button" class="btn-sm btn-primary skPointConversion" data-ng-click="pointConv()" ng-if="supShow">PointConversion</button>
+                    <button type="button" class="btn-sm btn-primary skPurchasePromoPoint" data-ng-click="open()">Purchase Promo Point</button>
+                </div>
+                <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
+                        <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        
+                        <button type="button" class="btn-sm btn-primary" data-ng-click="search()">Search Item</button>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <button type="button" class="btn-sm btn-primary" data-ng-click="refresh()">Refresh Item</button>
+                    </div>
+                    <br />
+                    <br />
+                </div><br />
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive" ng-if="isShow">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Item Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('itemname')"
+                                  data-ng-class="{active: row == 'itemname'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-itemname')"
+                                  data-ng-class="{active: row == '-itemname'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Ware House Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Supplier Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SupplierName')"
+                                  data-ng-class="{active: row == 'SupplierName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SupplierName')"
+                                  data-ng-class="{active: row == '-SupplierName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Subsub cat Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubsubcategoryName')"
+                                  data-ng-class="{active: row == 'SubsubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubsubcategoryName')"
+                                  data-ng-class="{active: row == '-SubsubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub category Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubcategoryName')"
+                                  data-ng-class="{active: row == 'SubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubcategoryName')"
+                                  data-ng-class="{active: row == '-SubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Selling Unit Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingUnitName')"
+                                  data-ng-class="{active: row == 'SellingUnitName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SellingUnitName')"
+                                  data-ng-class="{active: row == '-SellingUnitName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Promo/Items
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('promoPerItems')"
+                                  data-ng-class="{active: row == 'promoPerItems'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-promoPerItems')"
+                                  data-ng-class="{active: row == '-promoPerItems'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Total Promo
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('promoPoint')"
+                                  data-ng-class="{active: row == 'promoPoint'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-promoPoint')"
+                                  data-ng-class="{active: row == '-promoPoint'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Unit Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('PurchaseUnitName')"
+                                  data-ng-class="{active: row == 'PurchaseUnitName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PurchaseUnitName')"
+                                  data-ng-class="{active: row == '-PurchaseUnitName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Min Item Order
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('PurchaseMinOrderQty')"
+                                  data-ng-class="{active: row == 'PurchaseMinOrderQty'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PurchaseMinOrderQty')"
+                                  data-ng-class="{active: row == '-PurchaseMinOrderQty'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item image
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.itemname}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.SupplierName}}</td>
+                    <td>{{trade.SubsubcategoryName}}</td>
+                    <td>{{trade.SubcategoryName}}</td>
+                    <td>{{trade.SellingUnitName}}</td>
+                    <td>{{trade.promoPerItems}}</td>
+                    <td>{{trade.promoPoint}}</td>
+                    <td>{{trade.PurchaseUnitName}}</td>
+                    <td>{{trade.PurchaseMinOrderQty}}</td>
+                    <td>
+                        <div class="form-group">
+                            <img src='/../../images/itemimages/{{trade.SellingSku}}.jpg'
+                                 class="img-square img80_80" onError="this.onerror = null; this.src = '../../img/logoicon.png';" />
+                        </div>
+                    </td>
+                    <td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                </tr>
+
+            </tbody>
+        </table> 
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selectedPagedItem"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNumPerPageChange()"></select>  //option for no. Items per page //this give no. of items selected to show on page entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 page-num-info">
+                    <dir-pagination-controls max-size="8"
+                                             direction-links="true"
+                                             boundary-links="true"
+                                             on-page-change="getData1(newPageNumber)">
+                        //get method call every time when page changes
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<style>
+    .w3-red {
+        color: #fff!important;
+        background-color: #f44336!important;
+    }
+    .w1-red {
+        color: #fff!important;
+        background-color: #4c4948!important;
+    }
+</style>
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myitemMasterPut.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Item</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Item Name</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.itemname" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Item Number</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.Number" readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Code</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.SUPPLIERCODES"  readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Seliing Unit Name</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.SellingUnitName" readonly />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Hindi Name</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.HindiName" readonly />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Purchase Unit Name</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.PurchaseUnitName"  readonly/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Total Promo Point</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.promoPoint" placeholder="Enter Total Promo Point" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Promo Point per Item</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="itemMasterData.promoPerItems" placeholder="Enter poromo point for each item"/>
+            </div>            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning skcancel" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="PutitemMaster(itemMasterData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="purchaseModel.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Purchase Pomo Point</h4>
+        </div>
+        <div class="modal-body" style="top:20px;">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Select Supplier</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="supplier.SupplierCode" readonly />
+            </div>            
+            <div class="form-group">
+                <label for="site-name"> Promo Point</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="supplier.Point" placeholder="Enter Promo Point" ng-change="AmountCalculation()"/>
+            </div>    
+            <div class="form-group">
+                <label for="site-name"> Pay Amount</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="supplier.Amount" readonly />
+            </div>              
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning skcancel" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="PutitemMaster()">Save</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="promoADDModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add\Edit</h4>
+        </div>
+        <div class="modal-body" style="top:20px;">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <label for="site-name">Promo Point's :</label>
+                    <input id="site-name" type="text" class="form-control" ng-model="pointData.point" placeholder="Enter Name" />
+                </div>
+                <div class="form-group row">
+                    <label for="site-name">INR:</label>
+                    <input id="site-name" type="text" class="form-control" ng-model="pointData.rupee" placeholder="Enter Name" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning skcancel" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="Add()">Save</button>
+            <br /><br />
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="form-group row">
+                    <strong>
+                        {{pointData.point}} reward point equal to {{pointData.rupee}} rupees
+                    </strong>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>

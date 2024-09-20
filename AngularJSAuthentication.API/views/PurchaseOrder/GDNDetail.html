@@ -1,0 +1,334 @@
+﻿
+<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<style>
+    .accordion {
+        background-color: #03A9F4;
+        color: #fff;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 20px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+<style>
+    .imgWth {
+        width: 80px;
+        height: 80px;
+    }
+
+    .invoiceImg img {
+        max-width: 100%;
+    }
+
+    .modal-body {
+        max-height: 750px;
+        overflow-y: auto;
+    }
+</style>
+
+ 
+<div class="container-fluid">
+    <table class="border" style="width:600px !important" ng-if="Valid">
+        <tr>
+            <td>
+                Please Enter OTP
+            </td>
+            <td> <input type="text" id="txtotp" ng-model="otp" /> </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center"> <button class="btn-danger" id="btnVaidateOtp" ng-click="ValidateOtp(otp,GDNData[0].PurchaseOrderId);">Validate OTP</button> </td>
+        </tr>
+    </table>
+</div>
+
+<div class="container-fluid" id="divGDN">
+    <table class="table table-bordered" style="font-size: 14px !important;" width="100">
+        <tbody class="border">
+            <tr>
+                <td colspan="2">
+                   
+                    <button class="btn-dark" onclick="javascript: history.go(-1)" >Back</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;"> <h3>  Goods Descripancy Note</h3> </td>
+            </tr>
+            <tr>
+                <td height="60" width="33%"> <img src="./images/logo.PNG" style="padding-bottom: 20px;height: 90px;" /> <br /></td>
+
+                <td height="60" width="33%">
+                    <p style="padding: 3px;">
+                        <span style="float: left"> {{GDNData[0].WarehouseName}} <strong> </strong></span><br />
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <span style="float: left">Vendor Name: {{GDNData[0].suppliername}} </span> <br />
+                        <span style="float: left">Invoice No: {{GDNData[0].InvoiceNumber}} </span> <br />
+                         <span style="float: left">GDN Status: {{GDNData[0].GNDStatus}} </span> <br />
+
+                    </p>
+                </td>
+                <td>
+                    <p style="padding: 3px;">
+                        <span style="float: left">No.: {{GDNData[0].GDNNumber}}  </span><br />
+                        <span style="float:left">Date: {{GDNData[0].InvoiceDate}}  </span><br />
+                        <span style="float: left">PO.No: {{GDNData[0].PurchaseOrderId}} </span><br />
+
+                    </p>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th></th>
+                <th>SNo.</th>
+                <th>SKU Description</th>
+                <th>Short Qty</th>
+                <th>Damage Qty</th>
+                <th>Expiry Qty</th>
+                <th>Total</th>
+            </tr>
+            <tr ng-repeat="gdn in GDNData">
+                <th></th>
+                <td>{{$index+1}}</td>
+                <td>{{gdn.SKUDescription}}</td>
+                <td>{{gdn.ShortQty }}</td>
+                <td>{{gdn.DamageQty}}</td>
+                <td>{{gdn.ExpiryQty}}</td>
+                <td>{{gdn.ShortQty + gdn.DamageQty +gdn.ExpiryQty}}</td>
+            </tr>
+        </thead>
+
+        <!-- ngRepeat: O in GrMaster -->
+    </table>
+    <table class="border">
+        <tr>
+            <td>This is a system generated statement, no signature is required.</td>
+            <!--<td> <span style="float: left">Vendor Name & Signature:</span></td>
+            <td><span style="float:inherit">Receiver Signature :</span></td>
+            <td> <span style="float: right">Security Seal & Signature:</span></td>-->
+        </tr>
+    </table>
+    <table class="border" border="0" cellspacing="0" cellpadding="0">
+           <tr>
+               <th colspan="6" class="bg-dark" style="text-align:center"> Issue Qty of GDN  </th>
+           </tr>
+            <tr>
+                
+                <th>SNo.</th>
+                <th>SKU Description</th>
+                <th>Short Qty</th>
+                <th>Damage Qty</th>
+                <th>Expiry Qty</th>
+                <th>Total</th>
+            </tr>
+            <tr ng-repeat="gdn in GDNData">
+                 
+                <td>{{$index+1}}</td>
+                <td>{{gdn.SKUDescription}}</td>
+                <td>{{gdn.IssueShortQty }}</td>
+                <td>{{gdn.IssueDamageQty}}</td>
+                <td>{{gdn.IssueExpiryQty}}</td>
+                <td>{{gdn.IssueShortQty + gdn.IssueDamageQty +gdn.IssueExpiryQty}}</td>
+            </tr>
+        
+
+        <!-- ngRepeat: O in GrMaster -->
+    </table>
+</div>
+<br />
+<br />
+<br />
+<div class="container-fluid" ng-if="action">
+
+    <table class="border" style="text-align:center ; width:600px !important">
+        <tr>
+            <td>Comment</td>
+            <td>
+                <input type="text" ng-model="comment" id="txtcomment" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn-dark" id="btnApprove" ng-click="GdnApprove(GDNData[0].GDNId,GDNData[0].PurchaseOrderId,comment)">
+                    Approve
+                </button>
+            </td>
+            <td>
+                <button class="btn-dark" id="btnreject" ng-click="GdnReject(GDNData[0].GDNId,GDNData[0].PurchaseOrderId,comment)">
+                    Reject
+                </button>
+            </td>
+        </tr>
+    </table>
+
+</div>

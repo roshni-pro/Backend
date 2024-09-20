@@ -1,0 +1,258 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="State">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>States
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()">
+                <span class="glyphicon glyphicon-plus"> </span> Add new State
+            </button>
+        </div>
+        <br />
+
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            State Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ALias Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('aliasName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            State GST Code
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('GSTNo')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedDate')"
+                                  data-ng-class="{active: row == '- CreatedDate'}"></span>
+                        </div>
+                    </th>
+
+                    <th ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )">
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )">
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.StateName}}</td>
+                    <td>{{trade.AliasName}}</td>
+                    <td>{{trade.GSTNo}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="myStateModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add State</h4>
+
+        </div>
+
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">State Name:</label><br />
+                <select id="site-name" type="text" class="form-control" ng-model="vm.StateData" ng-options="state.StateName for state in states" ng-required></select>
+
+                <!--<input id="site-name" type="text" class="form-control" ng-model="StateData.StateName"  placeholder="Enter state name" ng-required />-->
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Alias Name:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter state alias name" value="{{vm.StateData.Alias}}" ng-required disabled />
+            </div>
+            <div class="form-group">
+                <label for="site-name">State GST Code:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter state GSTNo" value="{{vm.StateData.GSTNo}}" ng-required disabled />
+            </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddState()">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myStateModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit State</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">State Name:</label><br />            
+                <input id="site-name" type="text" class="form-control"  value="{{StateData.StateName}}"  placeholder="Enter state name" ng-required disabled/>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Alias Name:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter state alias name" value="{{StateData.AliasName}}" ng-required disabled />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">State GST Code:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter state GSTNo" value="{{StateData.GSTNo}}" ng-required disabled />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Retailer is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="vm.StateData.active" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Supplier is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="vm.StateData.IsSupplier" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutState(vm)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteState.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete State</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletestate(StateData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

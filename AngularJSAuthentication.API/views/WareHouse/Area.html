@@ -1,0 +1,346 @@
+﻿
+<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        .form-group.required .control-label:after {
+            content: "*";
+            color: red;
+        }
+    </style>
+</head>
+
+<div class="page page-table" button-permission-binder parentName="Warehouse" pageName="Area">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>  Area Master
+            </strong>
+        </div>
+        <div>
+
+            <button class="btn btn-primary skupload" ng-click="toggle()" ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"> <span class="glyphicon glyphicon-plus"> </span>Upload Area</button>
+            <button class="btn btn-primary skadd" ng-click="open()">
+                <span class="glyphicon glyphicon-plus">
+                </span> Add Area
+            </button>
+        </div>
+        <br />
+        <div id="typography" ng-hide="uploadshow">
+
+            <div class="well">
+                <div id="dragandrophandler">Drag &amp; Drop Files Here</div>
+                <br><br>
+
+            </div>
+
+        </div>
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div> <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.no
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Area Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ClusterName')"
+                                  data-ng-class="{active: row == 'ClusterName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ClusterName')"
+                                  data-ng-class="{active: row == '-ClusterName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Area Code
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ClusterName')"
+                                  data-ng-class="{active: row == 'ClusterName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ClusterName')"
+                                  data-ng-class="{active: row == '-ClusterName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            City Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CityName')"
+                                  data-ng-class="{active: row == 'ClusterName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CityName')"
+                                  data-ng-class="{active: row == '-ClusterName'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th >
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{$index +1}}</td>
+                    <td>{{trade.AreaName}}</td>
+                    <td>{{trade.AreaCode}}</td>
+                    <td>{{trade.CityName}}</td>
+
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                    <td ><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td ><button class="btn-sm btn-danger skremove" ng-click="oopendelete(trade,$index)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myAreaModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Area </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" ng-click="showDetails = ! showDetails" ng-model="AreaData.CityId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citys"> {{city.CityName}}</option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="site-name">Area Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Area Name" ng-model="AreaData.AreaName" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Area Code</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Area Code" ng-model="AreaData.AreaCode" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddArea(AreaData)">Save</button>
+        </div>
+    </form>
+</script>
+<!--Update Area-->
+<script type="text/ng-template" id="myareaPut.html">
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Area</h4>
+            <br />
+            <div class="form-group">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" ng-model="AreaData.CityId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citys" ng-selected="city.Cityid==AreaData.CityId">
+                        {{city.CityName}}
+                    </option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="site-name">Area Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Area Name" ng-model="AreaData.AreaName" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Area Code</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Area Code" ng-model="AreaData.AreaCode" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="putArea(AreaData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteArea.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Cluster</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to End?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteArea(AreaData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

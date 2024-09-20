@@ -1,0 +1,131 @@
+﻿<div class="page page-table"  button-permission-binder parentName="Purchase Order" pageName="Rejected IR">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>IR Information</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="site-name">Select Warehouse</label><br />
+                            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="GetIRDetail(WarehouseId)">
+                                <option value="{{warehouses.value}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.value"> {{warehouses.label}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">PurchaseOrder ID</label><br />
+                            <input type="number" placeholder="Enter PurchaseOrder ID" class="form-control" ng-model="SearhIr">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Search</label><br />
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="SearchRejectedIRData(SearhIr)">Search</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Order Id
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR ID
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR Type
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Supplier Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR Status
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    RejectedComment
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IR Detail
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--<tr dir-paginate="trade in IrData|itemsPerPage:itemsPerPage" total-items="total_count">-->
+                        <tr data-ng-repeat="trade in IrData">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.PurchaseOrderId}}</td>
+                            <td>{{trade.IRID}}</td>
+                            <td>{{trade.IRType}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td>{{trade.SupplierName}}</td>
+                            <td  ng-style="{ 'color' : (trade.IRStatus == 'Rejected from Buyer side') ? 'red' : 'green'  }" ><b>{{trade.IRStatus}}</b></td>
+                            <td>{{trade.RejectedComment}}
+                            <td><span class="label label-danger">{{trade.TotalAmount | number:2}}</span></td>
+                            <td>{{trade.CreationDate | date:'medium'}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary mb1 bg-teal btn-sm skopen" ng-click="openIR(trade)">
+                                    <span class="glyphicon glyphicon-folder-open"></span> &nbsp;Open
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="selectedPagedItem"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 page-num-info">
+                            <dir-pagination-controls max-size="8"
+                                                     direction-links="true"
+                                                     boundary-links="true"
+                                                     on-page-change="getData1(newPageNumber)">
+                                //get method call every time when page changes
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+</div>

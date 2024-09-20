@@ -1,0 +1,1324 @@
+﻿
+<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<style>
+    .collapsible {
+        background-color: #00a4e9;
+        color: white;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 8%;
+        height: 40px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        padding: 10px;
+        box-shadow: 5px 5px 8px gray;
+    }
+
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+
+    .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f1f1f1;
+    }
+</style>
+
+<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+<style>
+    .or-bld {
+        font-size: 25px;
+        font-weight: bold;
+        color: #EB5A00;
+        font-family: fantasy;
+    }
+
+    .or-bld-2 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #EB5A00;
+        font-family: fantasy;
+    }
+
+
+    .box-ds {
+        border: solid 1px lightgray;
+        padding: 13px 6px;
+        margin: 5px
+    }
+
+    .or-sm {
+        margin-top: 8px;
+    }
+
+    .btn-br {
+        /*position: absolute;*/
+        margin-left: 8px;
+        border-radius: 19px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .pull-right-im {
+        float: right !important;
+    }
+
+    .br-or {
+        border-top: solid 2px lightgray;
+        margin: 20px 0px;
+    }
+
+    .bx-dr {
+        border: solid 1px lightgray;
+        padding: 2px 5px;
+        min-width: 61px;
+    }
+</style>
+<style>
+    .accordion {
+        background-color: #03A9F4;
+        color: #fff;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 20px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    /*tr:nth-child(even) {
+        background-color: #dddddd;
+    }*/
+</style>
+<style type="text/css">
+    .button {
+        width: 150px;
+        padding: 10px;
+        background-color: #FF8C00;
+        box-shadow: -8px 8px 10px 3px rgba(0,0,0,0.2);
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    #coverMRP {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 5;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    #loginScreenMRP {
+        min-height: 300px;
+        width: 1039px;
+        margin: 100px auto;
+        position: relative;
+        z-index: 10;
+        display: block;
+        background: white;
+        border-radius: 7px;
+    }
+
+
+        #loginScreenMRP:target, #loginScreen:target + #cover {
+            display: block;
+            opacity: 2;
+        }
+
+    .cancelMRP {
+        display: block;
+        position: absolute;
+        top: 3px;
+        right: 2px;
+        background: #fff;
+        color: black;
+        height: 30px;
+        width: 35px;
+        font-size: 30px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: bold;
+        margin-right: 35px;
+        border: none;
+    }
+
+    #cover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 5;
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    #loginScreen {
+        min-height: 300px;
+        width: 1236px;
+        margin: 100px auto;
+        position: relative;
+        z-index: 10;
+        display: block;
+        background: white;
+        border: 3px solid white;
+        border-radius: 7px;
+        margin-left: 370px;
+    }
+
+        #loginScreen:target, #loginScreen:target + #cover {
+            display: block;
+            opacity: 2;
+        }
+
+    .cancel {
+        display: block;
+        position: absolute;
+        top: 3px;
+        right: 2px;
+        background: #fff;
+        color: black;
+        height: 30px;
+        width: 35px;
+        font-size: 30px;
+        text-decoration: none;
+        text-align: center;
+        font-weight: bold;
+        margin-right: 35px;
+        border: none;
+    }
+</style>
+
+<div class="client-document-container">
+    <div class="containers">
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="accordion btn btn-info" data-toggle="collapse" data-target="#demoS">&nbsp; Purchase Order Master Detail.</button>
+                <div id="demoS" class="collapse">
+                    <br />
+                    <div class="container-fluid">
+                        <table class="table table-bordered" style="font-size: 14px !important;" width="100">
+                            <tbody class="border">
+                                <tr>
+                                    <td colspan="3" style="text-align: center;font-size: large;">
+                                        <strong style="text-align: center;">Purchase Order Master Detail</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="60" width="33%"> <img src="./images/logo.PNG" style="padding-bottom: 20px;" /> <br /></td>
+                                    <td height="60" width="33%">
+                                        <p style="font-size: large;">
+                                            <strong> ShopKirana E Trading Pvt. Ltd.</strong> <br />
+                                            <span> Address:&nbsp; 201, 2nd Floor, A22/3 SP 365,</span> <br />
+                                            <span> Janjeerwala Square, Indore-4552001,</span><br />
+                                            <span> Madhya Pradesh.</span>
+                                        </p>
+                                    </td>
+                                    <td height="60" width="33%">
+                                        <p style="padding: 3px;">
+                                            <span style="float: left">Delivery at: <strong> {{WarehouseData.WarehouseName}}</strong></span><br />
+                                            <span style="float: left">C/O:  {{WarehouseData.Address}}</span><br />
+                                            <span style="float: left">City: {{WarehouseData.CityName}}</span><br />
+                                            <span style="float: left">Tel.No: {{WarehouseData.Phone}}</span><br />
+                                            <span style="float: left">GSTIN: {{WarehouseData.GSTin}}</span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="33%" style="color: orangered;text-align: center;">
+                                        <b>PO Information</b>
+                                    </td>
+                                    <td width="33%" style="color: orangered;text-align: center;">
+                                        <b>Supplier Information</b>
+                                    </td>
+                                    <td width="33%" style="color: orangered;text-align: center;">
+                                        <b>Depo Information</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>
+                                            <span style="float: left">Invoice No: {{PurchaseOrderData.PoInvoiceNo}} </span> <br />
+                                            <span style="float: left">PO.No: {{PurchaseOrderData.PurchaseOrderId}} </span> <br />
+                                            <span style="float: left">Created Date: {{PurchaseOrderData.CreationDate | date}} </span> <br />
+                                            <span style="float: left">PO Creater: {{PurchaseOrderData.CreatedBy}} </span> <br />
+                                            <span style="float: left">Buyer: {{PurchaseOrderData.BuyerName}}</span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p style="padding: 3px;">
+                                            <span style="float: left">{{PurchaseOrderData.SupplierName}}</span><br />
+                                            <span ng-show="PurchaseOrderData.IsCashPurchase" style="float:left">CashPurchase Name:  {{PurchaseOrderData.CashPurchaseName}}</span><br />
+                                            <span style="float: left">C/O:  {{SupplierData.BillingAddress}}</span><br />
+                                            <span style="float: left">Tel.No: {{SupplierData.MobileNo}}</span><br />
+                                            <span style="float: left">GSTIN: {{SupplierData.GstInNumber}}</span>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p style="padding: 3px;">
+                                            <span style="float: left"> {{DepoData.DepoName}}</span><br />
+                                            <span style="float: left">C/O:  {{DepoData.Address}}</span><br />
+                                            <span style="float: left">Tel.No: {{DepoData.Phone}}</span><br />
+                                            <span style="float: left">GSTIN: {{DepoData.GSTin}}</span>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <!--<p4 ng-show="PurchaseOrderData.IsPR==true">
+                            <span ng-style="{ 'color' : (PurchaseOrderData.IsPR == true) ? 'red' : '' }" style="float:left">Advance PR Amount: {{PurchaseOrderData.Advance_Amt | number:2}}&nbsp;<i class="fa fa-inr"></i> </span>
+                        </p4>-->
+                        <div class="col-md-4">
+                            <label for="site-name" style="color:red;">Advance Amt:</label><br />
+                            {{AdvanceAmountDetails && AdvanceAmountDetails.TotalPayment ?  AdvanceAmountDetails.TotalPayment: 'N/A'}}
+                        </div>
+                        <div class="col-md-4">
+                            <label for="site-name" style="color:red;">Bank payment:</label><br />
+                            {{AdvanceAmountDetails && AdvanceAmountDetails.BankPayment ?  AdvanceAmountDetails.BankPayment: 'N/A'}}
+
+                        </div>
+                        <div class="col-md-4">
+                            <label for="site-name" style="color:red;">Settle payment:</label><br />
+                            {{AdvanceAmountDetails && AdvanceAmountDetails.SettledPayment ?  AdvanceAmountDetails.SettledPayment: 'N/A'}}
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6"><button type="button" class="accordion btn btn-info" data-toggle="collapse" data-target="#demoD">&nbsp; Product Detail..</button></div>
+            <div class="col-md-6"> <button type="button" class="accordion btn btn-info" ng-click="getPOGRDetail()" data-toggle="collapse" data-target="#demo">&nbsp; GR Product Received Detail..</button> </div>
+            <div id="demoD" class="collapse">
+                <div class="container-fluid">
+                    <h4 class="title">PO Product Detail</h4>
+                    <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th>SNo.</th>
+                                <th>Item Number</th>
+                                <th>MultiMRPId</th>
+                                <th>MRP</th>
+                                <th>Name</th>
+                                <th>ABC Classification</th>
+                                <th>Demand Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="O in PurchaseorderDetails">
+                            <tr>
+                                <td>
+                                    {{$index+1}}
+                                    <span ng-if="O.IsFreeItem == true" ng-style="{ 'color' : (O.IsFreeItem == true) ? 'red' : ''  }">
+                                        Free
+                                    </span>
+                                </td>
+                                <td>{{O.ItemNumber}}</td>
+                                <td>{{O.ItemMultiMRPId}}</td>
+                                <td>{{O.MRP}}</td>
+                                <td>{{O.ItemName}}</td>
+                                <td>{{O.Category}}</td>
+                                <td>{{O.TotalQuantity}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="demo" class="collapse">
+                <div class="container-fluid">
+                    <h4 class="title">GR Product Received Detail</h4>
+                    <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>SNo.</th>
+                                <th>GR.No.</th>
+                                <th>GR Status</th>
+                                <th>GR Date</th>
+                                <th>GR Person</th>
+                                <th>GR Approver</th>
+                                <th>Vehicle Type</th>
+                                <th>Vehicle Number</th>
+                                <th>
+                                    InvoiceImage
+                                </th>
+                                <th>View Old Free Item</th>
+                                <th>GND Details</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="O in GrMaster">
+                            <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                                <td class="CX"><span style="color: red;">+</span></td>
+                                <td>{{$index+1}}</td>
+                                <td>{{O.GrSerialNumber}}</td>
+                                <td ng-style="{ 'color' : (O.strStatus == 'Approved') ? 'black' : 'red'  }">{{O.strStatus}}</td>
+
+                                <td>{{O.CreatedDate | date : format : medium}}</td>
+                                <td>{{O.GrPersonName}}</td>
+                                <td>{{O.ApproverName}}</td>
+                                <td ng-show="O.VehicleType != null">{{O.VehicleType}}</td>
+                                <td ng-show="O.VehicleType == null"><span style="        color: red;">-</span></td>
+                                <td ng-show="O.VehicleType != null">{{O.VehicleNumber }}</td>
+                                <td ng-show="O.VehicleType == null"><span style="        color: red;">-</span></td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-br" ng-click="GRDraft(O)" data-dismiss="modal">InvoiceImage</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-dark btn-br" ng-click="AddFreeItem(O.GrSerialNumber)" data-dismiss="modal">Old Free Item</button>
+                                </td>
+                                <td ng-if="O.IsGDN==true">
+                                    <button type="button" class="btn btn-info btn-br" ng-click="OpenGDN(PurchaseOrderData.PurchaseOrderId,O.GrSerialNumber)">GDN</button>
+                                </td>
+                            </tr>
+                            <tr class="sub">
+                                <td></td>
+                                <td colspan="5">
+                                    <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>SNo.</th>
+                                                <th>ItemNumber</th>
+                                                <th>ABC Classification</th>
+                                                <th>ItemMultiMrpId</th>
+                                                <th ng-style="{'color' : 'red'}">MRP</th>
+                                                <!--<th>Item Name.</th>-->
+                                                <th>HSN</th>
+                                                <th>Batch.No.</th>
+                                                <th>MFG Date</th>
+                                                <th>Total Po Qty</th>
+                                                <th>Qty Received</th>
+                                                <th>Dam Received</th>
+                                                <th>Exp Received</th>
+                                                <th>Short Qty</th>
+
+                                                <th ng-style="{'color' : 'red'}">
+
+                                                    Total Received Qty
+
+                                                </th>
+                                                <th>Price</th>
+                                                <th>Total Amount</th>
+                                                <th>Quality Image</th>
+                                                <th>Quality Comments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody ng-init="total = 0" ng-repeat="Od in O.GoodsReceivedItemDcs">
+
+                                            <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                                                <td class="CX"><span style="color: red;">+</span></td><!--ng-click="getBatchMasterData(Od)"-->
+                                                <td>
+                                                    {{$index+1}}
+                                                    <span ng-if="Od.IsFreeItem == true" ng-style="{ 'color' : (Od.IsFreeItem == true) ? 'red' : ''  }">
+                                                        (Free)
+                                                    </span>
+                                                </td>
+                                                <td>{{Od.Itemnumber}}</td>
+                                                <td>{{Od.Category}}</td>
+                                                <td>{{Od.ItemMultiMRPId}}</td>
+                                                <td>{{Od.MRP}}</td>
+                                                <!--<td>{{Od.ItemName}}</td>-->
+                                                <td>{{Od.HSNCode}}</td>
+                                                <td>{{Od.BatchNo}}</td>
+                                                <td>{{Od.MFGDate | date : format : medium}}</td>
+                                                <td>{{Od.TotalQuantity}}</td>
+                                                <td>{{Od.Qty}}</td>
+                                                <td>{{Od.DamageQty}} <br /> <span style="color:red" ng-if="O.IsGDN==true">GDN</span></td>
+                                                <td>{{Od.ExpiryQty}} <br /> <span style="color:red" ng-if="O.IsGDN==true">GDN</span></td>
+                                                <td>{{Od.ShortQty}}  <br /> <span style="color:red" ng-if="O.IsGDN==true">GDN</span></td>
+                                                <td>
+                                                    <span ng-if="Od.IsDamageExpiryPhysical==true">
+                                                        {{Od.Qty+Od.ExpiryQty+Od.DamageQty}}
+                                                    </span>
+                                                    <span ng-if="Od.IsDamageExpiryPhysical!=true">
+                                                        {{Od.Qty}}
+                                                    </span>
+                                                </td>
+                                                <td>{{Od.Price}}</td>
+
+                                                <td>
+                                                    <!--ng-init="$parent.total = $parent.total + Od.TotalAmount"-->
+                                                    {{Od.TotalAmount | number : 2}}
+
+                                                    <span ng-if="Od.IsDamageExpiryPhysical==true" ng-style="{'color':(Od.IsDamageExpiryPhysical == true)? 'red' : ''}">*</span>
+                                                </td>
+                                                <td><button class="text-center btn btn-primary" data-toggle="modal" data-target="#popupp" ng-click="ViewQA(Od)">View QA Report Image</button></td>
+                                                <td><button class="text-center btn btn-primary" data-toggle="modal" data-target="#popup" ng-click="ViewAllQA(Od)">View Old QA Report</button></td>
+                                            </tr>
+                                            <tr class="sub">
+                                                <td></td>
+                                                <td colspan="17">
+                                                    <table class="tableData" border="0" cellspacing="0" cellpadding="0" ng-if="!isDataNotFound">
+                                                        <tbody>
+
+                                                            <tr>
+                                                                <th>SNo.</th>
+                                                                <th>Batch Code</th>
+                                                                <th ng-style="{'color' : 'red'}">Damage Qty</th>
+                                                                <th>Qty</th>
+                                                                <th>Expiry Qty</th>
+                                                                <th>Expiry Date</th>
+                                                            </tr>
+                                                            <tr ng-repeat="bm in Od.BatchMasterDC" ng-class-even="'even'" ng-class-odd="'odd'">
+                                                                <td>
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td>{{bm.BatchCode}}</td>
+                                                                <td>{{bm.DamageQty}}</td>
+                                                                <td>{{bm.Qty}}</td>
+                                                                <td>{{bm.ExpiryQty}}</td>
+                                                                <td>{{bm.ExpiryDate | date : format : medium}}</td>
+                                                            </tr>
+                                                    </table>
+                                                    <span ng-if="Od.BatchMasterDC == null">No Data Found</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tr>
+                                            <td><b>Total</b></td>
+                                            <td></td>
+                                            <td><b>Rs. : {{ O.GoodsReceivedItemDcs.total | number : 2 }} /-</b></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" ng-if="saved">
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>PurchaseSku</th>
+                                <th>Item Name.</th>
+                                <th>MRP</th>
+                                <th>Purchase Price</th>
+                                <th>MOQ</th>
+                                <th>Qty </th>
+                                <th>No of Pieces</th>
+                                <th>Total Amount</th>
+                                <th>Qty Recived</th>
+                                <th>Recived Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="PurchaseorderDetail in xdata">
+                                <td>{{1+$index}}</td>
+                                <td>{{PurchaseorderDetail.PurchaseSku}}</td>
+                                <td>{{PurchaseorderDetail.ItemName}}</td>
+                                <td>{{PurchaseorderDetail.MRP |number:2}}</td>
+                                <td>{{PurchaseorderDetail.Price |number:2}}</td>
+                                <td>{{PurchaseorderDetail.MOQ}}</td>
+                                <td>{{((PurchaseorderDetail.TotalQuantity)/(PurchaseorderDetail.MOQ))}}</td>
+                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                <td>{{(PurchaseorderDetail.Price)*(PurchaseorderDetail.TotalQuantity) |number:2}}</td>
+                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                <td>{{(PurchaseorderDetail.PriceRecived) |number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: large;font-weight: bold;color: red;">
+                                    Total
+                                </td>
+                                <td colspan="4"></td>
+                                <td style="font-size: large;font-weight: bold;">
+                                    {{ScMOQ}}
+                                </td>
+                                <td style="font-size: large;font-weight: bold;">
+                                    {{ScTQuantity}}
+                                </td>
+                                <td style="font-size: large;font-weight: bold;">
+                                    {{ScNoofpieces}}
+                                </td>
+                                <td style="font-size: large;font-weight: bold;">
+                                    {{ScTotalAmount | number:2}}
+                                </td>
+                                <td style="font-size: large;font-weight: bold;">
+                                    {{ScRquantity}}
+                                </td>
+                                <td style="font-size: large;font-weight: bold;">
+                                    {{ScRamount | number:2}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11">
+                                    <p style="padding: 3px;">
+                                        <span style="float: left"><strong>Grand Total:&nbsp;&nbsp; &nbsp;</strong></span>
+                                        <span style="float: left">{{RamountInword}} Rupees.</span>
+                                        <span style="float: right;color: black;font-weight: bold;font-size: large;">{{ScRamount | number:2}}&nbsp;<i class="fa fa-inr"></i></span>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br />
+
+                <div class="col-md-12">
+                    <div class="col-md-6" ng-if="saved">
+                        <table class="table table-striped table-bordered table-hover" ng-if="frShow">
+                            <caption><strong>Free Items</strong></caption>
+                            <thead>
+                                <tr>
+                                    <th>GR Number</th>
+                                    <th>SupplierName</th>
+                                    <th>itemname</th>
+                                    <th>No of Piece</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="item in FreeItems">
+                                    <td>{{item.GRNumber}}</td>
+                                    <td>{{item.SupplierName}}</td>
+                                    <td>{{item.itemname}}</td>
+                                    <td>{{item.TotalQuantity | number:2}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <br />
+                        <textarea ng-hide="PurchaseOrderData.Status == 'UN Received' || PurchaseOrderData.Status == 'CN Received' || PurchaseOrderData.Status == 'Canceled'" placeholder="Insert note here....." ng-model="PurchaseOrderData.Comment" rows="4" cols="90"></textarea>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6" style="padding-top: 45px;">
+                        <button ng-disabled="PurchaseOrderData.Status == 'Canceled' || PurchaseOrderData.Status =='Closed'" ng-hide="PurchaseOrderData.Status == 'UN Received' || PurchaseOrderData.Status == 'UN Partial Received' || PurchaseOrderData.Status == 'CN Received' || PurchaseOrderData.Status == 'CN Partial Received' || PurchaseOrderData.Status == 'Received' || PurchaseOrderData.Status == 'Auto Closed' || PurchaseOrderData.Status == 'Closed'" class="btn btn-danger btn-br" style="float: right;margin-right: 15px;" ng-click="CancelPO(PurchaseOrderData)">
+                            &nbsp;Cancel PO
+                        </button>
+                        <!--<button ng-show="PurchaseOrderData.Status == 'Received' || PurchaseOrderData.Status == 'CN Received' ||  PurchaseOrderData.Status == 'CN Partial Received'" class="btn btn-primary btn-br" ng-click="showGRInvoice(PurchaseorderDetails)" style="margin-right: 15px;float: right;">
+                            <span class="glyphicon glyphicon-print"> </span>&nbsp;PRINT INVOICE
+                        </button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="border-top: dotted 4px;" /><br />
+</div>
+
+<script type="text/ng-template" id="myModalGRInvoice1.html">
+    <style type="text/css">
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .border {
+                border: 1px solid #000 !important;
+            }
+
+            th, td {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+                border-spacing: 0;
+                padding: 0;
+                text-align: center;
+            }
+        }
+    </style>
+    <form name="myFormSiteModal">
+        <div id="divtoPrint" class="client-document-container">
+            <div class="containers">
+
+                <div class="table-responsive">
+                    <br />
+                    <table class="table table-bordered" style="font-size: 12px !important;" width="100%">
+                        <tbody class="border">
+                            <tr><td colspan="11"> <strong style="text-align: center;">Purchase Order Detail</strong></td></tr>
+                            <tr>
+                                <td rowspan="2" height="130" width="100">
+                                    <img width="100" height="100" src="../../Content/SK.png" />
+                                </td>
+                                <td colspan="2" height="30" style="text-align: center;">Headquater Detail</td>
+                                <td colspan="2" height="30" style="text-align: center;">Warehouse Detail</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" width="150" height="90">
+                                    <p style="padding: 3px;">
+                                        <strong> ShopKirana E Trading Pvt. Ltd.</strong> <br />
+                                        <span style="text-align: left"> Address:&nbsp; 201, 2nd Floor, A22/3 SP 365,</span> <br />
+                                        <span style="text-align: left"> Janjeerwala Square, Indore-4552001,</span><br />
+                                        <span style="text-align: left"> Madhya Pradesh.</span>
+                                    </p>
+                                </td>
+                                <td height="90" colspan="2" width="150">
+                                    <p style="padding: 3px;">
+                                        <span style="float: left">Delivery at: <strong> {{WarehouseData.WarehouseName}}</strong></span><br />
+                                        <span style="float: left">C/O:  {{WarehouseData.Address}}</span><br />
+                                        <span style="float: left">City: {{WarehouseData.CityName}}</span><br />
+                                        <span style="float: left">Tel.No: {{WarehouseData.Phone}}</span><br />
+                                        <span style="float: left">GSTIN: {{WarehouseData.GSTin}}</span>
+
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" width="50%" style="text-align: center;">
+                                    <b>Supplier Detail</b><br />
+                                </td>
+                                <td width="50%" style="text-align: center;">
+                                    <!--  -->
+                                    <b>Depo Detail</b><br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" width="50%" style="padding-top: 0px;">
+                                    <p style="padding: 3px;">
+                                        <span style="float: left">&nbsp;{{PurchaseOrderData.purchaseOrder.SupplierName}}</span><br />
+                                        <span ng-show="PurchaseOrderData.purchaseOrder.IsCashPurchase" style="float:left">&nbsp;CashPurchase Name:  {{PurchaseOrderData.purchaseOrder.CashPurchaseName}}</span><br />
+                                        <span style="float: left">&nbsp;C/O:  {{SupplierData.BillingAddress}}</span><br />
+                                        <span style="float: left">&nbsp;Tel.No: {{SupplierData.MobileNo}}</span><br />
+                                        <span style="float: left">&nbsp;GSTIN: {{SupplierData.GstInNumber}}</span>
+                                    </p>
+                                </td>
+                                <td width="50%">
+                                    <p style="padding: 3px;">
+                                        <span style="float: left">&nbsp; {{DepoData.DepoName}}</span><br />
+                                        <span style="float: left">&nbsp;C/O:   {{DepoData.Address}}</span><br />
+                                        <span style="float: left">&nbsp;Tel.No: {{DepoData.Phone}}</span><br />
+                                        <span style="float: left">&nbsp;GSTIN:  {{DepoData.GSTin}}</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <p>
+                                        <span style="float: left">&nbsp;PO Creater: {{PurchaseOrderData.purchaseOrder.CreatedBy}} </span> <br />
+                                        <span style="float: left">&nbsp;Buyer: {{PurchaseOrderData.purchaseOrder.BuyerName}}</span>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p>
+                                        <span style="float: left">&nbsp;Invoice No:{{PurchaseOrderData.purchaseOrder.PoInvoiceNo}} </span><br />
+                                        <span style="float: left">&nbsp;PO No:{{PurchaseOrderData.purchaseOrder.PurchaseOrderId}} </span><br />
+                                        <!--<span style="float: left">&nbsp;Transaction No:{{PurchaseOrderData.purchaseOrder.TransactionNumber}} </span><br />-->
+                                        Pu
+                                        rc
+                                        ch
+                                        <span style="float: left">&nbsp;Date: {{PurchaseOrderData.purchaseOrder.CreationDate | date:'M/d/yyyy HH:mm:ss'}}</span>
+                                        er
+
+
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <style type="text/css">
+                    @media print {
+                        table {
+                            top: 10px !important;
+                        }
+
+                            table, table tr, table td {
+                                border-top: #000 solid 1px !important;
+                                border-bottom: #000 solid 1px !important;
+                                border-left: #000 solid 1px !important;
+                                border-right: #000 solid 1px !important;
+                                border-spacing: 0;
+                                padding: 0;
+                                text-align: center;
+                            }
+                    }
+                </style>
+                <div class="table-responsive">
+                    <table class="table table-bordered" style="        font-size: 12px !important;" width="100%">
+                        <thead class="border">
+                            <tr>
+                                <th style="border: 1px solid Black;" class="border">S.No</th>
+                                <th style="border: 1px solid Black;" class="border">Pur.Sku</th>
+                                <th style="border: 1px solid Black;" width="150" class="border">Item Name & Desc.</th>
+                                <th style="border: 1px solid Black;" class="border">MRP</th>
+                                <th style="border: 1px solid Black;" class="border">Pur.Price</th>
+                                <th style="border: 1px solid Black;" class="border">MOQ</th>
+                                <th style="border: 1px solid Black;" class="border">Qty </th>
+                                <th style="border: 1px solid Black;" class="border">Pieces</th>
+                                <th style="border: 1px solid Black;" class="border">Ttl.Amt.</th>
+                                <th style="border: 1px solid Black;" class="border">Qty Recived</th>
+                                <th style="border: 1px solid Black;" class="border">Recived Price</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border">
+                            <tr data-ng-repeat="PurchaseorderDetail in PurchaseOrderData.purchaseOrderDetail">
+                                <td>{{1+$index}}</td>
+                                <td>{{PurchaseorderDetail.PurchaseSku}}</td>
+                                <td width="150">{{PurchaseorderDetail.ItemName}}</td>
+                                <td>{{PurchaseorderDetail.MRP |number:2}}</td>
+                                <td>{{PurchaseorderDetail.Price |number:2}}</td>
+                                <td>{{PurchaseorderDetail.MOQ}}</td>
+                                <td>{{((PurchaseorderDetail.TotalQuantity)/(PurchaseorderDetail.MOQ))}}</td>
+                                <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                                <td>{{(PurchaseorderDetail.Price)*(PurchaseorderDetail.TotalQuantity) |number:2}}</td>
+                                <td>{{PurchaseorderDetail.QtyRecived}}</td>
+                                <td>{{(PurchaseorderDetail.PriceRecived) |number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td style="        font-size: large;
+        font-weight: bold;
+        color: red;">
+                                    Total
+                                </td>
+                                <td colspan="4"></td>
+                                <td style="        font-size: large;
+        font-weight: bold;">
+                                    {{ScMOQ}}
+                                </td>
+                                <td style="        font-size: large;
+        font-weight: bold;">
+                                    {{ScTQuantity}}
+                                </td>
+                                <td style="        font-size: large;
+        font-weight: bold;">
+                                    {{ScNoofpieces}}
+                                </td>
+                                <td style="        font-size: large;
+        font-weight: bold;">
+                                    {{ScTotalAmount | number:2}}
+                                </td>
+                                <td style="        font-size: large;
+        font-weight: bold;">
+                                    {{ScRquantity}}
+                                </td>
+                                <td style="        font-size: large;
+        font-weight: bold;">
+                                    {{ScRamount | number:2}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11">
+                                    <p style="padding: 3px;">
+                                        <span style="float: left"><strong>Grand Total:&nbsp;&nbsp; &nbsp;</strong></span>
+                                        <span style="float: left">{{RamountInword}} Rupees.</span>
+                                        <span style="float: right;
+        color: black;
+        font-weight: bold;
+        font-size: large;">{{ScRamount | number:2}}</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11">
+                                    <p style="padding: 3px;">
+                                        <span style="float: left"><strong>Payment Terms:&nbsp;</strong></span>
+                                        <span style="float: left">7 days after receipt of material (from GRN date)</span><br />
+                                        <span style="float: Left;
+        margin-top: 2px;">* PLEASE MENTION ITEM WISE OUR PO NO. AND PART NO. ON YOUR INVOICE.</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="11">
+                                    <p style="padding: 3px;">
+                                        <span style="float: left"><strong>Place of Delivery: {{PurchaseOrderData.purchaseOrder.WarehouseName}} ({{WhCityName}}) </strong></span><br />
+                                        <span style="float: left"><strong>C/O: {{WhAddress}} &nbsp;*City: {{WhCityName}}</strong></span>
+
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <hr />
+                <br />
+                <div class="row client-info" style="        width: 100% !important">
+                    <div class="" style="        width: 100% !important">
+                        <div class="" style="        float: left">
+                            <strong><strong>TERMS AND CONDITIONS:</strong></strong>
+                            <br />
+                            <div style="        font-size: 12px;">
+                                <p>
+                                    1. All invoices should be accompanied with a hard copy of the PO or the number of the PO should be mentioned on the invoice.<br />
+                                    2. The invoice qty not exceed the PO qty.<br />
+                                    3. The invoice value should not exceed the PO value.<br />
+                                    4. The invoice value should not exceed the PO value.<br />
+                                    5. If any product has not been supplied then it should be informed to the buying team before the invoice is raised.<br />
+                                    6. Stocks will be accepted in the ShopKirana warehouse only between 10:00 AM to 7 PM from Monday to Saturday.<br />
+                                    7. Hard copy of the invoice has to be sent along with the product to the delivery address mentioned above. And the soft copy of the same to be mailed to invoice@shopkirana.com on the day of dispatch of material to process payment in hassle free manner.<br />
+                                    8. Deliveries against this PO shall be accepted only within 36 hour or earlier date mentioned on PO, and any balance quantity shall stand cancelled.<br />
+                                    9. If Vendor fails to send an invoice to ShopKirana on time and as per ShopKirana demand, then ShopKirana will have right to hold future payment until old pending invoices gets clear.<br />
+                                    <br /><br />
+                                <p style="        float: left">ShopKirana Signature:</p> <p style="        float: right">Supplier Signature:</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="        float: right;">
+                            <!--<img src="./images/logo.PNG" style="width:300px;"/>-->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row" style="        width: 100% !important">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive">
+
+                            <div class="row">
+                                <style>
+                                    @media print {
+                                        #btnPrint {
+                                            display: none !important;
+                                        }
+
+                                        .printer {
+                                            display: none !important;
+                                        }
+                                    }
+                                </style>
+                                <div class="col-lg-4 col-md-4 col-sm-4 printer">
+                                    <div class="row pad-top-botm">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 printer">
+                                            <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="        float: right;
+        margin-right: 15px;" onclick="javascript: printDiv('divtoPrint')">
+                                                <span class="glyphicon glyphicon-print no-print"> </span> Print Invoice
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+    function printDiv(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrint");
+        onRouteChangeOff();
+        window.location.reload();
+    }
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+</script>
+
+<script type="text/ng-template" id="CancelPO.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Purchase Order </h4>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="site-name">Do you want to Cancel PO ?</label><br />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">POID</label><br />
+                    <input class="form-control" ng-model="PurchaseOrderData.PurchaseOrderId" disabled />
+                </div>
+            </div>
+            <!--<div class="col-md-12">
+                <div class="form-group">
+                    <label for="site-name">Reject reason</label><br />
+                    <textarea class="form-control" ng-model="saveData.IrRejectComment" />
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="modal-body" id="myModal">
+                    <div class="form-group  col-md-4">
+                        <label class='control-label' for="site-name">Comment</label><br />
+                        <textarea class="form-control" id="txtcomment" name="comment" type="text" form="usrform" ng-model="saveData.Newcomment" placeholder="Type the Comment"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="CancelPO(saveData)">Yes</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="OldaddfreeItemData.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">Ã—</button>
+            <h4 class="modal-title">Purchase Order List</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12"></div>
+
+            <div class="form-group col-md-2">
+                <label for="site-name"> GRN</label><br />
+                <input readonly class="form-control" ng-model="saveData.GrSerialNumber" />
+            </div>
+            <!--<div class="row" style="padding:15px;" ng-hide="{{GrStatus == 'Approved'}}">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="site-name">Search Item {{GrStatus}}</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input id="site-name" type="text" class="form-control" ng-model="key" placeholder="Enter item Name for search" />
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="Search(key)">
+                                <span class="glyphicon glyphicon-search"></span> Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group  ">
+                    <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="item">
+                        <option value="{{item}}" ng-repeat="item in itemData">{{item.itemname}}=({{item.SellingSku}}) => ({{item.PurchaseMinOrderQty}})</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="site-name">No Of Piece :</label><br />
+                    <input class="form-control" ng-model="quantity" />
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name">&nbsp;</label><br />
+                    <button type="button" style="float:right;" class="btn btn-ar btn-primary" ng-click="AddItem(item ,quantity)">Save</button>
+                </div>
+            </div>
+            <br />-->
+            <table ng-if="frShow" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>PurchaseOrder Id</th>
+                        <th>GR Number</th>
+                        <th>SupplierName</th>
+                        <th>itemname</th>
+                        <th>No of Piece</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="item in FreeItems">
+                        <td>{{item.PurchaseOrderId}}</td>
+                        <td>{{item.GRNumber}}</td>
+                        <td>{{item.SupplierName}}</td>
+                        <td>{{item.itemname}}</td>
+                        <td>{{item.TotalQuantity}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-danger" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </form>
+</script>
+
+<body ng-app="MyApp" ng-controller="CreateBackendController">
+    <div class="container">
+        <div class="modal fade" id="popupp" role="dialog">
+            <div class="modal-dialog" style="display: inline;">
+                <div class="modal-content" style=" margin-left: 41%; margin-right: 40%; margin-top: 5%; ">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="Close()">×</button>
+                    </div>
+                    <h4 style="text-align:center"><b>Gr Quality Image</b></h4>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-if="viewDocument">
+                                    <br />
+                                    <img alt="" style=" width: 293%; margin: 25% 42%;" src="{{baseurl}}{{viewDocument}}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<body ng-app="MyApp" ng-controller="CreateBackendController">
+    <div class="container">
+        <div class="modal fade" id="popup" role="dialog">
+            <div class="modal-dialog" style="display: inline;">
+                <div class="modal-content" style=" margin-left: 20%; margin-right: 20%; margin-top: 5%; ">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="Close()">×</button>
+                    </div>
+                    <h4 style="text-align:center"><b>Gr Report</b></h4>
+                    <div class="modal-body">
+                        <br />
+                        <!--<img alt="" style=" width: 293%; margin: 25% 42%;" src="{{baseurl}}{{viewDocument}}" />-->
+                    <table class="table table-bordered table-striped table-responsive" style=" font-size: 12px !important;" width="100%">
+                        <tbody>
+                            <tr>
+                                <!--<th>GoodsReceivedDetailId</th>-->
+                                <th style=" width: 28%;">Comment</th>
+                                <th style=" width: 28%;">Image</th>
+                                <th style=" width: 28%;">ModifiedBy</th>
+                                <th style=" width: 28%;">Status</th>
+                                <th style=" width: 28%;">ModifiedDate</th>
+                                <th style=" width: 28%;">Quality Checher Name</th>
+                                <th style=" width: 28%;">Quality Checher PhoneNo.</th>
+                            </tr>
+                            <tr ng-repeat="gr in GrQualityInvoiceList">
+                                <!--<td style=" width: 28%;">{{gr.GoodsReceivedDetailId}}</td>-->
+                                <td style=" width: 28%;">{{gr.Comment}}</td>
+                                <td style=" width: 28%;"><img alt="" style=" width: 22%; margin: 1% 20%;" src="{{baseurl}}{{gr.Image}}" /> </td>
+                                <td style=" width: 28%;">{{gr.DisplayName}}</td>
+                                <td style=" width: 28%;">{{gr.Status}}</td>
+                                <td style=" width: 28%;">{{gr.ModifiedDate |date:'medium'}}</td>
+                                <td style=" width: 28%;">{{gr.QaName}}</td>
+                                <td style=" width: 28%;">{{gr.QaPhoneNo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>

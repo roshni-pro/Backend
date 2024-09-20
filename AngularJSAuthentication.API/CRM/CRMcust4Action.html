@@ -1,0 +1,314 @@
+﻿<div class="page page-table"  button-permission-binder parentName="CRM" pageName="CRM Customers">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Customers orders
+            </strong>
+        </div>
+        <br />
+        <div>
+            <div class="form-group col-md-12 clear-both">
+                <div class="form-group col-md-1">
+                    <label for="site-name">Select F1:</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.type" ng-change="selectedtypeChanged(CRMData)">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2" ng-if="CRMData.type==2">
+                    <label for="site-name">Hub</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.id">
+                        <option value="">---SELECT---</option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in dataselect"> {{warehouses.WarehouseName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2" ng-if="CRMData.type==3">
+                    <label for="site-name">City</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.id">
+                        <option value="">---SELECT---</option>
+                        <option value="{{citys.Cityid}}" ng-repeat="citys in dataselect"> {{citys.CityName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2" ng-if="CRMData.type==4">
+                    <label for="site-name">Executive</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.id">
+                        <option value="">--Select--</option>
+                        <option value="{{obj1.PeopleID}}" ng-repeat="obj1 in dataselect"> {{obj1.DisplayName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2" ng-if="CRMData.type==5">
+                    <label for="site-name">Cluster</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.id">
+                        <option value="">--Select--</option>
+                        <option value="{{obj.ClusterId}}" ng-repeat="obj in dataselect"> {{obj.ClusterName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-1">
+                    <label for="site-name">Select F2:</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.cattype" ng-change="selectedItemChanged(CRMData)">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in catType">{{a.text}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group form-group col-md-2" ng-if="CRMData.cattype==1">
+                    <label for="site-name">Catogory</label><br />
+                    <select class="form-control" ng-model="CRMData.catid">
+                        <option value="">---SELECT---</option>
+                        <option value="{{a.Categoryid}}" ng-repeat="a in dataselect1"> {{a.CategoryName}}</option>
+                    </select>
+                </div>
+                <div class="form-group form-group col-md-2" ng-if="CRMData.cattype==2">
+                    <label for="site-name">SubCatogory</label><br />
+                    <select class="form-control" ng-model="CRMData.catid">
+                        <option value="">---SELECT---</option>
+                        <option value="{{a.SubCategoryId}}" ng-repeat="a in dataselect1"> {{a.SubcategoryName}}</option>
+                    </select>
+                </div>
+                <div class="form-group form-group col-md-2" ng-if="CRMData.cattype==3">
+                    <label for="site-name">SubSubCatogory</label><br />
+                    <select class="form-control" ng-model="CRMData.catid">
+                        <option value="">---SELECT---</option>
+                        <option value="{{a.SubsubCategoryid}}" ng-repeat="a in dataselect1"> {{a.SubsubcategoryName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-1">
+                    <label for="site-name">Select F3:</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.GL_Type">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in GL_Type">{{a.text}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name">Value:</label><br />
+                    <input type="text" class="form-control" ng-model="CRMData.values" />
+                </div>
+                <!--<div class="form-group col-md-3">
+                    <label for="site-name">Select Customer type<span style="color:red;">*</span></label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.custtype">
+                        <option value="">---SELECT---</option>
+                        <option value="Aware/Intereseted">Aware/Intereseted</option>
+                        <option value="Ordered">Ordered</option>
+                        <option value="EngagedCustomer">Engaged Customer</option>
+                        <option value="RelyingCustomer">Relying Customer</option>
+                        <option value="EnabledCustomer">Enabled Customer</option>
+                        <option value="EmpoweredCustomer">Empowered Customer</option>
+                        <option value="Keep/DropCustomer">Keep/DropCustomer</option>
+                    </select>
+                </div>-->
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select Date Range</label><br>
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-12 clear-both">
+                <div class="form-group col-md-3">
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="getdata(CRMData)" data-dismiss="modal">Get data</button>
+                </div>
+                <!--<div class="form-group col-md-3">
+                    <label for="site-name">Filter f4:</label><br />
+                    <select class="form-control" id="site-name" ng-model="type" ng-change="changeGraph(type)">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in selType">{{a.text}}</option>
+                    </select>
+                </div>-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="chartContainer">
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            <!--<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />-->
+                            #
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shop Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CityName')"
+                                  data-ng-class="{active: row == 'CityName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CityName')"
+                                  data-ng-class="{active: row == '-CityName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Skcode
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Skcode')"
+                                  data-ng-class="{active: row == 'Skcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Skcode')"
+                                  data-ng-class="{active: row == '-Skcode'}"></span>
+                        </div>
+                    </th>
+                  
+                    <th>
+                        <div class="th">
+                            Cluster Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ClusterName')"
+                                  data-ng-class="{active: row == 'ClusterName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ClusterName')"
+                                  data-ng-class="{active: row == '-ClusterName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Mobile
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Mobile')"
+                                  data-ng-class="{active: row == 'Mobile'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Mobile')"
+                                  data-ng-class="{active: row == '-Mobile'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Order count
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('thisordercount')"
+                                  data-ng-class="{active: row == 'thisordercount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-thisordercount')"
+                                  data-ng-class="{active: row == '-thisordercount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Order Value
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('thisordervalue')"
+                                  data-ng-class="{active: row == 'thisordervalue'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-thisordervalue')"
+                                  data-ng-class="{active: row == '-thisordervalue'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Task Action
+                        </div>
+                    </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in customers">
+                    <td><!--<input type="checkbox" value="{{trade.check}}" ng-model="trade.check" />-->{{$index+1}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.Skcode}}</td>
+                    
+                    <td>{{trade.ClusterName}}</td>
+                    <td>{{trade.Mobile}}</td>
+                    <td>{{trade.thisordercount}}</td>
+                    <td>{{trade.thisordervalue | number: 0}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="open(trade)">Action</button> </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="modal-footer">
+                <br /><br />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+    </section>
+
+</div>
+<script type="text/ng-template" id="myActionModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Action Model</h4>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-group ">
+                <label for="site-name">Customer Id</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="customers.CustomerId"  />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select People:</label><br />
+                <select class="form-control" id="site-name" ng-model="customers.PeopleID" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{people.PeopleID}}" ng-repeat="people in peoples" ng-click="showDetails = ! showDetails"> {{people.DisplayName}}</option>
+
+                </select>
+            </div>
+
+            <div class="form-group ">
+                <label for="site-name">Task Action</label><br />
+                <select class="form-control" id="site-name" ng-model="customers.Action">
+                    <option value="">---SELECT---</option>
+                    <option value="1:1 meeting">1:1 meeting</option>
+                    <option value="CAll">Call</option>
+                    <option value="Add wallet amount">Add wallet amount</option>
+                    <option value="Send notification">Send notification</option>
+                    <option value="Activate customer">Activate customer</option>
+                    <option value="Gift to customer">Gift to customer</option>
+                    <option value="Welcome kit to customer">Welcome kit to customer</option>
+                    <option value="Dream Kit to customer">Dream Kit to customer</option>
+                    <option value="Send brochure of brand">Send brochure of brand</option>
+                    <option value="Send product list">Send product list</option>
+                    <option value="Send certificate">Send certificate</option>
+                    <option value="Send sample ">Send sample </option>
+                    <option value="Get registration number/licence">Get registration number/licence</option>
+                    <option value="Fill feedback form">Fill feedback form</option>
+                    <option value="Warn for deactivation">Warn for deactivation</option>
+                    <option value="Download app">Download app</option>
+                </select>
+            </div>
+            <div class="form-group ">
+                <label for="site-name">Due date</label><br />
+                <input id="site-name" type="date" class="form-control" ng-model="customers.CompletionDate" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="Action(customers)">Save</button>
+        </div>
+    </form>
+</script>

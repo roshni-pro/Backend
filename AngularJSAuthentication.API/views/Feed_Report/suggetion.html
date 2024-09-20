@@ -1,0 +1,49 @@
+﻿<div class="page page-table"  button-permission-binder parentName="Request" pageName="Request">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Customer Request
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="table-filters">
+                <div class="row ">                    
+                    <div class="col-sm-2 col-xs-6 filter-result-info pull-right">
+                        <span>
+                            Showing {{request.length}} entries
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive" style="font-size:20px!important; font-family:'Arial Rounded MT'">
+            <thead>
+                <tr>
+                    <th class="th">
+                        Request Id
+                    </th>
+                    <th class="th">
+                        Shop Name
+                    </th>
+                    <th class="th">
+                        Requested Brand
+                    </th> 
+                    <th class="th">
+                        Created Date
+                    </th>                   
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr data-ng-repeat="trade in request">
+                    <td>{{trade.reqId}}</td>
+                    <td>{{trade.shopName}}</td>
+                    <td>{{trade.requestedBrand}}</td>  
+                    <td>{{trade.createdDate}}</td>                   
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">           
+        </footer>
+    </section>
+</div>

@@ -1,0 +1,374 @@
+﻿<style>
+    .tab {
+        width: 100%;
+        border-radius: 100px;
+        margin-bottom: 41px;
+        margin-top: 10px;
+    }
+
+    .reqError {
+        color: #ff0000; /*Red Color*/
+        font-weight: bold;
+        font-size:18px;
+    }
+
+</style>
+<form name="myFormSiteModal" novalidate>
+    <div ng-show="showform">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add People</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-4 "><button class="btn btn-primary  tab" ng-click="DetailsForm()">Step 1</button></div>
+                <div class="col-md-4"><button class="btn btn-default  tab" ng-click="SalaryForm()">Step 2</button></div>
+                <div class="col-md-4"><button class="btn btn-default  tab" ng-click="DocumentForm()">Step 3</button></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name" class="">First Name:</label>
+                                <span class="reqError">*</span><br />
+                                <input id="FP_name" type="text" class="form-control" name="FPName" ng-model="PeopleData.people.PeopleFirstName" placeholder="Enter First Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Last Name:</label>
+                                <span class="reqError">*</span><br />
+                                <input id="LP_name" type="text" class="form-control" name="LPName" ng-model="PeopleData.people.PeopleLastName" placeholder="Enter Last Name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Email:</label>
+                        <span class="reqError">*</span><br />
+                        <!--<input id="EmailP" type="email" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter Email" ng-blur="CheckEmail(PeopleData.Email)" />-->
+                        <div class="col-md-6">
+                            <input id="EmailP" type="text" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.people.Email" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.people.Email+'@shopkirana.com')" />
+
+                            <!--<input id="EmailP" type="email" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.Email)" />-->
+
+                        </div>
+                        <div class="col-md-6">
+                            <input id="EmailP1" type="email" class="form-control" disabled name="PEmail" placeholder="@shopkirana.com" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Password:</label>
+                        <span class="reqError">*</span><br />
+                        <input id="P_pass" class="form-control" type="password" required="" name="Ppassword" placeholder="Enter Password.min 8 Digits Like (Abc@123)" ng-model="PeopleData.people.Password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Mobile:</label>
+                        <span class="reqError">*</span><br />
+                        <input id="Pmobile" type="number" class="form-control" name="Pcontact" ng-model="PeopleData.people.Mobile" ng-pattern="/^[0-9]{10}$/" placeholder="Enter Mobile" ng-blur="CheckMobile(PeopleData.people.Mobile)" />
+                    </div>
+                    <!--<div class="form-group">
+                    <label for="site-name">Desgination:</label><br />
+                    <select class="form-control" id="PDesgination" name="PDesgination" ng-model="PeopleData.people.Desgination" required>
+                        <option value="">---SELECT---</option>
+                        <option value="CEO">CEO</option>
+
+                    </select>
+                </div>-->
+
+                    <div class="form-group">
+                        <label for="site-name">Status:</label><br />
+                        <select class="form-control" id="PStatus" name="PStatus" ng-model="PeopleData.people.Status" required>
+                            <option value="">---SELECT---</option>
+                            <option value="OnRoll">OnRoll</option>
+                            <option value="OffRoll">OffRoll</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Select State:</label>
+                        <span class="reqError">*</span><br />
+                        <select class="form-control" id="PState" name="Psstate" ng-model="PeopleData.people.Stateid" ng-change="SelectFilterWh(PeopleData.people.Stateid)"required>
+                            <option value="">---SELECT---</option>
+                            <option value="{{state.Stateid}}" ng-repeat="state in states" ng-click="showDetails = ! showDetails">{{state.StateName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Select City:</label>
+                        <span class="reqError">*</span><br />
+                        <select class="form-control" id="PCity" name="Pccity" data-ng-disabled="!PeopleData.people.Stateid" ng-model="PeopleData.people.Cityid"  ng-change="SelectFilterST(PeopleData.people.Cityid)">
+                            <option value="">---SELECT---</option>
+                            <option value="{{city.Cityid}}" ng-repeat="city in citys| filter:{Stateid:PeopleData.Stateid}"> {{city.CityName}}</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Date of Join :</label>
+                                <span class="reqError">*</span><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.people.DataOfJoin" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">End Date :</label><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.people.EndDate" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="site-name">Location:</label>
+                        <span class="reqError">*</span><br />
+                        <select class="form-control" id="PUnit" name="PUnit" ng-model="PeopleData.people.Unit" required>
+                            <option value="">---SELECT---</option>
+                            <option value="Central">Central</option>
+                            <option value="hub1">Hub</option>
+
+                        </select>
+                    </div>
+                    <!--<div class="form-group">
+        <label for="site-name">Reporting:</label><br />
+        <select class="form-control" id="PReporting" name="PReporting" ng-model="PeopleData.people.Reporting" required>
+            <option value="">---SELECT---</option>
+                                </select>
+    </div>-->
+                    <div class="form-group">
+                        <label for="site-name">Department:</label>
+                        <span class="reqError">*</span><br />
+                        <!--<input type="text" ng-model="PeopleData.people.Department" class="form-control" list="PDeprt">-->
+                        <select id="PDeprt" class="form-control" ng-model="PeopleData.people.Department">
+                            <option value="">---SELECT---</option>
+                            <option value="{{Department.DepName}}" ng-repeat="Department in Departments">{{Department.DepName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Designation:</label>
+                        <span class="reqError">*</span><br />
+                        <!--<input type="text" ng-model="PeopleData.people.Desgination" class="form-control" list="PDeprt1">-->
+                        <select id="PDeprt1" class="form-control" ng-model="PeopleData.people.Desgination">
+                            <option value="">---SELECT---</option>
+                            <option value="{{Designations.DesignationName}}" ng-repeat="Designations in Designation">{{Designations.DesignationName}}</option>
+                        </select>
+                    </div>
+                    <!--<div class="form-group">
+        <label for="People-name">Permission:</label><br />
+        <select class="form-control" id="PWhouse" name="Pwarhouse" ng-model="PeopleData.people.RoleName">
+            <option value="">---SELECT---</option>
+            <option value="{{w.Name}}" ng-repeat="w in roles"> {{w.Name}}</option>
+        </select>
+    </div>-->
+
+                    <div class="form-group">
+                        <label for="People-name">Role:</label>
+                        <span class="reqError">*</span><br />
+                        <select class="form-control" id="PWhouse" name="Pwarhouse" ng-model="PeopleData.people.RoleName">
+                            <option value="">---SELECT---</option>
+                            <option value="{{w.Name}}" ng-repeat="w in roles"> {{w.Name}}</option>
+                        </select>
+                    </div>
+                    <!--<div class="form-group" ng-show="PeopleData.Permissions=='Supplier'">
+        <label for="site-name">Supplier Code:</label><br />
+        <input id="site-name" type="text" class="form-control" ng-model="PeopleData.people.Skcode" />
+    </div>-->
+                    <div class="form-group" ng-if="(PeopleData.people.RoleName == 'Agent')">
+                        <label for="site-name">Cluster</label><br />
+                        <div ng-dropdown-multiselect="" id="ids" options="Cluster" selected-model="clusterModel" extra-settings="clusterSetting"></div>
+                    </div>
+
+                    <div>
+                        <label for="site-name">DepositAmount:</label><br />
+                        <input id="Pmobile" type="number" class="form-control" name="Pcontact" ng-model="PeopleData.people.DepositAmount" placeholder="Enter DepositAmount" />
+                    </div>
+                    <!--<div class="form-group">
+        <label for="site-name">Select warehouse:</label><br />
+        <select class="form-control" id="PWhouse" name="Pwarhouse" data-ng-disabled="!PeopleData.people.Cityid" ng-model="PeopleData.people.WarehouseId">
+            <option value="">---SELECT---</option>
+            <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse| filter:{Cityid:PeopleData.Cityid}"> {{w.WarehouseName}} {{w.CityName}}</option>
+        </select>
+    </div>-->
+                    <div class="form-group">
+                        <label for="site-name">Select Warehouses:</label>
+                        <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="AddPeople(PeopleData)"  ng-disabled="PeopleData.people.PeopleFirstName==null ||PeopleData.people.Email==null ||PeopleData.people.PeopleFirstName=='' || PeopleData.people.Email==''||PeopleData.people.RoleName==null ||PeopleData.people.Desgination==null||PeopleData.people.Department==null||PeopleData.people.Mobile==null ||PeopleData.people.Cityid==null">Save</button>
+                <button type="button" class="btn btn-ar btn-warning" id="PSave" name="Pconfirm" ng-click="SalaryForm()" ng-disabled="PeopleData.people.PeopleFirstName==null ||PeopleData.people.Email==null ||PeopleData.people.PeopleFirstName=='' || PeopleData.people.Email==''||PeopleData.people.RoleName==null ||PeopleData.people.Desgination==null||PeopleData.people.Department==null||PeopleData.people.Mobile==null ||PeopleData.people.Cityid==null">Next</button>
+            </div>
+            <br />
+        </div>
+        <div>
+            <span style="font-size:15px;">Note:</span><br />
+            <span class="reqError">(i) All  '*'  Fields are Mandatory.</span><br />
+            <span class="reqError">(ii) Mobile No. Should be 10 Digit.</span><br />
+            <span class="reqError"> (iii) Passwords must have at least one non letter or digit character.
+                                        Passwords must have at least one uppercase ('A'-'Z').
+            </span><br />
+            <span class="reqError">(iv) First click on 'SAVE' then go 'NEXT' page.</span><br />
+        </div>
+    </div>
+    <div ng-show="showform1">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add People</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-4 "><button class="btn btn-default  tab" ng-click="DetailsForm()">Step 1</button></div>
+                <div class="col-md-4"><button class="btn btn-primary  tab" ng-click="SalaryForm()">Step 2</button></div>
+                <div class="col-md-4"><button class="btn btn-default  tab" ng-click="DocumentForm()">Step 3</button></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="site-name">Salary:</label><br />
+                        <input id="Salary" type="number" class="form-control" name="Salary" ng-model="PeopleData.Salary.Salary" ng-blur="Salary_Calculation(PeopleData.Salary.Salary)" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Basic Salary:</label><br />
+                        <input id="B_Salary" type="number" class="form-control" name="B_Salary" ng-model="PeopleData.Salary.B_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">HRA:</label><br />
+                        <input id="Hra_Salary" type="text" class="form-control" name="Hra_Salary" ng-model="PeopleData.Salary.Hra_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Conveyance Allowance:</label><br />
+                        <input id="CA_Salary" type="text" class="form-control" name="CA_Salary" ng-model="PeopleData.Salary.CA_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Dearness Allowance:</label><br />
+                        <input id="DA_Salary" type="text" class="form-control" name="DA_Salary" ng-model="PeopleData.Salary.DA_Salary" placeholder="0" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="site-name">Date of Birth :</label>
+                            <span class="reqError">*</span><br />
+                            <input id="site-name" type="date" class="form-control" ng-model="PeopleData.people.DOB" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="site-name">Date of Marriage:</label><br />
+                            <input id="site-name" type="date" class="form-control" ng-model="PeopleData.people.DataOfMarriage" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+
+                    <div class="form-group">
+                        <label for="site-name">LTA :</label><br />
+                        <input id="Lta_Salary" type="text" class="form-control" name="Lta_Salary" ng-model="PeopleData.Salary.Lta_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">PF :</label><br />
+                        <input id="PF_Salary" type="text" class="form-control" name="PF_Salary" ng-model="PeopleData.Salary.PF_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">ESI :</label><br />
+                        <input id="ESI_Salary" type="text" class="form-control" name="ESI_Salary" ng-model="PeopleData.Salary.ESI_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Monthly Incentive :</label><br />
+                        <input id="M_Incentive" type="text" class="form-control" name="M_Incentive" ng-model="PeopleData.Salary.M_Incentive" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name"> Yearly Incentive :</label><br />
+                        <input id="Y_Incentive" type="text" class="form-control" name="Y_Incentive" ng-model="PeopleData.Salary.Y_Incentive" placeholder="0" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="DetailsForm()">Previous</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="DocumentForm()" ng-disabled="PeopleData.Salary.Salary==null||PeopleData.Salary.B_Salary==null">Next</button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="showform2">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add People</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-4 "><button class="btn btn-default  tab" ng-click="DetailsForm()">Step 1</button></div>
+                <div class="col-md-4"><button class="btn btn-default  tab" ng-click="SalaryForm()">Step 2</button></div>
+                <div class="col-md-4"><button class="btn btn-primary  tab" ng-click="DocumentForm()">Step 3</button></div>
+            </div>
+            <!-- Upload Img -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="uploadAdvertisements">Upload Id_Proof:</label>
+                        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+
+                        <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-model="uploader.queue[0].FileUrl" ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                        <div class="form-group">
+                            <img alt="" src="{{PeopleData.Id_Proof}}" class="img-square img80_80">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadAdvertisements">Address_Proof:</label>
+                        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader1" />
+
+                        <button type="button" class="btn btn-success btn-xs" ng-click="uploader1.queue[0].upload()" ng-model="uploader1.queue[0].FileUrl" ng-disabled="uploader1.queue[0].isReady || uploader1.queue[0].isUploading || uploader1.queue[0].isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                        <div class="form-group">
+                            <img alt="" src="{{PeopleData.Address_Proof}}" class="img-square img80_80">
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                        <label for="uploadAdvertisements">MarkSheet:</label>
+                        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader2" />
+
+                        <button type="button" class="btn btn-success btn-xs" ng-click="uploader2.queue[0].upload()" ng-model="uploader2.queue[0].FileUrl" ng-disabled="uploader2.queue[0].isReady || uploader2.queue[0].isUploading || uploader2.queue[0].isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                        <div class="form-group">
+                            <img alt="" src="{{PeopleData.MarkSheet}}" class="img-square img80_80">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="uploadAdvertisements">Pre_Salary:</label>
+                            <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader3" />
+                            <button type="button" class="btn btn-success btn-xs" ng-click="uploader3.queue[0].upload()" ng-model="uploader3.queue[0].FileUrl" ng-disabled="uploader3.queue[0].isReady || uploader3.queue[0].isUploading || uploader3.queue[0].isSuccess">
+                                <span class="glyphicon glyphicon-upload"></span> Upload
+                            </button>
+                            <div class="form-group">
+                                <img alt="" src="{{PeopleData.Pre_SalarySlip}}" class="img-square img80_80">
+                            </div>
+                        </div>
+                    </div>
+            <!--<div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="PeopleData.people.Cityid" />
+            </div>-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="SalaryForm()">Previous</button>
+                <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="PutPeople(PeopleData)" ng-disabled="PeopleData.Salary.Salary==null||PeopleData.Salary.B_Salary==null">Save</button>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+

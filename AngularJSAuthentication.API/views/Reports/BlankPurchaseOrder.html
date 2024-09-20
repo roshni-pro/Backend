@@ -1,0 +1,178 @@
+﻿<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="Blank PO">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>Blank Purchase Order Master</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <label for="site-name">&nbsp;</label><br />
+                            <a href="#/AddBlankPO" class="skadd" target="_parent">
+                                <button class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus"> </span> Add Blank PO
+                                </button>
+                            </a>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="site-name">Select Warehouse</label><br />
+                            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getBlankPOData1(pageno)">
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="site-name">&nbsp;</label><br />
+                            <input type="number" placeholder="Enter PO Id" class="form-control" data-ng-model="searchKey"/>
+                        </div>
+                        <div class="col-sm-1">
+                            <label for="site-name">&nbsp;</label><br />
+                            <button type="button" class="btn btn-primary" ng-click="searchData()" data-dismiss="modal">
+                                <span class="glyphicon glyphicon-search"> </span>  SearchByPoId
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-responsive " ng-show="order">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Order Id
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('OrderId')"
+                                          data-ng-class="{active: row == 'OrderId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-OrderId')"
+                                          data-ng-class="{active: row == '-OrderId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('WarehouseName')"
+                                          data-ng-class="{active: row == 'WarehouseName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-WarehouseName')"
+                                          data-ng-class="{active: row == '-WarehouseName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Supplier Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('SupplierName')"
+                                          data-ng-class="{active: row == 'SupplierName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-SupplierName')"
+                                          data-ng-class="{active: row == '-SupplierName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Depo Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('DepoName')"
+                                          data-ng-class="{active: row == 'DepoName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-DepoName')"
+                                          data-ng-class="{active: row == '-DepoName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Status
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Status')"
+                                          data-ng-class="{active: row == 'Status'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Status')"
+                                          data-ng-class="{active: row == '-Status'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' CreatedDate')"
+                                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CreatedDate')"
+                                          data-ng-class="{active: row == '-CreatedDate'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Open Details
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Edit
+
+                                </div>
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.PurchaseOrderId}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td>{{trade.SupplierName}}</td>
+                            <td>{{trade.DepoName}}</td>
+                            <td>{{trade.Status}}</td>
+                            <td>{{trade.CreationDate | date:'medium'}}</td>
+
+                            <td>
+                                <button type="button" class="btn btn-primary  btn-sm skopen" ng-click="open(trade)">
+                                    <span class="glyphicon glyphicon-eye-open"></span> Open
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-warning  btn-sm skedit" ng-click="BlankPOEdit(trade)">
+                                    <span class="glyphicon glyphicon-list-alt"></span>Edit PO
+                                </button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="selectedPagedItem"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 page-num-info">
+                            <dir-pagination-controls max-size="8"
+                                                     direction-links="true"
+                                                     boundary-links="true"
+                                                     on-page-change="getData1(newPageNumber)">
+                                //get method call every time when page changes
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+    </section>
+</div>

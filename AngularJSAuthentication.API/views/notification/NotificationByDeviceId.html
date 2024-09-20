@@ -1,0 +1,307 @@
+﻿<div class="page page-table" button-permission-binder parentName="Admin" pageName="Notification By DeviceId">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Device Notification
+            </strong>
+        </div>
+        <br />
+        <div class="form-group col-md-3">
+            <label for="site-name">Filter by Customer</label><br>
+            <select class="form-control" id="site-name" ng-model="CustomerId" ng-change="getNotificationdata()">
+                <option value="">-Select-</option>
+                <option value="{{db.CustomerId}}" ng-repeat="db in cust"> {{db.ShopName}}</option>
+            </select>
+        </div>
+        <!--<div class="form-group col-md-3">
+        <label for="site-name">Select Date Range</label><br>
+        <div class="form-group">
+            <div class='input-group date'>
+                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>-->
+        <!--</div>-->
+        <!--<div class="col-xs-12 col-md-12">-->
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Device To
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('NotifiedTo') "
+                                  data-ng-class="{active: row == 'NotifiedTo'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-NotifiedTo') "
+                                  data-ng-class="{active: row == '-NotifiedTo'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Title
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('NotifiedTo') "
+                                  data-ng-class="{active: row == 'NotifiedTo'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-NotifiedTo') "
+                                  data-ng-class="{active: row == '-NotifiedTo'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Message
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Message') "
+                                  data-ng-class="{active: row == 'Message'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Message') "
+                                  data-ng-class="{active: row == '-Message'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ImageUrl') "
+                                  data-ng-class="{active: row == 'ImageUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ImageUrl') "
+                                  data-ng-class="{active: row == '-ImageUrl'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Notification Time
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('NotificationTime') "
+                                  data-ng-class="{active: row == 'NotificationTime'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-NotificationTime') "
+                                  data-ng-class="{active: row == '-NotificationTime'}"></span>
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStoress">
+                    <td><p>{{trade.DeviceId}}</p></td>
+                    <td><p>{{trade.title}}</p></td>
+                    <td style="max-width: 400px;"><p style="max-width: 400px;">{{trade.Message}}</p></td>
+                    <td><img alt="" src="/notificationimages/{{trade.ImageUrl}}" class="img-square"></td>
+                    <td>{{trade.NotificationTime | date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</div>
+        
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="">
+            <div class="col-xs-12 col-md-12">
+                <h3>All Notification</h3>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Device To
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('NotifiedTo') "
+                                          data-ng-class="{active: row == 'NotifiedTo'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-NotifiedTo') "
+                                          data-ng-class="{active: row == '-NotifiedTo'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Title
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('NotifiedTo') "
+                                          data-ng-class="{active: row == 'NotifiedTo'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-NotifiedTo') "
+                                          data-ng-class="{active: row == '-NotifiedTo'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Message
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Message') "
+                                          data-ng-class="{active: row == 'Message'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Message') "
+                                          data-ng-class="{active: row == '-Message'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Image
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('ImageUrl') "
+                                          data-ng-class="{active: row == 'ImageUrl'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-ImageUrl') "
+                                          data-ng-class="{active: row == '-ImageUrl'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Notification Time
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('NotificationTime') "
+                                          data-ng-class="{active: row == 'NotificationTime'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-NotificationTime') "
+                                          data-ng-class="{active: row == '-NotificationTime'}"></span>
+                                </div>
+                            </th>
+
+                            <!--<th>
+                            <div class="th">
+                                Edit
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Action
+                            </div>
+                        </th>-->
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade in currentPageStores">
+
+                            <td><p>{{trade.DeviceId}}</p></td>
+                            <td><p>{{trade.title}}</p></td>
+                            <td style="max-width: 400px;"><p style="max-width: 400px;">{{trade.Message}}</p></td>
+                            <td><img alt="" src="/notificationimages/{{trade.ImageUrl}}" class="img-square"></td>
+                            <td>{{trade.NotificationTime | date:'medium'}}</td>
+
+                            <!--td><button class="btn-sm btn-primary" ng-hide="true" ng-click="edit(trade)">Edit</button> </td>
+                        <td><button class="btn-sm btn-danger" ng-hide="true" ng-click="opendelete(trade,$index)">Remove</button> </td>-->
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <dir-pagination-controls max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true"
+                                          on-page-change="getnotificationbyId(newPageNumber)">
+                                         
+                    //get method call every time when page changes
+                </dir-pagination-controls>
+                <div class="col-md-6 text-right pagination-container">
+                    <div class="col-md-6 page-num-info">
+                        <span>
+                            Show
+                            <select data-ng-model="selected"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page
+                            entries per page
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--<footer class="panel-footer">
+        <div class="row">
+            <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()"></select>
+                    entries per page
+                </span>
+            </div>
+            <div class="col-md-6 text-right pagination-container">
+                <pagination class="pagination-sm"
+                            page="currentPage"
+                            total-items="filteredStores.length"
+                            max-size="4"
+                            on-select-page="select(page)"
+                            items-per-page="numPerPage"
+                            rotate="false"
+                            boundary-links="true"></pagination>
+            </div>
+        </div>
+    </footer>-->
+    </section>
+</div>
+
+<script type="text/ng-template" id="myADDModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Send Notification</h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+           
+
+            <div class="form-group" >
+                <label for="site-name">To:</label><br />
+                <select class="form-control" id="site-name" ng-model="saveData.NotifiedTo">
+                    <option value="">---SELECT---</option>
+                    <option value="EveryOne">EveryOne</option>
+                    <option value="{{customer.DeviceId}}" ng-repeat="customer in deviceNotification" >{{customer.DeviceId}}</option>
+                </select>
+            </div>
+           
+            <div class="form-group">
+                <label for="site-name">Title:</label><br />
+                <input class="form-control" rows="5" ng-model="saveData.Title" id="site-nam" />
+            </div>
+
+
+            <div class="form-group">
+                <label for="site-name">Message:</label><br />
+                <textarea class="form-control" rows="5" ng-model="saveData.Message" id="site-nam"></textarea>
+            </div>
+
+            <div class="form-group">
+
+                <label for="uploadAdvertisements">Upload Image:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" data-target="#myModal">Open Preview</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Add(saveData)">Send</button>
+        </div>
+    </form>
+</script>

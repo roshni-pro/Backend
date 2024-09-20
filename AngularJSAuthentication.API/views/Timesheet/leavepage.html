@@ -1,0 +1,89 @@
+﻿
+<div class="col-md-6">
+    <div class="page page-table">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th">
+                </span> Leave Application
+            </strong>
+            </div>
+            <div class="panel-body">
+                <div class="media">
+                    <div class="media-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="" class="col-sm-2">Employee Name</label>
+                                <div class="col-sm-10">
+                                    <!--<input type="text" class="form-control" ng-model="LeaveData.EmployeeName" placeholder="Enter Employee Name">-->
+                                    <input type="text"
+                                           ng-model="LeaveData.EmployeeName"
+                                           typeahead="state.DisplayName for state in peoples | filter:$viewValue | limitTo:8"
+                                           class="form-control"
+                                           placeholder="Search your Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="label-focus" class="col-sm-2">Department</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="label-focus" ng-model="LeaveData.Department" placeholder="Enter Department">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-2">Emergency Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="LeaveData.Email" placeholder="Enter Email">
+                                    <!--<span class="help-block">Some help text goes here.</span>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-2">Emergency Cell No</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" ng-model="LeaveData.CellNo" placeholder="Enter Cell No">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="col-sm-2">Leave</label>
+                                <div class="col-sm-10">
+                                    <div class="form-group col-lg-6">
+                                        <label for="site-name">Start Date:</label><br />
+                                        <input id="site-name" type="date" class="form-control" ng-model="LeaveData.StartDate" placeholder="" />
+                                    </div>
+                                    <div class="col-sm-1"></div>                                    
+                                    <div class="form-group col-lg-6">
+                                        <label for="site-name">End Date:</label><br />
+                                        <input id="site-name" type="date" class="form-control" ng-model="LeaveData.EndDate" placeholder="" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for=""class="col-sm-2">Leave Type:</label>
+                                <div class="col-sm-10">
+                                <select id="site-name" class="form-control" ng-model="LeaveData.LeaveType">
+                                    <option value="">---SELECT---</option>
+                                    <option value="Causal">Causal Leave</option>
+                                    <option value="Medical">Medical Leave</option>
+                                </select>
+                               </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-2">Reason</label>
+                                <div class="col-sm-10">
+                                    <textarea id="Leave-Reason" ng-model="LeaveData.Reason" placeholder="Enter Reason for Leave" name="" class="form-control" rows="4"></textarea>
+                                    <!--<input type="text" class="form-control" ng-model="peoples.Permissions" value="{{profiles.Permissions}}" disabled>-->
+                                </div>
+                            </div>
+                        </form>                       
+
+                        <div class="modal-footer">                     
+                            <a href="#/dashboard" type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</a>
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="AddLeave(data)">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

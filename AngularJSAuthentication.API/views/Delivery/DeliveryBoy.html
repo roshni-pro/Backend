@@ -1,0 +1,488 @@
+﻿<div class="page page-table"  button-permission-binder parentName="Delivery" pageName="Delivery Boy">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> Deliveryboy table</strong> </div>
+        <br />
+        <div>
+            <button class="btn btn-primary" ng-click="open()"> <span class="glyphicon glyphicon-plus skadd"> </span> Add Deliveryboy</button>
+        </div>
+        <br />
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                    </form>
+                </div> <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            First Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DeliveryboyFirstName')"
+                                  data-ng-class="{active: row == 'DeliveryboyFirstName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DeliveryboyFirstName')"
+                                  data-ng-class="{active: row == '-DeliveryboyFirstName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Last Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DeliveryboyLastName')"
+                                  data-ng-class="{active: row == 'DeliveryboyLastName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DeliveryboyLastName')"
+                                  data-ng-class="{active: row == '-DeliveryboyLastName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Mobile Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Mobile')"
+                                  data-ng-class="{active: row == 'Mobile'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Mobile')"
+                                  data-ng-class="{active: row == '-Mobile'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Vehicle Assigned
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Email')"
+                                  data-ng-class="{active: row == 'Email'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Email')"
+                                  data-ng-class="{active: row == '-Email'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Active
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Active')"
+                                  data-ng-class="{active: row == 'Active'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Active')"
+                                  data-ng-class="{active: row == '-Active'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>-->
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.PeopleFirstName}}</td>
+                    <td>{{trade.PeopleLastName}}</td>
+                    <td>{{trade.Mobile}}</td>
+                    <td>{{trade.VehicleName}}-{{trade.VehicleNumber}}</td>
+                    <td>{{trade.Active}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <!--<td><button class="btn-sm btn-danger" ng-click="opendelete(trade,$index)">Remove</button> </td>-->
+                    <td><button class="btn-sm btn-primary skhistory" data-toggle="modal" data-target="#Deliverymodel" ng-click="DeliveryHistroy(trade)">History</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myDeliveryboyModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Deliveryboy</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">First Name:</label><br />
+                <input id="FAD_name" name="FadName" type="text" class="form-control" ng-model="DeliveryboyData.PeopleFirstName" placeholder="Enter First Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Last Name:</label><br />
+                <input id="LAD_name" name="Lad_Name" type="text" class="form-control" ng-model="DeliveryboyData.PeopleLastName" placeholder="Enter Last Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Mobile:</label><br />
+                <input id="ADmobile" name="ADcontact" type="text" class="form-control" ng-model="DeliveryboyData.Mobile" placeholder="Enter Mobile" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Password:</label><br />
+                <input id="AD_pass" name="ADpassword" type="password" class="form-control" ng-model="DeliveryboyData.Password" placeholder="Enter Password" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="ADState" name="ADsstate" ng-model="DeliveryboyData.Stateid" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{state.Stateid}}" ng-selected="DeliveryboyData.Stateid==state.Stateid" ng-repeat="state in states" ng-click="showDetails = ! showDetails"> {{state.StateName}}</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="ADCity" name="ADccity" data-ng-disabled="!DeliveryboyData.Stateid" ng-model="DeliveryboyData.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-selected="DeliveryboyData.Cityid==city.Cityid" ng-repeat="city in citys| filter:{Stateid:DeliveryboyData.Stateid}"> {{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select warehouse:</label><br />
+                <select class="form-control" id="ADWhouse" name="ADwarhouse" data-ng-disabled="!DeliveryboyData.Cityid" ng-model="DeliveryboyData.WarehouseId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{w.WarehouseId}}" ng-selected="DeliveryboyData.WarehouseId==w.WarehouseId" ng-repeat="w in warehouse| filter:{Cityid:DeliveryboyData.Cityid}"> {{w.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Vehicle:</label><br />
+                <select class="form-control" id="site-name" data-ng-disabled="!DeliveryboyData.Cityid" ng-model="DeliveryboyData.VehicleId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{v.VehicleId}}" ng-repeat="v in Vehicles"> {{v.VehicleName}} - {{v.VehicleNumber}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="People-name">Select Agent:</label><br />
+                <select id="site-name" class="form-control" ng-model="DeliveryboyData.AgentCode">
+                    <option value="">---SELECT---</option>
+                    <option value="{{Agent.AgentCode}}" ng-repeat="Agent in Agents">{{Agent.DisplayName}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" id="ADCancel" name="ADclose" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddDeliveryboy(DeliveryboyData)" id="ADSave" name="ADconfirm">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update Deliveryboy-->
+<script type="text/ng-template" id="myDeliveryboyModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Deliveryboy</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">First Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="DeliveryboyData.PeopleFirstName" placeholder="Enter First Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Last Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="DeliveryboyData.PeopleLastName" placeholder="Enter Last Name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Mobile:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="DeliveryboyData.Mobile" placeholder="Enter Mobile" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Password:</label><br />
+                <input id="site-name" type="password" class="form-control" ng-model="DeliveryboyData.Password" placeholder="Enter Password" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="site-name" ng-model="DeliveryboyData.Stateid" required>
+                    <option value="">{{DeliveryboyData.state}}</option>
+                    <option value="{{state.Stateid}}" ng-selected="DeliveryboyData.Stateid==state.Stateid" ng-repeat="state in states" ng-click="showDetails = ! showDetails"> {{state.StateName}}</option>
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" data-ng-disabled="!DeliveryboyData.Stateid" ng-model="DeliveryboyData.Cityid">
+                    <option value="{{city.Cityid}}" ng-selected="city.Cityid == DeliveryboyData.Cityid" ng-repeat="city in citys| filter:{Stateid:DeliveryboyData.Stateid}"> {{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select warehouse:</label><br />
+                <select class="form-control" id="site-name" data-ng-disabled="!DeliveryboyData.Cityid" ng-model="DeliveryboyData.WarehouseId">
+                    <option value="">-Select-</option>
+                    <option value="{{w.WarehouseId}}" ng-selected="w.WarehouseId == DeliveryboyData.WarehouseId" ng-repeat="w in warehouse| filter:{Cityid:DeliveryboyData.Cityid}"> {{w.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Vehicle:</label><br />
+                <select class="form-control" id="site-name" data-ng-disabled="!DeliveryboyData.Cityid" ng-model="DeliveryboyData.VehicleId">
+                    <option value="{{v.VehicleId}}" ng-selected="c.VehicleId == DeliveryboyData.VehicleId" ng-repeat="v in Vehicles"> {{v.VehicleName}} - {{v.VehicleNumber}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="People-name">Select Agent:</label><br />
+                <select id="site-name" class="form-control" ng-model="DeliveryboyData.AgentCode">
+                    <option value="">---SELECT---</option>
+                    <option value="{{Agent.AgentCode}}" ng-repeat="Agent in Agents" ng-selected="Agent.AgentCode == DeliveryboyData.AgentCode">{{Agent.DisplayName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="DeliveryboyData.Active" placeholder="Enter VehicleData" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutDeliveryboy(DeliveryboyData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeletedeliveryboy.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Deliveryboy</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletedeliveryboys(DeliveryboyData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+<!--Delivey Boy History-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: orange;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 50% !important;
+        margin-left: 485px;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<div class="modal fade " id="Deliverymodel" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">DeliverBoy History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                DeliveryboyId
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                DeliveryboyFirstName
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                CreatedBy
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                UpdateBy
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                UpdatedDate
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                History
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in dataPeopleHistrory">
+                        <td>{{trade.Id}}</td>
+                        <td>{{trade.PeopleID}}</td>
+                        <td>{{trade.PeopleFirstName}}</td>
+                        <td>{{trade.CreatedBy}}</td>
+                        <td>{{trade.UpdateBy}}</td>
+                        <td>{{trade.UpdatedDate | date:'medium'}}</td>
+                        <td><button class="btn-sm btn-primary" data-toggle="modal" data-target="#DeliveryByIdmodel" ng-click="HistroyDetails(trade)">HistoryDetails</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<div class="modal fade " id="DeliveryByIdmodel" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Delivery History Details</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+
+                <tbody>
+
+
+                    <tr><th>DeliveryboyId </th> <td>{{dataHistrory.PeopleID}} </td> <td> </td><th>DeliveryboyFirstName</th> <td>{{dataHistrory.PeopleFirstName}} </td> <td> </td> <th>DeliveryboyLastName</th> <td>{{dataHistrory.PeopleLastName}} </td>  </tr>
+                    <tr><th>Email </th> <td>{{dataHistrory.Email}} </td> <td> </td><th>DisplayName</th> <td>{{dataHistrory.DisplayName}} </td> <td> </td> <th>state</th> <td>{{dataHistrory.state}} </td>  </tr>
+                    <tr><th>city </th> <td>{{dataHistrory.city}} </td> <td> </td><th>Mobile</th> <td>{{dataHistrory.Mobile}} </td> <td> </td> <th>WarehouseName</th> <td>{{dataHistrory.WarehouseName}} </td>  </tr>
+                    <tr><th>Department </th> <td>{{dataHistrory.Department}} </td> <td> </td><th>Permissions</th> <td>{{dataHistrory.Permissions}} </td> <td> </td> <th>Type</th> <td>{{dataHistrory.Type}} </td>  </tr>
+                    <tr><th>Active </th> <td>{{dataHistrory.Active}} </td> <td> </td><th>VehicleId</th> <td>{{dataHistrory.VehicleId}} </td> <td> </td> <th>VehicleName</th> <td>{{dataHistrory.VehicleName}} </td>  </tr>
+                    <tr><th>VehicleNumber </th> <td>{{dataHistrory.VehicleNumber}} </td> <td> </td><th>VehicleCapacity</th> <td>{{dataHistrory.VehicleCapacity}} </td> <td> </td> <th>Salesexecutivetype</th> <td>{{dataHistrory.Salesexecutivetype}} </td>  </tr>
+                    <tr><th>DataOfJoin </th> <td>{{dataHistrory.DataOfJoin}} </td> <td> </td><th>DataOfMarriage</th> <td>{{dataHistrory.DataOfMarriage}} </td> <td> </td> <th>EndDate</th> <td>{{dataHistrory.EndDate}} </td>  </tr>
+                    <tr><th>Status </th> <td>{{dataHistrory.Status}} </td> <td> </td><th>Unit</th> <td>{{dataHistrory.Unit}} </td> <td> </td> <th>DOB</th> <td>{{dataHistrory.DOB}} </td>  </tr>
+                    <tr><th>AgentCode </th> <td>{{dataHistrory.AgentCode}} </td> <td> </td><th>AgentName</th> <td>{{dataHistrory.AgentName}} </td> <td> </td> <th></th> <td> </td>  </tr>
+                    <tr><th>Empcode </th> <td>{{dataHistrory.Empcode}} </td> <td> </td><th>Desgination</th> <td>{{dataHistrory.Desgination}} </td> <td> </td>  </tr>
+
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

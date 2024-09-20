@@ -1,0 +1,232 @@
+﻿<style>
+    .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+        border-color: #126912;
+        background-color: #126912;
+        color: #ffffff;
+    }
+
+        .btn-link:hover, .btn-link:focus {
+            color: #fff;
+            text-decoration: underline;
+            background-color: #126912;
+        }
+
+        .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+            border-color: #126912;
+            background-color: #126912;
+            color: #ffffff;
+            border-radius: 15px;
+        }
+
+    .btn-primary {
+        color: white;
+        background-color: #00a4e9;
+        border-color: #00a4e9;
+        border-radius: 15px;
+    }
+
+    .btn-warning {
+        color: white;
+        background-color: #ffb61c;
+        border-color: #ffae02;
+        border-radius: 15px;
+    }
+
+    .form-control {
+        border-width: 1px;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        border-radius: 15px;
+    }
+
+    .input-group-addon {
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: normal;
+        line-height: 1;
+        color: #767676;
+        text-align: center;
+        background-color: #eeeeee;
+        border: 1px solid #cbd5dd;
+        border-radius: 17px;
+    }
+</style>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>&nbsp; HQ Cheque History
+            </strong>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2" style="margin-top: -12px;">
+                <label for="site-name">Select Warehouse:</label><br>
+                <select class="form-control" id="Warehouseid" ng-model="WarehouseID" data-ng-change="getChequeDetailsCollenction(WarehouseID)">
+                    <option value="All">--All--</option>
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseID == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+                </select>
+            </div>
+       
+
+            <div class="col-md-2" style="margin-top: -12px;">
+                <label for="site-name">Cheque Status:</label><br />
+                <select ng-model="ChequeStatus" class="form-control">
+                    <option value="" selected>Select Cheque Status</option>
+                    <option value="1">Operation</option>
+                    <option value="2">Bank</option>
+                    <option value="3">Clear</option>
+                    <option value="4">Return</option>
+                    <option value="5">Reject</option>
+                    <option value="6">Recoverd</option>
+                </select>
+            </div>           
+            <div class="col-md-2" style="margin-top: -12px;">
+                <label for="site-name">Search:</label><br>
+                <div class="form-group">
+                    <input id="dat" type='text' title="Enter Search Filter" placeholder="Enter Search Filter" ng-model="searchfilter" autocomplete="off" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-2 " style="margin-top: 10px;">
+                <button ng-click="GetsearchChequeData()" ngEnter="GetFilterChequeDetailData()" class="btn btn-link">Search</button>                
+                <button type="button" class="btn btn-warning" ngEnter="Back()" ng-click="Back()">Back</button>
+            </div>
+            <!--<div class="col-md-2" style="margin-top:10px">
+                <lable for="site-name">Totalcheque: {{TotalAmount}}</lable>
+
+            </div>-->
+        </div>
+        <br />
+        <div class="row" ng-if="Warehouseid != '0'">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+
+                            <th> Order ID </th>
+                            <th> Assignment ID</th>
+                            <th> Sk Code</th>                           
+                            <th> Bank Cheque </th>
+                            <th> Cheque No.</th>
+                            <th> Cheque Amount</th>
+                            <th> Cheque Date</th>
+                            <th> Deposit Date</th>
+                            <th> Cheque Image</th>
+                            <th> Status</th>
+                            <th>Return Status Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cheque in chequesearchCollection">
+                            <td>
+                                <div ng-bind="cheque.OrderId"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.Deliveryissueid"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.SKCode"></div>
+                            </td>                         
+                            <td>
+                                <div ng-bind="cheque.ChequeBankName"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.ChequeNumber"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.ChequeAmt"></div>
+                            </td>
+                            <td>
+                                {{cheque.ChequeDate | date:"dd/MM/yyyy"}}
+                            </td>
+                            <td>
+                                {{cheque.BankSubmitDate | date:"dd/MM/yyyy"}}
+                            </td>
+                           
+                            <td>
+                                <img src={{cheque.ChequeimagePath}} class="img-square img80_80" ng-click="showImage(cheque)" />
+                            </td>
+                            <td>
+                                {{cheque.ChequeStatusText}}
+
+                            </td>
+                            <td>
+                                {{cheque.ReturnComment}}
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select name="page" ng-model="vm.rowsPerPage" ng-change="onNumPerPageChange()">
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+
+                                </select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="vm.currentPage"
+                                        total-items="vm.count"
+                                        max-size="5"
+                                        on-select-page="changePage(page)"
+                                        items-per-page="vm.rowsPerPage"
+                                        rotate="false"
+                                        boundary-links="true">
+                            </pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <div class="row" ng-if="Warehouseid == '0'">
+            <div class="col-lg-12">
+                <span> You are not authorize person to access warehouse dashboard</span>
+            </div>
+        </div>
+    </section>
+</div>
+<div id="myModal" class="modal mdl" role="dialog" ng-if="vm.isImagePopupOpen">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ngEnter="hideImage(cheque)" ng-click="hideImage()">Close</button>
+            </div>
+            <div class="modal-body">
+                <!--<img ng-if="selectedChequeForImage.ChequeimagePath" class="img-big" ng-src="selectedChequeForImage.ChequeimagePath" />
+                <img ng-if="!selectedChequeForImage.ChequeimagePath" class="img-big" src="../../styles/img/checkmark.png" />-->
+                <img ng-if="selectedChequeForImage.ChequeimagePath" class="img-big" src="{{selectedChequeForImage.ChequeimagePath}}" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+    .mdl {
+        display: block !important;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .img-sml {
+        width: 100px;
+        width: 50px;
+    }
+
+    .img-big {
+        background: lightgray;
+        width: 100%;
+    }
+</style>

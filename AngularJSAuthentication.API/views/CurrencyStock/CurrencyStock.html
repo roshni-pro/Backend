@@ -1,0 +1,1826 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+
+    #dragandrophandler {
+        border: 2px dashed #92AAB0;
+        width: 650px;
+        height: 200px;
+        color: #92AAB0;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 0px 10px 10px;
+        font-size: 200%;
+        display: table-cell;
+    }
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #printThisElement {
+            display: block !important;
+        }
+
+        #page-break {
+            display: block;
+            page-break-before: always;
+        }
+    }
+
+    #printThisElement {
+        display: none;
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<style>
+    .modal-dialog {
+        width: 100% !important;
+    }
+
+    #section-left {
+        overflow: hidden;
+    }
+
+    #section-right {
+        width: auto;
+        margin-left: 30px;
+        float: right;
+    }
+
+    section {
+        border: 1px solid #999;
+        height: auto;
+    }
+</style>
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: #171616 !important;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .row {
+        margin-left: -15px;
+        margin-right: 20px;
+    }
+</style>
+<div class="page page-table">
+    <div class="row">
+        <div class="col-md-12">
+            <section id="section-left" class="panel panel-default table-dynamic">
+                <div class="panel-heading">
+                    <strong>
+                        <span class="glyphicon glyphicon-th"> </span>Stock Currency
+                    </strong>
+                </div>
+                <div class="form-group col-md-3 pull-right ">
+                    <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" data-target="#oldstock" ng-click="outhistory()"> History Out </button>
+                </div>
+                <div class="form-group col-md-3 pull-right ">
+                    <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" data-target="#newstock" ng-click="oldStock()"> History In</button>
+                </div>
+                <div class="form-group col-md-3 pull-right ">
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="CurrencyUp()">Currency Up</button>
+                </div>
+
+                <!--<div class="form-group col-md-3 pull-right ">
+                    <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" data-target="#newstock" ng-click="DBoyCurrency()"> Delivary Boy Currency</button>
+                </div>-->
+
+                <div class="form-group col-md-3 pull-right ">
+                    <button class="btn-sm btn-primary" ng-click="toggle()"> <span class="glyphicon glyphicon-plus"> </span>Upload Currency Data</button>
+                </div>
+
+                <div class="form-group col-md-3 pull-right ">
+
+                    <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" data-target="#CheckStockDetails" ng-click="Checkdetails()">Check details</button>
+                </div>
+                <div class="form-group col-md-3 pull-right ">
+                    <a target="_self" class="btn btn-ar btn-primary" href="UploadCurrency/SampleCurrency.xlsx" download="SampleCurrency.xlsx">
+                        Download Sample Sheet
+                    </a>
+                </div>
+                <br />
+                <div id="typography" ng-hide="uploadshow1">
+                    <div class="well">
+                        <div id="dragandrophandler">Drag &amp; Drop Files Here</div>
+                        <br><br>
+                        <div id="status1"></div>
+                    </div>
+                </div>
+
+                <!--<table class="table table-bordered table-striped table-responsive" style="width:50%">
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>Total Amount:</th>
+                        <td>{{trade.TotalAmount}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>1 Count:</th>
+                        <td>{{trade.onerscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>1 Rupee:</th>
+                        <td>{{trade.OneRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>2 Count:</th>
+                        <td>{{trade.tworscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>2 Rupee:</th>
+                        <td>{{trade.TwoRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>5 Count:</th>
+                        <td>{{trade.fiverscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>5 Rupee:</th>
+                        <td>{{trade.FiveRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>5 NoteCount:</th>
+                        <td>{{trade.FiveNoteCount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>5 NoteRupee:</th>
+                        <td>{{trade.FiveNote}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>10 Count:</th>
+                        <td>{{trade.tenrscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>10 Rupee:</th>
+                        <td>{{trade.TenRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>10 NoteCount:</th>
+                        <td>{{trade.TenNoteCount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>10 NoteRupee:</th>
+                        <td>{{trade.TenNote}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>20 Count:</th>
+                        <td>{{trade.fiftyrscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>20 Rupee:</th>
+                        <td>{{trade.fiftyRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>50 Count:</th>
+                        <td>{{trade.onerscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>50 Rupee:</th>
+                        <td>{{trade.OneRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>100 Count:</th>
+                        <td>{{trade.hunrscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>100 Rupee:</th>
+                        <td>{{trade.HunRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>200 Count:</th>
+                        <td>{{trade.twohunrscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>200 Rupee:</th>
+                        <td>{{trade.twoHunRupee}}</td>
+
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>500 Count:</th>
+                        <td>{{trade.fivehrscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>500 Rupee:</th>
+                        <td>{{trade.fiveHRupee}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>2000 Count:</th>
+                        <td>{{trade.twoTHrscount}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>2000 Rupee:</th>
+                        <td>{{trade.twoTHRupee}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>Date:</th>
+                        <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    </tr>
+                    <tr data-ng-repeat="trade in StockCurrencys">
+                        <th>open:</th>
+
+                        <td><button type="button" class="btn btn-ar btn-primary" id="typography" ng-click="open(trade)" data-dismiss="modal"> Open </button></td>
+                    </tr>
+                </table>-->
+
+                <table class="table table-bordered table-striped table-responsive" style="width:100%">
+                    <tr>
+                        <th>Date:</th>
+                        <td>{{Yesderday | date:'EEE, dd MMM yyyy'}}</td>
+                        <td>{{Today | date:'EEE, dd MMM yyyy'}}</td>
+                        <td>{{Today | date:'EEE, dd MMM yyyy'}}</td>
+                        <td>{{Today | date:'EEE, dd MMM yyyy'}}</td>
+                        <td>{{Today | date:'EEE, dd MMM yyyy'}}</td>
+                        <td data-ng-repeat="dboy in DelivaryBoy">
+                            {{Today  | date:'EEE, dd MMM yyyy'}}
+                        </td>
+                        <td>{{Today | date:'EEE, dd MMM yyyy'}}</td>
+                        <td>{{Today | date:'EEE, dd MMM yyyy'}}</td>
+                        <td>{{Today |date:'EEE, dd MMM yyyy'}}</td>
+                        <td>{{Today |date:'EEE, dd MMM yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tittle:</th>
+                        <td>Closing</td>
+                        <td>Openings</td>
+                        <td>Bank Dep by del boy</td>
+                        <td>Out</td>
+                        <td>Total Disposable</td>
+                        <td>Cheque B</td>
+                        <td>Dues In</td>
+                        <td>ToTal In Today</td>
+                        <td>Closing</td>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <th>Cash: 2000</th>
+                            <td>{{twoTHRupeeData}}</td>
+                            <td>{{twoTHRupeeData}}</td>
+                            <td>{{twoTHRupee}}</td>
+                            <td></td>
+                            <td>{{DistwoTHRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotaltwoTHRupee}}</td>
+                            <td>{{twoTHRupeeData - twoTHRupee + DelivaryBoyTotaltwoTHRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash: 500</th>
+                            <td>{{fiveHRupeeData}}</td>
+                            <td>{{fiveHRupeeData}}</td>
+                            <td>{{fiveHRupee}}</td>
+                            <td></td>
+                            <td>{{DisfiveHRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalfiveHRupee}}</td>
+                            <td>{{fiveHRupeeData - fiveHRupee+DelivaryBoyTotalfiveHRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash: 200</th>
+                            <td>{{twoHunRupeeData}}</td>
+                            <td>{{twoHunRupeeData}}</td>
+                            <td>{{twoHunRupee}}</td>
+                            <td></td>
+                            <td>{{DistwoHunRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotaltwoHunRupee}}</td>
+                            <td>{{twoHunRupeeData-twoHunRupee+DelivaryBoyTotaltwoHunRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash:100</th>
+                            <td>{{HunRupeeData}}</td>
+                            <td>{{HunRupeeData}}</td>
+                            <td>{{HunRupee}}</td>
+                            <td></td>
+                            <td>{{DisHunRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalHunRupee}}</td>
+                            <td>{{HunRupeeData-HunRupee+DelivaryBoyTotalHunRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash:50</th>
+                            <td>{{fiftyRupeeData}}</td>
+                            <td>{{fiftyRupeeData}}</td>
+                            <td>{{fiftyRupee}}</td>
+                            <td></td>
+                            <td>{{DisfiftyRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalfiftyRupee}}</td>
+                            <td>{{fiftyRupeeData-fiftyRupee+DelivaryBoyTotalfiftyRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash:20</th>
+                            <td>{{TwentyRupeeData}}</td>
+                            <td>{{TwentyRupeeData}}</td>
+                            <td>{{TwentyRupee}}</td>
+                            <td></td>
+                            <td>{{DisTwentyRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalTwentyRupee}}</td>
+                            <td>{{TwentyRupeeData-TwentyRupee+DelivaryBoyTotalTwentyRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash:10</th>
+                            <td>{{TenNoteData}}</td>
+                            <td>{{TenNoteData}}</td>
+                            <td>{{TenNote}}</td>
+                            <td></td>
+                            <td>{{DisTenNote}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalTenNote}}</td>
+                            <td>{{TenNoteData-TenNote+DelivaryBoyTotalTenNote}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash: 5</th>
+                            <td>{{FiveNoteData}}</td>
+                            <td>{{FiveNoteData}}</td>
+                            <td>{{FiveNote}}</td>
+                            <td></td>
+                            <td>{{DisFiveNote}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalFiveNote}}</td>
+                            <td>{{FiveNoteData-FiveNote+DelivaryBoyTotalFiveNote}}</td>
+                        </tr>
+                        <tr>
+                            <th>Coins 10:</th>
+                            <td>{{TenRupeeData}}</td>
+                            <td>{{TenRupeeData}}</td>
+                            <td>{{TenRupee}}</td>
+                            <td></td>
+                            <td>{{DisTenRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalTenRupee}}</td>
+                            <td>{{TenRupeeData-TenRupee+DelivaryBoyTotalTenRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Coins 5:</th>
+                            <td>{{FiveRupeeData}}</td>
+                            <td>{{FiveRupeeData}}</td>
+                            <td>{{FiveRupee}}</td>
+                            <td></td>
+                            <td>{{DisFiveRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalFiveRupee}}</td>
+                            <td>{{FiveRupeeData-FiveRupee+DelivaryBoyTotalFiveRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Coins 2:</th>
+                            <td>{{TwoRupeeData}}</td>
+                            <td>{{TwoRupeeData}}</td>
+                            <td>{{TwoRupee}}</td>
+                            <td></td>
+                            <td>{{DisTwoRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalTwoRupee}}</td>
+                            <td>{{TwoRupeeData-TwoRupee+DelivaryBoyTotalTwoRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Coins 1:</th>
+                            <td>{{OneRupeeData}}</td>
+                            <td>{{OneRupeeData}}</td>
+                            <td>{{OneRupee}}</td>
+                            <td></td>
+                            <td>{{DisOneRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalOneRupee}}</td>
+                            <td>{{OneRupeeData-OneRupee+DelivaryBoyTotalOneRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Cash Big:</th>
+                            <td>{{ CashBig }}</td>
+                            <td>{{ CashBig }}</td>
+                            <td>{{ twoTHRupee + fiveHRupee + twoHunRupee + HunRupee + fiftyRupee }}</td>
+                            <td></td>
+                            <td>{{ DistwoTHRupee + DisfiveHRupee + DistwoHunRupee + DisHunRupee + DisfiftyRupee }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotaltwoTHRupee + DelivaryBoyTotalfiveHRupee + DelivaryBoyTotaltwoHunRupee + DelivaryBoyTotalHunRupee + DelivaryBoyTotalfiftyRupee}}</td>
+                            <td>{{twoTHRupeeData - twoTHRupee + DelivaryBoyTotaltwoTHRupee+fiveHRupeeData - fiveHRupee+DelivaryBoyTotalfiveHRupee+twoHunRupeeData-twoHunRupee+DelivaryBoyTotaltwoHunRupee+HunRupeeData-HunRupee+DelivaryBoyTotalHunRupee+fiftyRupeeData-fiftyRupee+DelivaryBoyTotalfiftyRupee}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <th>Cash Small:</th>
+                            <td>{{ Cashsmall}}</td>
+                            <td>{{ Cashsmall}}</td>
+                            <td>{{ TwentyRupee + TenNote + FiveNote}}</td>
+                            <td></td>
+                            <td>{{ DisTwentyRupee + DisTenNote +  DisFiveNote}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalTwentyRupee + DelivaryBoyTotalTenNote + DelivaryBoyTotalFiveNote}}</td>
+                            <td>{{TwentyRupeeData-TwentyRupee+DelivaryBoyTotalTwentyRupee+TenNoteData-TenNote+DelivaryBoyTotalTenNote+FiveNoteData-FiveNote+DelivaryBoyTotalFiveNote}}</td>
+                        </tr>
+                        <tr>
+                            <th>Coins:</th>
+                            <td>{{ CashCoin}}</td>
+                            <td>{{ CashCoin}}</td>
+                            <td>{{ TenRupee + FiveRupee + TwoRupee + OneRupee}}</td>
+                            <td></td>
+                            <td>{{ DisTenRupee + DisFiveRupee + DisTwoRupee + DisOneRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotalTenRupee + DelivaryBoyTotalFiveRupee + DelivaryBoyTotalTwoRupee + DelivaryBoyTotalOneRupee}}</td>
+                            <td>{{TenRupeeData-TenRupee+DelivaryBoyTotalTenRupee+FiveRupeeData-FiveRupee+DelivaryBoyTotalFiveRupee+TwoRupeeData-TwoRupee+DelivaryBoyTotalTwoRupee+OneRupeeData-OneRupee+DelivaryBoyTotalOneRupee}}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Cash:</th>
+                            <td>{{ TotalCash }}</td>
+                            <td>{{ TotalCash }}</td>
+                            <td>{{ twoTHRupee + fiveHRupee + twoHunRupee + HunRupee + fiftyRupee + TwentyRupee + TenNote + TenRupee + FiveNote + FiveRupee + TwoRupee + OneRupee}}</td>
+                            <td></td>
+                            <td>{{ DistwoTHRupee + DisfiveHRupee + DistwoHunRupee+ DisHunRupee + DisfiftyRupee + DisTwentyRupee + DisTenNote + DisFiveNote + DisTenRupee + DisFiveRupee + DisTwoRupee + DisOneRupee}}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotaltwoTHRupee + DelivaryBoyTotalfiveHRupee + DelivaryBoyTotaltwoHunRupee + DelivaryBoyTotalHunRupee + DelivaryBoyTotalfiftyRupee + DelivaryBoyTotalTwentyRupee + DelivaryBoyTotalTenNote + DelivaryBoyTotalFiveNote + DelivaryBoyTotalTenRupee + DelivaryBoyTotalFiveRupee + DelivaryBoyTotalTwoRupee + DelivaryBoyTotalOneRupee;}}</td>
+                            <td>{{ StockCurrencytwoTHRupee - twoTHRupee + DelivaryBoyTotaltwoTHRupee+StockCurrencyfiveHRupee - fiveHRupee+DelivaryBoyTotalfiveHRupee+StockCurrencytwoHunRupee-twoHunRupee+DelivaryBoyTotaltwoHunRupee+StockCurrencyHunRupee-HunRupee+DelivaryBoyTotalHunRupee+StockCurrencyfiftyRupee-fiftyRupee+DelivaryBoyTotalfiftyRupee+StockCurrencyTwentyRupee-TwentyRupee+DelivaryBoyTotalTwentyRupee+StockCurrencyTenNote-TenNote+DelivaryBoyTotalTenNote+StockCurrencyFiveNote-FiveNote+DelivaryBoyTotalFiveNote+StockCurrencyTenRupee-TenRupee+DelivaryBoyTotalTenRupee+StockCurrencyFiveRupee-FiveRupee+DelivaryBoyTotalFiveRupee+StockCurrencyTwoRupee-TwoRupee+DelivaryBoyTotalTwoRupee+StockCurrencyOneRupee-OneRupee+DelivaryBoyTotalOneRupee}}</td>
+
+
+                        </tr>
+                        <tr>
+                            <th>Total Amount:</th>
+                            <td>{{TotalCash}}</td>
+                            <td>{{ TotalCash}}</td>
+                            <td>{{ twoTHRupee + fiveHRupee +twoHunRupee+ HunRupee + fiftyRupee + TwentyRupee + TenNote + TenRupee + FiveNote + FiveRupee + TwoRupee + OneRupee}}</td>
+                            <td></td>
+                            <td>{{ DistwoTHRupee + DisfiveHRupee + DistwoHunRupee + DisHunRupee + DisfiftyRupee + DisTwentyRupee + DisTenNote + DisFiveNote + DisTenRupee + DisFiveRupee + DisTwoRupee + DisOneRupee}}</td>
+
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotaltwoTHRupee + DelivaryBoyTotalfiveHRupee + DelivaryBoyTotaltwoHunRupee + DelivaryBoyTotalHunRupee + DelivaryBoyTotalfiftyRupee + DelivaryBoyTotalTwentyRupee + DelivaryBoyTotalTenNote + DelivaryBoyTotalFiveNote + DelivaryBoyTotalTenRupee + DelivaryBoyTotalFiveRupee + DelivaryBoyTotalTwoRupee + DelivaryBoyTotalOneRupee;}}</td>
+                            <td>{{ twoTHRupeeData - twoTHRupee + DelivaryBoyTotaltwoTHRupee+fiveHRupeeData - fiveHRupee+DelivaryBoyTotalfiveHRupee+twoHunRupeeData-twoHunRupee+DelivaryBoyTotaltwoHunRupee+HunRupeeData-HunRupee+DelivaryBoyTotalHunRupee+fiftyRupeeData-fiftyRupee+DelivaryBoyTotalfiftyRupee+TwentyRupeeData-TwentyRupee+DelivaryBoyTotalTwentyRupee+TenNoteData-TenNote+DelivaryBoyTotalTenNote+FiveNoteData-FiveNote+DelivaryBoyTotalFiveNote+TenRupeeData-TenRupee+DelivaryBoyTotalTenRupee+FiveRupeeData-FiveRupee+DelivaryBoyTotalFiveRupee+TwoRupeeData-TwoRupee+DelivaryBoyTotalTwoRupee+OneRupeeData-OneRupee+DelivaryBoyTotalOneRupee}}</td>
+
+                        </tr>
+                        <!--<tr>
+            <th>Due Amount:</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>-->
+                        <tr>
+                            <th>Assigment Total:</th>
+                            <td>{{ TotalCash}}</td>
+                            <td>{{ TotalCash}}</td>
+                            <td>{{ twoTHRupee + fiveHRupee + twoHunRupee + HunRupee + fiftyRupee + TwentyRupee + TenNote + TenRupee + FiveNote + FiveRupee + TwoRupee + OneRupee}}</td>
+                            <td></td>
+                            <td>{{ DistwoTHRupee + DisfiveHRupee + DistwoHunRupee+ DisHunRupee + DisfiftyRupee + DisTwentyRupee + DisTenNote + DisFiveNote + DisTenRupee + DisFiveRupee + DisTwoRupee + DisOneRupee}}</td>
+
+                            <td></td>
+                            <td></td>
+                            <td>{{DelivaryBoyTotaltwoTHRupee + DelivaryBoyTotalfiveHRupee + DelivaryBoyTotaltwoHunRupee + DelivaryBoyTotalHunRupee + DelivaryBoyTotalfiftyRupee + DelivaryBoyTotalTwentyRupee + DelivaryBoyTotalTenNote + DelivaryBoyTotalFiveNote + DelivaryBoyTotalTenRupee + DelivaryBoyTotalFiveRupee + DelivaryBoyTotalTwoRupee + DelivaryBoyTotalOneRupee}}</td>
+                            <td>{{ twoTHRupeeData - twoTHRupee + DelivaryBoyTotaltwoTHRupee+fiveHRupeeData - fiveHRupee+DelivaryBoyTotalfiveHRupee+twoHunRupeeData-twoHunRupee+DelivaryBoyTotaltwoHunRupee+HunRupeeData-HunRupee+DelivaryBoyTotalHunRupee+fiftyRupeeData-fiftyRupee+DelivaryBoyTotalfiftyRupee+TwentyRupeeData-TwentyRupee+DelivaryBoyTotalTwentyRupee+TenNoteData-TenNote+DelivaryBoyTotalTenNote+FiveNoteData-FiveNote+DelivaryBoyTotalFiveNote+TenRupeeData-TenRupee+DelivaryBoyTotalTenRupee+FiveRupeeData-FiveRupee+DelivaryBoyTotalFiveRupee+TwoRupeeData-TwoRupee+DelivaryBoyTotalTwoRupee+OneRupeeData-OneRupee+DelivaryBoyTotalOneRupee}}</td>
+
+                        </tr>
+                        <!--<tr>
+            <th>Status:</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>-->
+
+                        <tr>
+                            <th>open:</th>
+
+                            <td><button type="button" class="btn btn-ar btn-primary" ng-disabled="disable" id="CSopen" name="CS_pn" ng-click="open()" data-dismiss="modal"> Open </button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+        <div class="col-md-8">
+            <section id="section-right" class="panel panel-default table-dynamic ">
+                <div class="panel-heading">
+                    <strong>
+                        <span class="glyphicon glyphicon-th"> </span>Currency Slip
+                    </strong>
+                </div>
+                <div class="page page-table" id="typography" ng-hide="uploadshow">
+                    <div class="form-group col-md-p clear-both">
+                        <form name="myFormSiteModal">
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Amount</label><br>
+                                <input class="form-control" readonly value="{{TotalAmount}}" ng-model="TotalAmount" placeholder="Enter Amount" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Bank Amount </label><br>
+                                <input type="number" class="form-control" readonly value="{{currttotal}}" ng-model="currttotal" placeholder="Enter Amount Submitted in bank" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Person Name </label><br>
+                                <input class="form-control" value="{{bank.name}}" ng-model="bank.name" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Person Mobile No</label><br>
+                                <input id="phone" type="number" name="phone" class="form-control" value="{{bank.mobile}}" ng-model="bank.mobile" ng-minlength="10" ng-maxlength="10" required />
+
+                            </div>
+
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="refresh()">Refresh</button>
+                            <div class="tab-content" id="divtoPrint">
+                                <div class="row ng-scope">
+                                    <div class="col-xs-6">
+                                        <div style="margin-top:20px ;">
+                                        </div>
+                                        <style>
+                                            table, th, td {
+                                                border: 1px solid black;
+                                                border-collapse: collapse;
+                                            }
+
+                                            .mytext {
+                                                width: 500px;
+                                            }
+
+                                            .banktext {
+                                                height: 500px;
+                                            }
+                                        </style>
+                                        <br><br>
+                                        <br>
+                                        <table style="width:150%">
+                                            <tr>
+                                                <th>Bank & Branch</th>
+                                                <th>City</th>
+                                                <th>Cheque No.</th>
+                                                <th colspan="2">Denomination</th>
+                                                <th>Rupees</th>
+                                            </tr>
+                                            <tr>
+                                                <td rowspan="12"><input type="text" style="border:hidden" value="{{bnk.Bankname}}" ng-model="bnk.Bankname" /></td>
+                                                <td rowspan="12"><input type="text" style="border:hidden" value="{{bnk.Cityname}}" ng-model="bnk.Cityname" /></td>
+                                                <td rowspan="12"><input type="text" style="border:hidden" value="{{bnk.Checkno}}" ng-model="bnk.Checkno" /></td>
+                                                <td><strong>2000x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{twothCash}}" ng-disabled="xy" ng-model="twothCash" ng-blur="addManualCash2000(2000,twothCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew}}" readonly /></td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td><strong>500x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{fivehunCash}}" ng-disabled="fh" ng-model="fivehunCash" ng-blur="addManualCash500(500,fivehunCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+
+                                                <td><input type="text" style="border:hidden" value="{{totalnew1}}" readonly /></td>
+                                            </tr>
+                                            <tr>
+
+                                                <td><strong>200x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{twohunCash}}" ng-disabled="twoh" ng-model="twohunCash" ng-blur="addManualCash200(200,twohunCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew2}}" readonly /></td>
+                                            </tr>
+                                            <tr>
+
+                                                <td><strong>100x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{onehunCash}}" ng-disabled="oneh" ng-model="onehunCash" ng-blur="addManualCash100(100,onehunCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew3}}" readonly /></td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td><strong>50x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{fiftyCash}}" ng-disabled="fih" ng-model="fiftyCash" ng-blur="addManualCash50(50,fiftyCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew4}}" readonly /></td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td><strong>20x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{twentyCash}}" ng-disabled="twh" ng-model="twentyCash" ng-blur="addManualCash20(20,twentyCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew5}}" readonly /></td>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td><strong>10x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{tenCash}}" ng-disabled="teh" ng-model="tenCash" ng-blur="addManualCash10(10,tenCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew6}}" readonly /></td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td><strong>5x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{fiveCash}}" ng-disabled="ffh" ng-model="fiveCash" ng-blur="addManualCash5(5,fiveCash)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew7}}" readonly /></td>
+
+                                            </tr>
+
+
+                                            <tr>
+
+                                                <td><strong>2x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{two}}" ng-model="two" ng-disabled="twooh" ng-blur="addManualCash2(2,two)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew10}}" readonly /></td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td><strong>1x</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{One}}" ng-disabled="onh" ng-model="One" ng-blur="addManualCash1(1,One)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew11}}" readonly /></td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td><strong>10Note</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{tenCoin}}" ng-disabled="tenh" ng-model="tenCoin" ng-blur="addManualCash10note(10,tenCoin)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew8}}" readonly /></td>
+
+                                            </tr>
+                                            <tr>
+
+                                                <td><strong>5Note</strong></td>
+                                                <td><input numeric-only="" style="width:80px" value="{{fiveCoin}}" ng-disabled="fvh" ng-model="fiveCoin" ng-blur="addManualCash5note(5,fiveCoin)" class="ng-pristine ng-untouched ng-valid" required></td>
+                                                <td><input type="text" style="border:hidden" value="{{totalnew9}}" readonly /></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">Rupees (in word):<input type="text" value="{{rupee}}" ng-model="rupee" style="border:hidden;width:100%" class="mytext" /></td>
+
+
+                                                <td><input type="text" style="border:hidden" /></td>
+                                                <td>Total Amount:</td>
+                                                <td><input type="text" style="border:hidden" value="{{currttotal}}" readonly /></td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-ar btn-primary" ng-disabled="!(!!bank.name && !!bank.mobile)" ng-click="Settle(bank)">Settle</button>
+                                <button id="btnPrint" class="btn-sm btn-primary" style="float:right; margin-right: 15px;"> <span class="glyphicon glyphicon-print"> </span> Print Invoice</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade " id="oldstock" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Currency Stock History Out</h3>
+            </div>
+
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Date
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                TotalWithdrawl
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                RemainStock
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                1 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                1 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                5 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 Note Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 Note
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Note
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                20 Count
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                20 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                50 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                50 Rupee
+
+                            </div>
+                        </th>
+
+
+                        <th>
+                            <div class="th">
+                                100 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                100 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                200 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                200 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                500 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                500 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                2000 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2000 Rupee
+
+                            </div>
+                        </th>
+                    
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <tr dir-paginate="trade1 in getHistoryout|itemsPerPage:itemsPerPage" total-items="total_count1">
+                        <!--<tr data-ng-repeat="trade1 in StockCurrencyshistory">-->
+                        <td>{{trade1.CreatedDate | date:'medium'}}</td>
+                        <td>{{trade1.Withdrawl}}</td>
+                        <td>{{trade1.RemainAmountInStock}}</td>
+                        <td>{{trade1.onerscount}}</td>
+                        <td>{{trade1.OneRupee}}</td>
+
+                        <td>{{trade1.tworscount}}</td>
+                        <td>{{trade1.TwoRupee}}</td>
+
+                        <td>{{trade1.fiverscount}}</td>
+                        <td>{{trade1.FiveRupee}}</td>
+
+                        <td>{{trade1.FiveNoteCount}}</td>
+                        <td>{{trade1.FiveNote}}</td>
+
+                        <td>{{trade1.tenrscount}}</td>
+                        <td>{{trade1.TenRupee}}</td>
+
+                        <td>{{trade1.TenNoteCount}}</td>
+                        <td>{{trade1.TenNote}}</td>
+
+                        <td>{{trade1.Twentyrscount}}</td>
+                        <td>{{trade1.TwentyRupee}}</td>
+
+                        <td>{{trade1.fiftyrscount}}</td>
+                        <td>{{trade1.fiftyRupee}}</td>
+
+                        <td>{{trade1.hunrscount}}</td>
+                        <td>{{trade1.HunRupee}}</td>
+
+                        <td>{{trade1.twohunrscount}}</td>
+                        <td>{{trade1.twoHunRupee}}</td>
+
+                        <td>{{trade1.fivehrscount}}</td>
+                        <td>{{trade1.fiveHRupee}}</td>
+
+                        <td>{{trade1.twoTHrscount}}</td>
+                        <td>{{trade1.twoTHRupee}}</td>
+                       
+
+                    </tr>
+
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="oldStocksOut(newPageNumber1)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    var $printSection
+    document.getElementById("btnPrint").onclick = function () {
+        //printElement(document.getElementById("divtoPrint"));
+        printDivThroughTrick("divtoPrint");
+
+        //var modThis = document.querySelector("#printSection .modifyMe");
+
+
+        onRouteChangeOff();
+        window.location.reload();
+
+    }
+
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=800,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=800,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+
+</script>
+<script>
+    var $printSection
+    document.getElementById("btnPrintt").onclick = function () {
+        //printElement(document.getElementById("divtoPrint"));
+        printDivThroughTrick("divtoPrintt");
+
+        //var modThis = document.querySelector("#printSection .modifyMe");
+
+
+        onRouteChangeOff();
+        window.location.reload();
+
+    }
+
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=800,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=800,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+
+</script>
+<style>
+    @media print {
+        body {
+            display: none;
+        }
+
+        #print {
+            display: block;
+        }
+    }
+</style>
+<div class="modal fade " id="CheckStockDetails" role="dialog">
+    <div class="modal-dialog modal-lg" style="width: 500px">
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Check Details </h3>
+            </div>
+
+            <div class="tab-content">
+                <div class="row ng-scope">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-3">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                    <tr>
+
+
+                                        <th>
+                                            <div class="th">DeliveryIssuanceId</div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                People Name
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Check Number
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Check Amount
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Created Date
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Status
+                                            </div>
+                                        </th>
+                                        <!--<th>
+                                            <div class="th">
+                                                Open
+                                            </div>
+                                        </th>-->
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr data-ng-repeat="p in CheckStock ">
+
+                                        <td>{{p.DeliveryIssuanceId}}</td>
+                                        <td>{{p.Peoplename}}</td>
+                                        <td>{{p.checknumber}}</td>
+                                        <td>{{p.checkamount}}</td>
+                                        <td>{{p.CreatedDate}}</td>
+                                        <td>{{p.status}} </td>
+                                        <!--<td><button type="button" class="btn btn-ar btn-primary" id="typography1" ng-click="opencheck(p)" data-dismiss="modal"> Open </button></td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <section class="panel panel-default table-dynamic">
+                        <div id="typography1" ng-hide="uploadshow1">
+                            <div>
+
+                                <div class="form-group col-md-5 clear-both">
+                                    <form name="myFormSiteModal">
+                                        <div class="tab-content" id="divtoPrintt">
+                                            <div class="row ng-scope">
+                                                <div class="col-xs-offset-4">
+
+                                                    <div style="margin-top:5px ;">
+                                                    </div>
+
+                                                    <style>
+                                                        table, th, td {
+                                                            border: 1px solid black;
+                                                            border-collapse: collapse;
+                                                        }
+
+                                                        .mytext {
+                                                            width: 50px;
+                                                        }
+
+                                                        .banktext {
+                                                            height: 50px;
+                                                        }
+                                                    </style>
+
+                                                    <table style="width:122%">
+
+                                                        <tr>
+                                                            <th>Bank & Branch</th>
+                                                            <th>City</th>
+                                                            <th>Cheque No.</th>
+                                                            <th colspan="2">Denomination</th>
+                                                            <th>Rupees</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td rowspan="12"><input type="text" style="border:hidden;width:100%" value="{{bnk.Bankname1}}" ng-model="bnk.Bankname1" /></td>
+                                                            <td rowspan="12"><input type="text" style="border:hidden;width:100%" value="{{bnk.Cityname1}}" ng-model="bnk.Cityname1" /></td>
+                                                            <td rowspan="12"><input type="text" style="border:hidden;width:100%" value="{{bnk.Checkno1}}" ng-model="bnk.Checkno1" /></td>
+                                                            <td><strong>2000x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[2000]}}" ng-model="denominations[2000]" ng-change="addManualCash2000(2000,denominations[2000])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden; width:100%" value="{{totalnew}}" /></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong style="width:10%">500x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[500]}}" ng-model="denominations[500]" ng-change="addManualCash500(500,denominations[500])" class="ng-pristine ng-untouched ng-valid"></td>
+
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew1}}" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>200x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[200]}}" ng-model="denominations[200]" ng-change="addManualCash200(200,denominations[200])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew2}}" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>100x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[100]}}" ng-model="denominations[100]" ng-change="addManualCash100(100,denominations[100])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew3}}" /></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>50x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[50]}}" ng-model="denominations[50]" ng-change="addManualCash50(50,denominations[50])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew4}}" /></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>20x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[20]}}" ng-model="denominations[20]" ng-change="addManualCash20(20,denominations[20])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew5}}" /></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>10x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[10]}}" ng-model="denominations[10]" ng-change="addManualCash10(10,denominations[10])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew6}}" /></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>5x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[5]}}" ng-model="denominations[5]" ng-change="addManualCash5(5,denominations[5])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew7}}" /></td>
+
+                                                        </tr>
+                                                        <!--<tr>-->
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><strong>10Note</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominationsd[10]}}" ng-model="denominationsd[10]" ng-change="addManualCash10note(10,denominations[ 1.e1])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew8}}" /></td>
+
+                                                        </tr>-->
+                                                        <!--<tr>-->
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><strong>5Note</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominationsd[5.]}}" ng-model="denominationsd[5.]" ng-change="addManualCash5note(5,denominations[5.e1])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew9}}" /></td>
+
+                                                        </tr>-->
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>2x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[2]}}" ng-model="denominations[2]" ng-change="addManualCash2(2,denominations[2])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew10}}" /></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <!--<td><input type="text" style="border:hidden" ng-model="bnk.Bankname" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><strong>1x</strong></td>
+                                                            <td><input numeric-only="" style="width:80px" value="{{denominations[1]}}" ng-model="denominations[1]" ng-change="addManualCash1(1,denominations[1])" class="ng-pristine ng-untouched ng-valid"></td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{totalnew11}}" /></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">Rupees (in word):<input type="text" value="{{rupee}}" ng-model="rupee" style="border:hidden;width:100%" class="mytext" /></td>
+
+                                                            <!--<td><input type="text" style="border:hidden" /></td>-->
+                                                            <td><input type="text" style="border:hidden; width:100%" /></td>
+                                                            <td>Total Amount:</td>
+                                                            <td><input type="text" style="border:hidden;width:100%" value="{{currttotal}}" /></td>
+                                                        </tr>
+
+
+                                                    </table>
+                                                    <br><br>
+                                                    <button id="btnPrintt" class="btn-sm btn-primary" style="float:right; margin-right: 15px;"> <span class="glyphicon glyphicon-print"> </span> Print Invoice</button>
+
+
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="site-name"></label><br />
+
+                                            <!--<button  id="btnPrint" class="btn-sm btn-primary" style="float:right; margin-right: 15px;"> <span class="glyphicon glyphicon-print"> </span> Print Invoice</button>-->
+                                            <!--<a style="float:left" class="btn btn-link" ng-click="clearCash()"><i class="fa fa-times"></i> Clear Cash</a>-->
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade " id="newstock" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Currency Stock HistoryIn</h3>
+            </div>
+
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+
+                        <th>
+                            <div class="th">
+                                     Date
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Total Amount
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Dboy-Name
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                1 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                1 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                5 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 Note Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 Note
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Note
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                20 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                20 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                50 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                50 Rupee
+
+                            </div>
+                        </th>
+
+
+                        <th>
+                            <div class="th">
+                                100 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                100 Rupee
+
+                            </div>
+                        </th>
+
+
+                        <th>
+                            <div class="th">
+                                200 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                200 Rupee
+
+                            </div>
+                        </th>
+
+
+                        <th>
+                            <div class="th">
+                                500 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                500 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                2000 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2000 Rupee
+
+                            </div>
+                        </th>
+
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    <tr dir-paginate="trade1 in getHistoryIn|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <!--<tr data-ng-repeat="trade1 in StockCurrencyshistoryin">-->
+                        <td>{{trade1.CreatedDate | date:'medium'}}</td>
+                        <td>{{trade1.TotalAmount}}</td>
+                        <td>{{trade1.DboyName}}</td>
+                        <td>{{trade1.onerscount}}</td>
+                        <td>{{trade1.OneRupee}}</td>
+
+                        <td>{{trade1.tworscount}}</td>
+                        <td>{{trade1.TwoRupee}}</td>
+
+                        <td>{{trade1.fiverscount}}</td>
+                        <td>{{trade1.FiveRupee}}</td>
+
+                        <td>{{trade1.FiveNoteCount}}</td>
+                        <td>{{trade1.FiveNote}}</td>
+
+                        <td>{{trade1.tenrscount}}</td>
+                        <td>{{trade1.TenRupee}}</td>
+
+                        <td>{{trade1.TenNoteCount}}</td>
+                        <td>{{trade1.TenNote}}</td>
+
+                        <td>{{trade1.Twentyrscount}}</td>
+                        <td>{{trade1.TwentyRupee}}</td>
+
+                        <td>{{trade1.fiftyrscount}}</td>
+                        <td>{{trade1.fiftyRupee}}</td>
+
+                        <td>{{trade1.hunrscount}}</td>
+                        <td>{{trade1.HunRupee}}</td>
+
+                        <td>{{trade1.twohunrscount}}</td>
+                        <td>{{trade1.twoHunRupee}}</td>
+
+                        <td>{{trade1.fivehrscount}}</td>
+                        <td>{{trade1.fiveHRupee}}</td>
+
+                        <td>{{trade1.twoTHrscount}}</td>
+                        <td>{{trade1.twoTHRupee}}</td>
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="oldStocks(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+            <!--<table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+
+
+                        <th>
+                            <div class="th">
+                                Total Amount
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                DboyId
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                1 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                1 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                5 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                20 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                20 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                50 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                50 Rupee
+
+                            </div>
+                        </th>
+
+
+                        <th>
+                            <div class="th">
+                                100 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                100 Rupee
+
+                            </div>
+                        </th>
+
+
+                        <th>
+                            <div class="th">
+                                500 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                500 Rupee
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                2000 Count
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2000 Rupee
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Date
+
+                            </div>
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr data-ng-repeat="trade1 in StockCurrencyshistoryin">
+                        <td>{{trade1.TotalAmount}}</td>
+                        <td>{{trade1.DBoyCId}}</td>
+                        <td>{{trade1.onerscount}}</td>
+                        <td>{{trade1.OneRupee}}</td>
+
+                        <td>{{trade1.tworscount}}</td>
+                        <td>{{trade1.TwoRupee}}</td>
+
+                        <td>{{trade1.fiverscount}}</td>
+                        <td>{{trade1.FiveRupee}}</td>
+
+                        <td>{{trade1.tenrscount}}</td>
+                        <td>{{trade1.TenRupee}}</td>
+
+                        <td>{{trade1.Twentyrscount}}</td>
+                        <td>{{trade1.TwentyRupee}}</td>
+
+                        <td>{{trade1.fiftyrscount}}</td>
+                        <td>{{trade1.fiftyRupee}}</td>
+
+                        <td>{{trade1.hunrscount}}</td>
+                        <td>{{trade1.HunRupee}}</td>
+
+                        <td>{{trade1.fivehrscount}}</td>
+                        <td>{{trade1.fiveHRupee}}</td>
+
+                        <td>{{trade1.twoTHrscount}}</td>
+                        <td>{{trade1.twoTHRupee}}</td>
+                        <td>{{trade1.CreatedDate | date:'medium'}}</td>
+
+                    </tr>
+
+                </tbody>
+            </table>-->
+
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

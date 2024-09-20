@@ -1,0 +1,324 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .border {
+                border: 1px solid #000 !important;
+            }
+
+            th, td, table {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+                border-spacing: 0;
+                column-gap: initial;
+                padding: 0;
+                text-align: center;
+            }
+
+            box {
+                box-sizing: border-box;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            td, th {
+                padding: 5px 15px;
+                text-align: left;
+            }
+
+            table, th, td {
+                border: 1px solid #000;
+            }
+
+            .invoice {
+                margin-right: 1em !important
+            }
+
+            .font-face {
+                font-family: 'Ek Mukta', sans-serif;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid">
+
+        <img src="../UploadedImages/Satyamev2.jpg" style="width: 140px; height: 151px; ">
+        <center>
+            <strong style="font-size:25px;">
+                Government of India
+                <br />
+                e-Way Bill
+            </strong>
+        </center>
+    </div>
+    <hr style="height:2px;border:none;color:#333;background-color:#333;">
+
+    <strong style="font-size:larger;">
+        1. E-WAY BILL Details
+    </strong>
+    <br />  <br />
+
+            <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-3 " style="display: inline-block;margin-left:20px">
+                        {{Ewaybillno}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left:20px">
+                        {{GeneratedDate}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block ;margin-left:20px">
+                        {{GeneratedBy}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left: 20px">
+                        <!--<strong>
+                Valid Upto:
+            </strong>27/04/2023  (Vehicle Type is regular)-->
+                        {{ValidUpTo}}
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+
+                    <div class="col-3" style="display: inline-block;margin-left:30px">
+                        Mode :ROAD
+
+                    </div>
+                    <div class="col-3" style="display: inline-block; margin-left:132px">
+                        <!--Approx Distance:20KM-->
+                        {{ApproxDistance}}
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+
+                    <div class="col-3 " style="display: inline-block;margin-left:30px">
+                        Type:OUTWARD
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left:110px">
+                        <!--Document Details: Tax Invoice - UP202120 - 26/04/2023-->
+                        {{DocumentDetails}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block ;margin-left:180px">
+                        <!--Transaction Type:Combination of Two and three-->
+                        {{TransactionType}}
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-3 " style="display: inline-block;margin-left:30px">
+                        extendedTimes:{{extendedTimes}}
+                    </div>
+                </div>
+                <div class="col-3 " style="display: inline-block;margin-left:30px">
+                    <!--Acknowledgement Date:26/04/2023 11:06 AM-->
+                    <!--{{AcknowledgementDate}}
+            </div>
+        </div>-->
+                </div>
+                <hr style="height:2px;border:none;color:#333;background-color:#333;">
+                <br />
+
+                <strong style="font-size:larger;">
+                    2. Address Details
+                </strong>
+                <br /><br />
+                <div class="row" style="">
+                    <strong>
+                        <label>From</label>
+                    </strong>
+                    <strong>
+                        <label style="margin-left:55%">To</label>
+                    </strong>
+                </div>
+                <div class="row">
+                    <div style="display: inline-block; height: 212px; width: 37%; margin-left: 6px;border:2px solid">
+
+                        <!--from =>Company Details-->
+                        GSTIN: {{fromGstina}} <br />
+                        {{fromTrdName}}<br />
+                        {{fromPlace}} <br />
+                        :: Dispatch From :: <br />
+                        {{fromAddr1}}<br />
+                        {{fromAddr1}} <br />
+
+                    </div>
+
+                    <div style="display: inline-block; height: 212px; margin-left: 20%; width: 37% ;border:2px solid ">
+
+                        GSTIN: {{toGstin}} <br />
+                        {{toTrdName}} <br />
+                        {{toPlace}} <br />
+                        :: Ship To ::
+                        {{toAddr1}} <br />
+                        {{toAddr2}} <br />
+                        {{toAddr2}} <br />
+
+                    </div>
+                    <!--<div class="col-6" style="display: inline-block; border: 2px solid; height: 250px; width: 30%; padding: 10px ">
+        <br />-->
+                    <!--from =>Company Details-->
+                    <!--GSTIN: {{fromGstina}} <br />
+            {{fromTrdName}}<br />
+            {{fromPlace}} <br />
+            :: Dispatch From :: <br />
+            {{fromAddr1}}<br />
+            {{fromAddr1}} <br />
+        </div>-->
+                    <!-- TO Customer Details-->
+                    <!--<div class="col-6" style="display: inline-block; border: 2px solid; margin-left: 300px; height: 250px; width: 30%; padding:10px">
+            <br />
+            GSTIN: {{toGstin}} <br />
+            {{toTrdName}} <br />
+            {{toPlace}} <br />
+            :: Ship To ::
+            {{toAddr1}} <br />
+            {{toAddr2}} <br />
+        </div>-->
+                </div>
+                <br /><br />
+                <hr style="height:2px;border:none;color:#333;background-color:#333;">
+
+                <br />
+                <strong style="font-size:larger;">
+                    3. Goods Details
+                </strong>
+                <br /><br />
+
+
+                <table style="width:100%; border:2px solid black;">
+                    <tr>
+                        <td colspan="3">
+                            <div class="table-responsive">
+                                <table style="font-size:12px;" width="100%">
+                                    <thead style="border-bottom: none;padding:0 50px;text-align:center">
+                                        <tr>
+                                            <td>HSN Code</td>
+                                            <td>Product Description</td>
+                                            <td>Quantity/Unit</td>
+                                            <td>Taxable Amount Rs</td>
+                                            <td>Tax Rate (C+S+I+Cess+Cess Non Advol)</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="border" style="text-align:center">
+                                        <tr>
+                                            <td> {{hsnCode}}</td>
+                                            <td>{{productName}}</td>
+                                            <td>{{quantity}}/{{qtyUnit}}</td>
+                                            <td>{{taxableAmount}}</td>
+                                            <td>{{taxSum}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <br />
+
+                <!--Amount dETIALS  FROM HERE-->
+
+                <div class="row">
+                    <div class="col-3 " style="display: inline-block;margin-left:5%">
+                        Total Taxable Amount:₹ {{totalValue}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left: 10%">
+                        CGST Amount:₹ {{cgstValue}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left: 10%">
+                        SGST Amount:₹ {{sgstValue}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left: 10%">
+                        IGST Amount:₹ {{igstValue}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left: 10%">
+                        CESS Amount:₹ {{cessValue}}
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-3 " style="display: inline-block;margin-left:5%">
+                        CESS Non.Advol Amt :₹ {{cessNonAdvolValue}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left: 10%">
+                        Other Amount:₹ {{otherValue}}
+                    </div>
+                    <div class="col-3 " style="display: inline-block; margin-left: 10%">
+                        Total Inv. Amount:₹ {{totInvValue}}
+                    </div>
+                </div>
+                <br />
+                <hr style="height:2px;border:none;color:#333;background-color:#333;">
+
+                <!--Transportation Details Start HERE-->
+
+                <strong style="font-size:larger;">
+                    4. Transportation Details
+                </strong>
+                <br /> <br />
+                <div class="col-6" style="display: inline-block; margin-left: 1%">
+                    Transporter ID & Name : {{transporterId}} {{transporterName}}
+                </div>
+                <div class="col-6" style="display: inline-block; margin-left: 25%">
+                    Transporter Doc & Date:
+                </div>
+                <hr style="height:2px;border:none;color:#333;background-color:#333;">
+                <br />
+
+
+                <!--Vehicle Details Start HERE-->
+
+
+                <strong style="font-size:larger;">
+                    5. Vehicle Details
+                </strong>
+                <table style="width:100%; border:2px solid black;">
+                    <tr>
+                        <td colspan="3">
+                            <div class="table-responsive">
+                                <table style="font-size:12px;" width="100%">
+                                    <thead style="border-bottom: none;padding:0 50px;">
+                                        <tr>
+                                            <td>Mode</td>
+                                            <td> Vehicle</td>
+                                            <td>Trans Doc No & Dt </td>
+                                            <td>From</td>
+                                            <td>Entered Date</td>
+                                            <td>Entered By </td>
+                                            <td>tripshtNo</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="border">
+                                        <tr>
+                                            <td> {{transMode}}</td>
+                                            <td> {{vehicleNo}}</td>
+                                            <td>{{transDocNo}} /{{transDocDate}}</td>
+                                            <td>{{fromPlace}} ({{fromState}})</td>
+                                            <td>{{enteredDate}}</td>
+                                            <td>{{userGSTINTransin}}</td>
+                                            <td>{{tripshtNo}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+</body>
+</html>

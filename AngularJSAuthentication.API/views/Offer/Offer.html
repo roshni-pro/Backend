@@ -1,0 +1,1231 @@
+﻿<style>
+    input[type="radio"], input[type="checkbox"] {
+        margin: 0px -175px 0;
+        margin-top: 1px \9;
+        line-height: normal;
+    }
+</style>
+
+<div class="page page-table" button-permission-binder parentName="Offer" pageName="Offer Zone">
+    <section class="panel panel-default table-dynamic">
+        <tabset>
+            <button class="btn btn-success skadd" ng-click="offer()">
+                <span class="glyphicon glyphicon-plus">
+                </span> Add New Offer
+            </button>
+            <button class="btn btn-success skadd" ng-click="offeruploader()">
+                <span class="glyphicon glyphicon-plus">
+                </span> Add Offer Using Uploader
+            </button>
+            <tab heading="Offer Task">
+                <div class="panel panel-default table-dynamic">
+                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Offer Item"></span></strong></div>
+                    <div class="panel-body">
+                        <div class="table-filters">
+                            <div class="row ">
+                                <div class="col-sm-4 col-xs-6">
+                                    <div class="form-group col-md-6">
+                                        <label for="site-name">Warehouse</label><br />
+                                        <!--<select class="form-control" id="site-name" ng-model="srch.WarehouseId" ng-change="AdvanceSearchV1(srch.WarehouseId)">-->
+                                        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="SelectedWarehouse(WarehouseId)">
+                                            <option value="">--select Warehouse--</option>
+                                            <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Start And End Time</label><br />
+                                        <div class="form-group">
+                                            <div class='input-group date'>
+                                                <input name="daterangeV1" id="dat" type='text' title="Select Date" autocomplete="off" class="form-control date-picker" />
+                                                <span class="input-group-addon ">
+                                                    <span class="fa fa-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $('input[name="daterangeV1"]').daterangepicker({
+                                                timePicker: true,
+                                                timePickerIncrement: 5,
+                                                timePicker12Hour: true,
+                                                format: 'MM/DD/YYYY h:mm A'
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="site-name">&nbsp;</label><br />
+                                    <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="OfferReport()">click on Search to get Data</button>
+                                    <button class="btn btn-ar btn-primary skexport" style="margin-left:10px" ng-click="exportOfferData()">Export</button>
+                                    <button class="btn btn-ar btn-primary skexport" style="margin-left:10px" ng-click="FreebiesUploader()">Freebies Uploader</button>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Global Search:</label><br />
+                                <form>
+                                    <input type="text" class="form-control" placeholder="search Only Offer Name OR Item Name" ng-model="searchText" ng-change="SearchOffers(searchText)" />
+                                </form>
+                            </div>
+                            <!--<div class="col-sm-3 col-xs-6 filter-result-info">
+                        <label for="site-name"> </label><br />
+                        <span>
+                            Showing {{filteredStores.length}}/{{stores.length}} entries
+                        </span>
+                    </div>-->
+                        </div>
+                    </div>
+
+                    >
+
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        OfferCode
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Offer Name
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Warehouse Name
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Offer On
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Offer Category
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Free Offer Type
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Item Name
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        ABC Classification
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Min Order Quantity
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Free Item Limit
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Freebies Available Quantity
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Free Item Name
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        No Offer Quantity
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Start DateTime
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        End DateTime
+
+                                    </div>
+                                </th>
+                                <!--<th>
+                            <div class="th">
+                                Created
+
+                            </div>
+                        </th>-->
+                                <th>
+                                    <div class="th">
+                                        Free Wallet Point
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Discount Percent
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Offer AppType
+                                    </div>
+                                </th>
+
+
+                                <th>
+                                    <div class="th"></div>
+                                    Edit
+
+                                </th>
+                                <th>
+                                    <div class="th"></div>
+                                    Active
+
+                                </th>
+                                <th>
+                                    <div class="th"></div>
+                                    View History
+                                </th>
+                                <!--Change By Anoop 27/01/2021-->
+                                <th>
+                                    <div class="th"></div>
+                                    User Type
+                                </th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="trade in currentPageStores">
+
+                                <td>{{trade.OfferCode}}</td>
+                                <td>{{trade.OfferName}}</td>
+                                <td>{{trade.WarehouseName}}</td>
+                                <td>{{trade.OfferOn}}</td>
+                                <td>{{trade.OfferCategory}}</td>
+
+                                <td>
+                                    <span class="label label-danger ng-binding" ng-if="trade.FreeOfferType =='ItemMaster'">{{trade.FreeOfferType}}</span>
+                                    <span class="label label-info ng-binding" ng-if="trade.FreeOfferType =='WalletPoint'">{{trade.FreeOfferType}}</span>
+                                </td>
+
+                                <td>{{trade.itemname}}</td>
+                                <td>{{trade.ABCCategory}}</td>
+                                <td>{{trade.MinOrderQuantity}}</td>
+                                <td>{{trade.FreeItemLimit}}</td>
+                                <td>{{trade.QtyAvaiable}}</td>
+
+                                <td>{{trade.FreeItemName}}</td>
+                                <td>{{trade.NoOffreeQuantity}}</td>
+                                <td>{{trade.start | date:'medium'}}</td>
+                                <td>{{trade.end| date:'medium'}}</td>
+                                <!--<td>{{trade.CreatedDate| date:'medium'}}</td>-->
+                                <td>{{trade.FreeWalletPoint}}</td>
+                                <td>{{trade.DiscountPercentage}}</td>
+                                <td>{{trade.OfferAppType}}</td>
+
+
+
+                                <td><button class="btn-sm btn-primary skedit" ng-click="Openedit(trade)">Edit</button> </td>
+                                <td ng-if="trade.IsActive == false"><button class="btn-sm btn-primary skactive" ng-click="SetActive(trade)">Activate</button> </td>
+                                <td ng-if="trade.IsActive == true"><button class="btn-sm btn-danger skdeactivate" ng-click="SetActive(trade)">Deactivate</button> </td>
+
+                                <td>
+                                    <button class="btn-sm btn-primary skview" ng-init="Id=trade.OfferId;entity='Offer'" ng-click="showMe=true">View</button>
+                                    <div ng-if="showMe" show-history></div>
+                                </td>
+                                <!--Change by Anoop 27/01/2021-->
+                                <td>{{trade.ApplyType}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select name="page" ng-model="vm.rowsPerPage" ng-change="onNumPerPageChangeV1()">
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="vm.currentPage"
+                                            total-items="vm.count"
+                                            max-size="4"
+                                            on-select-page="changePageV1(page)"
+                                            items-per-page="vm.rowsPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </tab>
+            <tab heading="Bill Discount">
+                <div class="panel panel-default table-dynamic">
+                    <div class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Bill Discount"></span></strong>
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-filters">
+                            <div class="row ">
+                                <div class="form-group col-md-2">
+                                    <label for="site-name">Warehouse</label><br />
+                                    <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="SelectedWarehouseBill(WarehouseId)">
+                                        <option value="">--select Warehouse--</option>
+                                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <div class="form-group col-md-2">
+                                        <form class="form-inline" role="form">
+                                            <div class="form-group">
+                                                <label for="site-name">Types:</label><br />
+                                                <select class="form-control" id="DiscountType" ng-model="srch.type">
+                                                    <option value="">--select--</option>
+                                                    <option value="{{a.text}}" ng-repeat="a in selectTypes">{{a.text}}</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="site-name">Start And End Time :</label><br />
+                                    <div class="form-group">
+                                        <div class='input-group date'>
+                                            <input name="daterangeV4" id="dat1" type='text' title="Select Date" autocomplete="off" class="form-control date-picker" />
+                                            <span class="input-group-addon ">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('input[name="daterangeV4"]').daterangepicker({
+                                            timePicker: true,
+                                            timePickerIncrement: 5,
+                                            timePicker12Hour: true,
+                                            format: 'MM/DD/YYYY h:mm A'
+                                        });
+                                    });
+                                </script>
+                                <div class="form-group col-md-4">
+                                    <label for="site-name">&nbsp;</label><br />
+                                    <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="billReportV2()">click on Search to get Data</button>
+                                    <button class="btn btn-ar btn-primary skexport" style="margin-left:10px" ng-click="exportData()">Export</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Global Search:</label><br />
+                            <form>
+                                <input type="text" class="form-control" placeholder="search Only Offer" ng-model="searchText" ng-change="SearchBill(searchText)" />
+                            </form>
+                        </div>
+                        <!--<div class="col-sm-2 col-xs-6 filter-result-info pull-left">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>-->
+                    </div>
+                    <table class="table table-bordered table-striped table-responsive">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Offer Code
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Offer Name
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Store
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Warehouse Name
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Offer On
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Offer Category
+                                    </div>
+                                </th>
+                                <!--<th>
+                            <div class="th">
+                                ABC Category
+                            </div>
+                        </th>-->
+                                <!--<th>
+                            <div class="th">
+                                Offer Type
+                            </div>
+                        </th>-->
+                                <th>
+                                    <div class="th">
+                                        Bill Discount on:
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Perce
+                                        ntage %
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Wallet Point
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Bill
+                                        Amount
+                                        Min
+                                        Limit
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Bill
+                                        Amount
+                                        Max
+                                        Limit
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Max
+                                        Disc
+                                        ount
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Start Date Time
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        End Date Time
+
+                                    </div>
+                                </th>
+                                <!--<th>
+                            <div class="th">
+                                Created
+                            </div>
+                        </th>-->
+                                <th>
+                                    <div class="th">
+                                        Multi Time Use
+                                    </div>
+
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Use Other Offer
+                                    </div>
+
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Active
+                                        /
+                                        Inactive
+                                    </div>
+
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Bill
+                                        Discount
+                                        Type
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Offer AppType
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Apply On Offer
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th"></div>
+                                    Edit
+
+                                </th>
+                                <!--<th>
+                            <div class="th"></div>
+                            Active
+
+                        </th>-->
+                                <th>
+                                    <div class="th"></div>
+                                    View History
+                                </th>
+                                <th>
+                                    <div class="th"></div>
+                                    View Customers
+                                </th>
+                                <!--Change By Anoop 27/01/2021-->
+                                <th>
+                                    <div class="th"></div>
+                                    User Type
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="trade in couponsbill">
+                                <td>{{trade.OfferCode}}</td>
+
+                                <td>{{trade.OfferName}}</td>
+                                <td>{{trade.StoreName}}</td>
+                                <td>{{trade.WarehouseName}}</td>
+                                <td>{{trade.OfferOn}}</td>
+                                <td>{{trade.OfferCategory}}</td>
+                                <!--<td>{{trade.ABCCategory}}</td>-->
+                                <!--<td>{{trade.FreeOfferType}}</td>-->
+                                <td>
+                                    <span class="label label-danger ng-binding" ng-if="trade.BillDiscountOfferOn=='Percentage'">{{trade.BillDiscountOfferOn}}</span>
+
+                                    <span class="label label-info ng-binding" ng-if="trade.BillDiscountOfferOn=='WalletPoint'">{{trade.BillDiscountOfferOn}}</span><br /><br />{{trade.WalletType}}
+                                </td>
+                                <td>{{trade.DiscountPercentage}}</td>
+                                <td>{{trade.BillDiscountWallet}}</td>
+                                <td>{{trade.BillAmount}}</td>
+                                <td>{{trade.MaxBillAmount}}</td>
+                                <td>{{trade.MaxDiscount}}</td>
+                                <td>{{trade.start | date:'medium'}}</td>
+                                <td>{{trade.end| date:'medium'}}</td>
+                                <!--<td>{{trade.CreatedDate| date:'medium'}}</td>-->
+                                <td>{{trade.IsMultiTimeUse}}</td>
+                                <td>{{trade.IsUseOtherOffer}}</td>
+                                <td>{{trade.IsActive}}</td>
+                                <td>{{trade.BillDiscountType}}</td>
+                                <td>{{trade.OfferAppType}}</td>
+                                <td>{{trade.ApplyOn}}</td>
+
+
+
+
+
+                                <td><button class="btn-sm btn-primary skedit" ng-click="Openedit(trade)">Edit</button> </td>
+                                <!--<td ng-if="trade.IsActive == false && trade.BillDiscountOfferOn!='Percentage' ||trade.BillDiscountOfferOn!='WalletPoint') ">
+                        <button class="btn-sm btn-primary" ng-click="SetActive(trade)">Activate</button>
+                        </td>
+                        <td ng-if="trade.IsActive == true && trade.BillDiscountOfferOn!='Percentage' ||trade.BillDiscountOfferOn!='WalletPoint')">
+                        <button class="btn-sm btn-danger" ng-click="SetActive(trade)">Deactivate</button>
+                        </td>-->
+                                <td>
+                                    <button class="btn-sm btn-primary skview" ng-init="Id=trade.OfferId;entity='Offer'" ng-click="showMe=true">View</button>
+                                    <div ng-if="showMe" show-history></div>
+                                </td>
+                                <td>
+                                    <button class="btn-sm btn-primary" ng-click="viewCustomer(trade)">Offer</button>
+
+                                </td>
+                                <!--Change by Anoop 28/01/2021-->
+                                <td>{{trade.ApplyType}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select name="page" ng-model="bill.rowsPerPage" ng-change="onNumPerPageChange()">
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="bill.currentPage"
+                                            total-items="bill.count"
+                                            max-size="4"
+                                            on-select-page="changePage(page)"
+                                            items-per-page="bill.rowsPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </tab>
+
+        </tabset>
+    </section>
+
+</div>
+
+<script type="text/ng-template" id="myputmodal.html">
+
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Offer SK </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group  row">
+                <div class="col-lg-6">
+                    <label for="site-name">Select Warehouse</label><br />
+                    <select class="form-control" id="site-name" ng-disabled="true" ng-change="ChangeWarehouse(saveDatasEdit.WarehouseId)" ng-model="saveDatasEdit.WarehouseId">
+                        <option value="">--Select--</option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="saveDatasEdit.WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label for="site-name">Offer Name</label>
+                    <input id="offername" type="text" class="form-control" ng-disabled="true" ng-model="saveDatasEdit.OfferName" placeholder="Enter Offer Name" />
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label for="site-name">Offer Category:</label>
+                    <select class="form-control" id="site-name" ng-disabled="true" ng-model="saveDatasEdit.OfferCategory">
+                        <option value="">---SELECT---</option>
+                        <option value="Offer">Offer</option>
+                        <option value="FlashDeal">FlashDeal</option>
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <label for="site-name">Offer On :</label>
+                    <select class="form-control" id="site-name" ng-disabled="true" ng-change="GetItemData(saveDatasEdit.OfferOn)" ng-model="saveDatasEdit.OfferOn">
+                        <option value="Item">Item</option>
+                        <!--<option value="Brand">Brand</option>-->
+                        <option value="BillDiscount">Bill Discount</option>
+                        <option value="ScratchBillDiscount">Scratch Bill Discount</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" ng-show="saveDatasEdit.OfferCategory=='FlashDeal'">
+                <div class="col-lg-6">
+                    <label for="site-name">Total Qty Available:</label>
+                    <input id="QtyAvaiable" type="number" ng-disabled="true" class="form-control" ng-model="saveDatasEdit.QtyAvaiable" placeholder="Enter Total Qty Available" />
+                </div>
+                <div class="col-lg-6">
+                    <label for="site-name">Max Qty Person Can Take:</label>
+                    <input id="QtyAvaiable" type="number" ng-disabled="true" class="form-control" ng-model="saveDatasEdit.MaxQtyPersonCanTake" placeholder="Enter Max Qty person can take" />
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col-lg-6">
+                    <label for="site-name">Offer Active/Deactive:</label>
+                    <select class="form-control" id="site-name" ng-model="saveDatasEdit.IsActive">
+                        <option value="true" ng-selected="saveDatasEdit.IsActive==true">Active</option>
+                        <option value="false" ng-selected="saveDatasEdit.IsActive==false">Deactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6" ng-show="saveDatasEdit.OfferOn == 'Item'">
+                    <label for="site-name">Item List:</label>
+                    <select class="form-control" id="site-name" ng-model="saveDatasEdit.ItemId" ng-disabled="true">
+                        <option value="">----Choose Item---</option>
+                        <option value="{{w.ItemId}},{{w.itemname}}" data-ng-selected="saveDatasEdit.ItemId == w.ItemId" ng-repeat="w in Items"> {{w.itemname}}</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-6" ng-show="saveDatasEdit.OfferOn == 'Item'">
+                    <label for="site-name">On Min Order Quantity :</label>
+                    <input id="MinOrderQuantity" type="number" class="form-control" ng-disabled="true" ng-model="saveDatasEdit.MinOrderQuantity" placeholder="Enter Min Order Quantity" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6">
+                    <label for="site-name">Start and End (DateTime) :</label><br />
+                    <label>{{ saveDatasEdit.start | date:'medium'}} -   {{saveDatasEdit.end | date:'medium' }}</label>
+
+                    <!--<div class="form-group" ng-if="">
+            <div class='input-group date'>
+                <input name="daterangeEdit" id="datEdit" type='text' title="Select Date" class="form-control date-picker" />
+                <span class="input-group-addon ">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>-->
+
+                </div>
+                <div class="col-lg-6">
+                    <label for="site-name">IsSelling SKU :</label><br />
+                    <label>{{ saveDatasEdit.IsFreebiesLevel}}</label>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-12">
+                    <label for="site-name">Type :</label>
+                    <select class="form-control" id="offerType" ng-disabled="true" ng-model="saveDatasEdit.FreeOfferType" ng-change="ChooseFreeItem(saveDatasEdit.FreeOfferType)">
+                        <option value="">----Choose Item Type---</option>
+                        <option ng-show="saveDatasEdit.OfferOn == 'Item' && saveDatasEdit.OfferOn != 'BillDiscount' && saveDatasEdit.OfferOn != 'ScratchBillDiscount'" value="ItemMaster">Item Master</option>
+                        <option ng-show="saveDatasEdit.OfferOn == 'Item'&& saveDatasEdit.OfferOn != 'BillDiscount' && saveDatasEdit.OfferOn != 'ScratchBillDiscount'" value="WalletPoint">Wallet Point</option>
+                        <option ng-show="saveDatasEdit.OfferOn == 'BillDiscount'&& saveDatasEdit.OfferOn != 'ScratchBillDiscount'" value="BillDiscount" ng-selected="saveDatas.OfferOn =='BillDiscount'">Bill Discount</option>
+                        <option ng-show="saveDatasEdit.OfferOn == 'ScratchBillDiscount' && saveDatasEdit.OfferOn != 'BillDiscount'" value="ScratchBillDiscount" ng-selected="saveDatas.OfferOn =='ScratchBillDiscount'">Scratch Bill Discount</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col-sm-12" ng-if="saveDatasEdit.OfferOn=='Item'|| saveDatasEdit.OfferOn=='BillDiscount' ">
+                <div class="col-sm-6">
+                    <label for="site-name">Multi Time Use</label>
+                    <input id="offername" ng-disabled="true" type="checkbox" class="form-control" ng-model="saveDatasEdit.IsMultiTimeUse" />
+                </div>
+                <div class="col-sm-6">
+                    <input id="OfferUseCount" type="number" ng-disabled="true" ng-if="saveDatasEdit.OfferOn=='BillDiscount'" class="form-control" ng-model="saveDatasEdit.OfferUseCount" />
+                </div>
+            </div>
+            <div class="row col-sm-12" ng-if="saveDatasEdit.OfferOn=='Item' || saveDatasEdit.OfferOn=='BillDiscount' || saveDatasEdit.OfferOn=='ScratchBillDiscount' ">
+                <div class="col-sm-6">
+                    <label for="site-name">Use Other Offer</label>
+                    <input id="offername" type="checkbox" ng-disabled="true" class="form-control" ng-model="saveDatasEdit.IsUseOtherOffer" />
+                </div>
+            </div>
+
+            <div class="form-group row" ng-show="saveDatasEdit.OfferOn == 'BillDiscount'">
+                <div class="col-lg-6" ng-hide="Itemssub.categorname=='' || Itemssub.categorname =='undefined'">
+                    <label for="site-name">Category:</label>
+                    <input id="category" type="text" ng-disabled="true" class="form-control" ng-model="Itemssub.categorname" />
+                </div>
+                <div class="col-lg-6" ng-hide="Itemssub.subcatname=='' || Itemssub.subcatname =='undefined'">
+                    <label for="site-name">Sub Category :</label>
+                    <input id="category" type="text" ng-disabled="true" class="form-control" ng-model="Itemssub.subcatname" />
+                </div>
+                <div class="col-lg-6" ng-hide="Itemssub.subsubcatname=='' || Itemssub.subsubcatname =='undefined'">
+                    <label for="site-name">Sub SubCategory :</label>
+                    <input id="category" type="text" ng-disabled="true" class="form-control" ng-model="Itemssub.subsubcatname" />
+                </div>
+                <!--<div class="col-lg-6" ng-hide="Itemssub.subsubcatname=='' || Itemssub.subsubcatname =='undefined'">
+                    <label for="site-name">None :</label>
+                    <input id="category" type="text" ng-disabled="true" class="form-control" ng-model="Itemssub.BillDiscountType" />
+                </div>-->
+
+            </div>
+
+            <div ng-if="saveDatasEdit.FreeOfferType =='ItemMaster'">
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label for="site-name">Items :</label>
+                        <select class="form-control" id="ItemData" ng-model="saveDatasEdit.FreeItemId" ng-disabled="true">
+                            <option value="">----Choose Item---</option>
+                            <option value="{{Fts.ItemId}},{{Fts.itemname}}" ng-repeat="Fts in Items" data-ng-selected="saveDatasEdit.FreeItemId == Fts.ItemId"> {{Fts.itemname}}</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12">
+                        <label for="site-name">Item Limit:</label>
+                        <input id="FreeItemLimit" type="number" min="1" class="form-control" ng-model="saveDatasEdit.FreeItemLimit" ng-disabled="true" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label for="NumberofFreeQunatity">No. Of free Quantity:</label><br />
+                        <input id="site-name" type="number" class="form-control" ng-model="saveDatasEdit.NoOffreeQuantity" ng-disabled="true" placeholder="Enter No. Of free Item Quantity:" typeof="number" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-6">
+
+                        <label for="FreeQunatityAvalible">Freebies Available Quantity:</label><br />
+                        <input id="site-name" type="number" class="form-control" ng-model="saveDatasEdit.QtyAvaiable " ng-disabled="true" typeof="number" />
+                    </div>
+                    <div class="col-lg-6">
+                        <label for="FreeQunatityConsumed">Free Sale Quantity</label><br />
+                        <input id="site-name" type="number" class="form-control" ng-model="saveDatasEdit.QtyConsumed " ng-disabled="true" typeof="number" />
+                    </div>
+                </div>
+            </div>
+            <div ng-if="saveDatasEdit.FreeOfferType =='WalletPoint'">
+                <div class="col-lg-6">
+                    <label for="site-name">Wallet Point :</label>
+                    <input id="WallentPoint" type="Number" maxlength="60" class="form-control" ng-disabled="true" ng-model="saveDatasEdit.FreeWalletPoint" placeholder="Enter Wallent Point" />
+                </div>
+            </div>
+            <div ng-if="saveDatasEdit.OfferOn =='BillDiscount'||saveDatasEdit.OfferOn == 'ScratchBillDiscount'">
+                <div class="col-lg-12">
+                    <label for="site-name">Offer On :</label>
+                    <select class="form-control" id="offerType" ng-disabled="true" ng-model="saveDatasEdit.BillDiscountOfferOn">
+                        <option value="">----Choose Item Type---</option>
+                        <option value="Percentage">Percentage</option>
+                        <option value="WalletPoint">Wallet Point</option>
+                    </select>
+                </div>
+                <div class="col-lg-6" ng-if="saveDatasEdit.BillDiscountOfferOn=='WalletPoint'">
+                    <label for="site-name">Wallent Point :</label>
+                    <input id="WallentPoint" type="Number" ng-disabled="true" maxlength="60" class="form-control" ng-model="saveDatasEdit.BillDiscountWallet" placeholder="Enter Percentage Discount" />
+                </div>
+                <div class="col-lg-6" ng-if="saveDatasEdit.BillDiscountOfferOn=='Percentage'">
+                    <label for="site-name">Percentage :</label>
+                    <input id="WallentPoint" type="Number" ng-disabled="true" maxlength="60" class="form-control" ng-model="saveDatasEdit.DiscountPercentage" placeholder="Enter Percentage Discount" />
+                </div>
+                <div class="col-lg-6" ng-if="saveDatasEdit.OfferOn=='BillDiscount'||saveDatasEdit.OfferOn == 'ScratchBillDiscount'">
+                    <label for="site-name">Bill Amount Min Limit:</label>
+                    <input id="BillAmount" type="Number" maxlength="60" class="form-control" ng-disabled="true" ng-model="saveDatasEdit.BillAmount" placeholder="Enter BillAmount" />
+                </div>
+                <div class="col-lg-6" ng-if="saveDatasEdit.OfferOn=='BillDiscount'||saveDatasEdit.OfferOn == 'ScratchBillDiscount'">
+                    <label for="site-name">Bill Amount Max Limit :</label>
+                    <input id="BillAmount" type="Number" maxlength="60" class="form-control" ng-disabled="true" ng-model="saveDatasEdit.MaxBillAmount" placeholder="Enter Bill Amount Limit" onchange="myFunction()" />
+                </div>
+                <div class="col-lg-6" ng-if="saveDatasEdit.OfferOn=='BillDiscount'||saveDatasEdit.OfferOn == 'ScratchBillDiscount'">
+                    <label for="site-name">Maximum Discount :</label>
+                    <input id="MaxDiscount" type="Number" maxlength="60" class="form-control" ng-disabled="true" ng-model="saveDatasEdit.MaxDiscount" placeholder="Enter Maximum Bill Discount" />
+                </div>
+                <div class="col-lg-6" ng-hide="saveDatasEdit.BillDiscountType =='items'" ng-if="saveDatasEdit.OfferOn=='BillDiscount'||saveDatasEdit.OfferOn == 'ScratchBillDiscount'">
+                    <label for="site-name">Number Of Line Items :</label>
+                    <input id="MaxDiscount" type="Number" maxlength="60" class="form-control" ng-disabled="true" ng-model="saveDatasEdit.LineItem" placeholder="Enter Number Of Line Items" />
+                </div>
+
+                <div class="col-lg-6" ng-if="saveDatasEdit.OfferOn !='BillDiscount'||saveDatasEdit.OfferOn == 'ScratchBillDiscount'">
+                    <label for="site-name">Offer Code</label>
+                    <input id="offername" type="text" class="form-control" ng-model="saveDatasEdit.OfferCode" ng-disabled="true" placeholder="Enter Offer Code" />
+                </div>
+
+
+
+                <!--///user type-->
+                <div ng-show="saveDatasEdit.OfferOn == 'ScratchBillDiscount'">
+                    <!--List of user group type -->
+                    <!--<div class="col-lg-6" ng-show="saveDatasEdit.GroupId == null">
+                        <label for="site-name">All Customer:</label>
+                        <input id="Name" type="text" class="form-control" ng-model="saveDatasEdit.Gname" ng-disabled="true"/>
+
+                    </div>-->
+                    <div class="col-lg-6" ng-show="saveDatasEdit.CustomerId == null">
+                        <label for="site-name">Customer Name:</label>
+                        <input id="Name" type="text" class="form-control" ng-model="saveDatasEdit.Gname" ng-disabled="true" />
+
+                    </div>
+                    <!--List of user single-->
+                    <div class="col-lg-6" ng-show="saveDatasEdit.GroupId!= null">
+                        <label for="site-name">Group Name:</label>
+                        <input id="Name" type="text" class="form-control" ng-model="saveDatasEdit.Gname" ng-disabled="false" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-6'" ng-if="saveDatasEdit.OfferOn=='Brand'">
+                    <label for="site-name">Brand List:</label>
+                    <select class="form-control" id="site-name" ng-model="saveDatasEdit.ItemId" ng-disabled="true">
+                        <option value="">----Choose Item---</option>
+                        <option value="{{Ssubsubcats.SubsubCategoryid}},{{Ssubsubcats.SubsubcategoryName}}" data-ng-selected="saveDatasEdit.ItemId == Ssubsubcats.SubsubCategoryid" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}} </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6" ng-if="saveDatasEdit.OfferOn=='Item'">
+                <label for="site-name">Multi Time Use</label>
+                <input id="offername" type="checkbox" class="form-control" ng-model="saveDatasEdit.IsMultiTimeUse" />
+            </div>
+
+            <div class="col-lg-6" ng-if="saveDatasEdit.OfferOn=='Item'">
+                <label for="site-name">Use Other Offer</label>
+                <input id="offername" type="checkbox" class="form-control" ng-model="saveDatasEdit.IsUseOtherOffer" />
+            </div>
+            <div class="form-group row">
+
+                <div class="col-lg-12">
+                    <label for="site-name">Description :</label>
+                    <input id="site-name" type="text" maxlength="60" ng-disabled="true" class="form-control" ng-model="saveDatasEdit.Description" placeholder="Enter Description" />
+                </div>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Put(saveDatasEdit)">Save</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Notify(saveDatasEdit)">Notify</button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="daterangeEdit"]').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 5,
+                timePicker12Hour: true,
+                format: 'MM/DD/YYYY h:mm A'
+            });
+        });
+    </script>
+</script>
+
+<script type="text/ng-template" id="mydeletemodal.html">
+
+    <form name="myFormdeleteModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete </h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="delete(saveData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="myfreemodal.html">
+    <form name="myfreemodalForm">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Active Deactive</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Is Active:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.IsActive" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutitemMaster(itemMasterData)">Set</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="Historymodal.html">
+    <section class="panel panel-default table-dynamic" style="overflow: auto;">
+
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Offers History
+            </strong>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.no
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Offer On
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Offer Category
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Free Offer Type
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Itemname
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            MinOrderQuantity
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            FreeItemName
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            NoOffreeQuantity
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Start DateTime
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            End DateTime
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Created
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Free Wallet Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Discount Percent
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created By
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Updated By
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in offerHistory">
+                    <td>{{$index +1}}</td>
+                    <td>{{trade.OfferOn}}</td>
+                    <td>{{trade.OfferCategory}}</td>
+                    <td>{{trade.FreeOfferType}}</td>
+                    <td>{{trade.itemname}}</td>
+                    <td>{{trade.MinOrderQuantity}}</td>
+                    <td>{{trade.FreeItemName}}</td>
+                    <td>{{trade.NoOffreeQuantity}}</td>
+                    <td>{{trade.start | date:'medium'}}</td>
+                    <td>{{trade.end| date:'medium'}}</td>
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                    <td>{{trade.FreeWalletPoint}}</td>
+                    <td>{{trade.DiscountPercentage}}</td>
+                    <td>{{trade.CreatedBy}}</td>
+                    <td>{{trade.UpdatedBy}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            </div>
+        </footer>
+    </section>
+
+
+</script>
+
+<script type="text/ng-template" id="CustomerOfferList.html">
+    <section class="panel panel-default table-dynamic" style="overflow: auto;">
+
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Customer List
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group col-md-12">
+                        <label for="site-name"> Search:</label><br />
+                        <input type="text" placeholder="search" class="form-control" ng-model="pager.searchKeywords" ng-change="search(1)">
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <button style="float:right" class="btn-sm btn-dark" ng-click="exportData()"> <span class="glyphicon glyphicon-export"> </span> Export</button>
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Hub
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Name
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Skcode
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Order ID
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Order Amount(AfterDiscount)
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Discount Type
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Discount Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        IsScratched
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Date
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="trade in currentPageItems">
+                                <td>{{trade.HubName}}</td>
+                                <td>{{trade.CustomerName}}</td>
+                                <td>{{trade.Skcode}}</td>
+                                <td>{{trade.OrderID}}</td>
+                                <td>{{trade.OrderAmount | number:2}}</td>
+                                <td>{{trade.BillDiscountType}}</td>
+                                <td>{{trade.Amount | number:2}}</td>
+                                <td>{{trade.IsScratchBDCode}}</td>
+                                <td>{{trade.CreatedDate| date:'medium'}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="currentPage"
+                                            total-items="totalRecords"
+                                            max-size="4"
+                                            on-select-page="search(page)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</script>
+

@@ -1,0 +1,277 @@
+﻿<div class="page page-table" button-permission-binder parentName="Purchase Order" pageName="On Hold GR">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> Master OnHold GR</strong>
+        </div>
+        <div class="form-group col-md-12 clear-both">
+            <div class="col-sm-2">
+                <label for="site-name">Search</label><br />
+                <form>
+                    <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                </form>
+            </div>
+        </div>
+        <div>
+            <a href="#/MasterOnHoldGR" class="skadd"><button class="btn btn-primary"> <span class="glyphicon glyphicon-plus"> </span> Add OnHoldGR</button></a>
+        </div>
+        <br />
+        <div>
+            <button class="btn-sm btn-primary skexport" ng-click="exportdatewiseData1()" ng-show="(UserRole.rolenames.startsWith('HQ')"> <span class="glyphicon glyphicon-plus"> </span> Export Excel</button>
+        </div>
+
+
+        <table class="table table-bordered table-striped table-responsive ">
+            <thead>
+                <tr>
+                    <!--<th>
+        <div class="th">
+            SNo.
+        </div>
+    </th>-->
+                    <th>
+                        <div class="th">
+                            OnHoldGR Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderId')"
+                                  data-ng-class="{active: row == 'OrderId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderId')"
+                                  data-ng-class="{active: row == '-OrderId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                           City Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CityName')"
+                                  data-ng-class="{active: row == 'CityName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CityName')"
+                                  data-ng-class="{active: row == '-CityName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Invoice No.
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' InvoiceNo')"
+                                  data-ng-class="{active: row == 'InvoiceNo'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-InvoiceNo')"
+                                  data-ng-class="{active: row == '-InvoiceNo'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('  ItemName')"
+                                  data-ng-class="{active: row == '  ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-  ItemName')"
+                                  data-ng-class="{active: row == '-  ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            MRP
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('  MRP')"
+                                  data-ng-class="{active: row == '  MRP'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-  MRP')"
+                                  data-ng-class="{active: row == '-  MRP'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('  Price')"
+                                  data-ng-class="{active: row == '  Price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-  Price')"
+                                  data-ng-class="{active: row == '-  Price'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Quantity
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('  Quantity')"
+                                  data-ng-class="{active: row == '  Quantity'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-  Quantity')"
+                                  data-ng-class="{active: row == '-  Quantity'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('  Description')"
+                                  data-ng-class="{active: row == '  Description'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-  Description')"
+                                  data-ng-class="{active: row == '-  Description'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' Image')"
+                                  data-ng-class="{active: row == ' Image'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- Image')"
+                                  data-ng-class="{active: row == '- Image'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Comments
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' comments')"
+                                  data-ng-class="{active: row == ' comments'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-comments')"
+                                  data-ng-class="{active: row == '-comments'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Save
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' comments')"
+                                  data-ng-class="{active: row == ' comments'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-comments')"
+                                  data-ng-class="{active: row == '-comments'}"></span>
+                        </div>
+                    </th>
+</thead>
+            <tbody>
+
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <!--<td>{{$index+1}}</td>-->
+                    <td>{{trade.OnHoldGRId}}</td>
+                    <td>{{trade.CityName}}</td>
+                    <td>{{trade.WarehouseName}}{{trade.CityName}}</td>
+                    <td>{{trade.InvoiceNo}}</td>
+                    <td>{{trade.ItemName}}</td>
+                    <td>{{trade.MRP}}</td>
+                    <td>{{trade.Price}}</td>
+                    <td>{{trade.Qty}}</td>
+                    <td>{{trade.Discription}}</td>
+                    <td><img src='{{trade.Image}}' ng-click="openimg(trade.Image)" alt="Snow" class="img-square img80_80" id="myImg" /></td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td><input type="text" ng-model="trade.comments" class="form-control" /></td>
+                    <td> <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AddComment(trade)">Save</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 page-num-info">
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    page="currentPage"
+                                    total-items="filteredStores.length"
+                                    max-size="4"
+                                    on-select-page="select(page)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <div id="myModal" class="modal" ngclick="this.style.display='none'">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01"   style="width:100%">
+            <div id="caption"></div>
+        </div>
+    </section>
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('myImg');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+
+</script>
+<script type="text/ng-template" id="imageViewOnHold.html">
+
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">InvoiceImage</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group" >
+                <img alt="Image" src="{{ImageOnHold}}" class="img-responsive">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+
+
+
+
+
+
+
+

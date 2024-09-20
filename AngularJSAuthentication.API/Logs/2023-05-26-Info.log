@@ -1,0 +1,17 @@
+2023-05-26 17:57:04.4214|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 
+2023-05-26 17:57:54.1685|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending FCM for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int64 customerId) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 489
+2023-05-26 17:58:06.1755|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 
+2023-05-26 18:00:05.6776|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending FCM for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int64 customerId) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 489
+2023-05-26 18:01:50.9571|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 
+2023-05-26 18:14:26.5662|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending FCM for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int64 customerId) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 488
+2023-05-26 18:15:31.7622|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 
+2023-05-26 18:19:06.9670|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 
+2023-05-26 18:22:06.1063|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 
+2023-05-26 19:26:29.4902|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 
+2023-05-26 19:28:49.9777|INFO|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Add message: 

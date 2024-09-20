@@ -1,0 +1,530 @@
+﻿
+<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        img.img80_80 {
+            width: 60px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>Damage stock Item</strong> </div>
+        <br />
+        <div class="table-filters">
+            <div class="row">
+                <div class=" col-sm-2 col-xs-3">
+                    <p>Select Warehouse</p>
+                    <!--<select class="form-control" id="site-name" name="Warename"
+                            ng-model="warehouses.WarehouseId" data-ng-change="getWareitemMaster(warehouses)">
+            <option value="">---SELECT---</option>
+            <option value="{{warehouses.WarehouseId}}"
+                            ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+        </select>-->
+                    <div ng-dropdown-multiselect="" id="Warehouseid" options="warehouse"
+                         selected-model="MultiWarehouseModel"
+                         extra-settings="MultiWarehouseModelsettings"
+                         style="width:200px"></div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="site-name">Search</label><br />
+                    <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="getWareitemMaster()">Search</button>
+                </div>
+
+            
+                <div class="form-group col-md-4">
+                    <label for="site-name">Export History Acc. to Warehouse</label><br />
+                                                                 <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="oldStockHistory()">Export History</button>
+                </div>
+
+                <div class="col-sm-4 col-xs-6">
+                    <div class="form-group col-md-12">
+                        <label for="site-name"></label><br />
+                        <form>
+                            <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-6">
+                    <label for="site-name"></label><br />
+                    <button type="button" class="btn btn-primary" ng-click="Export()">Export</button>
+                </div>
+
+                <div class="col-sm-2 filter-result-info">
+                    <label for="site-name"></label><br />
+                    <span>
+                        Showing {{total_count}}/{{stores.length}} Entries
+                    </span>
+                </div>
+            </div>
+            </div>
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            ItemIdMultiMrpId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingSku')"
+                                  data-ng-class="{active: row == 'SellingSku'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SKUCode')"
+                                  data-ng-class="{active: row == '-SellingSku'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingSku')"
+                                  data-ng-class="{active: row == 'SellingSku'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SKUCode')"
+                                  data-ng-class="{active: row == '-SellingSku'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderId')"
+                                  data-ng-class="{active: row == 'OrderId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderId')"
+                                  data-ng-class="{active: row == '-OrderId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Skcode')"
+                                  data-ng-class="{active: row == 'Skcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Skcode')"
+                                  data-ng-class="{active: row == '-Skcode'}"></span>
+                        </div>
+                    </th>
+
+                  
+                    <th>
+                        <div class="th">
+
+                            ABC Classification
+                           
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Unit Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Reason To Transfer
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Damage Inventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Barcode')"
+                                  data-ng-class="{active: row == 'Barcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Barcode')"
+                                  data-ng-class="{active: row == '-Barcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            History
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.ItemMultiMRPId}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.ItemNumber}}</td>
+                    <td> {{trade.ItemName}}</td>
+                    <td> {{trade.ABCClassification}}</td>
+                    <td> {{trade.UnitPrice}} </td>
+                    <td> {{ trade.ReasonToTransfer}}</td>
+                    <td>
+                        <!--{{ trade.DamageInventory}}-->
+                        <a class="badge badge-primary ml-2" href="javascript:void(0)" ng-click="onClickDamageInventory(trade)">{{trade.DamageInventory}}</a>
+                    </td>
+                    <td> {{ trade.CreatedDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-dark skhistory" data-toggle="modal" data-target="#oldstock" ng-click="oldStock(trade)">History</button></td>
+                </tr>
+                <!--</tr>-->
+
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+        <!--<footer class="table-footer">
+        <div class="row">
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="getdamagedata(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+            <div class="col-md-6 text-right pagination-container">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selected"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page
+                        entries per page
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>-->
+    </section>
+</div>
+
+<div class="modal fade " id="oldstock" role="dialog">
+    <div class="modal-dialog modal-lg" style="width: auto;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div id="divtoPrint">
+                <style type="text/css">
+                    @media print {
+                        .no-print {
+                            display: none !important;
+                        }
+
+                        .border {
+                            border: 1px solid #000 !important;
+                        }
+
+
+                        th, td {
+                            border: solid #000 !important;
+                            border-width: 1px 1px 1px 0 !important;
+                            border-top-width: 10px;
+                            border-spacing: 0;
+                            padding: 0;
+                            text-align: center;
+                        }
+                    }
+                </style>
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title" style="text-align: center;">Damage Stock History</h3>
+
+
+                </div>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr class="w1-red">
+
+                            <th>
+                                <div class="th">
+                                    ItemName
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+
+                                    ABC Classification
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Damage Inventory
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Inword Qty
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Outword Qty
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    OdOrPoId
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Reason to Transfer
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    WareHouse Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Edit By
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Date
+
+                                </div>
+                            </th>
+
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr dir-paginate="trade in OldStockData|itemsPerPage:itemsPerPage" total-items="total_count">
+                            <td>{{trade.ItemName}}</td>
+                            <td>{{trade.ABCClassification}}</td>
+                            <td>
+                                <a class="badge badge-primary ml-2" href="javascript:void(0)">{{trade.DamageInventory}}</a><!--ng-click="onClickDamageInventory(trade)"-->
+                            </td>
+                            <td><span ng-if="trade.InwordQty > 0 " class="label label-primary ng-binding">{{trade.InwordQty}}</span></td>
+                            <td><span ng-if="trade.OutwordQty > 0 " class="label label-danger ng-binding">{{trade.OutwordQty}}</span></td>
+                            <td>{{trade.OdOrPoId}}</td>
+                            <td>{{trade.ReasonToTransfer}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+
+                            <td><span ng-if="trade.UserName!=null " class="label label-danger ng-binding">{{trade.UserName}}</span></td>
+                            <!--<td><span ng-if="trade.UserName!=null " class="label label-danger ng-binding">{{trade.UserName}}</span></td>-->
+                            <td>{{trade.CreatedDate| date:'medium'}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="oldStocks(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+
+
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/ng-template" id="DamageInventoryStockMasterModal.html">
+    <style>
+        .tableData {
+            border-left: solid 1px #D8C3C3;
+            border-top: solid 1px #D8C3C3;
+            width: 100%;
+        }
+
+            .tableData tr {
+            }
+
+            .tableData td, .tableData th {
+                border-right: solid 1px #D8C3C3;
+                border-bottom: solid 1px #D8C3C3;
+                text-align: left;
+                padding: 5px;
+            }
+
+            .tableData td {
+            }
+
+            .tableData th {
+                background-color: #FAFAFA;
+                padding: 7px 5px;
+                border-bottom-color: #9C9C9C;
+            }
+    </style>
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Damage Stock Item</h4>
+        </div>
+        <div class="modal-body">
+
+            <table class="tableData" border="0" cellspacing="0" cellpadding="0" ng-if="!isDataNotFound">
+                <thead>
+
+                    <tr>
+                        <th>SNo.</th>
+                        <th>Batch Code</th>
+                        <th>Qty</th>
+                        <th>MFG Date</th>
+                        <th>Expiry Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="bm in batchMasterList" ng-class-even="'even'" ng-class-odd="'odd'">
+                        <td>
+                            {{$index+1}}
+                        </td>
+                        <td>{{bm.BatchCode}}</td>
+                        <td>{{bm.Qty}}</td>
+                        <td>{{bm.MFGDate | date : format : medium}}</td>
+                        <td>{{bm.ExpiryDate | date : format : medium}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">
+                Cancel
+            </button>
+        </div>
+    </form>
+</script>
+

@@ -1,0 +1,361 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="Agent Data">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> AgentData table</strong> </div>
+        <br />
+
+        <!--<br />
+        <button class="btn btn-primary" ng-click="AddAgentAmount()"> <span class="glyphicon glyphicon-plus"> </span>Add Agent Amount</button>
+        <br />-->
+        <br />
+        <button class="btn btn-primary skadd" ng-click="AddAgent()"> <span class="glyphicon glyphicon-plus"> </span>Add Agent</button>
+        <br />
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div> <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Full Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            AgentCode
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Department
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Department')"
+                                  data-ng-class="{active: row == 'Department'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Department')"
+                                  data-ng-class="{active: row == '-Department'}"></span>
+                        </div>
+                    </th>
+                    
+                   
+                    <th>
+                        <div class="th">
+                            Active
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Active')"
+                                  data-ng-class="{active: row == 'Active'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Active')"
+                                  data-ng-class="{active: row == '-Active'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('WH Master login')>-1)">
+                        <div class="th">
+                            View
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('WH Master login')>-1 )">
+                        <div class="th">                           
+                            Edit Amount
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('WH Master login')>-1)">
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+
+                </tr>
+
+
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.DisplayName}}</td>
+                    <td>{{trade.AgentCode}}</td>
+                    <td>{{trade.Department}}</td>
+                    <td>{{trade.Active}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('WH Master login')>-1)"><button class="btn-sm btn-primary skview" ng-click="View(trade)">View</button> </td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('WH Master login')>-1)"><button class="btn-sm btn-danger skedit" ng-click="AddAgentAmount(trade)">Edit Amount</button> </td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('WH Master login')>-1)"><button class="btn-sm btn-danger skremove" ng-click="DeleteAgent(trade)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="AgentOrderData.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="cancel()">×</button>
+            <h4 class="modal-title">View Order Data</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+
+            <table class="table table-bordered table-striped table-responsive">
+                <tr>
+                    <th>Date</th>
+                    <th colspan="2">Debit</th>
+                    <th colspan="2">Credit</th>
+                    <th>Balance</th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Order Issurance Id</td>
+                    <td>Amount</td>
+                    <td>Item</td>
+                    <td>Amount</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{ OrderData[0].CreatedDate | date:'medium' }}</td>
+                    <td></td>
+                    <td></td>
+                    <td>Advance deposit</td>
+                    <td>{{ OrderData[0].AdvanceDepositedAmount}}</td>
+                    <td></td>
+                </tr>
+                <tr data-ng-repeat="trade in OrderData">
+                    <td></td>
+                    <td>{{ trade.DebitIssueId}}</td>
+                    <td>{{ trade.CreaditIssuedAmount}}</td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ trade.AdvanceDepositedAmount-trade.CreaditIssuedAmount}}</td>
+                </tr>
+                <!--<tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Cash deposit(from currency)</td>
+                    <td>180</td>
+                    <td>220</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Cheque settled</td>
+                    <td>40</td>
+                    <td>260</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>Cash deposit(from currency)</td>
+                    <td>30</td>
+                    <td>260</td>
+                </tr>-->
+
+            </table>
+    </form>
+</script>
+
+<!--Update People-->
+<script type="text/ng-template" id="myPeoplDDeModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="closeModal()">×</button>
+            <h4 class="modal-title">View Record</h4>
+
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                       
+                        <th>
+                            <div class="th">
+                               Agent Pre Amount
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Agent Add Amount
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Agent Minus Amount
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Total Amount
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Issue Id
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Created Date
+
+                            </div>
+                        </th>
+                       
+                       
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr dir-paginate="trade in agentamountData|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <td>{{trade.AgentPreAmount}}</td>
+                        <td>+{{trade.AgentAddedAmount}}</td>
+                        <td>-{{trade.CreaditIssuedAmount}}</td>
+                        <td>{{trade.AgentAmounts}}</td>
+                        <td>{{trade.DebitIssueId}}</td>
+                        <td>{{trade.CreatedDate | date:'medium'}}</td>
+                        <!--<td><button class="btn-sm btn-primary" ng-click="open(trade)">Details</button> </td>-->
+                    </tr>
+                </tbody>
+            </table>
+
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="oldStocks(newPageNumber)">
+            </dir-pagination-controls>
+        </div>
+
+    </form>
+</script>
+
+<script type="text/ng-template" id="AddAgentAmountModel.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="cancel()">×</button>
+            <h4 class="modal-title">Add Agent Amount</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Agent Amount:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="AgentCash.AgentAmount" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" value="Submit" id="btnAgentAmountAdd" ng-click="AddAgentAmountData(AgentCash)">Save</button>
+        </div>
+
+    </form>
+</script>
+
+<script type="text/ng-template" id="AddAgentModel.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="cancel()">×</button>
+            <h4 class="modal-title">Add Agent</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Agent Full Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="PeopleData.AgentFullName" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Agent Code:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="PeopleData.Agentcode" ng-disabled="true" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" value="Submit" id="btnAgentAdd" ng-click="AddAgentData(PeopleData)">Save</button>
+        </div>
+    </form>
+
+</script>
+
+<!-- /new site modal -->

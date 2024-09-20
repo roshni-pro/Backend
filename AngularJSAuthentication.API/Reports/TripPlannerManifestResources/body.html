@@ -1,0 +1,226 @@
+﻿<div style="">
+    <div>
+        <table class="tbll">
+            <tr>
+                <td><span>Trip No </span></td>
+                <td><span>: ##TRIPNO##</span></td>
+                <td><span>Trip Date</span></td>
+                <td><span>: ##TRIPDATE##</span></td>
+            </tr>
+            <tr>
+                <td><span>Trip Type</span></td>
+                <td><span>: ##TRIPTYPE##</span></td>
+                <td><span>Hub</span></td>
+                <td><span>: ##HUB##</span></td>
+            </tr>
+            <tr class="ex-m">
+                <td><span>No of Assignments</span></td>
+                <td><span>: ##NOOFASSIGNMENTS##</span></td>
+                <td><span>Total Load (in KG) </span></td>
+                <td><span>: ##TOTALLOAD##</span></td>
+            </tr>
+            <tr>
+                <td colspan="1"><span>Total Estimated Round Trip (in KM): </span></td>
+                <td colspan="3"><span>##TRIPDISTANCE##</span></td>
+            </tr>
+            <tr class="ex-m">
+                <td><span>Vehicle No</span></td>
+                <td><span>: ##VEHICLENO##</span></td>
+                <td><span>Vehicle Type</span></td>
+                <td><span>: ##VEHICLETYPE##</span></td>
+            </tr>
+            <tr>
+                <td><span>Vehicle Intime: </span></td>
+                <td><span>: ##VEHICLEINTIME##</span></td>
+                <td><span>Vehicle Reading (in KM)</span></td>
+                <td><span>: ##VEHICLEKMREADING##</span></td>
+            </tr>
+            <tr class="ex-m">
+                <td colspan="1"><span>Agent Name</span></td>
+                <td colspan="3"><span>: ##AGENTNAME##</span></td>
+            </tr>
+            <tr>
+                <td><span>Driver Name</span></td>
+                <td><span>: ##DRIVERNAME##</span></td>
+                <td><span>Driver Number</span></td>
+                <td><span>: ##DRIVERNUMBER##</span></td>
+            </tr>
+            <tr>
+                <td><span>Delivery Boy Name</span></td>
+                <td><span>: ##DBOYNAME##</span></td>
+                <td><span>Delivery Boy Number</span></td>
+                <td><span>: ##DBOYNUMBER##</span></td>
+            </tr>
+        </table>
+    </div>
+    <div style="min-height: 150px;">
+        <div style="text-align: center;">Assignment Details</div>
+        <table class="trn-tbl">
+            <tr class="hd">
+                <th>
+                    SNo.
+                </th>
+                <th>
+                    Assignment No.
+                </th>
+                <th>
+                    Assignment Value
+                </th>
+                <th>
+                    Assignment Weight
+                </th>
+                <th class="rt">
+                    EWB Applicable
+                </th>
+            </tr>
+            ##ASSIGNMENTROWS##
+
+        </table>
+    </div>
+
+    <div style="min-height: 150px;">
+        <div style="text-align: center;">EWB Details</div>
+        <table class="trn-tbl">
+            <tr class="hd">
+                <th>
+                    SNo.
+                </th>
+                <th>
+                    Order Id
+                </th>
+                <th>
+                    Order Date
+                </th>
+                <th>
+                    Òrder Value
+                </th>
+                <th class="rt">
+                    EWB No.
+                </th>
+                <th class="rt">
+                    EWB Date
+                </th>
+            </tr>
+            ##EWBROWS##
+        </table>
+    </div>
+    <div class="mr-22">
+        <p>Vehicle Out-Time </p>
+    </div>
+    <div class="mr-22">
+        <p style="font-weight: bold;">Driver Declaration</p>
+
+        <ul>
+            <li>
+                <span>I have received all orders and items are counted properly and checked the condition.</span>
+                <!--<span>माल पूर्ण रूप से सही प्राप्त हुआ |</span>-->
+            </li>
+            <li>
+                <span>I have also received invoice copy of all of above.</span>
+                <!--<span>सभी इन्वॉइस कॉपी भी प्राप्त हुईं |</span>-->
+
+            </li>
+        </ul>
+
+    </div>
+    <div class="mr-22">
+        <table class="tbll tt-b">
+            <tr>
+                <td><span>Security Sign</span></td>
+                <td><span>Driver Sign</span></td>
+                <td><span>Delivery Planner Sign</span></td>
+                <td><span>Cashier Sign</span></td>
+            </tr>
+
+        </table>
+    </div>
+
+</div>
+
+
+<style>
+    td {
+        padding: 5px;
+    }
+
+
+    .tbll {
+        width: 100%;
+        font-size: 13px;
+    }
+
+        .tbll td {
+            width: 50%
+        }
+
+            .tbll td:nth-child(2) {
+                text-align: right;
+            }
+
+    .tbl tr {
+        padding: 10px;
+    }
+
+    .trn-tbl {
+        width: 100%;
+        font-size: 12px;
+        border-spacing: 0px;
+    }
+
+        .trn-tbl tr td {
+            border: solid 0px white;
+        }
+
+        .trn-tbl .hd {
+            background: #ecc171;
+            border-bottom: none;
+        }
+
+        .trn-tbl th {
+            padding: 10px 15px;
+            text-align: center;
+            font-weight: bold;
+            background: #ecc171;
+        }
+
+        .trn-tbl td {
+            padding: 10px 15px;
+            font-weight: bold;
+            color: gray;
+        }
+
+        .trn-tbl .mdl {
+            text-align: center;
+        }
+
+        .trn-tbl .brdr td {
+            border-bottom: solid 1px gray;
+        }
+
+        .trn-tbl .rt {
+            text-align: right;
+        }
+
+        .trn-tbl .lft {
+            text-align: left;
+        }
+
+        .trn-tbl .paid {
+            text-align: center;
+            font-size: 29px;
+            color: red;
+            font-style: italic;
+        }
+
+        .trn-tbl .pending {
+            text-align: center;
+            font-size: 29px;
+            color: green;
+            font-style: italic;
+        }
+
+    .ex-m td {
+        padding-top: 20px;
+    }
+</style>
+

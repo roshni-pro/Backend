@@ -1,0 +1,153 @@
+﻿<style>
+    #dragandrophandler {
+        border: 2px dashed #92AAB0;
+        width: 650px;
+        height: 200px;
+        color: #92AAB0;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 0px 10px 10px;
+        font-size: 200%;
+        display: table-cell;
+    }
+</style>
+<style>
+    .tab {
+        width: 100%;
+        border-radius: 100px;
+        margin-bottom: 41px;
+        margin-top: 10px;
+    }
+</style>
+
+<script type="text/javascript">
+    function checkSpcialChar(event) {
+        if (!((event.keyCode >= 65) && (event.keyCode <= 90) || (event.keyCode >= 97) && (event.keyCode <= 122) || (event.keyCode = 64) && (event.keyCode <= 57))) {
+            event.returnValue = false;
+            return;
+        }
+        event.returnValue = true;
+    }
+</script>
+
+
+<style>
+    .btn-primary {
+        margin-right: 10px;
+    }
+
+    .container {
+        margin: 20px 0;
+    }
+</style>
+
+<section class="panel panel-default table-dynamic">
+    <div class="table-filters"></div>
+
+
+    <div class="row">
+        <div class="col-sm-2">
+            <label for="site-name">Select Warehouse</label><br />
+            <select class="form-control" id="site-name" ng-model="data.WarehouseId">
+                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse">  {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label for="site-name">Invoice No.</label><br />
+                <input type="text" class="form-control" ng-model="data.InvoiceNo" placeholder="Enter Invoice Number" ng-required />
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="uploadAdvertisements">Upload Image:</label>
+                    <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                    <div ng-repeat="item in uploader.queue">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div name="form_constraints" ng-controller="MasterOnHoldGRController">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form ng-submit="addNew()">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                                        <!--<th>InvoiceNo</th>-->
+                                        <th>Itemname</th>
+                                        <th>MRP</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in OnHoldDetails">
+                                        <td>
+                                            <input type="checkbox" ng-model="data.selected" />
+                                        </td>
+                                        <!--<td>
+        <input type="text" class="form-control" ng-model="data.InvoiceNo" required readonly />
+    </td>-->
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="data.Itemname" required />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="data.MRP" required />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="data.Price" required />
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="data.Qty" required />
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="data.Discription" required />
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="form-group">
+                                <input ng-hide="!OnHoldDetails.length" type="button" class="btn btn-danger pull-right" ng-click="remove()" value="Remove">
+                                <input type="submit" class="btn btn-primary addnew pull-right" value="Add New">
+                            </div>
+                        </form>
+                        <div class="col-sm-1">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="AddGR(data)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

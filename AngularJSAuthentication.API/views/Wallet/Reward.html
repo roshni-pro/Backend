@@ -1,0 +1,228 @@
+﻿<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+
+<div class="page page-table"  button-permission-binder parentName="Offer" pageName="Reward Zone">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Reward Point
+            </strong>
+        </div><br />
+        <div>
+            <button  class="btn btn-primary skmarginpointconversion" ng-click="openMargin()" ng-show="(UserRole.email== 'masteradmin@shopkirana.com')">
+                <span class="glyphicon glyphicon-plus"> </span> Margin Point Conversion
+            </button>
+            <button class="btn btn-primary skretailershare" ng-click="openShare()" ng-show="(UserRole.email== 'masteradmin@shopkirana.com')">
+                <span class="glyphicon glyphicon-plus"> </span> Retailer Share
+            </button>
+        </div><br /><br />
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CustomerId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CustomerId')"
+                                  data-ng-class="{active: row == 'CustomerId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CustomerId')"
+                                  data-ng-class="{active: row == '-CustomerId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sk Code
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Skcode')"
+                                  data-ng-class="{active: row == 'Skcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Skcode')"
+                                  data-ng-class="{active: row == '-Skcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shop Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ShopName')"
+                                  data-ng-class="{active: row == 'ShopName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ShopName')"
+                                  data-ng-class="{active: row == '-ShopName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Reward Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Milestone Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Earn Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Used Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                             Date
+                        </div>
+                    </th>                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in rewardData">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.CustomerId}}</td>
+                    <td>{{trade.Skcode}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.TotalPoint}}</td>
+                    <td>{{trade.MilestonePoint}}</td>
+                    <td>{{trade.EarningPoint}}</td>
+                    <td>{{trade.UsedPoint}}</td>
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="marginADDModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add\Edit (Point To Rupee conversion)</h4>
+        </div>
+        <div class="modal-body" style="top:20px;">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <label for="site-name">Reward Point's :</label>
+                    <input id="site-name" type="text" class="form-control" ng-model="pointData.point" placeholder="Reward Point's " />
+                </div>
+                <div class="form-group row">
+                    <label for="site-name">INR:</label>
+                    <input id="site-name" type="text" class="form-control" ng-model="pointData.rupee" placeholder="rupee" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddmaginData()">Save</button>
+            <br /><br />
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="form-group row"> 
+                    <strong>
+                        {{pointData.point}} reward point equal to {{pointData.rupee}} rupees
+                    </strong>    
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="shareADDModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add\Edit Retailer Share</h4>
+        </div>
+        <div class="modal-body" style="top:20px;">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <label for="site-name">City: </label>
+                    <select class="form-control" id="site-name" ng-model="shareData.cityid">
+                        <option value="">----Choose city---</option>
+                        <option value="{{x.Cityid}}" ng-repeat="x in city">{{x.CityName}}</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="site-name">Share in %:</label>
+                    <input id="site-name" type="text" class="form-control" ng-model="shareData.share" placeholder="Enter share percentage" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddShareData()">Save</button>
+            <br /><br />
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="form-group row">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Index</th>
+                                <th>City</th>
+                                <th>Share %</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="trade in shareData">
+                                <td>{{$index+1}}</td>
+                                <td>{{trade.cityName}}</td>
+                                <td>{{trade.share}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>

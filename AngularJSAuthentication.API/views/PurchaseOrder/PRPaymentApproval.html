@@ -1,0 +1,875 @@
+﻿<div class="page" button-permission-binder parentName="Purchase Order" pageName="Approver&Reviewer">
+
+    <section>
+        <tabset>
+
+            <tab heading="PR Pending" ng-click="tabOnclick1(1)">
+                <div class="panel panel-default table-dynamic">
+                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="PR Payment Approval"></span></strong></div>
+                    <div class="table-filters">
+                        <div class="row">
+                            <!--<div class="col-sm-2">
+                                <label for="site-name">Select Warehouse</label><br />
+                                <select class="form-control" id="site-name" ng-model="data.WarehouseId" data-ng-change="getPending(data.WarehouseId)">
+                                    <option>-select-</option>
+                                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                </select>
+                            </div>-->
+                            <div class="col-sm-2">
+                                <label for="site-name">Select Warehouse</label><br />
+                                <select class="form-control" id="site-name" ng-model="srchP.WarehouseId">
+                                    <option>-select-</option>
+                                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                </select>
+                                 
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">PR ID</label><br />
+                                <input type="text" placeholder="search" class="form-control" ng-model="srchP.PurchaseOrderId">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">OR Supplier Name</label><br />
+                                <input type="text" placeholder="search" class="form-control" ng-model="srchP.SupplierName">
+                            </div>
+                            <div class="col-sm-2">
+                                <label for="site-name">Select Date Range</label><br />
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input name="daterange" id="dat1" type='text' title="Select Date" class="form-control date-picker" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name"></label><br />
+                                <button type="button" id="btnPending" class="btn btn-ar btn-primary" ng-click="AdvanceSearchPending()">Search</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Sr No
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Creation Date
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Name'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Name')"
+                                              data-ng-class="{active: row == '-Name'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PR ID
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Name'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Name')"
+                                              data-ng-class="{active: row == '-Name'}"></span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        PR Amount
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Supplier Name
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Buyer Name
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Warehouse
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Billable')"
+                                              data-ng-class="{active: row == 'Billable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-Billable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Status
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PR Type
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+
+
+                                <th>
+                                    <div class="th">
+                                        Approved
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Reject
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        View
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="page in PurchaseOrderMasterList|itemsPerPage:itemsPerPage" total-items="total_count">
+                            <tr ng-repeat="i in PurchaseOrderMasterList">
+                                <td>{{$index+1}}</td>
+                                <td>{{i.CreationDate | date:'medium'}}</td>
+                                <td>{{i.PurchaseOrderId}}
+                                    <br /><span ng-if="(i.PoType == 'Manual')" class="label label-info ng-binding">Manual PO</span>
+                                          <span ng-if="(i.PoType == 'Automated' || i.PoType == 'Auto PR')" class="label label-success ng-binding">Auto PO</span>
+                                </td>
+                                <td>{{i.ETotalAmount | number : 2}}</td>
+                                <td>{{i.SupplierName}}</td>
+                                <td>{{i.BuyerName}}</td>
+                                <td>{{i.WarehouseName}}</td>
+                                <td><span ng-if="(i.PRStatus == '3')">PR Payment Approvel Pending </span></td>
+                                <!--<td>{{i.PRPaymentType}}</td>-->
+                                <td>
+                                    <span ng-if="(i.PRPaymentType == 'AdvancePR')" class="label label-info ng-binding">Advance PR</span>
+                                    <span ng-if="(i.PRPaymentType == 'CreditPR')" class="label label-success ng-binding">Credit PR</span>
+                                    <br />
+                                    <br />
+                                    <span ng-if="(i.IsAdjustmentPo == true)" class="badge badge-primary">Adjustment Po</span>
+                                </td>
+                                <!--<td><progressbar class="progressbar-xs no-margin" style="margin-top:10px;" value="i.progress"></progressbar></td>-->
+
+                                <td><button ng-show="i.ApprovedBY == userid" type="button" class="btn btn-primary" ng-click="OpenVerify(i.PurchaseOrderId)">Approved</button></td>
+                                <td><button ng-show="i.ApprovedBY == userid" type="button" class="btn btn-danger" ng-click="RejectModel(i)">Reject</button></td>
+                                <td><button ng-show="i.ApprovedBY == userid" type="button" class="btn btn-info" ng-click="OpenView(i)">View</button></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row" ng-if="total_count>0">
+                            <div class="col-md-6 page-num-info">
+                                <!--<span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>-->
+                            </div>
+                            <div id="div1" class="col-md-6 text-right pagination-container">
+                                <dir-pagination-controls max-size="5"
+                                                         direction-links="true"
+                                                         boundary-links="true"
+                                                         on-page-change="AdvanceSearchPending(newPageNumber)">
+                                    //get method call every time when page changes
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </tab>
+            <tab heading="PR Aprroved" ng-click="tabOnclick2(2)">
+                <div class="panel panel-default table-dynamic">
+                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="PR Payment Approval"></span></strong></div>
+                    <div class="table-filters">
+                        <div class="row">
+                            <!--<div class="col-sm-2">
+                                <label for="site-name">Select Warehouse</label><br />
+                                <select class="form-control" id="site-name" ng-model="data.WarehouseId" data-ng-change="getApproved(data.WarehouseId)">
+                                    <option>-select-</option>
+                                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                </select>
+                            </div>-->
+                            <div class="col-sm-2">
+                                <label for="site-name">Select Warehouse</label><br />
+                                <select class="form-control" id="site-name" ng-model="srch.WarehouseId">
+                                    <option>-select-</option>
+                                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">PR ID</label><br />
+                                <input type="text" placeholder="search" class="form-control" ng-model="srch.PurchaseOrderId">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">OR Supplier Name</label><br />
+                                <input type="text" placeholder="search" class="form-control" ng-model="srch.SupplierName">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">Confirm?</label><br>
+                                <form class="form-inline" role="form">
+                                    <div class="form-group">
+                                        <select class="form-control" id="site-name" ng-model="srch.IsPaymentDone" style="width:14pc">
+                                            <option value="">--select--</option>
+                                            <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+                                <div class="col-sm-3">
+                                    <label for="site-name">Select Date Range</label><br />
+                                    <div class="form-group">
+                                        <div class='input-group date'>
+                                            <input name="daterangePRApprove" id="txtdat" type='text' title="Select Date" class="form-control date-picker" />
+                                            <span class="input-group-addon daterangePRApprovegroup">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="AdvanceSearchPending()">Search</button>
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="ExportExcel()">Export to Excel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Sr No
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Creation Date
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Name'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Name')"
+                                              data-ng-class="{active: row == '-Name'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PR ID
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Name'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Name')"
+                                              data-ng-class="{active: row == '-Name'}"></span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        PR Amount
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Supplier Name
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Buyer Name
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Warehouse
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Billable')"
+                                              data-ng-class="{active: row == 'Billable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-Billable'}"></span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Status
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PR Type
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Payment Status
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="page in PurchaseOrderMasterApprovedList|itemsPerPage:itemsPerPage" total-items="total_count2">
+                            <tr ng-repeat="i in PurchaseOrderMasterApprovedList">
+                                <td>{{$index+1}}</td>
+                                <td>{{i.CreationDate | date:'medium'}}</td>
+                                <td>
+                                    {{i.PurchaseOrderId}}
+                                    <br /><span ng-if="(i.PoType == 'Manual')" class="label label-info ng-binding">Manual PO</span>
+                                    <span ng-if="(i.PoType == 'Automated' || i.PoType == 'Auto PR')" class="label label-success ng-binding">Auto PO</span>
+                                </td>
+                                <td>{{i.Advance_Amt | number : 2}}</td>
+                                <td>{{i.SupplierName}}</td>
+                                <td>{{i.BuyerName}}</td>
+                                <td>{{i.WarehouseName}}</td>
+                                <td><span ng-if="(i.PRStatus == '5')">PR Appoved for Payment</span></td>
+                                <td>
+                                    <span ng-if="(i.PRPaymentType == 'AdvancePR')" class="label label-info ng-binding">Advance PR</span>
+                                    <span ng-if="(i.PRPaymentType == 'CreditPR')" class="label label-success ng-binding">Credit PR</span>
+                                </td>
+                                <td ng-if="(i.IsPaymentDone == false)">
+                                    <span class="label label-danger ng-binding">Payment Inprogress</span>
+                                </td>
+                                <td ng-if="(i.IsPaymentDone == true)">
+                                    <span class="label label-success ng-binding">Payment Confirmed</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row" ng-if="total_count2>0">
+                            <div class="col-md-6 page-num-info">
+                                <!--<span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>-->
+                            </div>
+                            <div id="div2" class="col-md-6 text-right pagination-container">
+                                <dir-pagination-controls max-size="5"
+                                                         direction-links="true"
+                                                         boundary-links="true"
+                                                         on-page-change="AdvanceSearchPending(newPageNumber)">
+                                    //get method call every time when page changes
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </tab>
+            <tab heading="PR Reject" ng-click="tabOnclick3(3)">
+                <div class="panel panel-default table-dynamic">
+                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="PR Payment Approval"></span></strong></div>
+                    <div class="table-filters">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label for="site-name">Select Warehouse</label><br />
+                                <select class="form-control" id="site-name" ng-model="srchR.WarehouseId">
+                                    <option>-select-</option>
+                                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">PR ID</label><br />
+                                <input type="text" placeholder="search" class="form-control" ng-model="srchR.PurchaseOrderId">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">OR Supplier Name</label><br />
+                                <input type="text" placeholder="search" class="form-control" ng-model="srchR.SupplierName">
+                            </div>
+                            <div class="col-sm-2">
+                                <label for="site-name">Select Date Range</label><br />
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input name="daterange" id="dat3" type='text' title="Select Date" class="form-control date-picker" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="AdvanceSearchPending()">Search</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Sr No
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Creation Date
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Name'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Name')"
+                                              data-ng-class="{active: row == '-Name'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PR ID
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Name'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Name')"
+                                              data-ng-class="{active: row == '-Name'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PR Amount
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Supplier Name
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Buyer Name
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Warehouse
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Billable')"
+                                              data-ng-class="{active: row == 'Billable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-Billable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Status
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        PR Type
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('NonBillable')"
+                                              data-ng-class="{active: row == 'NonBillable'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Billable')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+
+                                <!--<th>
+        <div class="th">
+            Reject Comment
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('NonBillable')"
+                  data-ng-class="{active: row == 'NonBillable'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-Billable')"
+                  data-ng-class="{active: row == '-NonBillable'}"></span>
+        </div>
+    </th>-->
+                                <!--<th>
+        <div class="th">
+            Reset for Approval
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('NonBillable')"
+                  data-ng-class="{active: row == 'NonBillable'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-Billable')"
+                  data-ng-class="{active: row == '-NonBillable'}"></span>
+        </div>
+    </th>-->
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="page in PurchaseOrderMasterRejectList|itemsPerPage:itemsPerPage" total-items="total_count3">
+                            <tr ng-repeat="i in PurchaseOrderMasterRejectList">
+                                <td>{{$index+1}}</td>
+                                <td>{{i.CreationDate | date:'medium'}}</td>
+                                <td>
+                                    {{i.PurchaseOrderId}}
+                                    <br /><span ng-if="(i.PoType == 'Manual')" class="label label-info ng-binding">Manual PO</span>
+                                    <span ng-if="(i.PoType == 'Automated' || i.PoType == 'Auto PR')" class="label label-success ng-binding">Auto PO</span>
+                                </td>
+                                <td>{{i.ETotalAmount | number : 2}}</td>
+                                <td>{{i.SupplierName}}</td>
+                                <td>{{i.BuyerName}}</td>
+                                <td>{{i.WarehouseName}}</td>
+                                <td><span ng-if="(i.PRStatus == '6')">PR Payment Rejected</span></td>
+                                <td>
+                                    <span ng-if="(i.PRPaymentType == 'AdvancePR')" class="label label-info ng-binding">Advance PR</span>
+                                    <span ng-if="(i.PRPaymentType == 'CreditPR')" class="label label-success ng-binding">Credit PR</span>
+                                </td>
+
+
+
+                                <!--<td>{{i.Comment}}</td>-->
+                                <!--<td><button type="button" class="btn btn-danger" ng-click="Resend(i.PurchaseOrderId)">Reset</button></td>-->
+                                <!--<td><button type="button" class="btn btn-danger" ng-click="openReject(i)">Reject</button></td>-->
+
+                            </tr>
+                        </tbody>
+                        </
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row" ng-if="total_count3>0">
+                            <div class="col-md-6 page-num-info">
+                                <!--<span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>-->
+                            </div>
+                            <div id="div3" style="display:block" class="col-md-6 text-right pagination-container">
+                                <dir-pagination-controls max-size="5"
+                                                         direction-links="true"
+                                                         boundary-links="true"
+                                                         on-page-change="AdvanceSearchPending(newPageNumber)">
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </tab>
+        </tabset>
+    </section>
+</div>
+<script type="text/ng-template" id="PRVerifyModal.html">
+
+    <div id="logreg-forms" class="shadow">
+        <form class="form-signin">
+
+            <input type="password" ng-model="OTP" id="inputPassword" class="form-control" placeholder="Enter OTP" required="">
+            <br />
+            <button class="btn btn-success btn-block" type="button" ngEnter="ValidateOTPForPOApproval(OTP)" ng-click="ValidateOTPForPOApproval(OTP)"> <i class="fas fa-sign-in-alt"></i> Verify</button>
+
+            <hr>
+            <!-- <p>Don't have an account!</p>  -->
+        </form>
+
+    </div>
+</script>
+
+<style>
+
+
+
+    /* sign in FORM */
+    #logreg-forms {
+        width: 412px;
+        margin: 10vh auto;
+        background-color: #f3f3f3;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+
+        #logreg-forms form {
+            width: 100%;
+            max-width: 410px;
+            padding: 15px;
+            margin: auto;
+        }
+
+        #logreg-forms .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+            #logreg-forms .form-control:focus {
+                z-index: 2;
+            }
+
+        #logreg-forms .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        #logreg-forms .form-signin input[type="password"] {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        #logreg-forms .social-login {
+            width: 390px;
+            margin: 0 auto;
+            margin-bottom: 14px;
+        }
+
+        #logreg-forms .social-btn {
+            font-weight: 100;
+            color: white;
+            width: 190px;
+            font-size: 0.9rem;
+        }
+
+        #logreg-forms a {
+            display: block;
+            padding-top: 10px;
+            color: lightseagreen;
+        }
+
+    #logreg-form .lines {
+        width: 200px;
+        border: 1px solid red;
+    }
+
+
+    #logreg-forms button[type="submit"] {
+        margin-top: 10px;
+    }
+
+    #logreg-forms .facebook-btn {
+        background-color: #3C589C;
+    }
+
+    #logreg-forms .google-btn {
+        background-color: #DF4B3B;
+    }
+
+    #logreg-forms .form-reset, #logreg-forms .form-signup {
+        display: none;
+    }
+
+        #logreg-forms .form-signup .social-btn {
+            width: 210px;
+        }
+
+        #logreg-forms .form-signup input {
+            margin-bottom: 2px;
+        }
+
+    .form-signup .social-login {
+        width: 210px !important;
+        margin: 0 auto;
+    }
+
+    /* Mobile */
+
+    @media screen and (max-width:500px) {
+        #logreg-forms {
+            width: 300px;
+        }
+
+            #logreg-forms .social-login {
+                width: 200px;
+                margin: 0 auto;
+                margin-bottom: 10px;
+            }
+
+            #logreg-forms .social-btn {
+                font-size: 1.3rem;
+                font-weight: 100;
+                color: white;
+                width: 200px;
+                height: 56px;
+            }
+
+                #logreg-forms .social-btn:nth-child(1) {
+                    margin-bottom: 5px;
+                }
+
+                #logreg-forms .social-btn span {
+                    display: none;
+                }
+
+            #logreg-forms .facebook-btn:after {
+                content: 'Facebook';
+            }
+
+            #logreg-forms .google-btn:after {
+                content: 'Google+';
+            }
+    }
+</style>
+
+
+<script type="text/ng-template" id="myCancelModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">PR Reject</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-6">
+                <label for="site-for">Why PR Reject ? Please Enter Comment<span style="color:red;"></span></label><br />
+                <textarea type="text" class="form-control ng-pristine ng-valid" maxlength="500" ng-model="PRdata.Comment" placeholder="Please Enter Comment"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-info" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-info" ng-click="CancelPR(PRdata)">Save</button>
+        </div>
+    </form>
+</script>
+

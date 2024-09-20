@@ -1,0 +1,34 @@
+﻿
+<div class="page"  button-permission-binder parentName="StatisticalRep" pageName="LiveHub KPI?s">
+    <section class="panel panel-default table-dynamic" style="height:100%!important">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Order's Report
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4" style="float:right!important; font-size:18px;">                    
+                    <div class="col-md-8">
+                        <label for="site-name">Warehouse:</label><br />
+
+                        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="genereteReport(WarehouseId)">
+
+                            <option value="">--select--</option>
+                            <option value="{{a.value}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.value">{{a.label}}</option>
+                        </select>
+                    </div>
+                </div>                
+                <br />
+            </div><br />
+            <div class="row">
+                <div class="col" style="padding-left:30px!important">
+                    <div id="chartContainer" style="height:768px!important; width:98%;">
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+    </section>
+</div>

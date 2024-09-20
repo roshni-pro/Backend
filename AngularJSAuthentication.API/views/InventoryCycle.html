@@ -1,0 +1,518 @@
+﻿<!--<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+
+<style>
+    @media print {
+        btn-sm.btn-primary.no-print {
+            display: none !important;
+        }
+
+        glyphicon.glyphicon-print.no-print {
+            display: none !important;
+        }
+    }
+
+    .modal-dialog {
+        width: 90% !important;
+    }
+
+    .hd {
+        display: none;
+    }
+
+
+    .input-color {
+        position: relative;
+    }
+
+        .input-color input {
+            padding-left: 20px;
+        }
+
+        .input-color .color-box {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            background-color: #ccc;
+            position: absolute;
+            left: 5px;
+            top: 5px;
+        }
+</style>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 18px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>-->
+    <style>
+            @media screen {
+                #printSection {
+                    display: none;
+                }
+            }
+
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+
+                #printSection, #printSection * {
+                    visibility: visible;
+                }
+
+                #printSection {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+
+                #printThisElement {
+                    display: block !important;
+                }
+
+                #page-break {
+                    display: block;
+                    page-break-before: always;
+                }
+            }
+
+            #printThisElement {
+                display: none;
+            }
+
+            /* =============================================================
+          GENERAL STYLES
+        ============================================================ */
+            /*body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            line-height: 30px;
+        }*/
+
+            .pad-top-botm {
+                padding-bottom: 40px;
+                padding-top: 22px;
+            }
+
+            h4 {
+                text-transform: uppercase;
+            }
+            /* =============================================================
+          PAGE STYLES
+        ============================================================ */
+
+            .contact-info span {
+                font-size: 14px;
+                padding: 0px 50px 0px 50px;
+            }
+
+            .contact-info hr {
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+
+            .client-info {
+                font-size: 15px;
+            }
+
+            .ttl-amts {
+                text-align: right;
+                padding-right: 70px;
+            }
+
+            .containers {
+                padding-left: 45px;
+                padding-right: 45px;
+            }
+
+            .box-size {
+                font-size: 16px !important;
+                height: 30px;
+                width: 50%;
+            }
+
+            .capitalize {
+                text-transform: capitalize;
+            }
+
+            .HIT {
+                background-color: #033e15
+            }
+
+            .Miss {
+                background-color: #a58902
+            }
+
+            .Fail {
+                background-color: #eb5a00
+            }
+
+            .BOLD {
+                background-color: #f90808
+            }
+    </style>
+
+<style>
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+
+
+    .Divcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* fraction*/
+        padding-left: 10px;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+
+</script>
+<script>
+    var dt = new Date();   
+</script>
+<div    class="page page-table" button-permission-binder parentName="Inventory Cycle" pageName="Inventory Cycle">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Inventory Cycle
+            </strong>
+        </div>
+        <br />
+        <br />
+        <div class="form-group col-md-12">
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <!--<select class="form-control" id="site-name" ng-change="ChangeWarehouse(searchdata.WarehouseId)" ng-model="searchdata.WarehouseId" data-ng-change="getInventory(searchdata.WarehouseId)">-->
+                <select class="form-control" id="site-name" ng-model="searchdata.WarehouseId">
+                    <option value="">Select Warehouse</option>
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                </select>
+            </div>
+            <!--<div class="form-group col-md-2">
+        <label for="site-name">Item Name</label><br>
+        <select class="form-control" id="site-name" ng-model="searchdata.ItemId">
+            <option value="">--Select--</option>
+            <option value="{{db.ItemId}}" ng-repeat="db in Items"> {{db.itemname}}</option>
+                ui-date ui-date-format="MM/DD/YYYY"
+        </select>
+    </div>-->
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Date </label><br>
+                <input name="date" ui-date ui-date-format="MM/DD/YYYY" id="dat" type='date' ng-model="searchdata.Date" title="Select Date" />
+            </div>
+
+
+            <div class="form-group col-md-2">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="getInventCount(searchdata)">Search</button>
+            </div>
+            <!--<button ng-click="printToCart('printSectionId')" class="button">Print</button>-->
+            <div class="form-group col-md-2">
+                <label for="site-name"></label><br />
+                <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="float:right; margin-right: 15px;" ng-click="printToCart('printSectionId')">
+                    <span class="glyphicon glyphicon-print no-print"> </span> Print
+                </button>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="site-name"></label><br />
+
+
+                <button type="button" class="btn btn-primary" ng-click="exportData() ">
+                    <span class="glyphicon glyphicon-export"> </span> Export
+                </button>
+            </div>
+        </div>
+               <div id="printSectionId"> 
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Sr
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    WarehouseName
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('WarehouseId')"
+                                          data-ng-class="{active: row == 'WarehouseId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-WarehouseId')"
+                                          data-ng-class="{active: row == '-WarehouseId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ItemName
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('ItemId')"
+                                          data-ng-class="{active: row == 'ItemId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-ItemId')"
+                                          data-ng-class="{active: row == '-ItemId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ABC Classification
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Inventory Count
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('InventoryCount')"
+                                          data-ng-class="{active: row == 'InventoryCount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-InventoryCount')"
+                                          data-ng-class="{active: row == '-InventoryCount'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Current Inventory
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('CurrentInventory')"
+                                          data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-CurrentInventory')"
+                                          data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    RTD Qty
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('RtdCount')"
+                                          data-ng-class="{active: row == 'RtdCount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-RtdCount')"
+                                          data-ng-class="{active: row == '-RtdCount'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Past  Inventory
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('PastInventory')"
+                                          data-ng-class="{active: row == 'PastInventory'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-PastInventory')"
+                                          data-ng-class="{active: row == '-PastInventory'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    MRP
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('MRP')"
+                                          data-ng-class="{active: row == 'MRP'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-MRP')"
+                                          data-ng-class="{active: row == '-MRP'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Comments
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('Comment')"
+                                          data-ng-class="{active: row == 'Comment'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-Comment')"
+                                          data-ng-class="{active: row == '-Comment'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="getInventCount('CreatedDate')"
+                                          data-ng-class="{active: row == 'CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="getInventCount('-CreatedDate')"
+                                          data-ng-class="{active: row == '-CreatedDate'}"></span>
+                                </div>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="trade in searchdatadata">
+                            <td>{{$index + 1}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td>{{trade.ItemName}}</td>
+                            <td>{{trade.ABCClassification}}</td>
+                            <td>
+                                <input type="number" ng-model="trade.InventoryCount" ng-disabled="trade.CreatedDate!=CurrentDate || trade.IsApproved==true" />
+                                <input type="hidden" ng-model="trade.Id" />
+                            </td>
+                            <td>{{trade.CurrentInventory}}</td>
+                            <td>{{trade.RtdCount}}</td>
+                            <td>{{trade.PastInventory}}</td>
+                            <td>{{trade.MRP}}</td>
+                           
+                            <td><input type="text" ng-model="trade.Comment" ng-disabled="trade.CreatedDate!=CurrentDate || trade.IsApproved==true" /> </td>
+                            <td>{{trade.CreatedDate | date:'medium' }}</td>
+                            <!--<td>{{trade.UpdatedDate | date:'medium' }}</td>-->
+                        </tr>
+                    </tbody>
+                </table>  
+                   </div>
+</section>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-ar btn-warning sksave" ng-click="Put(searchdatadata)">Save</button>
+    </div>
+
+
+

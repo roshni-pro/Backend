@@ -1,0 +1,45 @@
+﻿<html ng-app="app" ng-controller="mainControl">
+<head>
+    <meta charset="utf-8">
+    <title>angular-tree-view</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!--<link rel="stylesheet" href="dist/angular-tree-view.min.css">-->
+    <link rel="stylesheet" href="../../scripts/dist/angular-dual-multi-select.min.css">
+    
+</head>
+<body>
+    <div style="width: 600px;">
+        <dualmultiselect options="options" ng-model="value"></dualmultiselect>
+    </div>
+    <div>
+        value: {{ value }}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js"></script>
+    <script src="../../scripts/src/js/angular.js"></script>
+    <script src="../../scripts/src/js/angular-tree-view.min.js"></script>
+    <script src="../../scripts/src/js/angular-recursion.min.js"></script>
+    <script src="../../scripts/dist/angular-dual-multi-select.min.js"></script>
+   
+    <script>
+		var app = angular.module('app', ['DualMultiSelect']);
+
+		app.controller('mainControl', function ($scope) {
+		    var data = [
+                {id: 'a', text: 'a'},
+				{id: 'b', text: 'b'},
+				{id: 'c', text: 'c'},
+				{id: 'd', text: 'd'},
+				{id: 'e', text: 'e'}
+			];
+			$scope.options = {
+				items: data,
+				labelAll: 'All items',
+				labelSelected: 'Selected items',
+				displayProperty: 'text',
+				valueProperty: 'id'
+			};
+		});
+    </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+﻿<head>
+    <style>
+        b, strong {
+            font-weight: bold;
+            color: black;
+        }
+
+        .panel-default > .panel-heading {
+            color: #767676;
+            background-color: #ffffff;
+            border-color: #61554c;
+            border-bottom: 3px solid;
+        }
+
+        .modal-body {
+            position: relative;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #00a4e9;
+        }
+
+            .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
+                color: white;
+                background-color: #0c4c67;
+                border-color: #17688a;
+            }
+
+        img.img80_80 {
+            width: 80px;
+            height: 80px;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #00a4e9;
+            border-radius: 15px;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #ffb61c;
+            border-color: #ffae02;
+            border-radius: 15px;
+        }
+
+        .btn-info {
+            color: white;
+            background-color: #2ec1cc;
+            border-color: #29adb7;
+            border-radius: 15px;
+        }
+        .btn-dark {
+    color: white;
+    background-color: #222533;
+    border-color: #181a24;
+    border-radius: 15px;
+}
+        .form-control {
+    border-width: 1px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-radius: 15px;
+}
+        
+        .btn-danger {
+            color: white;
+            background-color: #e63624;
+            border-color: #e63624;
+            border-radius: 15px;
+        }
+
+    </style>
+</head>
+
+<div class="page page-table" >
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Bank Withdraw History
+            </strong>
+        </div>
+        <br />
+
+        <div class="row" ng-if="Warehouseid != '0'" ngEnter="FilterData()">
+            <div class="col-lg-12">
+                <div class="form-group col-lg-3">
+                    <select class="form-control" id="Warehouseid" ng-model="Warehousehistory.Warehouseid" data-ng-change="FilterData()">
+                        <option value="">--All--</option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="Warehousehistory.Warehouseid == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <div class="form-group">
+                        <input id="dat" type='date' title="Select Date" ng-model="Warehousehistory.FilterDate" autocomplete="off" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-6 ">
+                    <button type="button" class="btn btn-ar btn-primary" ngEnter="FilterData()" ng-click="FilterData()">Search</button>
+                    <button type="button" class="btn btn-ar btn-dark" ng-click="exportData1()">Export</button>
+                    <button type="button" class="btn btn-warning" ngEnter="Back()" ng-click="Back()">Back</button>
+                    <button type="button" class="btn btn-danger" ngEnter="getcashData()" ng-click="getcashData()">
+                        Opening Balance
+                    </button>
+                    &nbsp;
+                    <b style="font-size: x-large;"><i class="fa fa-rupee"></i>{{TotalOpeningAmount}}</b>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-striped table-responsive">
+                            <thead>
+                                <tr style="background-color: #ffffff;">
+
+                                    <th>
+                                        <div class="th">
+                                            Warehouse Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Bank Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Depositer Name
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Cash Amount
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Cheque Amount
+                                        </div>
+
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Total Deposit Amount
+                                        </div>
+
+                                    </th>
+
+                                    <th>
+                                        <div class="th">
+                                            Withdraw Slip
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="th">
+                                            Deposit Slip
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Deposit Date
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Status
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th" ng-if="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('HQ IC Executive')>-1 || UserRole.rolenames.indexOf('HQ Accounts Executive')>-1">
+                                            Action
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr ng-repeat="cash in CurrencySettlementSource" ng-if="CurrencySettlementSource.length>0">
+                                    <td>
+                                        {{cash.WarehouseName}}
+                                    </td>
+                                    <td>
+                                        {{cash.SettlementSource}}
+                                    </td>
+                                    <td>
+                                        {{cash.HandOverPersonName}}
+                                    </td>
+                                    <td>
+                                        &#8377;{{cash.TotalCashAmt}}
+                                    </td>
+                                    <td>
+                                       &#8377; {{cash.TotalChequeAmt}}</td>
+                                    <td>
+                                        &#8377;{{cash.TotalCashAmt + cash.TotalChequeAmt}}
+                                    </td>
+                                    <td>
+                                        <div class="col-lg-12" ng-repeat="image in cash.SettlementProofImages">
+                                            <a href="{{image.SettlementImage}}" download="">{{SplitLastvalue(image.SettlementImage)}}</a><br />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-lg-12" ng-repeat="image in cash.SlipImages">
+                                            <a href="{{image.SettlementImage}}" download>{{SplitLastvalue(image.SettlementImage)}}</a><br />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{cash.SettlementDate| date:'dd/MM/yyyy hh:mma'}}
+                                    </td>
+                                    <td>
+                                        {{cash.Statustext}}
+                                    </td>
+                                    <td ng-if="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('HQ IC Executive')>-1 || UserRole.rolenames.indexOf('HQ Accounts Executive')>-1">
+                                        <button type="button" class="btn btn-ar btn-primary" ng-if="cash.Status==0" ng-click="BankDepositVerify(cash.Id,1)">Verify</button>
+                                        <button type="button" class="btn btn-ar btn-danger" style="border-radius: 15px;" ng-if="cash.Status==1" ng-click="BankDepositVerify(cash.Id,0)" disabled>Un-Verify</button>
+                                        <div ng-if="UserRole.Email='NiteshP@shopKirana.com'">
+                                            <button class="btn-sm btn-default skview" ng-init="Id=cash.Id;entity='CurrencySettlementSource'" ng-click="showMe=true">History</button>
+                                            <div ng-if="showMe" show-history></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>TotalAmt</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>&#8377;{{TotalCash}}</b></td>
+                                    <td><b>&#8377;{{TotalCheque}}</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

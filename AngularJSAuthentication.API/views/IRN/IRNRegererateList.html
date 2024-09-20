@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title> </title>
+</head>
+<body>
+    <div class="page page-table" button-permission-binder parentName="Order" pageName="Order Master">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong><span class="glyphicon glyphicon-th"></span> IRN </strong>
+            </div>
+            <div class="panel-body">
+                <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                    <div class="form-group col-md-12 clear-both">
+                        <!--<div class="form-group col-md-6">-->
+
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Select City<span style="color:red;">*</span></label><br>
+
+                            <div ng-dropdown-multiselect="" id="Cityid" options="city"
+                                 selected-model="MultiCityModel"
+                                 extra-settings="MultiCityModelsettings" ng-click="getWarehosues(1)"
+                                 style="width:200px"></div>
+                        </div>
+                        <div class="form-group col-md-2 ">
+                            <label for="site-name">Select Warehouse </label><br />
+                            <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse"
+                                 selected-model="MultiWarehouseModel"
+                                 extra-settings="MultiWarehouseModelsettings"
+                                 style="width:200px"></div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Enter OrderId</label><br />
+
+                            <input type="text" placeholder="search" class="form-control" ng-model="srch.orderId">
+                        </div>
+                        <!--</div>-->
+                        <div class="form-group col-md-4">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="IRNDataSearch()">Search</button>
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="ExporttoExcelIRN(srch.orderId)">Export IRN to Excel</button>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-12 clear-both">
+                    </div>
+                    <table class="table table-bordered table-responsive ">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Order No.
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Order invoice No.
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Payment Type
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        WH
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Customer Detail
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Order Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Dispatch<br />
+                                        Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Status
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        IRN Status
+                                    </div>
+                                </th>
+                                <!--<th>
+        <div class="th">
+            Error
+        </div>
+    </th>-->
+
+                                <th>
+                                    <div class="th">
+                                        Error Details
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Action
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Convert B2C
+                                    </div>
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="trade in ordermaster|itemsPerPage:itemsPerPage" total-items="total_countIRN">
+                            <tr data-ng-repeat="trade in IRNcustomers" ng-include="getTemplate(trade)">
+                                <script type="text/ng-template" id="display">
+                                    <td>
+                                        {{trade.OrderId}}
+                                    </td>
+                                    <td>
+                                        {{trade.invoice_no}}
+                                    </td>
+                                    <td>
+                                        {{trade.paymentMode}}
+                                    </td>
+                                    <td>
+                                        {{trade.WarehouseName}}
+                                    </td>
+                                    <td>
+                                        {{trade.CustomerName }}
+                                        <br />
+                                        {{trade.Skcode }}
+                                    </td>
+                                    <td>
+                                        {{trade.OrderAmount}}
+                                    </td>
+                                    <td>
+                                        {{trade.DispatchAmount}}
+                                    </td>
+                                    <td>
+                                        {{trade.Status}}
+                                    </td>
+
+                                    <td>
+                                        {{trade.IRNStatus}}
+                                    </td>
+                                    <!--<td>
+                                        {{trade.Error}}
+                                    </td>-->
+
+                                    <td><button ng-show="(trade.IRNStatus == 'Error')" data-toggle="modal" type="button" class="btn btn-primary skopen" ng-click="show(trade)">Error Details</button></td>
+                                    <td>
+                                        <button ng-show="(trade.IRNStatus == 'Error')" type="button" class="btn btn-primary skopen" ng-click="test(trade)">  IRN</button>
+                                    </td>
+                                    <td>
+                                        <button ng-show="(trade.IRNStatus == 'Error')" type="button" class="btn btn-primary skopen" ng-click="ConvertB2C(trade.OrderId)"> B2B to B2C </button>
+
+                                    </td>
+                                </script>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </table>
+
+                    <pagination class="pagination-sm"
+                                page="vmIRN.currentPage"
+                                total-items="vmIRN.count"
+                                max-size="4"
+                                on-select-page="changePageIRN(page)"
+                                items-per-page="vmIRN.rowsPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </form>
+            </div>
+
+        </section>
+    </div>
+    <script type="text/ng-template" id="myShowModalPut.html">
+        <form name="myFormSiteModal">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                    <span class="icon icon-x" aria-hidden="true">
+                    </span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="cancel()">×</button>
+                <h4 class="modal-title">IRN Error Details</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive ">
+                    <tr>
+                        <td>Error code</td>
+                        <td>Error message</td>
+                        <td>Error id</td>
+                        <td>Error source</td>
+                    </tr>
+                    <tr ng-repeat="emps in errordata">
+                        <td>{{emps.error_code}}</td>
+                        <td>{{emps.error_message}}</td>
+                        <td>{{emps.error_id}}</td>
+                        <td>{{emps.error_source}}</td>
+                    </tr>
+                </table>
+
+            </div>
+        </form>
+    </script>
+
+
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="IRNActionModel" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Action for IRN</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4 class="modal-title">Order Id : {{IRNaction.OrderId}}</h4>
+                        <table class="table table-bordered table-responsive ">
+                            <tr>
+                                <td> <button type="button" class="btn btn-primary skopen" ng-click="RegenerateIRN()">Regenerate IRN</button></td>
+                            </tr>
+                        </table>
+                        <table class="table table-bordered table-responsive ">
+
+                            <tr>
+                                <td> IRN Number </td>
+                                <td> <textarea type="text" id="txtirn" ng-model="irn" multiple="" style="width:770px;" /> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"> <button type="button" class="btn btn-primary skopen" ng-click="GetIRNNumber(irn)">Get IRN</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>

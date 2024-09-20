@@ -1,0 +1,234 @@
+﻿<style>
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+
+    .Divcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* fraction*/
+        padding-left: 10px;
+    }
+
+    .btn-primary {
+        color: white;
+        background-color: #00a4e9;
+        border-color: #00a4e9;
+        margin-bottom: -60px;
+    }
+</style>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Flash Deal Report
+            </strong>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2">
+                <label for="site-name"> Zone </label><br />
+                <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                    <option value="">---Select Zone---</option>
+                    <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="site-name"> Region </label><br />
+                <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetCity(RegionId)">
+                    <option value="">---Select Region---</option>
+                    <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="site-name"> City </label><br />
+                <select class="form-control" id="site-name" ng-model="cityid" ng-change="GetWarehouses(cityid)">
+                    <option value="">---Select City---</option>
+                    <option value="{{city.CityId}}" ng-repeat="city in cities"> {{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="site-name"> Hub </label><br />
+                <select class="form-control" id="site-name" ng-model="WarehouseId">
+                    <option value="">--Select Hub--</option>
+                    <option value="{{warehouse.WarehouseId}}" ng-repeat="warehouse in warehouses">{{warehouse.WarehouseName}} </option>
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Date Range</label><br>
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label for="site-name"> SK Code </label><br />
+                <input type="text" placeholder="SK Code" class="form-control" ng-model="skcode" ng-change="search()">
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="ExportData(WarehouseId,cityid)">Search</button>
+                <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="ExportAllD()">Export Data</button>
+            </div>
+            <div class="col-md-3" ng-if="TotalOrders != null">
+                <label><h4>No Of Orders</h4></label>
+                <h1>{{TotalOrders}}</h1>
+            </div>
+            <div class="col-md-3" ng-if="TotalAmount != null">
+                <label><h4>Total Amount</h4></label>
+                <h1>{{TotalAmount}}</h1>
+            </div>
+            
+        </div>
+        <br /><br /><br />
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th><div class="th"> SN </div> </th>
+                    <th><div class="th"> SKCode </div> </th>
+                    <th><div class="th"> OrderId </div> </th>
+                    <th><div class="th"> Offer Code </div> </th>
+                    <th><div class="th"> Shop Name </div> </th>
+                    <th><div class="th"> Retailer Name </div></th>
+                    <th><div class="th"> Mobile </div></th>
+                    <th><div class="th"> Item ID </div></th>
+                    <th><div class="th"> Item Name </div></th>
+                    <th><div class="th"> HSNCode </div> </th>
+                    <th><div class="th"> Warehouse </div> </th>
+                    <th><div class="th"> Date </div> </th>
+                    <th><div class="th"> Order By </div> </th>
+                    <th><div class="th"> Executive </div> </th>
+                    <th><div class="th"> MRP </div> </th>
+                    <th><div class="th"> Unit Price </div></th>
+                    <th><div class="th"> MOQ </div></th>
+                    <th><div class="th"> Quantity </div></th>
+                    <th><div class="th"> Total Amt </div></th>
+                    <th><div class="th"> Status </div> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.SKCode}}</td>
+                    <td>{{trade.OrderId}}</td>
+                    <td>{{trade.OfferCode}}</td>
+                    <td>{{trade.ShopName}}</td>
+                    <td>{{trade.RetailerName}}</td>
+                    <td>{{trade.Mobile}}</td>
+                    <td>{{trade.ItemId}}</td>
+                    <td>{{trade.ItemName}}</td>
+                    <td>{{trade.HSNCode}}</td>
+                    <td>{{trade.Warehouse}}</td>
+                    <td>{{trade.Date}}</td>
+                    <td>{{trade.OrderBy}}</td>
+                    <td>{{trade.Executive}}</td>
+                    <td>{{trade.MRP}}</td>
+                    <td>{{trade.UnitPrice | number : 2}}</td>
+                    <td>{{trade.MOQPrice}}</td>
+                    <td>{{trade.Quantity}}</td>
+                    <td>{{trade.TotalAmt | number : 2}}</td>
+                    <td>{{trade.Status}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="100"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

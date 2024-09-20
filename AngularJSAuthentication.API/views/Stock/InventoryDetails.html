@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .input-color {
+            position: relative;
+        }
+
+            .input-color .color-box {
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                background-color: #ccc;
+                position: absolute;
+                left: 5px;
+                top: 5px;
+            }
+
+            .input-color input {
+                padding-left: 25px;
+            }
+    </style>
+</head>
+<body>
+    <div class="page page-table" button-permission-binder parentName="CurrentStock" pageName="InventoryDetails">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span>Inventory Details
+                </strong>
+            </div>
+            <br />
+            <div class="panel-body">
+                <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                    <div class="form-group col-md-12 clear-both">
+                        <!--<div class="form-group col-md-6">-->
+                        <div class="form-group col-md-2" style="margin-left:15px">
+                            <label for="site-name">Select City</label><br>
+                            <select class="form-control" id="site-name" ng-model="Cityid" ng-change="getWarehosues(Cityid)">
+                                <option value="undefined">---SELECT---</option>
+                                <option value="{{city.Cityid}}" ng-repeat="city in cities"> {{city.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" style="margin-left:20px">
+                            <label for="site-name"> Warehouse:</label><br />
+                            <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getInventoryDetails(WarehouseId)">
+                                <option value="">--SELECT--</option>
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse | filter:{Cityid:Demanddata.Cityid}"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Select Date Range</label><br />
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input name="daterange" id="dat" type='text' title="Select Date " class="form-control date-picker" />
+                                    <span class="input-group-addon ">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <span style="font-size:14px; color:red">Note: '*' select date between 1 month</span><br />
+                        </div>
+                        <div class="form-group col-md-2" style="margin-top:7px">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="Search(WarehouseId)">Search</button>
+                        </div>
+                        <!--</div>-->
+                    </div>
+                    <br />
+                    <table class="table table-bordered table-responsive" style="color:black">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    <div class="th">
+                                        SNo.
+                                        <span data-ng-click="order('SNo.')"
+                                              data-ng-class="{active: row == ' SNo.'}"></span>
+                                        <span data-ng-click="order('-SupplierId')"
+                                              data-ng-class="{active: row == 'SNo.'}"></span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Id
+                                        <span data-ng-click="order(' Inventory Id')"
+                                              data-ng-class="{active: row == 'Inventory Id'}"></span>
+                                        <span data-ng-click="order('-SupplierId')"
+                                              data-ng-class="{active: row == ' Inventory Id'}"></span>
+                                    </div>
+                                </th>
+                                <!--<th>
+                                    <div class="th">
+                                        Item Number
+                                        <span data-ng-click="order('SupplierId')"
+                                              data-ng-class="{active: row == 'SupplierId'}"></span>
+                                        <span data-ng-click="order('-SupplierId')"
+                                              data-ng-class="{active: row == 'SupplierId'}"></span>
+                                    </div>
+                                </th>-->
+
+                                <th>
+                                    <div class="th">
+                                        Created By
+                                        <span data-ng-click="order('CreatedBy')"
+                                              data-ng-class="{active: row == 'CreatedBy'}"></span>
+                                        <span data-ng-click="order('- Amount')"
+                                              data-ng-class="{active: row == '- CreatedBy'}"></span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Approved By
+
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Status
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Inventory Details
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Created Date
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Updated Date
+
+                                    </div>
+                                </th>
+
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="trade in inventoryEditData|itemsPerPage:itemsPerPage" total-items="total_count">
+                            <tr data-ng-repeat="trade in inventoryEditData">
+                                <td>{{($index+1)}}</td>
+                                <td>{{trade.InventoryEditId}}</td>
+                                <td>{{trade.CreatedBy}}</td>
+
+                                <td>{{trade.ApprovedBy}}</td>
+
+
+                                <td>
+                                    <span class="input-color" ng-if="trade.IsUpdate==false && trade.IsRejected==false">
+                                        <input type="text" style="border: none;pointer-events:none;font-size:14px" value="Open" readonly="">
+                                        <div class="color-box" style="background-color:springgreen;"></div>
+                                    </span>
+                                    <span class="input-color" ng-if="trade.IsUpdate==true">
+                                        <input type="text" style="border: none;pointer-events:none;font-size:14px" value="Approved" readonly="">
+                                        <div class="color-box" style="background-color: green;"></div>
+                                    </span>
+                                    <span class="input-color" ng-if="trade.IsRejected==true && trade.IsUpdate==false">
+                                        <input type="text" style="border: none;pointer-events:none;font-size:14px" value="Rejected" readonly="">
+                                        <div class="color-box" style="background-color:  red;"></div>
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn-sm btn-primary" data-toggle="modal" data-target="#Inventorystock" ng-click="OpenInventoryDetails(trade)">Open</button>
+
+                                    <!--<span ng-if="trade.IsUpdate==false && trade.IsRejected==false">
+                                        <button class="btn-sm btn-primary" data-toggle="modal" data-target="#Inventorystock" ng-click="OpenInventoryDetails(trade)">Open</button>
+                                    </span>-->
+                                </td>
+                                <td>{{trade.CreatedDate | date:'medium'}}</td>
+                                <td>{{trade.UpdatedDate | date:'medium'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls max-size="5"
+                                             direction-links="true"
+                                             boundary-links="true"
+                                             on-page-change="getInventoryData(newPageNumber)">
+                        //get method call every time when page changes
+                    </dir-pagination-controls>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal fade " id="Inventorystock" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: auto;">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="margin-left: 30px;margin-right: 30px">
+                <div id="divtoPrint">
+                    <style type="text/css">
+                        @media print {
+                            .no-print {
+                                display: none !important;
+                            }
+
+                            .border {
+                                border: 1px solid #000 !important;
+                            }
+
+                            th, td {
+                                border: solid #000 !important;
+                                border-width: 1px 1px 1px 0 !important;
+                                border-top-width: 10px;
+                                border-spacing: 0;
+                                padding: 0;
+                                text-align: center;
+                            }
+                        }
+
+                        .input-color {
+                            position: relative;
+                        }
+
+                            .input-color .color-box {
+                                width: 14px;
+                                height: 14px;
+                                display: inline-block;
+                                background-color: #ccc;
+                                position: absolute;
+                                left: 5px;
+                                top: 5px;
+                            }
+
+                            .input-color input {
+                                padding-left: 25px;
+                            }
+                    </style>
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title" style="text-align: center;">Inventory Details  : ID  {{inventoryHistoryData[0].InventoryEditId}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                            <table class="table table-bordered table-responsive" style="color:black">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                SNo.
+                                                <span data-ng-click="order('SNo.')"
+                                                      data-ng-class="{active: row == ' SNo.'}"></span>
+                                                <span data-ng-click="order('-SupplierId')"
+                                                      data-ng-class="{active: row == 'SNo.'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Number
+                                                <span data-ng-click="order(' Payment Request Id')"
+                                                      data-ng-class="{active: row == ' Payment Request Id'}"></span>
+                                                <span data-ng-click="order('-SupplierId')"
+                                                      data-ng-class="{active: row == ' Payment Request Id'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                ABC Classification
+                                                <span data-ng-click="order(' Payment Request Id')"
+                                                      data-ng-class="{active: row == ' Payment Request Id'}"></span>
+                                                <span data-ng-click="order('-SupplierId')"
+                                                      data-ng-class="{active: row == ' Payment Request Id'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Name
+                                                <span data-ng-click="order('SupplierId')"
+                                                      data-ng-class="{active: row == 'SupplierId'}"></span>
+                                                <span data-ng-click="order('-SupplierId')"
+                                                      data-ng-class="{active: row == 'SupplierId'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Current  Inventory
+                                                <span data-ng-click="order(' CurrentInventory')"
+                                                      data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                                                <span data-ng-click="order('-CurrentInventory')"
+                                                      data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Reason
+                                                <span data-ng-click="order('SupplierId')"
+                                                      data-ng-class="{active: row == 'SupplierId'}"></span>
+                                                <span data-ng-click="order('-SupplierId')"
+                                                      data-ng-class="{active: row == 'SupplierId'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Price
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Manual Inventory
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Total Amount
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Approved
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Reject
+                                            </div>
+                                        </th>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="trade in inventoryHistoryData" style="width: auto;">
+                                        <td>{{($index+1)}}</td>
+                                        <td>
+                                            <span class="badge badge-primary ml-2">{{trade.ItemNumber}}</span>
+                                        </td>
+                                        <td>{{trade.ABCClassification}}</td>
+                                        <td>{{trade.ItemName}}</td>
+                                        <td>
+                                            <span ng-if="trade.CurrentInventory!=0" class="badge badge-primary ml-2">{{trade.CurrentInventory}}</span>
+                                            <span ng-if="trade.CurrentInventory==0" class="badge badge-danger ml-2">{{trade.CurrentInventory}}</span>
+                                        </td>
+                                        <td>{{trade.ManualReason}}</td>
+                                        <td>{{trade.Price}}</td>
+                                        <td>{{trade.ManualInventory}}</td>
+                                        <td>{{trade.TotalAmount | number:2}}</td>
+                                        <td>
+                                            <span ng-if="trade.IsRejected==false">
+                                                <div class="input-color" ng-hide="trade.IsUpdate==false">
+                                                    <input type="text" style="border: none;pointer-events:none;font-size:16px" value="Approved" readonly="">
+                                                    <div class="color-box" style="background-color: #00BFFF;"></div>
+                                                </div>
+                                            </span>
+                                        </td>
+                                        <td>
+
+                                            <button class="btn-sm btn-danger" ng-if="trade.IsRejected==false && trade.IsUpdate==false" id="clickAndDisable" click-And-Disable="rejectInventoryDetails(trade)">Reject</button>
+                                            <span ng-if="trade.IsRejected==true ">
+                                                <div class="input-color">
+                                                    <input type="text" style="border: none;pointer-events:none;font-size:16px" value="Reject" readonly="">
+                                                    <div class="color-box" style="background-color: #FF0000;"></div>
+                                                </div>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                                <!--<tfoot>-->
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="pull-right to-ttl">Total</div>
+                                    </td>
+                                    <td>{{TotalPrice | number:2}}</td>
+                                    <td> </td>
+                                    <td> </td>
+                                </tr>
+                                <!--</tfoot>-->
+                            </table>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer w3-red">
+                        <button type="button" class="btn btn-ar btn-primary" name="t1" ng-if="inventorydetails.IsUpdate==false && inventorydetails.IsRejected==false" id="clickAndDisable1" click-And-Disable="approvedAllInventory(inventoryHistoryData)">Approved Inventory</button>
+                        <button type="button" class="btn btn-ar btn-danger" name="t2" ng-if="inventorydetails.IsUpdate==false && inventorydetails.IsRejected==false" id="clickAndDisable11" click-And-Disable="rejectAllInventory(inventoryHistoryData)">Reject All Inventory</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

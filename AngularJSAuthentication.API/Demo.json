@@ -1,0 +1,109 @@
+[
+    {
+    "id": 1,
+    "titles": "header text banner",
+    "item": [{}],
+    "active": true,
+    "sequenceno": 1,
+    "tiles": 1
+  },
+  {
+    "id": 2,
+     "titles": "slider",
+     "item": [
+      {
+        "id": 1,
+        "titles": "Sweet Witt",
+        "image": "https://t3.ftcdn.net/jpg/01/69/01/90/240_F_169019032_fPmYsjtdEjoVW2dJmIxKTOzPIvTcua5P.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":2 
+      },
+      {
+        "id": 2,
+        "titles": "Sweet Witt",
+        "image": "https://t3.ftcdn.net/jpg/01/69/01/90/240_F_169019032_fPmYsjtdEjoVW2dJmIxKTOzPIvTcua5P.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":2 
+      },
+      {
+        "id": 3,
+        "titles": "Sweet Witt",
+        "image": "https://img.freepik.com/vetores-gratis/projeto-fantastic-full-color-sale_1126-239.jpg?size=338c&ext=jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":2 
+      }
+    ],
+    "active": true,
+    "sequenceno": 2,
+    "tiles": 1
+  },
+  {
+    "id": 3,
+    "titles": "Category",
+    "item": [
+      {
+        "id": 1,
+        "titles": "Sweet Witt",
+        "image": "http://www.offersbiz.com/wp-content/uploads/2015/04/Reliance-Fresh-Sign-up-Online-Shopping-Off.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+         "parentid":3
+      },
+      {
+        "id": 2,
+        "titles": "Sweet Witt",
+        "image": "http://www.offersbiz.com/wp-content/uploads/2015/04/Reliance-Fresh-Sign-up-Online-Shopping-Off.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":3
+      }
+    ],
+    "active": true,
+    "sequenceno": 3,
+    "tiles": 2
+  },
+  {
+    "id": 4,
+    "titles": "Popular Category",
+    "item": [
+      {
+        "id": 1,
+        "titles": "Sweet Witt",
+        "image": "http://www.offersbiz.com/wp-content/uploads/2015/04/Reliance-Fresh-Sign-up-Online-Shopping-Off.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":4
+      },
+      {
+        "id": 2,
+        "titles": "Sweet Witt",
+        "image": "http://www.offersbiz.com/wp-content/uploads/2015/04/Reliance-Fresh-Sign-up-Online-Shopping-Off.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":4
+      },
+      {
+        "id": 3,
+        "titles": "Sweet Witt",
+        "image": "http://www.offersbiz.com/wp-content/uploads/2015/04/Reliance-Fresh-Sign-up-Online-Shopping-Off.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":4
+      },
+      {
+        "id": 4,
+        "titles": "Sweet Witt",
+        "image": "http://www.offersbiz.com/wp-content/uploads/2015/04/Reliance-Fresh-Sign-up-Online-Shopping-Off.jpg",
+        "active": true,
+        "eventurl": "http://137.59.52.130/api/........",
+        "parentid":4
+      }
+    ],
+    "active": true,
+    "sequenceno": 4,
+    "tiles": 4
+  }
+]

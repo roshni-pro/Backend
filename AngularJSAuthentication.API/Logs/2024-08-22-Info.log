@@ -1,0 +1,12 @@
+2024-08-22 11:28:14.5190|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-22 11:28:21.2211|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 4
+2024-08-22 11:29:18.9576|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-22 11:29:36.3609|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-22 11:29:36.3609|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 4
+2024-08-22 11:29:37.7699|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-22 16:55:04.3635|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-22 16:55:04.4541|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 4
+2024-08-22 16:55:08.7411|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-22 16:55:39.5524|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-22 16:55:39.5524|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 4
+2024-08-22 16:55:44.8262|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 

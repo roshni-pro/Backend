@@ -1,0 +1,9 @@
+2023-05-26 17:57:54.1685|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending FCM for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int64 customerId) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 489
+2023-05-26 18:00:05.6776|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending FCM for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int64 customerId) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 489
+2023-05-26 18:14:26.5662|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending FCM for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int64 customerId) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 488

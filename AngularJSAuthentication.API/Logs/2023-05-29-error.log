@@ -1,0 +1,15 @@
+2023-05-29 14:37:11.6632|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-29 15:21:56.7991|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-29 15:40:58.5627|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-29 18:11:10.9775|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496
+2023-05-29 18:54:29.0383|ERROR|AngularJSAuthentication.API.Controllers.NotificationUpdatedController|Error while sending Holiday notifcation for type: The remote server returned an error: (401) Unauthorized.System.Net.WebException: The remote server returned an error: (401) Unauthorized.
+   at System.Net.HttpWebRequest.GetResponse()
+   at AngularJSAuthentication.API.Controllers.NotificationUpdatedController.sendHolidayNotification(Int32 customerId, String CustomerFcmId, String days) in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\NotificationUpdatedController.cs:line 496

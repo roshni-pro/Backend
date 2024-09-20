@@ -1,0 +1,404 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .modal-footer {
+            padding: 18px !important;
+            padding-right: 35px !important;
+            margin-bottom: 40px !important;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<div class="page page-table"  button-permission-binder parentName="unit Economic" pageName="Unit Economics">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Unit Economic
+            </strong>
+        </div>
+        <br />
+        <div class="col-md-12">
+            <button class="btn btn-primary skadd" ng-click="open()">
+                <span class="glyphicon glyphicon-plus">
+                </span>Add Unit Economic
+            </button>
+            <button class="btn btn-primary" ng-click="toggle()"> <span class="glyphicon glyphicon-plus skImage"> </span>Upload Items</button>
+            <button class="btn btn-primary" ng-click="exportData()"> <span class="glyphicon glyphicon-plus skexport"> </span> Export full Item List</button>
+            <div id="typography" ng-hide="uploadshow">
+                <div class="well">
+                    <div id="dragandrophandler">Drag &amp; Drop Files Here</div>
+                    <br><br>
+                    <div id="status1"></div>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label for="site-name">Select Hub:</label><br />
+                        <select class="form-control" id="site-name" ng-model="data.WarehouseId">
+                            <option value="">--select--</option>
+                            <option value="{{a.WarehouseId}}" ng-repeat="a in warehouses">{{a.WarehouseName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Company Label</label><br />
+                        <select class="form-control" id="site-name" ng-model="data.LabelName">
+                            <option value="">--select--</option>
+                            <option value="{{a.LabelName}}" ng-repeat="a in CompanyLabel">{{a.LabelName }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Select Date Range</label><br>
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon ">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-ar btn-primary"  style="margin: 23px 0px 0px 29px;" ng-click="Searchdata(data)">Search</button>
+
+                    </div>
+                   </form>
+            </div>
+        </div>
+        </br>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Index
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('$index')"
+                                  data-ng-class="{active: row == '$index'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-$index')"
+                                  data-ng-class="{active: row == '-$index'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Company Label
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Label1')"
+                                  data-ng-class="{active: row == 'Label1'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Label1')"
+                                  data-ng-class="{active: row == '-Label1'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Label 1
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Label1')"
+                                  data-ng-class="{active: row == 'Label1'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Label1')"
+                                  data-ng-class="{active: row == '-Label1'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Label 2
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Label2')"
+                                  data-ng-class="{active: row == 'Label2'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Label2')"
+                                  data-ng-class="{active: row == '-Label2'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Label 3
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Label3')"
+                                  data-ng-class="{active: row == 'Label3'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Label3')"
+                                  data-ng-class="{active: row == '-Label3'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Warehouseid')"
+                                  data-ng-class="{active: row == 'Warehouseid'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Warehouseid')"
+                                  data-ng-class="{active: row == '-Warehouseid'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Amount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Amount')"
+                                  data-ng-class="{active: row == 'Amount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Amount')"
+                                  data-ng-class="{active: row == '-Amount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Discription
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Discription')"
+                                  data-ng-class="{active: row == 'Discription'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Discription')"
+                                  data-ng-class="{active: row == '-Discription'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ExpenceDate
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in unitEconomics">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.CompanyLabel}}</td>
+                    <td>{{trade.Label1}}</td>
+                    <td>{{trade.Label2}}</td>
+                    <td>{{trade.Label3}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.Amount | number:2}}</td>
+                    <td>{{trade.Discription}}</td>
+                    <td>{{trade.ExpenseDate| date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select name="page" ng-model="vm.rowsPerPage" ng-change="onNumPerPageChange()">
+                            <option value="3">3</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                        </select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="vm.currentPage"
+                                total-items="vm.count"
+                                max-size="4"
+                                on-select-page="changePage(page)"
+                                items-per-page="vm.rowsPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myUEModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add UnitEcomonic</h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-ar btn-primary " style="margin: 0px 0px 15px 15px;float: right;" ng-click="ShowLabelbox()">AddLabel</button>
+            </div>
+            <div class="form-group" ng-show="AddLabeldata">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="site-name">Select LabelType:</label><br />
+                        <select class="form-control" id="site-name" ng-model="label.LabelType" required>
+                            <option value="">---SELECT---</option>
+                            <option value="1">Label1</option>
+                            <option value="2">Label2</option>
+                            <option value="3">Label3</option>
+                            <option value="4">CompanyLabel</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="site-name">Label:</label><br />
+                        <input id="site-name" type="text" class="form-control" ng-model="label.Label" placeholder="Enter Label name" />
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-group">
+                    <div class="modal-footer" style="margin-bottom: -11px !important">
+                        <button type="button" class="btn btn-ar btn-warning" style="margin-bottom: -42px !important" ng-click="cancellabel()" data-dismiss="modal">CancelLabel</button>
+                        <button type="button" class="btn btn-ar btn-primary sksave" style="margin-bottom: -42px !important" ng-click="Addlabel(label)">SaveLabel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select CompanyLabel:</label><br />
+                <select class="form-control" id="site-name" ng-model="UnitEconomicData.CompanyLabel" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{uel3.LabelName}}" ng-repeat="uel3 in companylabel" ng-selected="UnitEconomicData.CompanyLabel == uel3.LabelName"> {{uel3.LabelName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Label1:</label><br />
+                <select class="form-control" id="site-name" ng-model="UnitEconomicData.Label1" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{uel1.LabelName}}" ng-repeat="uel1 in lablel1type" ng-selected="UnitEconomicData.Label1 == uel1.LabelName"> {{uel1.LabelName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Label2:</label><br />
+                <select class="form-control" id="site-name" ng-model="UnitEconomicData.Label2" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{uel2.LabelName}}" ng-repeat="uel2 in lablel2type" ng-selected="UnitEconomicData.Label2 == uel2.LabelName"> {{uel2.LabelName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Label3:</label><br />
+                <select class="form-control" id="site-name" ng-model="UnitEconomicData.Label3" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{uel3.LabelName}}" ng-repeat="uel3 in lablel3type" ng-selected="UnitEconomicData.Label3 == uel3.LabelName"> {{uel3.LabelName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Warehouse:</label><br />
+                <select class="form-control" id="site-name" ng-model="UnitEconomicData.WarehouseId" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{w.WarehouseId}}" ng-repeat="w in warehouses" ng-selected="UnitEconomicData.WarehouseId == w.WarehouseId"> {{w.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Amount:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="UnitEconomicData.Amount" placeholder="Enter Amount" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Expence Date</label><br />
+                <input type="date" class="form-control" ng-model="UnitEconomicData.ExpenseDate" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Discription:</label><br />
+                <textarea id="site-name" type="text" class="form-control" ng-model="UnitEconomicData.Discription" placeholder="Enter Discription" />
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AddUnitEconomic()">Save</button>
+        </div>
+    </form>
+</script>

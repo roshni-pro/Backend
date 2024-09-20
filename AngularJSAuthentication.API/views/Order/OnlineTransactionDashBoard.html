@@ -1,0 +1,520 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        #dragandrophandler1 {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        #dragandrophandler2 {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #00a4e9;
+            border-radius: 15px;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #e09a02;
+            border-color: #ffae03;
+            border-radius: 15px;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #12bd8f;
+            border-color: #0fc191;
+        }
+
+        .input-group-addon {
+            padding: 6px 12px;
+            font-size: 14px;
+            font-weight: normal;
+            line-height: 1;
+            color: #075842;
+            text-align: center;
+            background-color: #61d6b6;
+            border: 1px solid #229173;
+            border-radius: 16px;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857;
+            color: #767676;
+            background-color: white;
+            background-image: none;
+            border: 1px solid #cbd5dd;
+            border-radius: 24px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+            -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+            transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #12bd8f;
+            border-color: #0fc191;
+            border-radius: 15px;
+        }
+
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: bold;
+            line-height: 1;
+            color: white;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 15px;
+        }
+
+        .btn-dark {
+            color: white;
+            background-color: #222533;
+            border-color: #181a24;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+
+        <br />
+        <div class="p-3 mb-2 bg-primary ">
+
+            <div class="panel-heading"> <h4> <strong> <span class="glyphicon glyphicon-th"> </span>Online Transaction DashBoard</strong> </h4></div>
+
+        </div>
+        <br />
+        <br />
+
+    </section>
+
+    <div class="form-group col-md-12 clear-both">
+        <div class="form-group col-md-2">
+            <label for="site-name">MOP Filter</label><br>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <select class="form-control" id="site-name" ng-model="data.type" ng-change="changevalue(data)" style="width:14pc">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="site-name">SKcode</label><br>
+            <input class="form-control" ng-model="Demanddata.SKCode" placeholder="Enter Sk code" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name">OrderID</label><br>
+            <input class="form-control" ng-model="Demanddata.OrderId" placeholder="Enter OrderID" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name">Select Date Range</label><br />
+            <div class="form-group">
+                <div class='input-group date'>
+                    <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                    <span class="input-group-addon ">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-1">
+            <label for="site-name">Search</label><br />
+            <button type="button" class="btn btn-ar btn-warning" id="Search1" name="Sall" ng-click="Search(Demanddata)">Search</button>
+        </div>
+
+        <div class="form-group col-md-2">
+            <label for="site-name">Export</label><br />
+            <button class="btn btn-dark" ng-click="Exportrange(data)"><span class="glyphicon glyphicon-export"> </span>Export Date-Wise</button>
+        </div>
+        <div class="form-group col-md-1">
+            <label for="site-name">Refresh</label><br />
+            <button type="button" class="btn btn-ar btn-danger" ng-click="refresh()" style="border-radius: 15px;">Refresh</button>
+        </div>
+
+    </div>
+
+</div>
+<div class="form-group col-md-12 clear-both">
+
+    <div class="form-group col-md-2" ng-show="data.type==2">
+        <input type="file" id="epayFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadepayFile()" style="border-radius: 0px;">Add ePay</button>
+    </div>
+
+    <div class="form-group col-md-2" ng-show="data.type==3">
+        <input type="file" id="hdfcFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadHdfcFile()" style="border-radius: 0px;">Add HDFC</button>
+    </div>
+
+    <div class="form-group col-md-2" ng-show="data.type==3">
+        <input type="file" id="hdfcNetFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadNetBankingFile()" style="border-radius: 0px;">NetBanking</button>
+    </div>
+    <div class="form-group col-md-2" ng-show="data.type==5">
+        <input type="file" id="mposFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadmposFile()" style="border-radius: 0px;">Add mPos</button>
+    </div>
+    <div class="form-group col-md-2" ng-show="data.type==6">
+        <input type="file" id="hdfcCreditFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadHdFCcreditFile()" style="border-radius: 0px;">HDFC-Credit</button>
+    </div>
+    <div class="form-group col-md-2" ng-show="data.type==7">
+        <input type="file" id="RazorpayQRFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadRazorpayQRFile()" style="border-radius: 0px;">Razorpay QR</button>
+    </div>
+    <div class="form-group col-md-2" ng-show="data.type==9">
+
+        <input type="file" id="chequeFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadcheque()" style="border-radius: 0px;">Add cheque </button>
+    </div>
+    <div class="form-group col-md-2" ng-show="data.type==11">
+        <input type="file" id="UPIFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadUPIFile()" style="border-radius: 0px;">Add UPI</button>
+    </div>
+    <div class="form-group col-md-2" ng-show="data.type==13">
+        <input type="file" id="ICICIFile" name="file" />
+        <button class="btn btn-ar btn-primary" ng-click="uploadICICIFile()" style="border-radius: 0px;">Add ICICI</button>
+    </div>
+
+    <div class="col-sm-2">
+        <label for="site-name"></label><br />
+        <input type="number" placeholder="Enter Assignment Id" class="form-control" data-ng-model="searchKey">
+    </div>
+    <div class="col-sm-2">
+        <label for="site-name"></label><br />
+        <button type="button" class="btn btn-primary" ng-click="searchData()" data-dismiss="modal">
+            <span class="glyphicon glyphicon-search"> </span>  Search by AssignmentID
+        </button>
+    </div>
+
+    <!--<div class="form-group col-md-2 ">
+        <button class="btn btn-dark" ng-click="ExportData()"><span class="glyphicon glyphicon-export"> </span>Export</button>
+    </div>-->
+
+</div>
+<table class="table table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <!--<th>
+        <div class="th">
+            S.No
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('BaseCategoryName')"
+                  data-ng-class="{active: row == 'BaseCategoryName'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-BaseCategoryName')"
+                  data-ng-class="{active: row == '-BaseCategoryName'}"></span>
+        </div>
+    </th>-->
+            <th>
+                <div class="th">
+                    Date
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Warehouse
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    SKcode
+                </div>
+            </th>
+
+            <th>
+                <div class="th">
+                    MOP
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    OrderID
+                </div>
+            </th>
+            <th ng-show="onlinetxn[0].MOP=='UPI'">
+                <div class="th">
+                    Txn OrderId
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Order Status
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Order Amount
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Dispatched Amt
+                </div>
+            </th>
+
+            <th>
+                <div class="th">
+                    Txn Amt
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Refund Amt
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Txn ID
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Txn Status
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Status
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    AssignmentID
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Settlement Date
+                </div>
+            </th>
+            <th>
+                <div class="th">
+                    Comment
+                </div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="trade in onlinetxn |itemsPerPage:itemsPerPage" total-items="total_count">
+            <!--<td>{{1+$index}}</td>-->
+            <td>{{trade.Date | date:'medium'}}</td>
+            <td>{{trade.Warehouse}}</td>
+            <td>{{trade.Skcode}}</td>
+            <td>{{trade.MOP}}</td>
+            <td>{{trade.OrderId}}</td>
+            <td ng-show="onlinetxn[0].MOP=='UPI'">{{trade.TxnNo}}</td>
+            <td>{{trade.Orderstatus}}</td>
+            <td>{{trade.OrderAmount}}</td>
+            <td>{{trade.DispatchedAmount}}</td>
+            <td>{{trade.TxnAomunt}}</td>
+            <td>
+                {{trade.refundamount}} <br>
+                <span ng-if="trade.IsRefund== true">
+                    <span class="label label-info ng-binding">Refund Success</span>
+                </span>
+                <span ng-if="trade.IsRefund== false && trade.refundamount<0">
+                    <span class="label label-danger ng-binding">Failed</span>
+                </span>
+            </td>
+            <td>{{trade.TxnID}}</td>
+            <td ng-if="(trade.TxnStatus  && trade.IsRefund== true)">
+                <span class="label label-success ng-binding">Refunded</span>
+            </td>
+            <td ng-if="(trade.TxnStatus  && trade.IsRefund== false)">
+                <span class="label label-info ng-binding">Success</span>
+            </td>
+            <td ng-if="(trade.IsSettled == false)">
+                <span class="label label-danger ng-binding">Un-Verified</span>
+            </td>
+            <td ng-if="(trade.IsSettled == true && trade.UploadId>0)">
+                <span class="label label-success ng-binding">Auto-Verified</span>
+            </td>
+            <td ng-if="(trade.IsSettled == true && trade.UploadId==0)">
+                <span class="label label-info ng-binding">Manual-Verified</span>
+            </td>
+            <td>{{trade.DeliveryIssuanceId}}</td>
+            <td>{{trade.SettleDate | date:'medium'}}</td>
+            <td><button class="btn-sm btn-success skhistory" ng-hide="( trade.IsSettled == true && trade.UploadId>0)" ng-click="SettleAccount(trade)">View Comment</button></td>
+        </tr>
+    </tbody>
+</table>
+<footer class="table-footer">
+    <div class="row">
+        <div class="col-md-6 page-num-info">
+            <span>
+                Show
+                <select data-ng-model="selected"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNumPerPageChanges()"></select>
+                entries per page
+            </span>
+        </div>
+        <div class="col-md-6 text-right pagination-container">
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="selectedtypeChanged(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+        </div>
+    </div>
+
+</footer>
+
+<script type="text/ng-template" id="Mypayment.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <!--<button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>-->
+            <h4 class="modal-title">Description</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <!--<div class="form-group">
+                <label for="site-name"> Enter Comment:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="onlinetxn.SettleComments" placeholder="Enter Comment " />
+            </div>-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Comment<span style="color:red;">*</span></label><br />
+                <textarea readonly style="width: 700px;">{{data.SettlComments}}</textarea>
+                <!--<textarea type="text" ng-model="onlinetxn.SettleComments" placeholder="Enter New Comment" style="background-color: azure; font-weight: bold;" />-->
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">OK</button>
+            <!--<button type="button" class="btn btn-ar btn-primary" ng-click="Active(onlinetxn)"  ng-disabled="onlinetxn.SettleComments==null || onlinetxn.SettleComments==''" >Save</button>-->
+        </div>
+    </form>
+</script>
+
+
+
+
+
+
+
+
+
+

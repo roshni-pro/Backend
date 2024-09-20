@@ -1,0 +1,308 @@
+﻿  <!--// tejas to save device info-->
+<style>
+
+    .contentsstotalsell {
+        position: relative;
+    }
+
+    .overlaysstotalsell {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlaysstotalsell-contentsstotalsell {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+    .overlayss {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlayss-contentss {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        /*font-size: 20px;
+        font-family: fantasy;*/
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="page page-table" button-permission-binder parentName="Delivery" pageName="Delivery Boy Phone Details">
+    <div class="modal-header">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span>Delivery Boy phone details
+                </strong>
+            </div>
+            <form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-3">
+                        <label for="site-name"> City</label><br>
+                        <select class="form-control" id="site-name" ng-model="Demanddata.Cityid">
+                            <option value="">Select City</option>
+                            <option value="{{city.Cityid}}" ng-repeat="city in citys"> {{city.CityName}}</option>
+                        </select>
+                        <input class="form ng-pristine ng-valid" data-ng-model="searchKeywords" data-ng-keyup="search()" placeholder="search">
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="site-name">&nbsp;</label><br>
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="LineitemTotal(Demanddata.Cityid)">Filter</button>
+                    </div>
+
+                </div>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    S.No.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    People ID.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                 Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    department
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Mobile Numer
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Current APK version
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Phone OS version
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    User Device Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    History
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.PeopleID}}</td>
+                            <td>{{trade.DisplayName}}</td>
+                            <td>{{trade.Department}}</td>
+                            <td>{{trade.Mobile}}</td>
+                            <td>{{trade.CurrentAPKversion}}</td>      <!--// tejas to save device info-->
+                            <td>{{trade.PhoneOSversion}}</td>
+                            <td>{{trade.UserDeviceName}}</td>
+                            <td><button class="btn-sm btn-primary" data-toggle="modal" data-target="#customermodel" ng-click="CustomerDeviceHistroy(trade.PeopleID)">History</button></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"
+                                        data-ng-init="POListChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="currentPage"
+                                        total-items="filteredStores.length"
+                                        max-size="4"
+                                        on-select-page="select(page)"
+                                        items-per-page="numPerPage"
+                                        rotate="false"
+                                        boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>
+            </form>
+        </section>
+    </div>
+</div>
+
+
+
+
+
+
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 100% !important;
+        /*margin-left: 485px;*/
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: darkseagreen;
+    }
+</style>
+<div class="modal fade " id="customermodel" role="dialog">
+    <div class="modal-dialog1">
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Device History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+
+                        <th>
+                            <div class="th">
+                                PeopleID
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Department
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Mobile
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                CurrentAPKversion
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                PhoneOSversion
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                UserDeviceName
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                UpdatedDate
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in datacustomerDeviceHistrory">
+                        <td>{{trade.PeopleID}}</td>
+                        <td>{{trade.DisplayName}}</td>
+                        <td>{{trade.Department}}</td>
+                        <td>{{trade.Mobile}}</td>
+                        <td>{{trade.CurrentAPKversion}}</td>
+                        <td>{{trade.PhoneOSversion}}</td>
+                        <td>{{trade.UserDeviceName}}</td>
+                        <td>{{trade.UpdatedDate | date:'medium'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

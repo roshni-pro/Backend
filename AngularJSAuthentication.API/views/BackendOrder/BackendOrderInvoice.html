@@ -1,0 +1,1741 @@
+﻿<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading text-center" style="background-color:#ff6a00;color:aliceblue;">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> Order Details
+            </strong>
+        </div>
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                <h4 class="title"> Orders... </h4>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Order ID  </label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.OrderId" disabled />
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Invoice ID  </label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.invoice_no" disabled />
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Customer Name</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.CustomerName" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Customer Phone Number</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.Customerphonenum" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Billing Address</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.BillingAddress" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Shipping Address</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.ShippingAddress" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Bill Amount</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.GrossAmount" disabled />
+                </div> 
+                <div class="form-group col-md-3" ng-if="popup">
+                    <label for="site-name">
+                        Search Item No.
+                    </label>
+                    <br />
+                    <input id="inputBox1" type="text" name="inputBox1"  min="0" max="30" maxlength="30" class="form-control" ng-model="ScanBarCode" />
+                    <!--orderDetail.barCode-->
+                    <button id="focusButton" style="color: aliceblue;border:none;cursor:none;" ng-click="returnOrderQty(ScanBarCode,orderDetail.IsFreeItem,orderDetail)"></button>
+                </div>
+
+                <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    MultiMrpId
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Item Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Number
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Unit Price
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    MRP
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    MOQ
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Quantity
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Amt Without Tax & Disc.
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Amount w/o tax after discount (hidden)
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Tax
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Tax amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total Amount After Tax Disc (hidden)
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total Amount Incl. Tax
+                                </div>
+                            </th>
+                            <th ng-if="popup">
+                                <div class="th">
+                                    Return Qty
+                                </div>
+                            </th>
+                            <!--<th ng-if="popup">
+                                <div class="th">
+                                    Return Qty
+                                </div>
+                            </th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="orderDetail in OrderData.orderDetails">
+                            <td>{{orderDetail.ItemMultiMRPId}}</td>
+                            <td>
+                                {{orderDetail.itemname}}
+                                <span ng-if="orderDetail.MinOrderQty==0 || orderDetail.IsFreeItem==true">
+                                    <b style="color:red;">(Free Item)</b>
+                                </span>
+                            </td>
+                            <td>{{orderDetail.itemNumber}}</td>
+
+                            <td>{{orderDetail.UnitPrice | number : 2}}</td>
+                            <td>{{orderDetail.price}}</td>
+                            <td>{{orderDetail.MinOrderQty}}</td>
+                            <td>{{orderDetail.qty}}</td>
+                            <td>{{orderDetail.AmtWithoutTaxDisc | number: 2}}</td>
+                            <td>{{orderDetail.AmtWithoutAfterTaxDisc | number: 2}}</td>
+                            <td>{{orderDetail.TaxPercentage + orderDetail.TotalCessPercentage}}</td>
+                            <td>{{orderDetail.TaxAmmount +  orderDetail.CessTaxAmount| number:2}}</td>
+                            <td>{{orderDetail.TotalAmountAfterTaxDisc | number: 2}}</td>
+                            <td>{{orderDetail.TotalAmt | number: 2}}</td>
+
+                            <!--<td ng-if="popup">
+                                <input id="inputBox1" type="text" name="inputBox1" style="width:auto" min="0" max="30" maxlength="30" class="form-control" ng-model="orderDetail.barCode" />
+                                <button id="focusButton" style="color: aliceblue;border:none;cursor:none;" ng-click="returnOrderQty(orderDetail.barCode,orderDetail.IsFreeItem,orderDetail)"></button>
+                            </td>-->
+                            <td ng-if="popup">
+                                <input id="inputBox11" type="text" name="inputBox11" style="width:auto" min="0" max="30" maxlength="30" class="form-control" ng-model="orderDetail.retuenqty" disabled />
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col-lg-1">
+                        <button class="btn-sm btn-primary" id="invoicebtn" name="invoicebtn" ng-if="OrderData.Status=='Delivered' && isconsumerbtn == false" ng-click="showInvoice(orderDetails)"> Invoice</button>
+                    </div>
+                    <div class="col-lg-1">
+                        <button class="btn-sm btn-primary" id="posInvoicebtn" name="posInvoicebtn" ng-if="OrderData.Status=='Delivered' && isconsumerbtn == true" ng-click="showZilaInvoice(orderDetails)">POS Invoice</button>
+
+                    </div>
+
+                    <div class="col-lg-1">
+                        <button class="btn-sm btn-primary" id="sendInvoiceBtn" name="sendInvoiceBtn" ng-if="OrderData.Status=='Delivered' && OrderData.IsInvoiceSent==false" ng-click="SendInvoice(OrderData)"> Send Invoice</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <input id="mobilenumber" type="tel" name="mobilenumber" style="width:auto" min="10" max="10" ng-if="OrderData.Status=='Delivered' && OrderData.IsInvoiceSent==true" class="form-control" ng-keypress="amountdecimal($event)" ssss ng-keyup="onmobilenumberchange(mobilenumber)" ng-model="mobilenumber" />
+                    </div>
+                    <div class="col-lg-2">
+                        <button class="btn-sm btn-primary" ng-if="OrderData.Status=='Delivered' && OrderData.IsInvoiceSent==true" ng-click="SendInvoice(OrderData)"> ReSend Invoice</button>
+                    </div>
+                    <!--!ConfirmPopup && ng-if="OrderData.IsInvoiceSent==true data-toggle="modal" data-target="#returnPopUp""-->
+                    <div class="col-lg-3" style="text-align:right">
+                    </div>
+                    <div class="col-lg-1" style="text-align:right" ng-if="OrderData.OrderType != 3 && OrderData.IsShowReplace==true">
+                        <button class="btn-sm btn-primary" id="focusButton" ng-click="ShowPopUp()">Return</button>
+                    </div>
+                    <!--ng-if="ConfirmPopup"-->
+                    <!--<div class="col-lg-2">
+            <button class="btn-sm btn-primary" ng-click="ApproveReturn()" data-toggle="modal" data-target="#isshowreturnpopup">Approve Return</button>
+        </div>-->
+                    <div class="col-lg-1" style="text-align:right" ng-if="OrderData.OrderType != 3 && OrderData.IsShowReplace==true">
+                        <button class="btn-sm btn-danger" ng-disabled="IsApprove" ng-click="ApproveReturn()">Approve Return</button>
+                    </div>
+
+                    <div class="col-lg-1">
+                        <button class="btn-sm btn-primary" ng-if="OrderData.OrderType == 3" ng-click="creditNoteInvoice(orderDetails)">Credit Invoice</button>
+
+                    </div>
+                    <div class="col-lg-2" ng-if="OrderData.Status=='Payment Pending'">
+                        <label>Total Amount To Be Paid : {{OrderData.GrossAmount}}</label>
+                    </div>
+                    <div class="col-lg-1">
+                        <button type="button" class="btn-sm btn-primary" ng-if="OrderData.Status=='Payment Pending'" data-toggle="modal" data-target="#popup" ng-click="open(OrderData)">Payment Update</button>
+                    </div>
+                    <div class="col-lg-1">
+                        <button class="btn btn-danger skedit" ng-if="OrderData.Status=='Payment Pending'" ng-click="CancelOrder(orderDetails)"> Order Cancel</button>
+                    </div>
+
+
+                </div>
+            </form>
+           
+        </div>
+    </section>
+    <script>
+        document.getElementById("focusButton").addEventListener("click", function () {
+            document.getElementById("inputBox1").focus();
+        });
+    </script>
+
+    <script type="text/ng-template" id="BackendOrderInvoiceModel.html">
+        <style type="text/css">
+            @media print {
+                .no-print {
+                    display: none !important;
+                }
+
+                .border {
+                    border: 1px solid #000 !important;
+                }
+
+                th, td {
+                    border: solid #000 !important;
+                    border-width: 0 1px 1px 0 !important;
+                    border-spacing: 0;
+                    padding: 0;
+                    text-align: center;
+                }
+            }
+        </style>
+        <style>
+            .modal-content {
+                width: 116% !important;
+                margin-left: -0% !important;
+            }
+        </style>
+        <form name="OrderInvoiceModel">
+            <div id="divtoPrint" class="client-document-container" style="font-size: 12px;position: relative;">
+
+                <div class="containers invoice" style=" padding-left: 2%; padding-right: 2%;">
+
+                    <center>
+                        <h3><bold>TAX INVOICE</bold></h3>
+                    </center>
+                    <table style="width:100%;" ng-if="OrderData1.OrderType == 11">
+                        <tr>
+                            <td style="text-align:left;padding-left:10px;vertical-align:top; width:30%;">
+
+                                <br />
+                                <img src="../Content/ZilaPicture.png" width="216px" height="98px" />
+
+                            </td>
+
+
+                        </tr>
+                        <tr>
+                            <td style="text-align:left;padding-left:10px;vertical-align:top; width:25%;">
+                                <strong style="font-size: 18px;">{{FromWarehouseDetail.CompanyName}}</strong>
+                                <br />
+                                <span style="font-size: 14px;"><b>CIN: </b></span>U51109MP2014PTC033534<br />
+                                <span style="font-size: 14px;"><b>GSTN Number: </b></span>{{FromWarehouseDetail.GSTin}} <br />
+                                <span style="font-size: 14px;"><b>FSSAI Number: </b></span>{{FromWarehouseDetail.FSSAILicenseNumber}} <br />
+                                <span style="font-size: 14px;width:70%"><b>Address :</b> {{FromWarehouseDetail.Address}}</span><br />
+                                <span style="font-size: 14px;">{{FromWarehouseDetail.StateName}} ,India </span><br />
+                                <span style="font-size: 14px;"><b>Contact Number : </b> {{FromWarehouseDetail.Phone}}</span>
+                            </td>
+                            <td style="text-align:-webkit-center;">
+                                <div style="width: 40%;margin-right: 15px;">
+                                    <div ng-if="OrderData1.InvoiceBarcodeImage!=null">
+                                        <div style="text-align:center;">
+                                            Bar Code
+                                            <img src="data:image/png;base64,{{OrderData1.InvoiceBarcodeImage}}" width="350" height="150" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table style="width:100%;" ng-if="OrderData1.OrderType != 11">
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="text-align:left; border:none;border-bottom: none !important;">
+                                    <div class="row col-md-12" style="display:flex;justify-content:space-around;align-items:center;margin-top:10px;">
+                                        <!--<div style="width:30%;margin-left:15px;">
+                                            <img src="https://res.cloudinary.com/shopkirana/image/upload/v1563356363/home/Logo_2.png" height="20px" />
+                                        </div>-->
+                                        <div style="text-align:left;width:{{!(OrderData1.IRNNo==null || OrderData1.IRNNo==undefined ||  OrderData1.IRNNo=='') ? '60%' : '80%'}};padding-left:10px">
+                                            <left>
+                                                <strong style="font-size: 18px;">{{FromWarehouseDetail.CompanyName}}</strong>
+                                                <br />
+                                                <span style="font-size: 14px;"><b>CIN: </b></span>U51109MP2014PTC033534<br />
+                                                <span style="font-size: 14px;"><b>GSTN Number: </b></span>{{FromWarehouseDetail.GSTin}}  <br />
+                                                <span style="font-size: 14px;"><b>FSSAI Number: </b></span>{{FromWarehouseDetail.FSSAILicenseNumber}}  <br />
+                                                <span style="font-size: 14px;width:70%"><b>Address :</b> {{FromWarehouseDetail.Address}}</span>
+                                                <span style="font-size: 14px;">{{FromWarehouseDetail.StateName}} ,India </span><br />
+                                                <span style="font-size: 14px;"><b>Contact Number : </b> {{FromWarehouseDetail.Phone}}</span>
+                                            </left>
+
+                                        </div>
+                                        <div style="width:20%;margin-right:15px;">
+                                            <div ng-if="OrderData1.InvoiceBarcodeImage!=null && OrderData1.OrderType != 11">
+                                                <div style="text-align:center;">
+                                                    Bar Code
+                                                </div>
+
+                                                <!--<img src="{{OrderData1.BcodeUrl}}" style="width:60%;float: right;">-->
+                                                <img src="data:image/png;base64,{{OrderData1.InvoiceBarcodeImage}}" width="150" height="150" />
+
+                                            </div>
+                                        </div>
+                                        <div style="width:20%;margin-right:15px;">
+                                            <div style="font-size: 14px;" ng-if="(!(OrderData1.IRNQRCodeUrl==null || OrderData1.IRNQRCodeUrl==undefined ||  OrderData1.IRNQRCodeUrl=='') || !(OrderData1.POCIRNQRCodeURL==null || OrderData1.POCIRNQRCodeURL==undefined ||  OrderData1.POCIRNQRCodeURL==''))">
+                                                <div style="text-align:center" ng-if="!(OrderData1.IRNQRCodeUrl==null || OrderData1.IRNQRCodeUrl==undefined ||  OrderData1.IRNQRCodeUrl=='') && (OrderData1.POCIRNQRCodeURL==null || OrderData1.POCIRNQRCodeURL==undefined ||  OrderData1.POCIRNQRCodeURL=='')">
+                                                    IRN QR Code
+                                                </div>
+                                                <span ng-if="!(OrderData1.IRNQRCodeUrl==null || OrderData1.IRNQRCodeUrl==undefined ||  OrderData1.IRNQRCodeUrl=='') && (OrderData1.POCIRNQRCodeURL==null || OrderData1.POCIRNQRCodeURL==undefined ||  OrderData1.POCIRNQRCodeURL=='')">
+                                                    <img ngif src="{{OrderData1.IRNQRCodeUrl}}" width="150" height="150" />
+                                                </span>
+                                            </div>
+                                            <div style="font-size: 14px;" ng-if="!(OrderData1.POCIRNQRCodeURL==null || OrderData1.POCIRNQRCodeURL==undefined ||  OrderData1.POCIRNQRCodeURL=='')">
+                                                <div style="text-align:center">
+                                                    POC IRN QR Code
+                                                </div>
+                                                <span ng-if="!(OrderData1.POCIRNQRCodeURL==null || OrderData1.POCIRNQRCodeURL==undefined ||  OrderData1.POCIRNQRCodeURL=='')">
+                                                    <img ngif src="{{OrderData1.POCIRNQRCodeURL}}" width="150" height="150" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+                            <tr ng-if="!(OrderData1.IRNNo==null || OrderData1.IRNNo==undefined ||  OrderData1.IRNNo=='') && (OrderData1.POCIRNNo==null || OrderData1.POCIRNNo==undefined ||  OrderData1.POCIRNNo=='')">
+                                <td style="padding:15px">
+                                    <b>IRN No.:</b><strong> {{OrderData1.IRNNo}}</strong>
+                                </td>
+                            </tr>
+                            <tr ng-if="!(OrderData1.POCIRNNo==null || OrderData1.POCIRNNo==undefined ||  OrderData1.POCIRNNo=='')">
+                                <td style="padding:15px">
+                                    <b>POC IRN No.:</b><strong> {{OrderData1.POCIRNNo}}</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+
+                    <div style="border:none;border-bottom:none">
+
+                    </div>
+                    <br />
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="text-align:left;padding-left:10px;vertical-align:top; width:30%;">
+                                <strong style="font-size: 14px;">Bill To:</strong>
+                                <br />
+                                <strong style="font-size: 12px;" ng-if="OrderData1.OrderType != 11"><b>Shop Name :</b> {{OrderData1.ShopName}}</strong><br />
+                                <strong style="font-size: 12px;" ng-if="OrderData1.OrderType == 11"><b>Receiver's Name :</b> {{OrderData1.ShopName}}</strong><br />
+                                <span style="font-size: 14px;"><b>Address : </b> {{OrderData1.BillingAddress}}</span><br />
+                                <span style="font-size: 14px;"><b>GSTN Number :</b> {{OrderData1.Tin_No}}</span><br />
+                                <span style="font-size: 14px;"><b>Customer Name : </b>{{OrderData1.CustomerName}}</span><br />
+                                <span style="font-size: 14px;"><b>SKCode :</b> <strong>{{OrderData1.Skcode}}</strong></span><br />  <!--<span ng-show="OrderData1.CRMTags!=null">({{OrderData1.CRMTags}})</span>-->
+                                <span style="font-size: 14px;"><b>Mobile : </b>{{OrderData1.Customerphonenum}}</span><br />
+                                <span style="font-size: 14px;"><b>Place of Supply : </b>{{OrderData1.BillingStateName}}</span><br />
+                                <span style="font-size: 14px;"><b>Code : </b>{{OrderData1.BillingStateCode}}</span>
+
+                                <span style="color:red;" ng-if="OrderData1.IsPrimeCustomer!=null && OrderData1.IsPrimeCustomer">
+                                    {{OrderData1.IsPrimeCustomer!=null && OrderData1.IsPrimeCustomer?"* Fayda Club ":""}}
+
+                                </span>
+                                <span ng-if="OrderData1.IsFirstOrder"> <strong style="font-size: 14px;">* 1st Order</strong> </span>
+
+                            </td>
+                            <td style="text-align:left;padding-left:10px;vertical-align:top;width:25%;">
+                                <strong style="font-size: 14px;">Ship To:</strong>
+                                <br />
+                                <span style="font-size: 14px;"><b>Address : </b> {{OrderData1.ShippingAddress}}</span><br />
+                                <span style="font-size: 14px;"><b>Place of Supply : </b>{{OrderData1.shippingStateName}}</span><br />
+                                <span style="font-size: 14px;"><b>Code : </b>{{OrderData1.shippingStateCode}}</span>
+                            </td>
+                            <td style="text-align:left;padding-left:10px;vertical-align:top; width:25%;">
+                                <span style="font-size: 14px;"><b>Invoice No.:</b><strong> {{OrderData1.invoice_no}}</strong></span><br />
+                                <span style="font-size: 14px;"><b>Invoice Date : </b>{{OrderData1.CreatedDate|date}}</span><br />
+                                <span style="font-size: 14px;"><b>Order Id: </b>{{OrderData1.OrderId}}</span><br />
+                                <span style="font-size: 14px;"><b>Order Date : </b>{{OrderData1.CreatedDate|date}}</span><br />
+                                <span style="font-size: 14px;"><b>Eway Bill Number : </b>{{OrderData1.EwayBillNumber}}</span><br />
+                                <span style="font-size: 14px;" ng-if="OrderData1.PocCreditNoteNumber"><b>Credit note No.:</b><strong> {{OrderData1.PocCreditNoteNumber}}</strong></span><br />
+                                <span style="font-size: 14px;" ng-if="OrderData1.PocCreditNoteDate"><b>Credit note Date.:</b><strong> {{OrderData1.PocCreditNoteDate |date}}</strong></span>
+                            </td>
+
+                            <td style="text-align:left;padding-left:10px;vertical-align:top; width:25%;" ng-if="OrderData1.OrderType != 11">
+                                <span style="font-size: 14px;"><b>Executive :</b> {{OrderData1.SalesPerson}} </span><br />
+                                <span style="font-size: 14px;"><b>Mob.No. :</b> {{OrderData1.SalesMobile}}</span><br />
+                                <span style="font-size: 14px;"><b>DeliveryBoy : </b>{{OrderData1.DboyName}}</span><br>
+                                <span style="font-size: 14px;">
+                                    <b>Assign. No. :</b> {{OrderData1.DeliveryIssuanceIdOrderDeliveryMaster}}<br />
+                                </span>
+
+                                <!--<span style="font-size: 14px;">offertype  : {{OrderData1.offertype}} </span><br/>-->
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType == '1'|| OrderData1.OrderType == '0')"><b>OrderType:</b> General Order</span>
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType =='2')"><b>OrderType:</b>Bundle Order </span>
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType == '3')"><b>OrderType:</b> Return Order </span>
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType =='4')"><b>OrderType:</b>Distributer Order</span>
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType !='0')(OrderData1.OrderType !='1')(OrderData1.OrderType !='2')(OrderData1.OrderType !='3')(OrderData1.OrderType !='4')"><b>OrderType:</b> Order</span>
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType =='6')"><b>OrderType:</b>Damage Order</span>
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType =='8')"><b>OrderType:</b>Clearance Order</span>
+                                <span style="font-size: 14px;" ng-if="(OrderData1.OrderType =='9')"><b>OrderType:</b>Non Sellable Order</span>
+                            </td>
+                        </tr>
+                        <tr>
+                    </table>
+
+                    <table style="width:100%;">
+                        <tr>
+                            <td colspan="3">
+                                <div class="table-responsive">
+                                    <div class="table-responsive">
+                                        <table style="font-size:12px!important;" width="100%">
+                                            <thead style="border-bottom:none !important;">
+
+                                                <tr>
+                                                    <td style"><strong>S.No.</strong></td>
+                                                    <td style="width:21%"><strong>Item Name</strong></td>
+                                                    <td style="width:3%"><strong>MRP</strong></td>
+                                                    <td style="width:3%" ng-if="OrderData1.OrderType != 11"><strong>PTR</strong></td>
+                                                    <td style="width:3%" ng-if="OrderData1.OrderType != 11"><strong>Scheme %</strong></td>
+                                                    <td style="width:3%" ng-if="OrderData1.OrderType != 11"><strong>Scheme Value</strong></td>
+                                                    <td style="width:8%"><strong>Unit Price</strong></td>
+                                                    <td style="width:5%" ng-if="OrderData1.OrderType != 11"><strong>MOQ</strong></td>
+                                                    <td style="width:6%" ng-if="OrderData1.OrderType != 11"><strong>Peti/Out/Qty</strong></td>
+                                                    <td style="width:6%"><strong>Total Qty(pcs)</strong></td>
+                                                    <!--<td><strong>Discount%</strong></td>
+                                                    <td><strong>Discount Amount</strong></td>-->
+                                                    <td style="width:6%" ng-if="OrderData1.OrderType != 11"><strong>AWOTD</strong></td>
+                                                    <td style="width:6%" ng-if="OrderData1.OrderType == 11"><strong>Taxable Value</strong></td>
+                                                    <td class="border" style="width:6%"><strong>HSN Code</strong></td>
+                                                    <!--<td class="border"><strong>Tax%</strong></td>
+                                                    <td class="border"><strong>Tax</strong></td>-->
+                                                    <!--New-->
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== true)" style="width:15%"><strong>IGST%</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== true)" style="width:8%"><strong>IGST</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== false)" style="width:5%"><strong>SGST%</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== false)" style="width:5%"><strong>SGST</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== false)" style="width:5%"><strong>CGST%</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== false)" style="width:5%"><strong>CGST</strong></td>
+                                                    <!--//cess-->
+                                                    <td class="border" ng-if="(HideCessColumn == true && OrderData1.IsIgstInvoice== false)" style="width:15%"><strong>Cess%</strong></td>
+                                                    <td class="border" ng-if="(HideCessColumn == true && OrderData1.IsIgstInvoice== false)" style="width:10%"><strong>Cess</strong></td>
+                                                    <td class="border" style="width:15%"><b>TotalAmt (Inc.Tax)</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="border">
+                                                <tr data-ng-repeat="orderDetail in OrderData1.orderDetails | filter: RemoveZeroQtyItemInvoice('Noqty', 0)" ">
+                                                    <td>
+                                                        {{$index + 1}}
+                                                    </td>
+                                                    <!--<td ng-if="orderDetail.UnitPrice==0.01">      {{orderDetail.itemname}}    <b style="color:red">Free Item</b>  </td>-->
+                                                    <td>
+
+                                                        {{orderDetail.itemname}}
+                                                        <span ng-if="orderDetail.IsFreeItem">
+                                                            <!--<b style="color:red">*</b>-->
+                                                            <b style="color:red">(Free Item)</b>
+                                                        </span>
+                                                    </td>
+
+                                                    <!--<td>{{orderDetail.itemname}}</td>-->
+                                                    <td>{{orderDetail.price}}</td>
+
+                                                    <td ng-if="OrderData1.OrderType != 11">
+                                                        <span ng-if="orderDetail.PTR>0 && (orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100>0">
+                                                            {{(orderDetail.price/(1+orderDetail.PTR/100)) | number : 2}}
+                                                        </span>
+                                                        <span ng-if="!(orderDetail.PTR>0 && (orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100>0)">
+                                                            {{(orderDetail.UnitPrice==0.0001 || orderDetail.UnitPrice==0.01)? (orderDetail.UnitPrice | number : 4) : (orderDetail.UnitPrice | number : 2)}}
+                                                        </span>
+                                                    </td>
+                                                    <td ng-if="OrderData1.OrderType != 11">
+                                                        <span ng-if="orderDetail.PTR>0 && (orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100>0 ">
+                                                            {{ (orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100  | number : 2}}
+                                                        </span>
+                                                        <span ng-if="!(orderDetail.PTR>0 && (orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100>0)">
+                                                            0
+                                                        </span>
+                                                    </td>
+                                                    <td ng-if="OrderData1.OrderType != 11">
+                                                        <span ng-if="orderDetail.PTR>0 && (orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100>0 ">
+                                                            {{(orderDetail.price/(1+orderDetail.PTR/100))*(orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100/100 | number : 2}}
+                                                        </span>
+                                                        <span ng-if="!(orderDetail.PTR>0 && (orderDetail.price/(1+orderDetail.PTR/100) -orderDetail.UnitPrice)/(orderDetail.price/(1+orderDetail.PTR/100))*100>0)">
+                                                            0
+                                                        </span>
+                                                    </td>
+                                                    <td>{{(orderDetail.UnitPrice==0.0001 || orderDetail.UnitPrice==0.01)? (orderDetail.UnitPrice | number : 4) : (orderDetail.UnitPrice | number : 2)}}</td>
+                                                    <td ng-if="OrderData1.OrderType != 11">{{orderDetail.MinOrderQty}}</td>
+                                                    <td ng-if="OrderData1.OrderType != 11">{{orderDetail.qty/orderDetail.MinOrderQty | number : 2}}</td>
+                                                    <td>{{orderDetail.Noqty}}</td>
+
+
+
+                                                    <!--<td>{{orderDetail.DiscountPercentage}}</td>
+                                                    <td>{{orderDetail.DiscountAmmount | number : 2}}</td>-->
+                                                    <td>{{orderDetail.AmtWithoutTaxDisc | number:2}}</td>
+                                                    <td>{{orderDetail.HSNCode}}</td>
+
+                                                    <!--<td>{{orderDetail.TaxPercentage + orderDetail.TotalCessPercentage}}</td>
+                                                    <td>{{(orderDetail.TaxAmmount + orderDetail.CessTaxAmount) | number:2}}</td>-->
+                                                    <!--//new column in Igst-->
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== true)">{{orderDetail.TaxPercentage + orderDetail.TotalCessPercentage}} </td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== true)">{{(orderDetail.TaxAmmount + orderDetail.CessTaxAmount) | number:2}} </td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)">{{orderDetail.SGSTTaxPercentage}}</td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)">{{orderDetail.SGSTTaxAmmount| number:2}}</td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)">{{orderDetail.CGSTTaxPercentage}}</td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)">{{orderDetail.CGSTTaxAmmount| number:2}}</td>
+                                                    <!--//cess-->
+                                                    <td ng-if="(HideCessColumn == true  && OrderData1.IsIgstInvoice== false)">{{orderDetail.TotalCessPercentage}}</td>
+                                                    <td ng-if="(HideCessColumn == true  && OrderData1.IsIgstInvoice== false)">{{orderDetail.CessTaxAmount| number:2}}</td>
+                                                    <td>{{orderDetail.TotalAmt}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>{{}}</b></td>
+                                                    <!--<td><b>{{getItemName(OrderData) | number:2}}</b></td>-->
+                                                    <td><strong>Total: </strong></td>
+                                                    <td></td>
+                                                    <td ng-if="OrderData1.OrderType != 11"></td>
+                                                    <td ng-if="OrderData1.OrderType != 11"></td>
+                                                    <td ng-if="OrderData1.OrderType != 11"><b>{{getMRP(OrderData)}}</b></td>
+                                                    <td><b>{{getUnitPrice(OrderData) | number:2}}</b></td>
+                                                    <td ng-if="OrderData1.OrderType != 11"><b>{{getMOQ(OrderData) | number:2}}</b></td>
+                                                    <td ng-if="OrderData1.OrderType != 11"><b>{{getPeti/Out/Qty(OrderData) | number:2}}</b></td>
+                                                    <td><b>{{getTotalQty(OrderData1.orderDetails)}}</b></td>
+                                                    <!--<td><b>{{getDiscount%(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td><b>{{getDiscountAmount(OrderData) | number:2}}</b></td>-->
+                                                    <td>
+                                                        <b>{{getTotalAWOTD(OrderData1.orderDetails) | number:2}}</b>
+                                                    </td>
+                                                    <td><b>{{getHSNCode()}}</b></td>
+                                                    <!--<td>{{}}</td>-->
+                                                    <!--<td><b>{{getTotalTax(OrderData1.orderDetails) | number:2}}</b></td>-->
+                                                    <!--New-->
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalCGST%(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalCGST(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalSGST%(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalSGST(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== true)"><b>{{getTotalIGST%(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== true)"><b>{{getTotalIGST(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <!--//cess-->
+                                                    <td ng-if="(HideCessColumn == true && OrderData1.IsIgstInvoice== false)"><b>{{getTotalCess%(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(HideCessColumn == true && OrderData1.IsIgstInvoice== false)"><b>{{getTotalCess(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td><b>{{getTotalAmtIncTaxes(OrderData1.orderDetails) | number:2}}</b></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="no-print">
+                        <hr />
+                    </div>
+
+
+                    <table style="width:100%;">
+                        <tr>
+                            <td colspan="3">
+                                <div class="table-responsive">
+                                    <div class="table-responsive">
+                                        <table style="font-size:12px!important;" width="100%">
+                                            <thead style="border-bottom: none !important;padding:0 5px;">
+                                                <tr>
+                                                    <td><strong>HSN Summary</strong></td>
+                                                    <td><strong>Taxable Value</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== false)"><strong>CGST</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== false)"><strong>SGST</strong></td>
+                                                    <td class="border" ng-if="(OrderData1.IsIgstInvoice== true)"><strong>IGST</strong></td>
+                                                    <!--//cess-->
+                                                    <td class="border" ng-if="(HideCessColumn == true && OrderData1.IsIgstInvoice== false)"><strong>Cess</strong></td>
+                                                    <td><strong>Total</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="border">
+                                                <tr data-ng-repeat="SumDataHSNDetail in  OrderData1.orderDetails">
+                                                    <td>{{SumDataHSNDetail.HSNCode}}</td>
+                                                    <td>{{SumDataHSNDetail.AmtWithoutTaxDisc  | number:2}}</td>
+                                                    <!--<td>{{(SumDataHSNDetail.TaxAmmount + SumDataHSNDetail.CessTaxAmount) | number:2}}</td>-->
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)">{{SumDataHSNDetail.CGSTTaxAmmount| number:2}}</td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)">{{SumDataHSNDetail.SGSTTaxAmmount| number:2}}</td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== true)">{{(SumDataHSNDetail.TaxAmmount + SumDataHSNDetail.CessTaxAmount) | number:2}} </td>
+
+                                                    <td ng-if="(HideCessColumn == true  && OrderData1.IsIgstInvoice== false)">{{SumDataHSNDetail.CessTaxAmount| number:2}}</td>
+                                                    <td>{{(SumDataHSNDetail.AmtWithoutTaxDisc + SumDataHSNDetail.SGSTTaxAmmount+SumDataHSNDetail.CGSTTaxAmmount+SumDataHSNDetail.CessTaxAmount)| number:2}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong> Total:</strong></td>
+                                                    <td><b>{{getTotalTaxableValue(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== true)"><b>{{getTotalIGST(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalCGST(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalSGST(OrderData1.orderDetails) | number:2}}</b></td>
+
+                                                    <td ng-if="(HideCessColumn == true  && OrderData1.IsIgstInvoice== false)"><b>{{getTotalCess(OrderData1.orderDetails) | number:2}}</b></td>
+                                                    <td>
+                                                        <b>{{getTotalIOverall(OrderData1.orderDetails) | number:2}}</b>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="no-print">
+                        <hr />
+                    </div>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="text-align:left;padding-left:10px;vertical-align:top;width:100%;">
+                                <table border="0" style="font-size:14px">
+
+                                    <tr ng-if="OrderData1.deliveryCharge>0">
+                                        <td><b>Delivery Charge:</b>  </td>
+                                        <td>{{OrderData1.deliveryCharge | number:0}}&nbsp;₹ /- <span ng-if="OrderData1.OrderType==4 && OrderData1.paymentThrough=='Cash'">(Included COD Charges)</span></td>
+                                    </tr>
+                                    <tr ng-if="OrderData1.WalletAmount>0">
+                                        <td><b>Wallet Amount: </b></td>
+                                        <td>{{OrderData1.WalletAmount | number:0}}&nbsp;₹ /-</td>
+                                    </tr>
+                                    <tr ng-if="OrderData1.BillDiscountAmount>0">
+                                        <td><b>Bill Discount Amount: </b> <br /><b>Offer Code:</b></td>
+                                        <td>{{OrderData1.BillDiscountAmount | number:0}}&nbsp;<i class="fa fa-inr"></i> <br />{{OrderData1.offertype }}</td>
+                                    </tr>
+                                    <tr ng-if="InvoiceOrderOffer.BillDiscountAmount>0">
+                                        <td><b>Post Offer Code: </b></td>
+                                        <td>{{InvoiceOrderOffer.OfferCode }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Credit Note Amount:</b></td>
+                                        <td>{{OrderData1.CreditNoteAmount}}<i class="fa fa-inr"></i></td>
+                                    </tr>
+                                    <tr ng-if="InvoiceOrderOffer.BillDiscountAmount>0 ">
+                                        <td><b>Post Wallet Amount:</b></td>
+                                        <td>{{InvoiceOrderOffer.BillDiscountAmount| number: 0 }}<i class="fa fa-inr"></i></td>
+                                    </tr>
+                                    <tr ng-if="OrderData1.TCSAmount>0">
+                                        <td> <b>TCS Charge ({{TCSPercent}}%):</b> </td>
+                                        <td> {{OrderData1.TCSAmount | number:2}}&nbsp;₹ /-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Invoice Amount: </b> </td>
+                                        <td><b>&nbsp;{{OrderData1.GrossAmount - (OrderData1.DiscountAmount?OrderData1.DiscountAmount:0) | number:0}} &nbsp;₹ /-</b>&nbsp; &nbsp;&nbsp;<b>({{InvoiceAmountInWord}})</b></td>
+
+                                    </tr>
+
+                                    <tr ng-if="paymentdetail.length>0">
+                                        <td><b>Payment Mode:</b></td>
+                                        <td>
+                                            <span data-ng-repeat="Pd in paymentdetail">
+                                                <span ng-if="Pd.amount>0">{{Pd.PaymentFrom}}</span>
+                                                <span ng-if="Pd.amount<0 && Pd.IsOnline">, {{Pd.PaymentFrom}}</span>
+                                                <span>&nbsp;</span>
+                                                <span ng-if="Pd.amount>0">
+                                                    {{Pd.amount}}&nbsp;₹ /-
+                                                    <span ng-if="Pd.IsOnline">
+                                                        (Paid)
+                                                    </span>
+                                                </span>
+                                                <span ng-if="Pd.amount<0 && Pd.IsOnline">
+                                                    {{Pd.refundAmount}}&nbsp;₹ /- (Refund)
+                                                </span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td><b>Bill Discount Amount: </b> </td>
+                                        <td><b>&nbsp;{{OrderData1.BillDiscountAmount | number:0}} </td>
+                                    </tr>-->
+
+                                </table>
+                                <!--<span style="font-size: 14px;" ng-if="OrderData1.deliveryCharge>0">
+                                    <b>Delivery Charge:</b> {{OrderData1.deliveryCharge | number:0}}&nbsp;₹ /-
+                                </span><br ng-if="OrderData1.deliveryCharge>0" />
+
+                                <span style="font-size: 14px;" ng-if="OrderData1.WalletAmount>0">
+                                    <b>Wallet Amount: </b>{{OrderData1.WalletAmount | number:0}}&nbsp;₹ /-
+                                </span><br ng-if="OrderData1.WalletAmount>0" />
+                                <span style="font-size: 14px;" ng-if="OrderData1.BillDiscountAmount>0"><b>Bill Discount Amount: </b>{{OrderData1.BillDiscountAmount | number:0}}&nbsp;<i class="fa fa-inr"></i></span><br ng-if="OrderData1.BillDiscountAmount>0" />
+                                <span style="font-size: 14px;" ng-if="OrderData1.BillDiscountAmount>0"><b>Offer Code:</b> {{OrderData1.offertype }}</span><br ng-if="OrderData1.BillDiscountAmount>0" />
+                                <span style="font-size: 14px;" ng-if="InvoiceOrderOffer.BillDiscountAmount>0"> <b>Post Offer Code: </b>{{InvoiceOrderOffer.OfferCode }}</span><br ng-if="InvoiceOrderOffer.BillDiscountAmount>0 " />
+                                <span style="font-size: 14px;" ng-if="InvoiceOrderOffer.BillDiscountAmount>0 "><b>Post Wallet Amount</b> : {{InvoiceOrderOffer.BillDiscountAmount| number: 0 }}<i class="fa fa-inr"></i></span><br ng-if="InvoiceOrderOffer.BillDiscountAmount>0 " />
+                                <span style="font-size: 14px;" ng-if="OrderData1.TCSAmount>0">
+                                    <b>TCS Charge ({{TCSPercent}}%):</b> {{OrderData1.TCSAmount | number:0}}&nbsp;₹ /-
+                                </span><br ng-if="OrderData1.TCSAmount>0" />
+                                <span style="font-size: 14px;">
+                                    <b>Invoice Amount:</b> ₹&nbsp;{{OrderData1.GrossAmount - (OrderData1.DiscountAmount?OrderData1.DiscountAmount:0) | number:0}} /-
+                                    &nbsp; &nbsp;&nbsp;<b>({{InvoiceAmountInWord}})</b>
+                                </span><br />
+                                <span ng-if="paymentdetail.length>0">
+                                    <span style="font-size: 14px;">
+                                        <b>  Payment Mode:</b>
+                                        <span data-ng-repeat="Pd in paymentdetail">
+                                            <span>{{Pd.PaymentFrom}}</span>
+                                            <span>&nbsp;&nbsp;</span>
+                                            <span>
+                                                {{Pd.amount}}&nbsp;₹ /-
+                                            </span>
+                                            <span>&nbsp;&nbsp;</span>
+                                        </span>
+                                    </span>
+                                </span>-->
+
+                                <br />
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:left">
+                                <span style="font-size: 14px;text-align:left;margin-left:11px;"><strong><b><u>Terms & conditions</u></b></></strong></span>
+
+                                <!--<span style="font-size: 12px; margin-right:5px;">&nbsp;&nbsp;&nbsp;<b>1).</b> Payment to be made by cash on delivery or Cheque(Same day only)</span></br>
+                                <span style="font-size: 12px; margin-right:5px;">&nbsp;&nbsp;&nbsp;<b>2).</b> Cheques Payable to ShopKirana E Trading Pvt. Ltd.</span></br>
+                                <span style="font-size: 12px; margin-right:5px;">&nbsp;&nbsp;&nbsp;<b>3).</b> Only same day cheques are accepted.</span></br>
+                                <span style="font-size: 12px; margin-right:5px;">4). Cheques retrun charges Rs.200 to Rs.400</span>
+                                <span style="font-size: 12px; margin-right:5px;">&nbsp;&nbsp;&nbsp;<b>4).</b> Cheques Bounce Charges: Cheque Amount 5,000/- to 9999/-; Bounce Charges: INR 300/- For Cheque Amount =>10,000/-& Above; Bounce Charges: INR 500/-</span></br>
+                                <span style="font-size: 12px; margin-right:5px;">&nbsp;&nbsp;&nbsp;<b>5).</b> Cheques are accepted above 5,000.00 only.</span></br>-->
+                                <span style="font-size: 12px; margin-right:5px;">&nbsp;&nbsp;&nbsp;<b>1).</b> Post WalletPoint  will be credited after delivery of order</span><br />
+                                <span style="font-size: 12px; margin-right: 5px; color: red">
+                                    &nbsp;&nbsp;&nbsp;<b>2).</b>* All Amount in Rupee(₹ )
+                                </span><br />
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='6')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>3).</b> Not fit for human consumption.
+                                </span><br />
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='8')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>3).</b> All clearance orders will be placed as prepaid orders.
+                                </span>
+                                <br />
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='8')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>4).</b>All material listed for sale is sold on ‘as-is’ basis.
+                                    Products marked as "non-returnable" on the product detail page cannot be returned.
+                                </span>
+                                <br />
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='8')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>5).</b>Any issue with regards to the product must be reported at the time of delivery.
+                                </span>
+                                <br />
+
+                                <!--Nonsellable-->
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='9')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>3).</b>  All material listed for sale is sold on an ‘as-is’ basis.
+                                </span>
+                                <br />
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='9')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>4).</b>Any issue with regards to the product must be reported at the time of delivery.
+                                </span>
+                                <br />
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='9')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>5).</b> Not fit for re-sale and human consumption.
+                                </span><br />
+                                <span style="font-size: 12px; margin-right:5px;" ng-if="(OrderData1.OrderType =='9')">
+                                    &nbsp;&nbsp;&nbsp;
+                                    <b>6).</b> Not fit for human consumption.
+                                </span>
+                                <br />
+
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left" ng-if="CustomerCount.OrderCount>0">
+                                <span style="font-size: 14px;">
+                                    <strong>Note:-Please complete your KYC. You are eligible for  {{CustomerCount.MaxOrderLimit-CustomerCount.OrderCount}} more orders. Current Order Count = {{CustomerCount.OrderCount}}/ {{CustomerCount.MaxOrderLimit}}.</strong>
+                                </span>
+                            </td>
+                        </tr>
+                        <!--</tbody>-->
+                    </table>
+                    <!--<br />-->
+
+                    <br />
+                    <table>
+                        <tr>
+                            <td>
+
+                                <span>
+                                    This is computer generated invoice no signature required
+                                </span>
+                                <br />
+                                <span>* The courts at Indore alone will have jurisdiction in respect of all disputes arising with regard to the goods sold under this invoice.</span>
+                                <br />
+
+                                <p style="color:red;border:1px dotted black" ng-if="CustomerCriticalInfo">
+                                    *{{CustomerCriticalInfo}}
+                                </p>
+
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div style="color:red" ng-if="(OrderData1.Status == 'Pending'|| OrderData1.Status=='Ready to Dispatch'||  OrderData1.Status=='Order Canceled')">*You can not take Invoice print till assignment finalized.</div>
+
+                    <div class="row no-print" style=" margin-bottom: 2%;">
+
+                        <button id="btnPrint" ng-hide="(OrderData.Status == 'Pending'|| OrderData.Status=='Ready to Dispatch'||  OrderData.Status=='Order Canceled')" class="btn-sm btn-primary printer no-print" style="float:right; margin-right: 15px;" onclick="javascript: printDiv('divtoPrint')">
+                            <span class="glyphicon glyphicon-print no-print"> </span> Print Invoice
+                        </button>
+
+                    </div>
+
+                    <style type="text/css">
+                        @media print {
+                            table {
+                                top: 10px !important;
+                            }
+
+                                table, table tr, table td {
+                                    border-top: #000 solid 1px !important;
+                                    border-bottom: #000 solid 1px !important;
+                                    border-left: #000 solid 1px !important;
+                                    border-right: #000 solid 1px !important;
+                                    border-spacing: 0;
+                                    padding: 0;
+                                    text-align: center;
+                                }
+                        }
+                    </style>
+                    <style>
+                        @media print {
+                            #btnPrint {
+                                display: none !important;
+                            }
+
+                            .printer {
+                                display: none !important;
+                            }
+
+                            .clss {
+                                position: fixed;
+                                font-size: small;
+                                text-align: left;
+                                bottom: 0px;
+                                width: 100%;
+                            }
+                        }
+                    </style>
+                </div>
+                <!--<div id="digitalOrder" class="containers invoice" IsDigitalOrder="{{IsDigitalOrder}}">
+
+                </div>-->
+            </div>
+        </form>
+    </script>
+
+
+    <script type="text/ng-template" id="BackendOrderInvoiceZilaModel.html">
+        <style>
+            @media print {
+                .no-print {
+                    display: none !important;
+                }
+
+                body {
+                    font-family: Calibri !important;
+                    line-height: 2px !important;
+                    width: 100% !important;
+                    height: 100% !important;
+                }
+
+                .invoice {
+                    margin-left: 3px !important;
+                }
+
+                thead, tr, td {
+                    font-size: smaller !important
+                }
+
+                table, tr, td {
+                    font-size: smaller !important
+                }
+
+                table, tr, th {
+                    font-size: smaller !important
+                }
+
+                #btnPrint {
+                    display: none !important;
+                }
+            }
+
+            /* th {
+                width: 12%;
+                padding-top: 16px;
+            }*/
+
+            #PERSONAL {
+                font-family: Calibri !important;
+                font-weight: 600 !important;
+                text-align: center !important;
+            }
+
+            p {
+                text-align: center !important;
+                font-family: Calibri !important;
+                font-size: 12px !important
+            }
+
+            .heading1 {
+                text-align: left !important;
+                margin-left: 3px !important;
+            }
+
+            hr {
+                border: 1px dotted !important;
+            }
+
+            .heading2 {
+                justify-content: space-between !important;
+            }
+        </style>
+
+        <form name="OrderInvoiceModel">
+            <div id="divtoPrint">
+
+                <div class="containers invoice">
+
+                    <body>
+                        <div class="row" style="display: inline-flex; text-align: center;">
+                            <div class="col-md-6">
+                                <img src="../Content/ZilaLogo.svg" width="220px" height="100px" />
+                            </div>
+                            <div class="col-md-6" style="margin-top:10px">
+                                <img src="data:image/png;base64,{{OrderData1.InvoiceBarcodeImage}}" width="220px" height="80px" />
+                            </div>
+
+                        </div>
+                        <p style="font-size: smaller !important; font-family: Calibri !important">
+                            <strong>  Place of Supply:</strong> {{FromWarehouseDetail.Address}}
+                            <br />
+                            <strong> Contact : </strong>{{FromWarehouseDetail.Phone}}  |<strong> Visit us :</strong>www.zilastore.com
+                        </p>
+                        <p style="font-size: smaller !important; font-family: Calibri !important; line-height: 0px; text-align: center !important"><strong> GSTIN : </strong> {{FromWarehouseDetail.GSTin}}</p>
+                        <h4 style="text-align: center; font-weight: 600;">TAX INVOICE</h4>
+                        <table>
+                            <tr data-ng-repeat="orderDetail in OrderData1.orderDetails | filter: RemoveZeroQtyItemInvoice('Noqty', 0)" =" >
+                                <div class="row" style=" display: ruby;">
+                                    <div class="col-md-6 heading1" style="text-align:start;font-family: Calibri !important; margin-top: -15px;font-size:smaller !important ">
+                                        <!--<strong> Invoice No. :</strong> &nbsp; {{OrderData1.invoice_no}}<br />-->
+                                        <strong> Invoice Date:</strong> &nbsp; {{OrderData1.CreatedDate |date :"dd:MM:yyyy hh:mm"}} <br />
+                                        <strong> Order No.: </strong> &nbsp;{{OrderData1.OrderId}}<br />
+                                        <strong> Customer Id :</strong> &nbsp;{{OrderData1.Skcode}}<br />
+                                        <strong> Mobile No. :</strong> &nbsp;{{OrderData1.Customerphonenum}}<br />
+                                    </div>
+                                    <!--<div class="col-md-6" style="text-align:center;" ng-if="OrderData1.InvoiceBarcodeImage!=null">-->
+                                        <!--<label>Bar Code</label><br />-->
+                                        <!--<img src="data:image/png;base64,{{OrderData1.InvoiceBarcodeImage}}" width="350" style=" margin-top: -10%;" height="80" />
+                                    </div>-->
+                                </div>
+
+                            </tr>
+
+                            <thead>
+                                <tr>
+                                    <td class="border" style="width: 22% !important; font-size: smaller !important; font-family: Calibri !important; border-top: 1px dotted #000 !important; white-space: nowrap; "><strong>Item No.</strong></td>
+                                    <td style="font-family: Calibri !important; text-align: center; font-size: smaller !important; border-top: 1px dotted #000 !important;"><strong>Qty</strong></td>
+                                    <td style="font-family: Calibri !important; font-size: smaller !important; border-top: 1px dotted #000 !important; white-space: nowrap;"><strong>Rate</strong></td>
+                                    <td style="font-family: Calibri !important; font-size: smaller !important; border-top: 1px dotted #000 !important; white-space: nowrap;"><strong>Net Amt</strong></td>
+
+                                </tr>
+                                <tr>
+                                    <td class="border" style="width: 22% !important; font-size: smaller !important; font-family: Calibri !important; border-bottom: 1px dotted #000 !important; white-space: nowrap; "><strong>Item Name</strong></td>
+                                    <td style="width: 5% !important; font-family: Calibri !important; text-align: center; font-size: smaller !important; border-bottom: 1px dotted #000 !important; "></td>
+                                    <td style="width: 6% !important; font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted #000 !important; white-space: nowrap; "><strong>HSN Code</strong></td>
+                                    <td style="width: 23% !important; font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted #000 !important; white-space: nowrap; "><strong>Taxable Amt</strong></td>
+                                </tr>
+                            </thead>
+
+                            <tbody data-ng-repeat="i in GetBackendZilaInvoiceData">
+                                <tr>
+                                    <td style=" font-size: smaller !important; font-family: Calibri !important; white-space: nowrap;font-weight:600 !important "> {{indexToLetter($index)}})&nbsp; CGST@{{i.Cgst}}% SGST@{{i.Cgst}}% </td>
+                                </tr>
+                                <tr data-ng-repeat="orderDetail in i.OrderDetails">
+
+                                    <td style="width: 6%; font-size: smaller !important; font-family: Calibri !important; border-bottom: 1px dotted #000 !important;">
+                                        {{orderDetail.itemNumber}}
+                                        <br />
+                                        {{orderDetail.itemname}}
+                                    </td>
+                                    <td style="text-align: center; font-size: smaller !important; font-family: Calibri !important; border-bottom: 1px dotted #000 !important;">
+                                        {{orderDetail.Noqty}} <br />
+                                        <div style="color:white !important">.</div>
+                                    </td>
+                                    <td style="font-size: smaller !important; font-family: Calibri !important; border-bottom: 1px dotted #000 !important;">
+                                        {{(orderDetail.UnitPrice==0.0001 || orderDetail.UnitPrice==0.01)? (orderDetail.UnitPrice | number : 4) : (orderDetail.UnitPrice | number : 2)}}
+                                        <br />
+                                        {{orderDetail.HSNCode}}
+                                    </td>
+                                    <td style="font-size: smaller !important; font-family: Calibri !important; border-bottom: 1px dotted #000 !important;">
+                                        {{orderDetail.TotalAmountAfterTaxDisc |number:2}}
+                                        <br />
+                                        {{orderDetail.AmtWithoutTaxDisc | number:2}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table>
+                            <tr>
+                                <th style="text-align: start !important; display: inline !important; font-size: small !important; font-family: Calibri !important">
+                                    Net Amt :
+                                </th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="width: 50%; font-family: Calibri !important;font-size:small !important">Qty:{{getTotalQty(OrderData1.orderDetails)}}</td>
+                                <td style="width: 6%; font-size: small !important; font-family: Calibri !important"><strong>{{getTotalAmtIncTaxes(OrderData1.orderDetails) | number:2}}</strong></td>
+                            </tr>
+                            <!--<tr>
+        		<th style="text-align: start !important; font-size: small !important; font-family: Calibri !important; width: 33% !important;">
+            Total Tax Amt:
+        </th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="width:7%"></td>
+        <td style="width: 6%; font-size: small !important; font-family: Calibri !important"><strong>{{OrderData1.TaxAmount | number:2}}</strong></td>
+    </tr>-->
+                            <tr ng-if="OrderData1.BillDiscountAmount > 0">
+                                <th style="text-align: start !important; display: inline !important; font-size: small !important; font-family: Calibri !important">
+                                    Discount:
+                                </th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="width:7%"></td>
+                                <td style="width: 6%; font-size: small !important; font-family: Calibri !important"> <strong> -{{OrderData1.BillDiscountAmount | number:0}}</strong></td>
+                            </tr>
+                            <tr ng-if="OrderData1.WalletAmount>0">
+                                <th style="text-align: start !important; font-size: small !important; font-family: Calibri !important; width: 40% !important; width: 44% !important; ">
+                                    Wallet Amt:
+                                </th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="width:7%"></td>
+                                <td style="width: 6%; font-size: small !important; font-family: Calibri !important"> <strong> -{{OrderData1.WalletAmount | number:0 }}</strong></td>
+                            </tr>
+                            <tr ng-if="OrderData1.CreditNoteAmount>0">
+                                <th style="text-align: start !important; font-size: small !important; font-family: Calibri !important; width: 40% !important; width: 44% !important; ">
+                                    Credit Note Amt:
+                                </th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="width:7%"></td>
+                                <td style="width: 6%; font-size: small !important; font-family: Calibri !important"> <strong> -{{OrderData1.CreditNoteAmount | number:0 }}</strong></td>
+                            </tr>
+                            <tr>
+                                <th style="text-align: start !important; font-size: small !important; font-family: Calibri !important; border-bottom: 1px dotted black !important">Payable Amt:</th>
+                                <td style="border-bottom: 1px dotted black !important"></td>
+                                <td style="border-bottom: 1px dotted black !important"></td>
+                                <td style="border-bottom: 1px dotted black !important"></td>
+                                <td style="width: 7%;border-bottom: 1px dotted black !important"></td>
+                                <td style="width: 6%; font-size: small !important; font-family: Calibri !important; border-bottom: 1px dotted black !important"><strong>{{OrderData1.GrossAmount | number:2}}</strong></td>
+                            </tr>
+                           
+                        </table>
+                        <div>
+                            <table>
+                                <tr>
+                                    <td style="font-size: small !important; font-family: Calibri !important"><b>Payment Ref No: &nbsp;</b></td>
+                                    <td>
+                                        <span data-ng-repeat="Pd in paymentdetail">
+                                            <span style="font-size: small !important; font-family: Calibri !important">{{Pd.GatewayTransId}}</span>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr ng-if="paymentdetail.length>0">
+                                    <td style="font-size: small !important; font-family: Calibri !important"><b>Payment Mode: &nbsp; </b></td>
+                                    <td>
+                                        <span data-ng-repeat="Pd in paymentdetail">
+                                            <span style="font-size: small !important; font-family: Calibri !important" ng-if="Pd.amount>0">{{Pd.PaymentFrom}}</span>
+                                            <span ng-if="Pd.amount<0 && Pd.IsOnline">, {{Pd.PaymentFrom}}</span>
+                                            <span>&nbsp;</span>
+                                            <span ng-if="Pd.amount>0" style="font-size: small !important; font-family: Calibri !important">
+                                                {{Pd.amount}}&nbsp;₹ /-
+                                                <span ng-if="Pd.IsOnline" style="font-size: small !important; font-family: Calibri !important">
+                                                    (Paid)
+                                                </span>
+                                            </span>
+                                            <span ng-if="Pd.amount<0 && Pd.IsOnline" style="font-size: small !important; font-family: Calibri !important">
+                                                {{Pd.refundAmount}}&nbsp;₹ /- (Refund)
+                                            </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="font-size:12px!important;" width="100%">
+                                <thead style="border-bottom: none !important;padding:0 5px;">
+                                    <tr style="text-align: center; border-top: 1px dotted black !important;">
+                                        <td style="border-top: 1px dotted black !important;"></td>
+                                        <td style="border-top: 1px dotted black !important;"></td>
+                                        <td style="border-top: 1px dotted black !important; text-align: center !important; font-weight: 600;"> <h4 style=" margin-top: 0px !important; margin-bottom: 3px !important;">Tax Details</h4> </td>
+                                        <td style="border-top: 1px dotted black !important;"></td>
+                                        <td style="border-top: 1px dotted black !important;"></td>
+                                    </tr>
+                                    <tr style="text-align: center !important;">
+                                        <td style="font-family:Calibri !important; border-bottom: 1px dotted black !important; font-size: smaller !important;">
+                                            <strong>
+                                                GST IND
+                                            </strong>
+                                        </td>
+                                        <td style="font-family: Calibri !important; border-bottom: 1px dotted black !important; font-size: smaller !important; "><strong>Taxable Value</strong></td>
+                                        <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border;" ng-if="(OrderData1.IsIgstInvoice== false)"><strong>CGST</strong></td>
+                                        <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border" ng-if="(OrderData1.IsIgstInvoice== false)"><strong>SGST</strong></td>
+                                        <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border" ng-if="(OrderData1.IsIgstInvoice== true)"><strong>IGST</strong></td>
+                                        <!--//cess-->
+                                        <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border" ng-if="(HideCessColumn == true && OrderData1.IsIgstInvoice== false)"><strong>Cess</strong></td>
+                                        <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important "><strong>Total Amt</strong></td>
+                                    </tr>
+                                </thead>
+                                <tbody class="border">
+                                    <tr data-ng-repeat="SumDataHSNDetail in  hsnsummarydc" style="text-align: center !important;">
+                                        <td>{{indexToLetter($index)}})</td>
+                                        <td>{{SumDataHSNDetail.TaxableAmount | number:2}}</td>
+                                        <td ng-if="(OrderData1.IsIgstInvoice== false)">{{SumDataHSNDetail.CgstPercent| number:2}}</td>
+                                        <td ng-if="(OrderData1.IsIgstInvoice== false)">{{SumDataHSNDetail.CgstPercent| number:2}}</td>
+                                        <td ng-if="(OrderData1.IsIgstInvoice== true)">{{SumDataHSNDetail.IgstPercent | number:2}} </td>
+                                        <td>{{SumDataHSNDetail.TaxableAmount | number:2}} </td>
+                                    </tr>
+                                    <tr style="text-align: center !important;">
+                                        <td style="border-top:1px dotted black !important; border-bottom: 1px dotted black !important"><strong> Total:</strong></td>
+                                        <td style="border-top:1px dotted black !important; border-bottom: 1px dotted black !important"><b>{{getTotalTaxableValue(OrderData1.orderDetails) | number:2}}</b></td>
+                                        <td style="border-top:1px dotted black !important; border-bottom: 1px dotted black !important" ng-if="(OrderData1.IsIgstInvoice== true)"><b>{{getTotalIGST(OrderData1.orderDetails) | number:2}}</b></td>
+                                        <td style="border-top:1px dotted black !important; border-bottom: 1px dotted black !important" ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalCGST(OrderData1.orderDetails) | number:2}}</b></td>
+                                        <td style="border-top:1px dotted black !important; border-bottom: 1px dotted black !important" ng-if="(OrderData1.IsIgstInvoice== false)"><b>{{getTotalSGST(OrderData1.orderDetails) | number:2}}</b></td>
+
+                                        <td style="border-top: 1px dotted black !important; border-bottom: 1px dotted black !important" ng-if="(HideCessColumn == true  && OrderData1.IsIgstInvoice== false)"><b>{{getTotalCess(OrderData1.orderDetails) | number:2}}</b></td>
+                                        <td style="border-top: 1px dotted black !important; border-bottom: 1px dotted black !important">
+                                            <b>{{getTotalIOverall(OrderData1.orderDetails) | number:2}}</b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="text-align: center; font-family: Calibri !important;margin-top:3%;font-size:smaller !important;border-bottom:1px dotted black !important">
+
+                                <h5 style="text-align: center !important; font-family: Verdana !important; line-height: 0px; margin-bottom: -2px;">Shopkirana E-Trading Pvt Ltd</h5><br />
+                                <div style="font-size: smaller !important; font-family: Calibri !important; text-align:center !important">
+                                    <strong>
+                                        Address:
+                                    </strong> 1501, 15th Floor, Skye Corporate Park, Plot No. 25 Scheme No. 78, Part II, Sector-B, Indore 452010
+                                </div>
+                                <p style="font-size: smaller !important; font-family: Calibri !important; text-align:center !important"><strong> CIN : </strong> U51109MP2014PTC033534</p>
+                            </div>
+                            <div style="text-align: center; font-family: Calibri !important;font-size:smaller !important">
+                                *All offers are subject to Terms and Conditions as mentioned on Website.<br />
+                                *Exchange of items only acceptable if returned in original/packed condition within 15 days of purchase.<br />
+                                *Return of any of the items will not be accepted.<br />
+                                *This is a computer generated invoice and hence does not require any signature.<br />
+                                <h4 style="font-family: Calibri !important"><strong> Thank You for Shopping with us</strong> </h4>
+                            </div>
+                        </div>
+</div>
+                </body>
+
+
+
+
+            </div>
+
+            <div class="row no-print" style=" margin-bottom: 2%;text-align:right !important;margin-right:10px !important">
+
+                <button id="btnPrint" ng-hide="(OrderData.Status == 'Pending'|| OrderData.Status=='Ready to Dispatch'||  OrderData.Status=='Order Canceled')" class="btn-sm btn-primary printer no-print" onclick="javascript: printDiv('divtoPrint')">
+                    <span class="glyphicon glyphicon-print no-print"> </span> Print Invoice
+                </button>
+
+            </div>
+            <!--<div class="row no-print" style=" margin-bottom: 2%;">
+
+                <button id="btnPrint" ng-hide="(OrderData.Status == 'Pending'|| OrderData.Status=='Ready to Dispatch'||  OrderData.Status=='Order Canceled')" class="btn-sm btn-primary printer no-print" style="float:right; margin-right: 15px;" onclick="javascript: printDiv('divtoPrint')">
+                    <span class="glyphicon glyphicon-print no-print"> </span> Print Invoice
+                </button>
+
+            </div>-->
+            </body>
+            <style>
+                @media print {
+                    #btnPrint {
+                        display: none !important;
+                    }
+                }
+            </style>
+</div>
+<!--</form>-->
+    </script>
+<script type="text/ng-template" id="BackendOrdercreditNoteInvoiceModel.html">
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                font-family: Calibri !important;
+                line-height: 2px !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+
+            .invoice {
+                margin-left: 3px !important;
+            }
+
+            thead, tr, td {
+                font-size: smaller !important
+            }
+
+            table, tr, td {
+                font-size: smaller !important
+            }
+
+            table, tr, th {
+                font-size: smaller !important
+            }
+
+            #btnPrint {
+                display: none !important;
+            }
+        }
+
+        /* th {
+                width: 12%;
+                padding-top: 16px;
+            }*/
+
+        #PERSONAL {
+            font-family: Calibri !important;
+            font-weight: 600 !important;
+            text-align: center !important;
+        }
+
+        p {
+            text-align: center !important;
+            font-family: Calibri !important;
+            font-size: 12px !important
+        }
+
+        .heading1 {
+            text-align: left !important;
+            margin-left: 3px !important;
+        }
+
+        hr {
+            border: 1px dotted !important;
+        }
+
+        .heading2 {
+            justify-content: space-between !important;
+        }
+    </style>
+
+    <form name="OrderInvoiceModel">
+        <div id="divtoPrint">
+
+            <div class="containers invoice">
+
+                <body>
+                    <p class="s1" style="text-align: center; font-family: Verdana !important; line-height: 10px;">
+                        <img src="../Content/ZilaLogo.svg" width="220px" height="100px" />
+                    </p>
+                    <p style="font-size: x-small !important; font-family: Calibri !important">
+                        <strong>  Place of Supply:</strong> {{FromWarehouseDetail.Address}}
+                        <br />
+                        <strong> Contact : </strong>{{FromWarehouseDetail.Phone}}  |<strong> Visit us :</strong>www.zilastore.com
+                    </p>
+                    <p style="font-size: small !important; font-family: Calibri !important; line-height: 0px; text-align: center !important"><strong> GSTIN : </strong> {{FromWarehouseDetail.GSTin}}</p>
+                    <h4 style="text-align: center; font-weight: 600; margin-bottom: 4px;">Credit Note</h4>
+                    <div style="text-align: start !important; font-family: Calibri !important;font-size:small !important;">
+                        <strong> Issue Date :</strong> &nbsp;{{PrintCreditNoteInvoice.CreatedDate|date}}<br />
+                        <strong>Skcode : </strong> &nbsp; {{PrintCreditNoteInvoice.SKCode}}<br />
+                        <strong>Mobile No.</strong> &nbsp;{{PrintCreditNoteInvoice.MobileNo}}
+                    </div>
+                    <div style="text-align: center; font-family: Calibri !important;margin-top:3%;font-size:smaller !important;border-bottom:1px dotted black !important">
+                        <h5 style="text-align: center !important; font-family: Verdana !important; line-height: 12px; "><strong>Credit Note Number : </strong>  &nbsp;{{PrintCreditNoteInvoice.CreditNoteNumber}} </h5>
+                        <h5 style="text-align: center !important; font-family: Verdana !important; line-height: 0px; "><strong>Credit Note Amount : </strong>  &nbsp;{{PrintCreditNoteInvoice.Amount}} </h5>
+                        <h5 style="text-align: center !important; font-family: Verdana !important; line-height: 0px;"><strong>Expires On :</strong>{{PrintCreditNoteInvoice.CreditNoteValidTill | date}}</h5>
+                    </div>
+                    <div style="text-align: center; font-family: Calibri !important;margin-top:3%;font-size:smaller !important;border-bottom:1px dotted black !important">
+
+                        <h5 style="text-align: center !important; font-family: Verdana !important; line-height: 0px; margin-bottom: -2px;">Shopkirana E-Trading Pvt Ltd</h5><br />
+                        <div style="font-size: smaller !important; font-family: Calibri !important; text-align:center !important">
+                            <strong>
+                                Address:
+                            </strong> 1501, 15th Floor, Skye Corporate Park, Plot No. 25 Scheme No. 78, Part II, Sector-B, Indore 452010
+                        </div>
+                        <p style="font-size: smaller !important; font-family: Calibri !important; text-align:center !important"><strong> CIN : </strong> U51109MP2014PTC033534</p>
+                    </div>
+                    <div style="text-align: center; font-family: Calibri !important;font-size:x-small !important">
+                        *The Credit Note  Can Only be Used In a Zila Store Order as Per T&C<br />
+                        *This Credit Note Can Only be Used In Full Value against a Single  Order,no Partial Amount Will be Returned<br />
+                        *This Credit Note Cannot be Used After The Expiry Date<br />
+                        *This Credit Note Can Only be Redeemed Once On a Single Order<br />
+                        <h4 style="font-family: Calibri !important"><strong> Thank You for Shopping with us</strong> </h4>
+                    </div>
+            </div>
+            </body>
+
+
+
+
+        </div>
+
+        <div class="row no-print" style=" margin-bottom: 2%;text-align:right !important;margin-right:10px !important">
+
+            <button id="btnPrint" ng-hide="(OrderData.Status == 'Pending'|| OrderData.Status=='Ready to Dispatch'||  OrderData.Status=='Order Canceled')" class="btn-sm btn-primary printer no-print" onclick="javascript: printDiv('divtoPrint')">
+                <span class="glyphicon glyphicon-print no-print"> </span> Print Invoice
+            </button>
+
+        </div>
+        <!--<div class="row no-print" style=" margin-bottom: 2%;">
+
+            <button id="btnPrint" ng-hide="(OrderData.Status == 'Pending'|| OrderData.Status=='Ready to Dispatch'||  OrderData.Status=='Order Canceled')" class="btn-sm btn-primary printer no-print" style="float:right; margin-right: 15px;" onclick="javascript: printDiv('divtoPrint')">
+                <span class="glyphicon glyphicon-print no-print"> </span> Print Invoice
+            </button>
+
+        </div>-->
+        </body>
+        <style>
+            @media print {
+                #btnPrint {
+                    display: none !important;
+                }
+            }
+        </style>
+</script>
+</div>
+<style>
+    .modal-content {
+        margin-left: -17% !important;
+    }
+
+    .enlarged {
+        width: 300px; /* Set the initial enlarged width */
+        height: 300px; /* Set the initial enlarged height */
+    }
+    /*.enlarged {
+        width: 300px;
+        height: 300px;
+        transition: width 0.3s, height 0.3s;*/ /* Add a smooth transition effect */
+    }
+    /* .panel-body {
+        padding: 28px !important;
+    }*/
+
+</style>
+<script>
+    function toggleImageSize(img) {
+        if (img.classList.contains('enlarged')) {
+            img.classList.remove('enlarged');
+        } else {
+            img.classList.add('enlarged');
+        }
+    }
+</script>
+<!--<script>
+    function enlargeImage(img) {
+        img.style.width = '300px';  // Set the desired width
+        img.style.height = '300px'; // Set the desired height
+    }
+
+</script>-->
+<!--<script type="text/ng-template" id="BackendOrderInvoice.html" style="width: 145%; ">-->
+<style>
+    .responsive-image {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+<div class="container">
+    <div class="modal fade" id="popup" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="row">
+                    <!--<div class="col-md-12" style="text-align:right">-->
+                    <div class="modal-header" style="border-bottom: 0px solid #e5e5e5 !important;">
+                        <button type="button" class="close" style=" font-size: xx-large; margin-right: 11px;" ng-click="closepaymentdetail()">×</button>
+                    </div>
+                </div>
+                <div class="page page-table">
+
+                    <section class="panel panel-default table-dynamic" style="padding: 24px;">
+                        <div class="panel-heading">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>
+                                        <span class="glyphicon glyphicon-th"> </span> Payment Update
+                                    </strong>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>
+                                        <h4>Total Amount : <b>{{OrderData.GrossAmount}}</b></h4>
+                                    </strong>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="panel-body">
+                            <div class="row" style="margin-bottom:2%">
+                                <div class="col-md-2" style=" text-align: center;">
+                                    <label><h4><strong> Payment Mode</strong></h4></label>
+                                </div>
+                                <div class="col-md-4" style=" text-align: center;">
+                                    <label><h4> <strong> Amount</strong></h4></label>
+                                </div>
+                                <div class="col-md-4" style=" text-align: center;">
+                                    <label><h4> <strong>Reference Number </strong></h4></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label style="font-size: 16px; display: flex; ">
+                                        <input style="width: 20px; height: 20px; margin-right: 5px; margin-bottom: 0;" type="checkbox" id="Cash" name="Cash" ng-model="Data.Cash" ng-change="paymentmode(PaymentStatusCash)" disabled>  <strong> Cash</strong>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <!--<label style=" margin-right: 15px;">Amount</label>-->
+                                    <input class="form-control" ng-model="tottalll" placeholder=" Enter Amount" disabled ng-keypress="amountdecimal($event)" id="cashAmount" ng-keyup="keypress(Amount,OrderData)" name="cashAmount" type="number" />
+                                    <!--ng-disabled="IsAddPaymnet2"-->
+                                </div>
+
+                            </div>
+                            <div class="row" style="margin-top:2%" ng-repeat="item in dataItems">
+                                <div class="col-md-2">
+                                    <label style="font-size: 16px; display: flex; ">
+                                        <input style="width: 20px; height: 20px; margin-bottom: 0; margin-right: 5px;" type="checkbox" id="UPI{{$index}}" name="UPI{{$index}}" ng-model="item.UPI" ng-change="paymentmodeUpi(item,{{$index}})"> UPI
+                                    </label>
+                                </div>
+                                <div class="col-md-4" ng-if="item.modepaymentUpi">
+                                    <!--<label style="margin-right: 15px;">Amount</label>-->
+                                    <input class="form-control" ng-model="item.amount.upi" placeholder="Please Enter Amount" ng-disabled="item.isupiamountbtn " ng-keypress="amountdecimal($event)" id="UPI{{$index}}" ng-keyup="keypress(item.amount.upi, OrderData)" name="UPI{{$index}}" type="number" />
+                                </div>
+
+                                <div class="col-md-1" style="display: flex; margin-right: 2%;" ng-if="(item.modepaymentUpi ) && item.isqrgenerated && isqrenabled ">
+                                    <label></label>
+                                    <button type="button" id="stdamageorder" ng-disabled="item.qrrefance" class="btn btn-ar btn-primary" ng-click="QRCodeGen(item)">QRCode <br />Gen </button>
+                                </div>
+                                <div ng-if="item.isqrgenerated && item.qrrefance" class="col-md-3" style="display: inline-block; margin-top: -19px;">
+                                    QRCode
+                                    <br />
+                                    <img src="{{item.qrCode}}" width="100" height="100" ng-mouseover="showqrcodelarge(item)" />
+                                </div>
+                                <div id="imagePopup" style="display: none; position: fixed; top: 72%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border-radius: 8px; z-index: 1001; width: auto; height: auto">
+                                    <img src="{{item.qrCode}}" class="responsive-image" />
+                                    <button ng-click="closePopup()" style="position: absolute; top: 100px; right: 10px;">X</button>
+
+                                </div>
+                                <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000;" onclick="closePopup()"></div>
+
+                                <div class="col-md-1" style="display: flex; margin-right: 2%;" ng-if="item.isqrgenerated && item.qrrefance">
+                                    <label></label>
+                                    <button style=" margin-left: 30px;" type="button" ng-disabled="!item.ischeckstatus" id="stdamageorder" class="btn btn-ar btn-primary" ng-click="StatusMsg(item)">Check<br /> Status</button>
+                                </div>
+                                <!--ng-if="isqrenabled && RefanceNumberStatus"-->
+                                <!--<div class="col-md-2" ng-if='isqrenabled && item.ref["Upi"] >0'>
+                                    <label style="margin-right: 15px; display: inline-block;">Reference Number</label>
+                                    <input style=" width: 173%; margin-left: 14px;" placeholder="Enter Reference Number" ng-keypress="preventSpaceAndMinus($event)" ng-model='item.ref["Upi"]' ng-change="UPIRef(item)" id="Reference" name="Reference" class="form-control" type="text" />
+                                </div>-->
+                                <div class="col-md-4" ng-if=" item.modepaymentUpi ">
+                                    <!--<label style="margin-right: 15px; display: inline-block;">Reference Number</label>-->
+                                    <input ng-keypress="preventSpaceAndMinus($event)" placeholder="Enter Reference Number" ng-model="item.ref.Upi" ng-change="UPIRef(item)" id="Referen" name="Referen" class="form-control" type="text" />
+                                </div>
+
+                            </div>
+                            <!--<div class="row" style="margin-top: 2%">
+                                <div class="col-md-12" style="text-align:left" ng-if="isaddbtnenabled && isqrenabled">
+                                    <label>
+                                        <span class="glyphicon glyphicon-plus" style="color: #00a4e9; border-color: #00a4e9; font-size: 20px; " ng-click="addSomething()"> </span>
+                                    </label>-->
+                                    <!--<span style="color: red; font-size: 22px;" class="glyphicon glyphicon-minus" ng-click="removeLast()" ng-show="dataItems.length > 1"></span>-->
+                                <!--</div>
+                                <div class="col-md-12" style="text-align:left" ng-if="!isqrenabled">
+                                    <label>
+                                        <span class="glyphicon glyphicon-plus" style="color: #00a4e9; border-color: #00a4e9; font-size: 20px; " ng-click="addSomething()"> </span>
+                                    </label>-->
+                                    <!--<span style="color: red; font-size: 22px;" class="glyphicon glyphicon-minus" ng-click="removeLast()" ng-show="dataItems.length > 1"></span>-->
+                                <!--</div>
+                            </div>-->
+                            <!--<div class="row" style="margin-top:2%">
+                                <div class="col-md-2">
+                                    <label style="font-size: 16px; display: flex; ">
+                                        <input style="width: 20px; height: 20px; margin-right: 5px; margin-bottom: 0;" type="checkbox" id="RTGS" name="RTGS" ng-model="Data.RTGS" ng-change="paymentmodeRTGS(Data)">RTGS
+                                    </label>
+                                </div>
+                                <div class="col-md-4" ng-if="modepaymentRTGS">-->
+                                    <!--<label style=" margin-right: 15px;">Amount</label>-->
+                                    <!--<input class="form-control" ng-model="Data.AmountRtgs" placeholder="Please Enter Amount" ng-disabled="isrtgsamountbtn" ng-keypress="amountdecimal($event)" ng-keyup="keypress(Data.AmountRtgs, OrderData)" id="rtgs" name="rtgs" type="number" />
+
+                                </div>
+                                <div class="col-md-4" ng-if="modepaymentRTGS">-->
+                                    <!--<label>Reference Number</label>-->
+                                    <!--<input ng-disabled="hidde ||IsAddPaymnet2" placeholder="Enter Reference Number" ng-keypress="preventSpaceAndMinus($event)" ng-model="Data.RefanceRTGS" ng-change="RTGSRef(Data)" id="Referen" name="Referen" class="form-control" type="text" />
+                                </div>
+
+                            </div>
+                            <div class="row" style="margin-top:2%">
+                                <div class="col-md-2">
+                                    <label style="font-size: 16px; display: flex; ">
+                                        <input style="width: 20px; height: 20px; margin-bottom: 0; margin-right: 5px;" type="checkbox" id="POS" name="POS" ng-model="Data.POS" ng-change="paymentmodePOS(Data)"> POS
+                                    </label>
+                                </div>
+                                <div class="col-md-4" ng-if="modepaymentPOS">-->
+                                    <!--<label style=" margin-right: 15px;" >Amount</label>-->
+                                    <!--<input class="form-control" ng-model="Data.AmountPOS" placeholder="Please Enter Amount" ng-disabled="isposamountbtn" ng-keypress="amountdecimal($event)" id="posAmount" ng-keyup="keypress(Data.AmountPOS,OrderData)" name="posAmount" type="number" />
+
+                                </div>
+                                <div class="col-md-4" ng-if="modepaymentPOS">-->
+                                    <!--<label>Reference Number</label>-->
+                                    <!--<input ng-disabled="hidde ||IsAddPaymnet2" placeholder="Enter Reference Number" ng-keypress="preventSpaceAndMinus($event)" ng-model="Data.RefancePOS" ng-change="POSRef(Data)" id="Referen" name="Referen" class="form-control" type="text" />
+                                </div>
+
+                            </div>-->
+                            <div class="row">
+
+                                <div class="col-md-12" style="text-align:right">
+                                    <label></label>
+                                    <!--ng-disabled="Ispaymentupdateseen == false"-->
+                                    <button type="button" ng-disabled="OrderData.GrossAmount != totalAmountOfLists" class="btn btn-ar btn-primary" style="margin-top:25px;" ng-click="updatepayment(OrderData)">Update</button>
+
+                                    <!--<button type="button" ng-disabled="Ispaymentupdateseen == false" class="btn btn-ar btn-primary" style="margin-top:25px;" ng-click="updatepayment(OrderData)">Update</button>                        </div>-->
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--</script>-->
+
+<script>
+    function printDiv(divID) {
+
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrint");
+        onRouteChangeOff();
+        window.location.reload();
+    }  function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print();window.close();"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print();window.close();">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+</script>
+<!--<script type="text/ng-template" id="isshowreturnpopup">
+<div class="modal-dialog">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="Close()">×</button>
+    </div>
+    <h4 style="text-align:center"><b>Are you sure you want to proceed?</b></h4>
+    <div class="row" style="text-align :center;margin-bottom:5%">
+        <div class="row">
+            <div class="row" style="text-align: center; font-size: large;">
+                Credit Note will be generated for <br />
+                Amount of Rs : <strong>{{CalculateBillDiscount}}</strong> <br />
+                Valid Till :<strong>{{ValidTill | date }}</strong>
+            </div>
+            <div class="row" style="text-align :center">
+                <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" ng-click="Close()">Cancel</button> &nbsp;&nbsp;
+                <button type="button" class="btn btn-ar btn-primary" data-dismiss="modal" ng-click="CreditNoteGenerated()">Generate Credit Note </button>
+            </div>
+        </div>
+    </div>
+</div>
+</script>-->
+<!-- Modal HTML -->
+<div id="isshowreturnpopup" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="onCloseApprovalReturnpopup()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <h4 style="text-align:center"><b>Are you sure you want to proceed?</b></h4>
+                <div class="row" style="text-align:center;margin-bottom:5%">
+                    <div style="text-align: center; font-size: large;">
+                        Credit Note will be generated for <br />
+                        Return Amount : <strong>{{ReturnAmount | number}}</strong><br />
+                        <div ng-if="CalculateBillDiscount">
+                            Discount Amount : <strong>{{CalculateBillDiscount  | number}}</strong> <br />
+                        </div>
+                        Final Amount : <strong>{{ReturnAmount-CalculateBillDiscount | number}}</strong><br />
+                        Valid Till : <strong>{{ValidTill | date}}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="onCloseApprovalReturnpopup()">Cancel</button>
+                <button type="button" class="btn btn-primary" ng-click="CreditNoteGenerated()">Generate Credit Note</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="modal fade" id="returnPopUp" role="dialog" data-backdrop="static" ng-show="returnPopUp">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="row">
+                    <!--<div class="col-md-12" style="text-align:right">-->
+                    <div class="modal-header" style="border-bottom: 0px solid #e5e5e5 !important;">
+                        <button type="button" class="close" data-dismiss="modal" style=" font-size: xx-large; margin-right: 11px;" ng-click="ReturnQtyClose()">×</button>
+                    </div>
+                </div>
+                <h3 style="text-align:center"><b>Return Item</b></h3>
+                <h4 style="text-align:center"><b>{{name}}</b></h4>
+                <section class="panel panel-default">
+                    <table class="table table-bordered table-striped table-responsive ">
+                        <thead>
+                            <tr>
+                                <th>Batch Code</th>
+                                <th>Batch Qty</th>
+                                <th>Return Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="i in itmdetails">
+                                <td>{{i.BatchCode}}</td>  <!-- Displaying BatchCode -->
+                                <td>{{i.Quantity}}</td>
+                                <td>
+                                    <input type="number" min="0"   ng-model="i.Returnqty" ng-change="CheckReturnQty(i.Quantity,i.Returnqty)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                        </tbody>
+                    </table>
+
+                </section>
+                <div class="row mb-5" style="margin-bottom: 1%;">
+                    <div class="col-md-8">
+
+                    </div>
+                    <div class="col-md-2" style=" text-align:end">
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="ReturnQty()">Submit</button>
+                    </div>
+                    <div class="col-md-2" style=" text-align:center">
+                        <button type="button" class="btn btn-ar btn-primary" style="text-align: center !important" ng-click="ReturnQtyClose()">Close</button>
+
+                    </div>
+                </div>
+                <!--ng-model="orderDetail.ReturnQty" ng-change="returnOrderQty(orderDetail)"-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

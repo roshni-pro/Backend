@@ -1,0 +1,183 @@
+2023-07-28 13:28:26.9226|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-07-28 13:28:27.2056|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-07-28 13:29:06.7442|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-07-28 13:29:06.7442|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-07-28 13:37:02.9041|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user TestDev
+2023-07-28 13:37:02.9041|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   at System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate, CancellationToken cancellationToken)
+   at System.Data.Entity.QueryableExtensions.FirstOrDefaultAsync[TSource](IQueryable`1 source, Expression`1 predicate)
+   at Microsoft.AspNet.Identity.EntityFramework.UserStore`6.<GetUserAggregateAsync>d__67.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at Microsoft.AspNet.Identity.TaskExtensions.CultureAwaiter`1.GetResult()
+   at Microsoft.AspNet.Identity.UserManager`2.<FindAsync>d__80.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   at System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   at AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider.<GrantResourceOwnerCredentials>d__4.MoveNext() in C:\BackEndSaral\AngularJSAuthentication.API\Providers\SimpleAuthorizationServerProvider.cs:line 54
+2023-07-28 14:43:08.6218|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 14:43:08.6838|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 14:43:08.6838|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 14:43:08.7218|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 14:43:19.9372|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 14:43:20.5072|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 14:43:27.7299|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 14:43:50.5197|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 14:44:59.7895|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start addItem Master: 
+2023-07-28 15:00:50.0779|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717 AddItemMaster
+2023-07-28 15:00:50.0779|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  addItem Master: 
+2023-07-28 15:16:27.1522|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 15:16:27.1522|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 15:16:33.0322|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 15:16:33.3232|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 15:16:33.3232|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 15:16:39.6352|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 15:16:44.0083|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 15:16:44.0093|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 15:16:44.0093|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 15:16:44.1263|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 15:16:44.1883|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 15:16:45.9253|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:16:46.4123|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:17:12.0618|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 15:17:42.6417|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:18:12.0897|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 15:18:12.1067|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 15:18:12.1377|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 15:18:12.1377|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 15:18:13.2317|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 15:18:14.6637|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:18:42.3277|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start addItem Master: 
+2023-07-28 15:18:52.4617|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 15:22:17.8674|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717 AddItemMaster
+2023-07-28 15:22:17.8674|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  addItem Master: 
+2023-07-28 15:22:18.0634|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 15:22:18.0634|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 15:22:22.8607|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 15:22:22.9217|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 15:22:22.9217|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 15:22:27.7359|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 15:23:35.4331|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:23:52.7531|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:24:07.8761|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:24:16.0131|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:24:16.5391|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 15:24:16.5411|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 15:24:18.0971|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 15:24:18.2941|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 15:24:18.3961|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 15:24:28.2673|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start addItem Master: 
+2023-07-28 15:24:43.2853|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 15:25:09.5044|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717 AddItemMaster
+2023-07-28 15:25:09.5044|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  addItem Master: 
+2023-07-28 15:29:49.7471|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:30:11.9317|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:30:12.7727|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:30:13.9717|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 15:30:13.9717|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 15:30:14.2607|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 15:30:14.4507|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 15:30:14.5957|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 15:30:16.5830|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2023-07-28 15:30:40.9942|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start addItem Master: 
+2023-07-28 15:30:44.1395|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 15:31:21.4467|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717 AddItemMaster
+2023-07-28 15:31:21.4467|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End  addItem Master: 
+2023-07-28 15:31:24.1086|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 15:31:24.1086|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 15:31:28.9854|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 15:31:29.0924|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 15:31:29.0924|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 15:31:33.9110|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 15:48:48.2952|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 15:48:48.2952|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 15:48:49.6206|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 15:48:49.7436|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 15:48:49.8006|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 15:49:09.7752|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 15:49:09.7752|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 15:49:14.8236|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 15:49:39.9249|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 16:08:07.1013|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 16:08:07.1013|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 16:08:11.9516|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 16:08:30.5994|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 16:08:30.5994|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 16:08:36.0439|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 16:08:36.4859|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 16:08:36.6654|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 16:09:34.8514|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 16:09:34.8514|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 16:09:38.3273|ERROR|AngularJSAuthentication.API.Controllers.CategoryController|Error in Category An error occurred while reading from the store provider's data reader. See the inner exception for details.
+2023-07-28 16:09:38.3273|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 16:10:05.5439|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 16:11:18.7057|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 16:11:18.7057|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 16:11:27.1086|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 16:11:27.1906|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-07-28 16:11:27.1906|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-07-28 16:11:31.9178|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 16:11:31.9178|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 16:11:32.1193|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-07-28 16:11:34.7393|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|start TaxGroup: 
+2023-07-28 16:11:34.8693|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|User ID : 1 , Company Id : 1717
+2023-07-28 16:11:34.9253|INFO|AngularJSAuthentication.API.Controllers.TaxGroupController|End  TaxGroup: 
+2023-07-28 16:11:54.3017|INFO|AngularJSAuthentication.API.Controllers.CategoryController|start Category: 
+2023-07-28 16:11:54.3017|INFO|AngularJSAuthentication.API.Controllers.CategoryController|User ID : 1 , Company Id : 1717
+2023-07-28 16:12:05.5497|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 
+2023-07-28 16:12:28.9419|INFO|AngularJSAuthentication.API.Controllers.CategoryController|End  Category: 

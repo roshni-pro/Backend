@@ -1,0 +1,176 @@
+﻿<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>PO to IR TAT Report</strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="table-filters">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="site-name">Select Warehouse</label><br />
+                            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData(pageno)">
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                            </select>
+                        </div>
+                        <div style="background-color:antiquewhite">
+                            <!--<div class="col-sm-3">
+        <label for="site-name">Select Date Range</label><br />
+        <div class="form-group">
+            <div class='input-group date'>
+                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                <span class="input-group-addon ">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>-->
+                            <div class="form-group col-md-2">
+                                <label for="site-name">Select Date Range</label><br />
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input name="daterange" id="dat" type='text' title="Select Date " class="form-control date-picker" />
+                                        <span class="input-group-addon ">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <label for="site-name">Export</label><br />
+                                <button type="button" class="btn btn-primary skexport" ng-click="ExportPOTAT()">
+                                    <span class="glyphicon glyphicon-export"> </span> Export
+                                </button>
+                            </div>
+                            <!--<div class="form-group col-md-1">
+        <label for="site-name">&nbsp;Search</label><br />
+        <button type="button" class="btn btn-ar btn-primary" ng-click="SelectedWarehouse(pageno)">Search</button>
+    </div>
+    <div class="col-sm-1">
+        <label for="site-name">Export</label><br />
+        <button type="button" class="btn btn-primary skexport" ng-click="ExportPO()">
+            <span class="glyphicon glyphicon-export"> </span> Export
+        </button>
+    </div>-->
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label for="site-name"></label><br />
+                        <input type="text" placeholder="Enter PO Id" class="form-control" data-ng-model="searchKey">
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="site-name"></label><br />
+                        <button type="button" class="btn btn-primary" ng-click="searchData()" data-dismiss="modal">
+                            <span class="glyphicon glyphicon-search"> </span>  Search By PO Number
+                        </button>
+                    </div>
+                    <div class="col-sm-2">
+                        <label for="site-name"></label><br />
+                        <form>
+                            <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                        </form>
+                    </div>
+                    <div class="col-sm-2 filter-result-info">
+                        <label for="site-name"></label><br />
+                        <span>
+                            Showing {{filteredStores.length}}/{{stores.length}} Entries
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                   CreationDate
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Order #
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Supplier Name                                   
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Status
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PO to GR TAT(Hrs)
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    GR to IR TAT(Hrs)
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total TAT(Hrs)
+
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{trade.CreationDate|date:'medium'}}</td>
+                            <td>{{trade.PurchaseOrderId}}</td>
+                            <td>{{trade.WarehouseName}} </td>
+                            <td>{{trade.SupplierName}}</td>
+                            <td>{{trade.Status}}</td>
+                            <td>{{trade.PotoGRTAT}}</td>
+                            <td>{{trade.GRtoIRTAT}}</td>
+                            <td>{{trade.POtoIRTAT}}</td>
+                            <!--<td>
+        <button type="button" class="btn btn-primary  btn-sm skopen" ng-click="open(trade)">
+            <span class="glyphicon glyphicon-eye-open "></span> Open
+        </button>
+    </td>-->
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="selectedPagedItem"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 page-num-info">
+                            <dir-pagination-controls max-size="8"
+                                                     direction-links="true"
+                                                     boundary-links="true"
+                                                     on-page-change="getData(newPageNumber)">
+                                //get method call every time when page changes
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </section>
+</div>

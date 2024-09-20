@@ -1,0 +1,186 @@
+﻿<style>
+    .multiselect-parent button {
+        background: white;
+        border: solid 1px lightgray;
+        width: 200px;
+        text-align: left;
+    }
+
+    .nav-tabs {
+        cursor: pointer;
+    }
+
+    .tab-pane {
+        padding: 5px;
+    }
+
+    .panel-body li.active > a {
+        border-top: solid 3px #428bca !important;
+    }
+
+    .tat-div {
+        max-width: 100% !important;
+        display: block !important;
+        overflow: auto !important;
+        width: 100% !important;
+        padding: 15px;
+    }
+
+    .tat-tbl td, .tat-tbl th {
+        padding: 10px !important;
+    }
+
+    .tabbable {
+        background: white !important;
+    }
+       .reqError {
+        color: #ff0000; /*Red Color*/
+        font-weight: bold;
+        font-size:18px;
+    }
+</style>
+
+
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong> <span class="glyphicon glyphicon-th"> </span> Turn Around Time Report</strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-sm-2">
+                    <label for="site-name">Select Reports</label><br>
+                    <div ng-dropdown-multiselect="" options="spList" selected-model="selectedSPList" ng-change="onChangeSPList()"></div>
+                </div>
+
+                <div class="form-group col-sm-2">
+                    <label for="site-name">Select Warehouse</label><br>
+                    <select class="form-control" id="site-name" ng-model="inputParam.WarehouseID" ng-change="getDboyList()">
+                        <option value="">-Select-</option>
+                        <option value="{{w.WarehouseId}}" ng-repeat="w in warehoseList">{{w.WarehouseName + ' - ' +  w.CityName}}</option>
+                    </select>
+
+                </div>
+                <div class="form-group col-sm-2">
+                    <label class="control-label">Start Date:<span class="reqError">*</span></label>
+                    <div class="input-group">
+                        <input type="text"
+                               id="popup"
+                               class="form-control"
+                               datepicker-popup=""
+                               ng-model="inputParam.StartDate"required
+                               is-open="openedStartDate"
+                               ng-click="openStartDate()"
+                               ng-change="" />
+                    </div>
+
+                </div>
+                <div class="form-group col-sm-2">
+                    <label class="control-label">End Date:<span class="reqError">*</span></label>
+                    <div class="input-group">
+                        <input type="text"
+                               id="popup"
+                               class="form-control"
+                               datepicker-popup=""
+                               ng-model="inputParam.EndDate"required
+                               is-open="openedEndDate"
+                               ng-click="openEndDate()"
+                               ng-change="" />
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label for="site-name">Select DBoy</label><br>
+                    <select class="form-control" id="site-name" ng-model="inputParam.DboyMobileNo">
+                        <option value="">-Select-</option>
+                        <option value="{{dboy.Mobile}}" ng-repeat="dboy in dBoyList">{{dboy.PeopleFirstName + ' ' +  dboy.PeopleLastName }}</option>
+                    </select>
+                    
+                </div>
+                <div class="form-group col-sm-2">
+                    <button class="btn btn-primary" style="margin-top: 23px;" ng-click="getReport()">Generate Report </button>
+                    <button class="btn btn-primary" style="margin-top: 23px;" ng-click="getData()">Export </button>
+                </div>
+            </div>
+
+            <script type="text/ng-template" id="/home.html">
+                This is home content that will be loaded dynamically.
+            </script>
+
+            <script type="text/ng-template" id="/tenants.html">
+                This tenent is tenent
+            </script>
+
+            <tabset ng-if="ReportData && ReportData.length > 0">
+
+                <tab ng-repeat="table in ReportData">
+                    <tab-heading>
+                        {{table.ReportName}}
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="tat-hd">
+                                <h3>{{table.PageTitle}}</h3>
+                            </div>
+                        </div>
+                        <div class="tat-div">
+                            <table class="table table-bordered table-striped table-responsive tat-tbl">
+                                <thead>
+                                    <tr>
+                                        <th ng-repeat="colName in table.ColumnList">
+                                            {{colName}}
+                                        </th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in table.PagingDataTable">
+                                        <td ng-repeat="colName in table.ColumnList">
+                                            {{row[colName]}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <footer class="table-footer">
+                                <div class="row">
+                                    <div class="col-md-6 page-num-info">
+                                        <span>
+                                            Show
+                                            <select data-ng-model="table.numPerPage"
+                                                    data-ng-options="num for num in numPerPageOption"
+                                                    data-ng-change="selectOnTableChange(table, 1)"></select>
+                                            entries per page
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6 text-right pagination-container">
+                                        <pagination class="pagination-sm"
+                                                    page="table.currentPage"
+                                                    total-items="table.DataTable.length"
+                                                    max-size="4"
+                                                    on-select-page="selectOnTableChange(table, page)"
+                                                    items-per-page="table.numPerPage"
+                                                    rotate="false"
+                                                    boundary-links="true"></pagination>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </tab>
+
+
+            </tabset>
+
+        </div>
+
+
+    </section>
+</div>
+
+
+<style>
+    .tat-hd {
+        color: #EB5A00;
+        text-align: center;
+    }
+</style>

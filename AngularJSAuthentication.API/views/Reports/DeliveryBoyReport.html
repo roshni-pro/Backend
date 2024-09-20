@@ -1,0 +1,140 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+</style>
+<div class="page page-table"  button-permission-binder parentName="StatisticalRep" pageName="Del_Boy Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Delivery Boy Reports
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">                        
+                      
+                        <div class="form-group">
+                            <label for="site-name">Delivery Boys</label><br />
+                            <div ng-dropdown-multiselect="" style="min-width:75px;" options="dataselect" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select Date Range</label><br>
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>     
+
+                                          
+                        <div class="form-group">
+                            <button class="btn btn-primary marButton" ng-click="genereteReport()">
+                                <span class="glyphicon glyphicon-plus">
+                                </span> Generate Report
+                            </button>
+                        </div>
+                        <div class="form-group" style="margin-left:40px!important">
+                            <div class="form-group">
+                                <label for="site-name">Filter:</label><br />
+                                <select class="form-control" id="site-name" ng-model="type" ng-change="changegraph(type)">
+                                    <option value="">--select--</option>
+                                    <option value="{{a.value}}" ng-repeat="a in selType" ng-selected="a.value == type">{{a.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+        <div class="row" >
+            <div class="col-md-12" id="pierows"></div>
+            <!--<div class="col-md-4">
+                <div id="piechartContainer0" style="height:700px!important; width: 100%;">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="piechartContainer1" style="height:700px!important; width: 100%;">
+                </div>
+            </div>-->
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="chartContainer" style="height:700px!important; width: 100%;">
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+            </div>  
+            <div class="form-group col-md-4">
+                <div class="form-group col-md-2"></div>
+                <div class="form-group col-md-2"></div>
+            </div>  
+            <div class="form-group col-md-4">
+            </div>  
+        </div>
+       
+        <br />
+        <br />        
+    </section>
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr>
+                <th style="background-color: #7f6084; color: white;">
+                    <div class="th">
+                        Name
+                    </div>
+                </th>
+                <th style="background-color: #7f6084; color: white;">
+                    <div class="th">
+                        All Order - Amount
+                    </div>
+                </th>
+                <th style="background-color: #86b402; color: white;">
+                    <div class="th">
+                        Delivered Order - Amount
+                    </div>
+                </th>
+                <th style="background-color: #369ead; color: white;">
+                    <div class="th">
+                        Redispatched Order - Amount
+
+                    </div>
+                </th>
+                <th style="background-color: #c24642; color: white;">
+                    <div class="th">
+                        Canceled Oder - Amount
+
+                    </div>
+                </th>
+                <th style="background-color: #ffff99; color: black;">
+                    <div class="th">
+                        Pending Oder - Amount
+
+                    </div>
+                </th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            <tr data-ng-repeat="trade in datas">
+                
+                <td>{{trade.name}}</td>
+                <td>{{trade.totalOrder}} - {{trade.AllOrderAmount}}</td>
+                <td>{{trade.Delivered}} - {{trade.DeliveredOrderAmount}}</td>
+                <td>{{trade.Redispatched}} - {{trade.RedispatchedOrderAmount}}</td>
+                <td>{{trade.Canceled}} - {{trade.CanceledOderAmount}}</td>
+                <td>{{trade.Pending}} -{{trade.PendingOderAmount}}</td>      
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>

@@ -1,0 +1,2565 @@
+﻿<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+<style>
+    h1 {
+        color: black;
+        padding-left: 1%;
+        padding-left: 5%;
+        margin-bottom: -23px;
+    }
+
+    .heading {
+        font-weight: bolder;
+        color: black;
+    }
+
+    ul {
+        font-size: 14px;
+        text-decoration: none;
+        line-height: 20px;
+        list-style-type: none;
+        font-weight: bold;
+    }
+
+    #content {
+        background-color: white;
+    }
+    /*#button {
+    border-radius: 45px;
+    background-color: #1eacbe;
+    border: 1px solid #1eacbe;
+    padding: 9px;
+    width: 94px;
+    height: 43px;
+    margin-left: 75%;
+    margin-bottom: 5px;
+    margin-top: -49px;
+    }*/
+    #contain {
+        border: 1px solid white;
+        font-size: 20px;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-bottom: 5px;
+    }
+
+    #title {
+        font-size: 20px;
+        height: 300px;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-bottom: 10px;
+        margin-top: 40px;
+    }
+
+    #image {
+        width: 503px;
+        height: 200px;
+        margin-left: 18px;
+        margin-top: 1px;
+        margin-bottom: 8px;
+    }
+
+    #icon {
+        margin-top: 1px;
+        margin-left: 23px;
+        height: 44px;
+        width: 55px;
+        margin-bottom: -39px;
+    }
+
+    .icon {
+        background-image: url('../styles/img/Pic.PNG');
+    }
+
+    #backbtn {
+        margin-top: 2px;
+        margin-left: 26px;
+        height: 36px;
+        width: 40px;
+        margin-bottom: -27px;
+    }
+
+    #imgbut {
+        height: 212px;
+        width: 535px;
+        margin-top: -118px;
+        margin-bottom: 2px;
+        margin-left: 1px;
+    }
+
+    #input {
+        border: 1px solid#dedede;
+        background-color: white;
+        padding: 2px 3px;
+        width: 197px;
+        margin-top: 5%;
+    }
+
+    .span {
+        font-size: 11px;
+    }
+
+    .buttons {
+        height: 35px;
+        border-radius: 6px;
+        margin-left: 8px;
+        border: 2px solid #24b0ee;
+        background-color: white;
+        font-size: 14px;
+    }
+
+    .background {
+        background-image: url('../images/itemimages/AE1012A.jpg');
+        /*background: url('../notificationimages/Home Care.png');*/
+        /*background-color: #3d2f2e;*/
+        position: relative;
+    }
+
+        .background::before {
+            background-color: rgba(5, 6, 29, 1);
+            content: '';
+            opacity: 0.8;
+            display: block;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+        }
+
+    .text {
+        color: #24b0ee;
+        font-weight: 900;
+    }
+
+    .tileImageUploadButton {
+        color: #24b0ee;
+        font-weight: 900;
+        width: 33px;
+    }
+
+    .modal-content {
+        position: relative;
+        background-color: white;
+        border: 1px solid #999999;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
+        -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+        background-clip: padding-box;
+        outline: 0;
+        width: 500px;
+        text-align: center;
+        height: 478px;
+        border-radius: 37px;
+        margin-top: 205px;
+        margin-left: 61px;
+    }
+
+    .tiles-slider {
+        height: 154px;
+        border: groove;
+        border-radius: 13px;
+        margin-left: 28px;
+        margin-top: 46px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+        .tiles-slider img {
+            margin-left: -7px;
+            margin-bottom: -21px;
+            width: 57px;
+        }
+
+        .tiles-slider:hover {
+            border-style: groove;
+            border-color: #3ab8ef;
+        }
+
+            .tiles-slider:hover h4 {
+                color: #3ab8ef;
+            }
+
+            .tiles-slider:hover .radio-button {
+                color: aqua;
+            }
+
+    .next {
+        height: 106px;
+        width: 106px;
+        background-color: #3ab8ef;
+        color: white;
+        font-weight: 800;
+        font-size: 27px;
+        border-radius: 67px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .saveAll {
+        height: 38px;
+        border-radius: 7px;
+        background-color: white;
+        font-weight: 800;
+        font-size: 19px;
+        border: 2px solid #3ab8ef;
+        color: #3ab8ef;
+        padding-top: 3px;
+    }
+
+    .deleteAll {
+        height: 38px;
+        border-radius: 7px;
+        background-color: white;
+        font-weight: 800;
+        font-size: 19px;
+        border: 2px solid #ef5b5b;
+        color: #ef5b5b;
+        padding-top: 3px;
+    }
+
+    #nextsectionButton {
+        outline: 0;
+    }
+
+    .delete {
+        height: 43px;
+        width: 113px;
+        background-color: #ef5b5b;
+        color: white;
+        font-weight: 800;
+        font-size: initial;
+        border-radius: 6px;
+    }
+
+    #tilesSlider:hover #tile {
+        color: aqua;
+    }
+
+    #tilesSlider:hover #slider {
+        color: aqua;
+    }
+
+    .inputSection {
+        width: 204px;
+        height: 43px;
+        border-radius: 6px;
+        border-color: #3ab8ef;
+        text-align: center;
+        font-size: larger;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .selectSection {
+        width: 204px;
+        height: 43px;
+        border-radius: 6px;
+        text-align: center;
+        font-size: medium;
+        outline: 0;
+        text-align-last: center;
+        border: 2px solid #3ab8ef;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .close {
+        background-color: red;
+        border-radius: 32px;
+        width: 63px;
+        height: 58px;
+        position: absolute;
+        margin-top: -35px;
+        right: -35px;
+        opacity: 1;
+        color: white;
+        padding-top: 15px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+
+    /*CSS for Repeat sections color-profile Tiles command Slider*/
+    .repeatDiv {
+        border: 2px solid #999999;
+        margin-left: 6px;
+        height: 38px;
+        margin-bottom: 4px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .repeatDivDrag {
+        border: 2px solid #999999;
+        margin-left: 6px;
+        height: 38px;
+        margin-bottom: 4px;
+        color: black;
+        min-width: 53px;
+    }
+
+    .repeatp {
+        margin-top: 7px;
+        text-align: center;
+    }
+
+    .imageLevel {
+        margin: -1px 0 0 -16px;
+        height: 38px;
+        width: 87px;
+        outline: 0;
+        text-align-last: center;
+    }
+
+    .imageLevels {
+        margin: 0px 0 0 26px;
+        height: 38px;
+        width: 87px;
+        outline: 0;
+        text-align-last: center;
+    }
+
+    .repeatDelete {
+        background-color: #ef5b5b;
+    }
+
+    .repeat-Section-Name {
+        float: left;
+    }
+
+    .pTile {
+        border-color: #95eac3;
+    }
+
+    .pSlider {
+        border-color: #ebe967;
+    }
+
+    .pPopUp {
+        border-color: coral;
+    }
+
+    .extendAwwow {
+        float: right;
+        margin-top: 4px;
+        font-size: 18px;
+        font-weight: bolder;
+    }
+
+    .saveDeleteDiv {
+        position: absolute;
+        bottom: -446px;
+    }
+
+    .sectionSelection {
+        border: 2px solid #999999;
+        width: 478px;
+        margin-left: 21px;
+        margin-right: 76px;
+        margin-bottom: 10px;
+    }
+
+    .sectionSelection-column {
+        margin-left: -37px;
+        width: 552px;
+    }
+
+        .sectionSelection-column input {
+            height: 40px;
+            width: 196px;
+        }
+
+        .sectionSelection-column label {
+            font-size: 11px;
+        }
+
+    .sectionSelection-button {
+        width: 552px;
+        margin-left: -22px;
+        margin-top: 10px;
+    }
+
+    .buttonSelected {
+        height: 40px;
+        width: 196px;
+        border-radius: 25px;
+        background-color: #3ab8ef;
+        color: white;
+        margin-right: -73px;
+        position: inherit;
+    }
+
+    .buttonDeselected {
+        height: 40px;
+        width: 196px;
+        border-radius: 25px;
+        background-color: rgba(0, 0, 0, 0.2);
+        color: white;
+        margin-right: -73px;
+    }
+
+    button:focus {
+        outline: 0;
+    }
+
+    #button:focus {
+        outline: 0;
+    }
+    /*CSS for Repeat sections color-profile Tiles command Slider END*/
+    /*Column Row div CSS*/
+    .ColRowDiv {
+        margin-left: -21px;
+        margin-bottom: 7px;
+    }
+
+        .ColRowDiv label {
+            font-size: 11px;
+        }
+
+    .ColRowDivRepeat {
+        margin-left: -23px;
+        width: 551px;
+    }
+
+    .ColRowDivRepeatIndex {
+        border: 1px solid #999999;
+        margin-left: 6px;
+        height: 38px;
+        margin-bottom: 4px;
+        color: black;
+        background-color: gray;
+    }
+
+    .ColRowDivRepeatInput {
+        border: 1px solid #999999;
+        margin-left: 6px;
+        height: 38px;
+        margin-bottom: 4px;
+        color: black;
+    }
+
+        .ColRowDivRepeatInput input {
+            height: 38px;
+            width: 174px;
+            margin-top: -1px;
+            margin-left: -16px;
+        }
+
+    .ColRowDivRepeatImage {
+        margin-left: -12px;
+        margin-right: 12px
+    }
+
+    .ColRowDivRepeatDelete {
+        background-color: #ef5b5b;
+        border: 1px solid #999999;
+        margin-left: 6px;
+        height: 38px;
+        margin-bottom: 4px;
+        color: black;
+    }
+
+    .DeleteBeforeUpload {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid #999999;
+        margin-left: 6px;
+        height: 38px;
+        margin-bottom: 4px;
+        color: black;
+    }
+    /*Column Row div CSS END*/
+    .Color {
+        width: 33px;
+        height: 33px;
+        border-radius: 25px;
+        background-color: aquamarine;
+        border: 1px solid gray;
+        opacity: 0.2;
+        margin: 4px;
+    }
+
+    .Color-selected {
+        width: 33px;
+        height: 33px;
+        border-radius: 25px;
+        border: 1px solid gray;
+        opacity: 1;
+        margin: 4px;
+    }
+
+    .Color-Removal button {
+        width: 33px;
+        height: 33px;
+        border-radius: 25px;
+        border: none;
+        opacity: 1;
+        margin: 4px;
+        background-color: white;
+        margin-left: -34px;
+    }
+
+    .Color-Removal i {
+        font-size: 33px;
+        color: #ef5b5b;
+    }
+
+    .Color:hover {
+        opacity: 1
+    }
+
+    .Color:focus {
+        opacity: 1
+    }
+
+    .Color-slider {
+        background-color: black;
+        width: 33px;
+        height: 33px;
+        border-radius: 25px;
+        border: 1px solid gray;
+        opacity: 0.2;
+        margin: 4px;
+        color: white;
+        transition: 0.6s ease;
+    }
+
+        .Color-slider:hover {
+            opacity: 1;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+    .RemoveImageButton {
+        height: 35px;
+        border-radius: 6px;
+        margin-left: 8px;
+        border: 2px solid #ef5b5b;
+        background-color: white;
+        font-size: 14px;
+        color: #ef5b5b;
+        font-weight: 900;
+    }
+
+    .TileHeaderImage {
+        margin-top: 34px;
+        height: 74px;
+    }
+
+        .TileHeaderImage img {
+            height: 39px;
+            opacity: 0.2;
+            border-radius: 21px;
+        }
+
+    .BannerImage {
+        height: 200px;
+    }
+
+        .BannerImage img {
+            height: 200px;
+            opacity: 0.2;
+        }
+
+    .tileImages {
+        opacity: 1;
+        margin: 1px;
+        padding: 3px;
+        border-radius: 9px;
+    }
+
+    .tileBackgroundImage {
+        position: relative;
+        /*height: 500px;*/
+    }
+
+        .tileBackgroundImage::before {
+            background-color: white;
+            content: '';
+            opacity: 0.8;
+            display: block;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            margin-left: -15px;
+            border-radius: 21px;
+        }
+
+    .ImageDisplayName {
+        color: black;
+        text-align: center;
+        font-size: 11px;
+        word-wrap: break-word;
+        font-family: cursive;
+        width: auto;
+    }
+
+        .ImageDisplayName p {
+            display: block;
+            width: auto;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    .sectionCategoryTile {
+        margin-top: 1px;
+        text-align-last: center;
+    }
+
+        .sectionCategoryTile select {
+            width: 32px;
+            height: 33px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: medium;
+            outline: 0;
+            text-align-last: center;
+            border: 2px solid #3ab8ef;
+            margin-left: -44%;
+        }
+
+    .sectionCategoryTileDisabled {
+        width: 26px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    /*CSS form Banner/Slider Start*/
+    .sectionSelectionBanner {
+        border: 2px solid #999999;
+        width: 478px;
+        margin-left: 21px;
+        margin-right: 76px;
+        margin-bottom: 10px;
+    }
+
+    .sectionSelectionBanner-plus {
+        margin-left: -30px;
+        width: 504px;
+    }
+
+    .plusButton {
+        background-color: #3ab8ef;
+        border: 1px solid #999999;
+        margin: 6px;
+        height: 32px;
+        width: 32px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .plusButtonDisabled {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid #999999;
+        margin: 6px;
+        height: 32px;
+        width: 32px;
+        color: black;
+    }
+
+    .plusButtonBeforeClick {
+        background-color: #565357;
+        border: 1px solid #999999;
+        margin: 6px;
+        height: 32px;
+        width: 32px;
+        color: black;
+        cursor: pointer;
+    }
+
+    .deleteButton {
+        background-color: #ef5b5b;
+        border: 1px solid #999999;
+        margin: 6px;
+        height: 32px;
+        width: 32px;
+        color: black;
+        float: right;
+        cursor: pointer;
+    }
+
+    .deleteBeforeUploadSlider {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid #999999;
+        margin: 6px;
+        height: 32px;
+        width: 32px;
+        color: black;
+        float: right;
+    }
+
+    .slider-fafas {
+        margin: 5px 0px 0px -6px;
+        color: white;
+    }
+
+    .SliderImageDiv {
+        margin-left: -39px;
+        margin-bottom: 16px;
+    }
+
+    .SliderImage {
+        width: 462px;
+        height: 216px;
+    }
+
+    .redirection-url {
+        border: 1px solid #999999;
+        /* margin-left: 14px; */
+        height: 38px;
+        margin-bottom: 4px;
+        margin-top: 19px;
+        color: black;
+        width: 275px;
+    }
+
+        .redirection-url input {
+            height: 36px;
+            width: 238px;
+            margin-top: 0px;
+            margin-left: -15px;
+            border: none;
+            outline: none;
+            padding: 10px;
+        }
+
+    .redirection-url-Level {
+        border: 1px solid #999999;
+        margin-left: 14px;
+        height: 38px;
+        margin-bottom: 4px;
+        margin-top: 19px;
+        color: black;
+    }
+
+    .redirectionType {
+        padding: 0;
+        height: 38px;
+        margin-bottom: 4px;
+        margin-top: 19px;
+        color: black;
+    }
+
+        .redirectionType select {
+            height: 38px;
+            outline: 0;
+            text-align-last: center;
+        }
+
+    .redirectionType-Level {
+        /*border: 1px solid #999999;*/
+        height: 38px;
+        margin-bottom: 4px;
+        margin-top: 19px;
+        color: black;
+    }
+
+    .datetime input {
+        height: 33px;
+        width: 155px;
+        font-size: 12px;
+    }
+
+    .calendarDiv {
+        border: 1px solid #999999;
+        background-color: mediumseagreen;
+    }
+
+        .calendarDiv p {
+            margin-left: -7px;
+            margin-bottom: 6px;
+            margin-top: 6px;
+        }
+
+    .saveSliderButton {
+        height: 35px;
+        width: 108px;
+        background-color: #3ab8ef;
+        color: white;
+        font-weight: 800;
+        font-size: initial;
+        border-radius: 6px;
+        margin-top: 8px;
+    }
+
+    .sectionCategory {
+        margin-top: 6px;
+        text-align-last: center;
+    }
+
+        .sectionCategory select {
+            width: 140px;
+            height: 33px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: medium;
+            outline: 0;
+            text-align-last: center;
+            border: 2px solid #3ab8ef;
+            padding: 0;
+        }
+
+    .sectionCategoryDisabled {
+        width: 196px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+    /*Pop sup CSS*/
+    .popUpImage {
+        width: 230px;
+        height: 230px;
+        margin-left: 120px;
+    }
+    /*CSS form Emulator*/
+    .emulatorDiv {
+        background-image: url('../notificationimages/Google-Nexus-6P - Copy - Copy - Copy.png');
+        position: relative;
+        height: 648px;
+        width: 387px;
+        margin-left: 235px;
+        margin-top: 49px;
+    }
+
+    .emulatorImage {
+        margin: 1px 1px -48px 165px;
+        width: 682px;
+        height: 655px;
+    }
+
+    .emulator-Container {
+        background-color: aliceblue;
+        width: 272px;
+        margin-left: 72px;
+        margin-top: 35px;
+        padding: 0;
+        height: 558px;
+        border-radius: 20px;
+        overflow-y: scroll;
+        box-shadow: 0px 1px 10px -1px white, 7px 0px 3px -8px white;
+    }
+
+    #scroller::-webkit-scrollbar {
+        transition: all .5s;
+        width: 0px;
+        height: 1px;
+        z-index: 10;
+    }
+
+    #scroller::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    #scroller::-webkit-scrollbar-thumb {
+        background: black;
+    }
+
+    .baseCategory {
+        text-align: center;
+        margin-top: 8px;
+        font-size: initial;
+        color: white;
+        mix-blend-mode: difference;
+        font-family: cursive;
+        filter: drop-shadow(.05em .05em orange);
+    }
+
+    .sliderEmulatorDiv {
+        margin-left: -41px;
+        margin-bottom: 16px;
+        margin-top: 5px;
+    }
+
+    .sliderEmulator5 {
+        width: 260px;
+        height: 130px;
+    }
+
+    .sliderEmulator4 {
+        margin-left: 10px;
+        width: 240px;
+        height: 120px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .sliderEmulator3 {
+        margin-left: 20px;
+        width: 220px;
+        height: 110px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .sliderEmulator2 {
+        margin-left: 30px;
+        width: 200px;
+        height: 100px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .sliderEmulator1 {
+        margin-left: 40px;
+        width: 180px;
+        height: 90px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .sliderEmulator0 {
+        margin-left: 40px;
+        width: 0px;
+        height: 0px;
+        margin-top: 65px;
+        margin-bottom: 65px;
+    }
+
+    .slider-dots {
+        background-color: black;
+        border: none;
+        height: 7px;
+        border-radius: 7px;
+        opacity: 0.1;
+        padding-left: 1px;
+    }
+
+    .slider-dot-selected {
+        background-color: black;
+        border: none;
+        height: 7px;
+        border-radius: 7px;
+        padding-left: 1px;
+        cursor: pointer;
+    }
+
+    .prev, .nextButton {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+    /* Position the "next button" to the right */
+    .nextButton {
+        right: -115px;
+        border-radius: 3px 0 0 3px;
+    }
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover, .nextButton:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+    .deletePopUp {
+        position: absolute;
+        right: -70px;
+        top: 0px;
+        animation: fade;
+        padding: 0px;
+    }
+
+        .deletePopUp .cancel {
+            border-radius: 7px;
+            border: 1px solid black;
+            background-color: indianred;
+            color: white;
+            height: 34px;
+            width: 34px;
+        }
+
+        .deletePopUp .confirm {
+            border-radius: 7px;
+            border: 1px solid black;
+            background-color: green;
+            color: white;
+            height: 34px;
+            width: 34px;
+        }
+
+    .deleteAppHomeCancel {
+        border-radius: 7px;
+        border: 1px solid black;
+        background-color: indianred;
+        color: white;
+        height: 34px;
+        width: 34px;
+        padding: 0;
+    }
+
+    .deleteAppHomeConfirm {
+        border-radius: 7px;
+        border: 1px solid black;
+        background-color: green;
+        color: white;
+        height: 34px;
+        width: 34px;
+        padding: 0;
+    }
+    /*Level CSS*/
+    .tileImageDivLevel0 {
+        text-align: center;
+        padding: 0;
+        margin-top: 47px;
+        height: 81px;
+    }
+
+    .tileImageDivLevel1 {
+        text-align: center;
+        padding: 0;
+        margin-top: 47px;
+        height: 81px;
+    }
+
+    .tileImageDivLevel2 {
+        text-align: center;
+        padding: 0;
+        margin-top: 41px;
+        height: 87px
+    }
+
+    .tileImageDivLevel3 {
+        text-align: center;
+        padding: 0;
+        margin-top: 28px;
+        height: 100px;
+    }
+
+    .tileImageDivLevel4 {
+        text-align: center;
+        padding: 0;
+        margin-top: 20px;
+        height: 108px;
+    }
+
+    .tileImageDivLevel5 {
+        text-align: center;
+        padding: 0;
+        margin-top: 12px;
+        height: 116px;
+    }
+
+    .potpUpEmulator {
+        position: absolute;
+        top: -369px;
+        border-radius: 30px;
+        width: 220px;
+        height: 220px;
+        right: -97px;
+    }
+
+    @-webkit-keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-moz-keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-o-keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .popUpEmulator {
+        position: absolute;
+        top: 216px;
+        border-radius: 30px;
+        width: 220px;
+        height: 220px;
+        right: 257px;
+    }
+
+        .popUpEmulator img {
+            -webkit-animation: blink 3s;
+            -webkit-animation-iteration-count: infinite;
+            -moz-animation: blink 1s;
+            -moz-animation-iteration-count: infinite;
+            -o-animation: blink 1s;
+            -o-animation-iteration-count: infinite;
+        }
+
+        .popUpEmulator label {
+            cursor: pointer;
+            font-size: 17px;
+            text-align: center;
+            background-color: red;
+            border-radius: 32px;
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            margin-top: -13px;
+            margin-left: 224px;
+            opacity: 1;
+            color: white;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+    .popImage0 {
+        position: absolute;
+        border-radius: 30px;
+        width: 0px;
+        height: 0px;
+        box-shadow: 1px 1px 2px white, 0 0 25px black, 0 0 5px darkblue;
+        margin: 120px 120px 120px 120px;
+    }
+
+    .popImage1 {
+        position: absolute;
+        border-radius: 30px;
+        width: 160px;
+        height: 160px;
+        box-shadow: 1px 1px 2px white, 0 0 25px black, 0 0 5px darkblue;
+        margin: 40px 40px 40px 40px;
+    }
+
+    .popImage2 {
+        position: absolute;
+        border-radius: 30px;
+        width: 180px;
+        height: 180px;
+        box-shadow: 1px 1px 2px white, 0 0 25px black, 0 0 5px darkblue;
+        margin: 30px 30px 30px 30px;
+    }
+
+    .popImage3 {
+        position: absolute;
+        border-radius: 30px;
+        width: 200px;
+        height: 200px;
+        box-shadow: 1px 1px 2px white, 0 0 25px black, 0 0 5px darkblue;
+        margin: 20px 20px 20px 20px;
+    }
+
+    .popImage4 {
+        position: absolute;
+        border-radius: 30px;
+        width: 220px;
+        height: 220px;
+        box-shadow: 1px 1px 2px white, 0 0 25px black, 0 0 5px darkblue;
+        margin: 10px 10px 10px 10px;
+    }
+
+    .popImage5 {
+        position: absolute;
+        border-radius: 30px;
+        width: 240px;
+        height: 240px;
+        box-shadow: 1px 1px 2px white, 0 0 25px black, 0 0 5px darkblue;
+    }
+    /*form check box*/
+    .round {
+        position: relative;
+        margin-left: 23px;
+        margin-top: 30px;
+    }
+
+        .round label {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            height: 28px;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 28px;
+        }
+
+            .round label:after {
+                border: 2px solid #fff;
+                border-top: none;
+                border-right: none;
+                content: "";
+                height: 6px;
+                left: 7px;
+                opacity: 0;
+                position: absolute;
+                top: 8px;
+                transform: rotate(-45deg);
+                width: 12px;
+            }
+
+        .round input[type="checkbox"] {
+            visibility: hidden;
+        }
+
+            .round input[type="checkbox"]:checked + label {
+                background-color: #3ab8ef;
+                border-color: #3ab8ef /*#66bb6a*/;
+            }
+
+                .round input[type="checkbox"]:checked + label:after {
+                    opacity: 1;
+                }
+    /*form check box end*/
+    .dragging {
+        opacity: .4;
+    }
+
+    .dragover {
+        border: 2px dashed #000;
+    }
+
+        .dragover * {
+            //pointer-events: none;
+        }
+    /*Loader animation*/
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url(../notificationimages/lg.comet-spinner.gif) center no-repeat #fff;
+        opacity: 0.4;
+    }
+</style>
+<script></script>
+<div class="se-pre-con" ng-if="loader"></div>
+<div button-permission-binder parentName="AppAdmin" pageName="App home new">
+    <!--<input type="image" id="backbtn" src="/styles/img/backbutton.png">-->
+    <h1 style="padding-left: 1%">App Home DashBoard</h1>
+    <br />
+    <br />
+    <!--<p id="button"></p>-->
+    <div style="border: 1px solid red"></div>
+    <br /><br />
+    <div class="col-md-12" style="position: relative;">
+        <div class="col-md-5">
+            <div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <div class="col-md-6 form-group">
+
+
+                            <label for="site-name">Select App Type</label><br />
+                                                                          <select class="selectSection form-control" id="site-name" ng-model="SectionData.AppType" ng-change="AppTypeChanged()">
+                                                                              <option value="">--Select App Type--</option>
+                                                                              <option value="Retailer App">Retailer App</option>
+                                                                              <option value="Sales App">Sales App</option>
+                                                                              <option value="DON App">Direch Open Network App</option>
+                                                                          </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="site-name">Select Warehouse</label><br />
+                            <select class="selectSection form-control" id="site-name" ng-disabled="!SectionData.AppType" ng-change="AppHomeSection(SectionData.WarehouseId)" ng-model="SectionData.WarehouseId">
+                                <option value="">--Select Warehouse--</option>
+                                <option value="{{warehouses.WarehouseId}},{{warehouses.WarehouseName}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12" data-ng-repeat="trade in AppHomeSections">
+                        <div class="col-md-12" style="margin-left: -8px;">
+                            <div class="col-md-1 repeatDiv" ng-class="{'pTile':trade.IsTile == true,
+                        'pSlider':trade.IsBanner == true,
+                        'pPopUp':trade.IsPopUp == true}">
+                                <p class="repeatp">{{$index+1}}</p>
+                            </div>
+                            <div class="col-md-8 repeatDiv" ng-click="sectionSelected(trade,$index)">
+                                <p class="repeatp repeat-Section-Name" ng-if="trade.IsTile == true">Tiles | {{trade.SectionSubType}} | {{trade.SectionName}}</p>
+                                <p class="repeatp repeat-Section-Name" ng-if="trade.IsBanner == true">Banner | {{trade.SectionSubType}} | {{trade.SectionName}}  | Activity:  {{trade.BannerActivity}} </p>
+                                <p class="repeatp repeat-Section-Name" ng-if="trade.IsPopUp == true">PopUp | {{trade.SectionSubType}} | {{trade.SectionName}}</p>
+                                <span class="extendAwwow" ng-if="$index != level"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                                <span class="extendAwwow" ng-if="$index == level"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+                            </div>
+                            <div class="col-md-1 repeatDiv" style="visibility:hidden">
+                                <p class="repeatp"><i class="fa fa-hand-o-up" aria-hidden="true"></i></p>
+                            </div>
+                            <!--<div class="col-md-1 repeatDiv" style="margin-left: -52px;">
+                            <p class="repeatp"><i class="fa fa-hand-o-up" aria-hidden="true"></i></p>
+                            </div>-->
+                            <div class="col-md-1 repeatDiv" style="margin-left: -52px;" ng-show="showdrag == false">
+                                <p class="repeatp"><i class="fa fa-hand-o-up" aria-hidden="true"></i></p>
+                            </div>
+                            <div style="margin-left: 5px;" class="col-md-1 repeatDiv repeatDelete skremove" ng-click="deleteSectionConfirm($index)">
+                                <p class="repeatp"><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                            </div>
+                            <div class="col-md-2 deletePopUp" ng-show="deteteModal" ng-if="$index == deleteIndex">
+                                <button class="cancel" style="    margin-left: -3px;" ng-click="deleteSectionCancel()"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                <button class="confirm" ng-click="deleteSection($index)"><i class="fa fa-check" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <!--Tile HTML Started-->
+                        <div class="col-md-12 sectionSelection" ng-if="$index == level" ng-show="trade.IsTile == true">
+                            <div class="col-md-12" ng-show="trade.SectionSubType=='Flash Deal'">
+                                <span style="font-size: 15px;font-family: cursive;">Is Excel Upload:</span>
+                                <input id="site-name" type="checkbox" class="form-control" ng-model="Flashdealexcelupload" ng-click="FlashDealExcelHideShow()" />
+                            </div>
+                            <div class="col-md-12" ng-show="trade.SectionSubType=='Flash Deal'" ng-if="Flashdealexcelupload">
+                                <button class="btn btn-ar btn-primary" ng-click="downloadFlashDealFile()" style="border-radius: 0px;">Download Excel Format</button>
+                            </div>
+
+                           
+                           
+                            <div>
+                                <div class="col-md-12 sectionSelection-column" ng-show="!Flashdealexcelupload && (trade.SectionSubType != 'Other' && trade.SectionSubType != 'Store')">
+                                    <div class="col-md-6" ng-if="trade.SectionSubType != 'Other'">
+                                        <label>Number of Columns</label>
+                                        <input type="number" ng-model="trade.ColumnCount" ng-change="updateColRowNumber(trade)">
+                                    </div>
+                                    <div class="col-md-6" ng-if="trade.SectionSubType != 'Other'">
+                                        <label>Number of Rows</label>
+                                        <input type="number" ng-model="trade.RowCount" ng-change="updateColRowNumber(trade)">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 sectionSelection-column" style="margin-left: 76px; margin-top: 20px;" ng-if="trade.IsTile == true && (trade.SectionSubType == 'Other' || trade.SectionSubType == 'Store') ">
+                                    <div class="col-md-12">
+                                        <span style="font-size: 15px;font-family: cursive; margin-left: 52px; margin-top: 40px; ">Dynamic URL :</span>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="text" style="width: 67%; margin-left: -37px;" placeholder="Dynamic URL" ng-model="trade.WebViewUrl">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12" ng-if="buttonSelectedTwo == false">
+                                    <span style="font-size: 15px;font-family: cursive;"> Header Text Size :</span>
+                                    <input id="HeaderTextSize" autocomplete="off" type="number" class="form-control" ng-model="trade.HeaderTextSize" />
+                                </div>
+                                <!--for Tile Header-->
+                                <div class="col-md-12">
+                                    <br />
+                                    <span style="font-size: 15px;font-family: cursive;">Tile Header :</span>
+                                </div>
+                                <div class="col-md-12 sectionSelection-button">
+                                    <div class="col-md-10">
+                                        <button ng-click="buttonClickedTwo()" ng-class="{'buttonSelected':buttonSelectedTwo == true,
+                              'buttonDeselected':buttonSelectedTwo == false}">
+                                            Color
+                                        </button>
+                                        <button ng-click="buttonClickedTwo()" ng-class="{'buttonSelected':buttonSelectedTwo == false,
+                              'buttonDeselected':buttonSelectedTwo == true}">
+                                            Image
+                                        </button>
+                                        <br /> <br />
+                                    </div>
+                                    <div class="col-md-2 Color-Removal" ng-if="colourButtonTwo">
+                                        <button ng-click="buttonClickedTwo()" ng-class="{'buttonSelected':buttonSelectedTwo == false,
+                              'buttonDeselected':buttonSelectedTwo == true}">
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                        <br /> <br />
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-12" ng-if="colourButtonTwo" style="width: 509px;height: 100px;margin-left: -15px;">
+                                    <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                        <button class="Color-slider" ng-click="changeColorReverseHeader()" ng-disabled="colorDisplayMinHeader<=0">&#10094;</button>
+                                    </div>
+                                    <div class="col-md-10" style="margin-left: 7px;">
+                                        <button style="background-color: {{tilecolor.hexString}};" ng-class="{'Color-selected':trade.TileHeaderBackgroundColor==tilecolor.hexString,
+                              'Color':trade.TileHeaderBackgroundColor!=tilecolor.hexString}"
+                                                ng-if="colorDisplayMaxHeader>tilecolor.colorId && tilecolor.colorId>=colorDisplayMinHeader"
+                                                ng-repeat="tilecolor in TileColors" ng-click="TileHeaderColor(tilecolor.hexString)" title="{{tilecolor.name}}"></button>
+                                        <br /><br />
+                                    </div>
+                                    <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                        <button class="Color-slider" ng-click="changeColorForwardHeader()" ng-disabled="colorDisplayMaxHeader>=TileColors.length">&#10095;</button>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 Image" ng-if="imageButtonTwo">
+                                    <div class="col-md-8 TileHeaderImage">
+                                        <img class="col-md-12" src="{{trade.TileHeaderBackgroundImage}}" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="btn btn-primary" id="fileTileHeaderBackground" type="file" nv-file-select="" uploader="uploaderTileHeaderImage" ng-show="" />
+                                        <button class="btn buttons text" id="button" ng-click="uploadTileHeaderBackgroundImage($index)">Select Images</button><br /><br />
+                                        <button class="btn RemoveImageButton" id="button" ng-click="deleteTileHeaderBackgroundImage($index)">Remove Image</button>
+                                        <br /><br />
+                                    </div>
+                                    <!--.......................<p>Tile Header Background image </p>............................-->
+                                    <div>
+                                        <div class="col-md-12">
+                                            <br />
+                                            <span style="font-size: 15px;font-family: cursive;">Tile Header Background image :</span>
+                                            <input id="site-name" type="checkbox" class="form-control" ng-model="data.IsShow" />
+                                        </div>
+                                        <div class="col-md-12 sectionSelection-button" ng-if="data.IsShow==true">
+                                            <div class="col-md-10">
+                                                <br /> <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 Image" ng-if="data.IsShow==true">
+                                            <div class="col-md-8 TileHeaderImage">
+                                                <img class="col-md-12" src="{{trade.TileAreaHeaderBackgroundImage}}" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="btn btn-primary" id="fileTileAreaHeaderBackground" type="file" nv-file-select="" uploader="uploaderTileAreaHeaderImage" ng-show="" />
+                                                <button class="btn buttons text" id="button" ng-click="uploadTileAreaHeaderBackgroundImage($index)">Select Images</button><br /><br />
+                                                <button class="btn RemoveImageButton" id="button" ng-click="deleteTileAreaHeaderBackgroundImage($index)">Remove Image</button>
+                                                <br /><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!------------- end------------>
+                                </div>
+                                <!--...........Header Text Color ................-->
+                                <div ng-if="buttonSelectedTwo == true">
+                                    <div class="col-md-12">
+                                        <br />
+                                        <div class="col-md-6">
+                                            <span style="font-size: 15px;font-family: cursive;"> Header Text color :</span>
+                                            <input id="site-name" type="checkbox" class="form-control" ng-model="data.show" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span style="font-size: 15px;font-family: cursive;"> Header Text Size :</span>
+                                            <input id="HeaderTextSize" type="number" class="form-control" ng-model="trade.HeaderTextSize" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 sectionSelection-button">
+                                        <div class="col-md-10">
+                                            <br /> <br />
+                                        </div>
+                                        <div class="col-md-2 Color-Removal" ng-if="data.show==true">
+                                            <button ng-click="buttonClickedTextHeaderClear()">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                            <br /> <br />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12" ng-if="data.show==true" style="width: 509px;height: 100px;margin-left: -15px;">
+                                        <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                            <button class="Color-slider" ng-click="changeColorReverseTextHeader()" ng-disabled="colorDisplayTextMinHeader<=0">&#10094;</button>
+                                        </div>
+                                        <div class="col-md-10" style="margin-left: 7px;">
+                                            <button style="background-color: {{tilecolor.hexString}};" ng-class="{'Color-selected':trade.HeaderTextColor==tilecolor.hexString,
+                                      'Color':trade.HeaderTextColor!=tilecolor.hexString}"
+                                                    ng-if="colorDisplayTextMaxHeader>tilecolor.colorId && tilecolor.colorId>=colorDisplayTextMinHeader"
+                                                    ng-repeat="tilecolor in TileColors" ng-click="HeaderTextColors(tilecolor.hexString)" title="{{tilecolor.name}}"></button>
+                                            <br /><br />
+                                        </div>
+                                        <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                            <button class="Color-slider" ng-click="changeColorForwardTextHeader()" ng-disabled="colorDisplayTextMaxHeader>=TileColors.length">&#10095;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--.............................end........................-->
+                                <!--for Tile Body-->
+                                <div class="col-md-12">
+                                    <br />
+                                    <span style="font-size: 15px;font-family: cursive;">Tile Body Background Image :</span>
+                                </div>
+                                <div class="col-md-12 sectionSelection-button">
+                                    <div class="col-md-10">
+                                        <button ng-click="buttonClicked()" ng-class="{'buttonSelected':buttonSelected == true,
+                              'buttonDeselected':buttonSelected == false}">
+                                            Color
+                                        </button>
+                                        <button ng-click="buttonClicked()" ng-class="{'buttonSelected':buttonSelected == false,
+                              'buttonDeselected':buttonSelected == true}">
+                                            Image
+                                        </button>
+                                        <br /> <br />
+                                    </div>
+                                    <div class="col-md-2 Color-Removal" ng-if="colourButton">
+                                        <button ng-click="removeBackgroundColor()">
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                        <br /> <br />
+                                    </div>
+                                </div>
+                                <div class="col-md-12" ng-if="colourButton" style="width: 509px;height: 100px;margin-left: -15px;">
+                                    <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                        <button class="Color-slider" ng-click="changeColorReverse()" ng-disabled="colorDisplayMin<=0">&#10094;</button>
+                                    </div>
+                                    <div class="col-md-10" style="margin-left: 7px;">
+                                        <button style="background-color: {{tilecolor.hexString}};" ng-class="{'Color-selected':trade.TileBackgroundColor==tilecolor.hexString,
+                              'Color':trade.TileBackgroundColor!=tilecolor.hexString}"
+                                                ng-if="colorDisplayMax>tilecolor.colorId && tilecolor.colorId>=colorDisplayMin"
+                                                ng-repeat="tilecolor in TileColors" ng-click="TileColor(tilecolor.hexString)" title="{{tilecolor.name}}"></button>
+                                        <br /><br />
+                                    </div>
+                                    <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                        <button class="Color-slider" ng-click="changeColorForward()" ng-disabled="colorDisplayMax>=TileColors.length">&#10095;</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 Image" ng-if="imageButton">
+                                    <div class="col-md-8 BannerImage">
+                                        <img class="col-md-12" src="{{trade.TileBackgroundImage}}" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="btn btn-primary" id="fileTileBackground" type="file" nv-file-select="" uploader="uploaderSectionImage" ng-show="" />
+                                        <button class="btn buttons text" id="button" ng-click="uploadTileBackgroundImage($index)">Select Images</button><br /><br />
+                                        <button class="btn RemoveImageButton" id="button" ng-click="deleteTileBackgroundImage($index)">Remove Image</button>
+                                        <br /><br />
+                                    </div>
+                                    <!--All in one section Image-->
+                                    <div>
+                                        <div class="col-md-12">
+                                            <br />
+                                            <span style="font-size: 15px;font-family: cursive;">Tile Section image :</span>
+                                            <input id="site-name" type="checkbox" class="form-control" ng-model="data.ShowHide" />
+                                        </div>
+                                        <div class="col-md-12 sectionSelection-button" ng-if="data.ShowHide==true">
+                                            <div class="col-md-10">
+                                                <br /> <br />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 Image" ng-if="data.ShowHide==true">
+                                            <div class="col-md-8 TileHeaderImage">
+                                                <img class="col-md-12" src="{{trade.sectionBackgroundImage}}" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="btn btn-primary" id="fileSectionHeaderBackground" type="file" nv-file-select="" uploader="uploadersectionbackgroundImage" ng-show="" />
+                                                <button class="btn buttons text" id="button" ng-click="uploadSectionBackgroundImage($index)">Select Images</button><br /><br />
+                                                <button class="btn RemoveImageButton" id="button" ng-click="deleteSectionBackgroundImage($index)">Remove Image</button>
+                                                <br /><br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/////////////////////End//////////////////////-->
+                                </div>
+
+                                <div ng-if="trade.ColumnCount*trade.RowCount>0" style="text-align: center;" ng-show="!Flashdealexcelupload">
+                                    <span style="font-size: 15px;font-family: cursive;"> Tiles slider:</span>
+                                    <input id="site-name" type="checkbox" class="form-control" style="text-align:center;" ng-model="trade.IsTileSlider" />
+                                </div>
+                                <div class="col-md-10 ColRowDiv" ng-if="trade.ColumnCount*trade.RowCount>0" ng-show="!Flashdealexcelupload" ssss>
+                                    <br />
+                                    <label ng-if="trade.SectionSubType != 'Other'">List of Tiles</label>
+                                    <div ng-if="trade.SectionSubType != 'Other'" class="col-md-12 ColRowDivRepeat" ng-repeat="colrow in AppItemsListRepeatList[$index]">
+                                        <div class="col-md-1 ColRowDivRepeatIndex">
+                                            <p class="repeatp">{{$index+1}}</p>
+                                        </div>
+                                        <div class="col-md-4 ColRowDivRepeatInput">
+                                            <input class="repeatp" type="text" placeholder="Display Name" ng-click="clearItemSearch()" ng-model="colrow.TileName" />
+                                            <!--<span class="extendAwwow"><i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
+                                        </div>
+                                        <div class="col-md-4 ColRowDivRepeatInput">
+                                            <select style="width: 122%;" class="imageLevel" ng-model="colrow.ImageLevel" ng-change="clearItemSearch()">
+                                                <option value="" ng-selected="colrow.ImageLevel==''">Level</option>
+                                                <option value="1" ng-selected="colrow.ImageLevel==1">Level 1</option>
+                                                <option value="2" ng-selected="colrow.ImageLevel==2">Level 2</option>
+                                                <option value="3" ng-selected="colrow.ImageLevel==3">Level 3</option>
+                                                <option value="4" ng-selected="colrow.ImageLevel==4">Level 4</option>
+                                                <option value="5" ng-selected="colrow.ImageLevel==5">Level 5</option>
+                                            </select>
+                                            <!--<span class="extendAwwow"><i class="fa fa-angle-right" aria-hidden="true"></i></span>-->
+                                        </div>
+                                        <div class="col-md-1 ColRowDivRepeatImage">
+                                            <input class="btn btn-primary" id="fileTile" type="file" nv-file-select="" uploader="uploaderTileSectionBackgroundImage" ng-show="" />
+                                            <button class="btn buttons tileImageUploadButton" id="button" ng-click="uploadTileImage($index)">&#43;</button>
+                                        </div>
+                                        <div style="margin-left: 39px;" class="col-md-5" ng-if="trade.SectionSubType == 'Flash Deal' || trade.SectionSubType == 'Item'">
+                                            <input style="    margin-top: 6px;     width: 94%;" ng-click="detectChange($event)" ng-keyup="detectChange($event)" ng-model="searchValue" class="form-control" type="text" width="100px" id="textCustomer" placeholder="Search" maxlength="50" />
+                                        </div>
+                                        <div style="    margin-left: 10px;" class="col-md-3 sectionCategoryTile">
+                                            <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryTileImage(LogoUrl,$index)" ng-class="{'sectionCategoryTileDisabled':trade.AppItemsList[$index].TileImage}" ng-show="trade.SectionSubType=='Base Category'">
+                                                <option value="">Select Base Category</option>
+                                                <option value="{{BCategories.BaseCategoryId}},{{BCategories.BaseCategoryName}}, {{BCategories.LogoUrl}}" ng-selected="(SectionData.BaseCategoryId == BCategories.BaseCategoryId)" ng-repeat="BCategories in BaseCategories"> {{BCategories.BaseCategoryName}}</option>
+                                            </select>
+                                            <select style="width: 177%; margin-left: 28px;" class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryTileImage(LogoUrl,$index)" ng-class="{'sectionCategoryTileDisabled':trade.AppItemsList[$index].TileImage}" ng-show="trade.SectionSubType=='Category'">
+                                                <option value="">Select Category</option>
+                                                <option value="{{ccategorys.Categoryid}},{{ccategorys.CategoryName}},{{ccategorys.LogoUrl}}" ng-selected="(SectionData.Categoryid == ccategorys.Categoryid)" ng-repeat="ccategorys in categorys"> {{ccategorys.CategoryName}}</option>
+                                            </select>
+
+                                            <select style="width: 177%; margin-left: 28px;" class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryTileImage(LogoUrl,$index)" ng-class="{'sectionCategoryTileDisabled':trade.AppItemsList[$index].TileImage}" ng-show="trade.SectionSubType=='SubCategory'">
+                                                <option value="" ng-selected="popup.RedirectionID==0">SubCategory</option>
+                                                <option value="{{ccategorys.SubCategoryId}},{{ccategorys.SubcategoryName}},{{ccategorys.LogoUrl}}" ng-selected="popup.RedirectionID == ccategorys.SubCategoryId" ng-repeat="ccategorys in subcategorys"> {{ccategorys.SubcategoryName}}</option>
+                                            </select>
+
+                                            <select style="width: 177%; margin-left: 28px;" class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryTileImage(LogoUrl,$index)" ng-class="{'sectionCategoryTileDisabled':trade.AppItemsList[$index].TileImage}" ng-show="trade.SectionSubType=='Brand'">
+                                                <option value="">Brand</option>
+                                                <option value="{{Ssubsubcats.SubsubCategoryid}},{{Ssubsubcats.SubsubcategoryName}},{{Ssubsubcats.LogoUrl}}" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                                            </select>
+
+                                            <select style="    width: 169%;" class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryTileImage(LogoUrl,$index)" ng-class="{'sectionCategoryTileDisabled':trade.AppItemsList[$index].TileImage}" ng-show="trade.SectionSubType=='Item' || trade.SectionSubType=='Flash Deal'||trade.SectionSubType=='Offer'">
+                                                <option value="">Item</option>
+                                                <option value="{{Item.ItemId}},{{ Item.itemname }},{{ Item.LogoUrl }},{{ Item.SellingSku }}" ng-repeat="Item in Items"> {{Item.itemname}} - {{Item.active ? 'Active' : 'Inactive'}}</option>
+                                            </select>
+                                        </div>
+                                        <div ng-if="trade.SectionSubType == 'Flash Deal' || trade.SectionSubType == 'Item'" style="margin-left: 15px;   " class="col-md-1 ColRowDivRepeatDelete" ng-click="deleteUploadedImage($index)" ng-class="{'DeleteBeforeUpload':trade.AppItemsList[$index].TileImage==null||trade.AppItemsList[$index].TileImage==''}">
+                                            <p class="repeatp"><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                        </div>
+                                        <div ng-if="trade.SectionSubType != 'Flash Deal' && trade.SectionSubType != 'Item'" style="margin-left: 274px;;   " class="col-md-1 ColRowDivRepeatDelete" ng-click="deleteUploadedImage($index)" ng-class="{'DeleteBeforeUpload':trade.AppItemsList[$index].TileImage==null||trade.AppItemsList[$index].TileImage==''}">
+                                            <p class="repeatp"><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                        </div>
+                                        <!-- Add section Flash deal  -->
+                                        <div id="panel_flashItem" class="panel panel-default" ng-if="trade.SectionSubType == 'Flash Deal'" ng-show="(colrow.TileImage || LogoUrl)" style=" width: 91%;  margin: 87px 47px -9px -1px">
+                                            <h3>Item</h3>
+                                            <div class="row" style="margin: 10px;">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="site-name">MOQ</label>
+                                                        <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="colrow.MOQ" ng-change="GetUnitPurchasePrice(colrow)">
+                                                            <option value="">Select</option>
+                                                            <option value="{{ss.ItemId}},{{ ss.itemname }},{{ ss.LogoUrl }},{{ ss.SellingSku }},{{ss.MinOrderQty}},{{ ss.UnitPrice }},{{ ss.PurchasePrice }},{{ss.MRP}}" ng-repeat="ss in itmdata">{{ss.MinOrderQty}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="site-name">Unit Price:</label>
+                                                        <input id="UnitPriceNew" name="UnitPriceNew" type="text" ng-disabled="true" class="form-control" ng-model="colrow.UnitPrice" />
+                                                        <input id="PriceNew" name="PriceNew" type="text" ng-disabled="true" class="form-control" ng-model="colrow.MRP" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="site-name">Purchase Price:</label>
+                                                        <input id="UnitPriceNew" name="UnitPriceNew" type="text" ng-disabled="true" class="form-control" ng-model="colrow.PurchasePrice" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="site-name">Total Qty :<span style="color:red;">(Total QTY must be multiple of MOQ)</span></label>
+                                                        <input id="QtyAvaiable" type="number" class="form-control" ng-model="colrow.FlashDealQtyAvaiable" placeholder="Enter Total Qty Available" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="site-name">Max Quanity Person Take:<span style="color:red;">(Must be multiple of MOQ)</span></label>
+                                                        <input id="QtyAvaiable" type="number" class="form-control" ng-model="colrow.FlashDealMaxQtyPersonCanTake" placeholder="Enter Max Quantity" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="site-name">Flash Deal Special Price:</label>
+                                                        <input id="QtyAvaiable" type="number" class="form-control" ng-model="colrow.FlashDealSpecialPrice" placeholder="Flash Deal Price" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group" ng-show="flashDealDiv == true">
+                                                        <label for="site-name">Flash Deal Qty Available::</label>
+                                                        <input id="QtyAvaiable" type="number" class="form-control" ng-model="colrow.FlashdealRemainingQty" placeholder="Flash Deal Price" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 datetime">
+                                                    <label for="site-name">
+                                                        Start Date
+                                                    </label>
+                                                    <div class="col-md-12" style="margin-left:-16px">
+                                                        <div class="col-md-1 calendarDiv">
+                                                            <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                                        </div>
+                                                        <div class="col-md-9" style="padding:0">
+                                                            <input type="datetime-local" name="StartDate" ng-model="colrow.OfferStartTime">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 datetime">
+                                                    <label for="site-name">
+                                                        End Date
+                                                    </label>
+                                                    <div class="col-md-12" style="        margin: 0px 0px 0px -14px;
+">
+                                                        <div class="col-md-1 calendarDiv">
+                                                            <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                                        </div>
+                                                        <div class="col-md-9" style="padding:0">
+                                                            <input type="datetime-local" name="StartDate" ng-model="colrow.OfferEndTime">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button type="button" class="btn btn-ar btn-primary" style="float: right;margin: 5px -218px 1px -8px;" click-and-disable="AddData(colrow,$index)">Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End section Flash deal  -->
+
+                                    </div>
+                                    <br /> <br />
+                                </div>
+                                <div class="form-group col-md-2" ng-show="Flashdealexcelupload">
+                                    <div>
+                                        <input type="file" id="FlashDeal" name="file"><br>
+                                        <button class="btn btn-ar btn-primary" ng-click="uploadFlashDealFile($parent.$index)" style="border-radius: 0px;">Upload Excel</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="margin-left: 454px;margin-top: -43px;" ng-show="!Flashdealexcelupload">
+                                <button class="btn saveSliderButton" title="Save this Banner/Slider" id="button" ng-click="SaveSection($parent.$index)">Save</button>
+                            </div>
+                        </div>
+                        <!--Only Banner HTML Started-->
+                        <div class="col-md-10 sectionSelectionBanner" ng-if="$index == level" ng-show="trade.IsBanner == true && trade.SectionSubType!='Slider'">
+
+                            <!--For DynamicHtml-->
+                            <div class="col-md-12 sectionSelection-column" style="margin-left: 76px; margin-top: 20px;" ng-if="trade.SectionSubType == 'DynamicHtml' ">
+
+
+                                <div class="col-md-12">
+                                    <span style="font-size: 15px;font-family: cursive;"> Header Text Size :</span>
+                                    <input id="HeaderTextSize" type="number" class="form-control" ng-model="trade.HeaderTextSize" />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <span style="font-size: 15px;font-family: cursive; margin-left: 52px; margin-top: 40px; ">Dynamic URL :</span>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" style="width: 67%; margin-left: -37px;" placeholder="Dynamic URL" ng-model="trade.WebViewUrl">
+                                </div>
+                                <br />
+                                <br />
+
+
+                            </div>
+
+                            <div class="col-md-12 sectionSelectionBanner-plus" ng-if="trade.SectionSubType != 'DynamicHtml' ">
+
+                                <input class="btn btn-primary" id="fileSlider" type="file" nv-file-select="" uploader="uploaderSliderImage" ng-show="" />
+                                <div class="col-md-1 plusButton" ng-class="{'plusButtonDisabled':trade.AppItemsList[0].BannerImage}" ng-click="addBannerImage()">
+                                    <p class="slider-fafas"><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                </div>
+
+                                <div class="col-md-1 ">
+                                    <p style="margin-top: 5px;font-size: 20px;font-family: cursive;">or</p>
+                                </div>
+
+                                <div class="col-md-3" ng-if="trade.SectionSubType == 'Item'">
+                                    <input style="margin-top: 6px;" ng-keyup="detectChange($event)" ng-click="detectChange($event)" ng-model="searchValue" class="form-control" type="text" width="100px" id="textCustomer" placeholder="Search" maxlength="50" />
+                                </div>
+                                <div class="col-md-6 sectionCategory">
+                                    <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryBannerImage(LogoUrl)" ng-disabled="trade.AppItemsList[0].BannerImage" ng-class="{'sectionCategoryDisabled':trade.AppItemsList[0].BannerImage}" ng-if="trade.SectionSubType=='Base Category'">
+                                        <option value="">Select Base Category</option>
+                                        <option value="{{BCategories.LogoUrl}},{{BCategories.BaseCategoryId}}" ng-selected="(trade.AppItemsList[0].BannerImage == BCategories.LogoUrl)" ng-repeat="BCategories in BaseCategories"> {{BCategories.BaseCategoryName}}</option>
+                                    </select>
+                                    <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryBannerImage(LogoUrl)" ng-disabled="trade.AppItemsList[0].BannerImage" ng-class="{'sectionCategoryDisabled':trade.AppItemsList[0].BannerImage}" ng-if="trade.SectionSubType=='Category'">
+                                        <option value="">Select Category</option>
+                                        <option value="{{ccategorys.LogoUrl}},{{ccategorys.Categoryid}}" ng-selected="(trade.AppItemsList[0].BannerImage == ccategorys.LogoUrl)" ng-repeat="ccategorys in categorys"> {{ccategorys.CategoryName}}</option>
+                                    </select>
+                                    <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryBannerImage(LogoUrl)" ng-disabled="trade.AppItemsList[0].BannerImage" ng-class="{'sectionCategoryDisabled':trade.AppItemsList[0].BannerImage}" ng-if="trade.SectionSubType=='SubCategory'">
+                                        <option value="" ng-selected="popup.RedirectionID==0">SubCategory</option>
+                                        <option value="{{ccategorys.LogoUrl}},{{ccategorys.SubCategoryId}}" ng-selected="(trade.AppItemsList[0].BannerImage == ccategorys.LogoUrl)" ng-repeat="ccategorys in subcategorys"> {{ccategorys.SubcategoryName}}</option>
+                                    </select>
+                                    <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryBannerImage(LogoUrl)" ng-disabled="trade.AppItemsList[0].BannerImage" ng-class="{'sectionCategoryDisabled':trade.AppItemsList[0].BannerImage}" ng-if="trade.SectionSubType=='Brand'">
+                                        <option value="">Brand</option>
+                                        <option value="{{Ssubsubcats.LogoUrl}},{{Ssubsubcats.SubsubCategoryid}}" ng-selected="(trade.AppItemsList[0].BannerImage == Ssubsubcats.LogoUrl)" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}} - {{Ssubsubcats.SubsubcategoryName}}) </option>
+                                    </select>
+                                    <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryBannerImage(LogoUrl)" ng-disabled="trade.AppItemsList[0].BannerImage" ng-class="{'sectionCategoryDisabled':trade.AppItemsList[0].BannerImage}" ng-if="trade.SectionSubType=='Item' || trade.SectionSubType=='Offer' || trade.SectionSubType=='Flash Deal' || trade.SectionSubType=='Slider'">
+                                        <option value="">Item</option>
+                                        <option value="{{ Item.LogoUrl }},{{Item.ItemId}}" ng-selected="(trade.AppItemsList[0].BannerImage == Item.LogoUrl)" ng-repeat="Item in Items"> {{Item.itemname}} - {{Item.Active}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 deleteButton" ng-click="deleteOnlyBanner()" ng-class="{'deleteBeforeUploadSlider':trade.AppItemsList.length==0}">
+                                    <p class="slider-fafas"><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12 SliderImageDiv" ng-repeat="bannerImage in trade.AppItemsList">
+                                    <img class="SliderImage" src="{{bannerImage.BannerImage}}" /><br />
+                                    <div class="col-md-12" ng-show="redirectionStatus">
+                                        <div class="col-md-5 redirectionType">
+                                            <select ng-model="bannerImage.RedirectionType">
+                                                <option value="" ng-selected="bannerImage.RedirectionType==undefined">Redirection Type</option>
+                                                <option value="Category" ng-selected="bannerImage.RedirectionType=='Category'">Category</option>
+                                                <option value="Base Category" ng-selected="bannerImage.RedirectionType=='Base Category'">Base Category</option>
+                                                <option value="SubCategory" ng-selected="bannerImage.RedirectionType=='SubCategory'">SubCategory</option>
+                                                <option value="Item" ng-selected="bannerImage.RedirectionType=='Item'">Item</option>
+                                                <option value="Brand" ng-selected="bannerImage.RedirectionType=='Brand'">Brand</option>
+                                                <option value="Page" ng-selected="bannerImage.RedirectionType=='Page'">Page</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 redirectionType">
+                                            <div ng-if="bannerImage.RedirectionType=='Base Category'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Base Category</option>
+                                                    <option value="{{BCategories.BaseCategoryId}}" ng-selected="bannerImage.RedirectionID == BCategories.BaseCategoryId" ng-repeat="BCategories in BaseCategories"> {{BCategories.BaseCategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='Category'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Category</option>
+                                                    <option value="{{ccategorys.Categoryid}}" ng-selected="bannerImage.RedirectionID == ccategorys.Categoryid" ng-repeat="ccategorys in categorys"> {{ccategorys.CategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='SubCategory'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">SubCategory</option>
+                                                    <option value="{{ccategorys.SubCategoryId}}" ng-selected="bannerImage.RedirectionID == ccategorys.SubCategoryId" ng-repeat="ccategorys in subcategorys"> {{ccategorys.SubcategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='Brand'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Brand</option>
+                                                    <option value="{{Ssubsubcats.SubsubCategoryid}}" ng-selected="bannerImage.RedirectionID == Ssubsubcats.SubsubCategoryid" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='Item'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Item</option>
+                                                    <option value="{{Item.ItemId}}" ng-selected="bannerImage.RedirectionID == Item.ItemId" ng-repeat="Item in Items"> {{Item.itemname}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='Page'">
+                                                <select class="form-control" ng-model="bannerImage.BannerActivity">
+                                                    <option value="games" ng-selected="bannerImage.BannerActivity=='games'">Game</option>
+                                                    <option value="prime" ng-selected="bannerImage.BannerActivity=='prime'">Prime</option>
+                                                    <option value="target" ng-selected="bannerImage.BannerActivity=='target'">Target</option>
+                                                    <option value="shoppingcart" ng-selected="bannerImage.BannerActivity=='shoppingcart'">shoppingcart</option>
+                                                    <option value="wallet" ng-selected="bannerImage.BannerActivity=='wallet'">wallet</option>
+                                                    <option value="category" ng-selected="bannerImage.BannerActivity=='category'">category</option>
+                                                    <option value="tradeoffer" ng-selected="bannerImage.BannerActivity=='tradeoffer'">tradeoffer</option>
+                                                    <option value="allbrands" ng-selected="bannerImage.BannerActivity=='allbrands'">allbrands</option>
+                                                    <option value="myorder" ng-selected="bannerImage.BannerActivity=='myorder'">myorder</option>
+                                                    <option value="freebies" ng-selected="bannerImage.BannerActivity=='freebies'">freebies</option>
+                                                    <option value="direct" ng-selected="bannerImage.BannerActivity=='direct'">direct</option>
+                                                    <option value="clearance" ng-selected="bannerImage.BannerActivity=='clearance'">Clearance</option>
+                                                    <option value="ExternalURL" ng-selected="bannerImage.BannerActivity=='ExternalURL'">ExternalURL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 redirectionType-Level">
+                                            <select class="imageLevel" ng-model="bannerImage.ImageLevel" style="margin:0">
+                                                <option value="" ng-selected="bannerImage.ImageLevel==undefined">Level</option>
+                                                <option value="1" ng-selected="bannerImage.ImageLevel==1">Level 1</option>
+                                                <option value="2" ng-selected="bannerImage.ImageLevel==2">Level 2</option>
+                                                <option value="3" ng-selected="bannerImage.ImageLevel==3">Level 3</option>
+                                                <option value="4" ng-selected="bannerImage.ImageLevel==4">Level 4</option>
+                                                <option value="5" ng-selected="bannerImage.ImageLevel==5">Level 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" ng-show="!redirectionStatus">
+                                        <div class="col-md-10 redirectionType-Level">
+                                            <select class="imageLevel" ng-model="bannerImage.ImageLevel" style="margin:0">
+                                                <option value="" ng-selected="bannerImage.ImageLevel==undefined">Level</option>
+                                                <option value="1" ng-selected="bannerImage.ImageLevel==1">Level 1</option>
+                                                <option value="2" ng-selected="bannerImage.ImageLevel==2">Level 2</option>
+                                                <option value="3" ng-selected="bannerImage.ImageLevel==3">Level 3</option>
+                                                <option value="4" ng-selected="bannerImage.ImageLevel==4">Level 4</option>
+                                                <option value="5" ng-selected="bannerImage.ImageLevel==5">Level 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="font-size: 15px;font-family: cursive;"> Header Text Size :</span>
+                                        <input id="HeaderTextSize" type="number" class="form-control" ng-model="trade.HeaderTextSize" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <br />
+                                            <span style="font-size: 20px;font-family: cursive;">Has any Offer Period?</span>
+                                        </div>
+                                        <div class="col-md-4 round" style="margin: 21px 0px 0px 0px;">
+                                            <br />
+                                            <input type="checkbox" id="checkboxfour" ng-model="bannerImage.HasOffer" ng-click="hasOfferClicked($index)" />
+                                            <label for="checkboxfour"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 datetime" ng-if="bannerImage.HasOffer">
+                                        <br />
+                                        <span>Start Date</span>
+                                        <div class="col-md-12" style="margin-left: -16px">
+                                            <div class="col-md-1 calendarDiv">
+                                                <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                            </div>
+                                            <div class="col-md-9" style="padding:0">
+                                                <input type="datetime-local" name="StartDate" ng-model="bannerImage.OfferStartTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 datetime" ng-if="bannerImage.HasOffer">
+                                        <br />
+                                        <span>End Date</span>
+                                        <div class="col-md-12" style="margin-left:-16px">
+                                            <div class="col-md-1 calendarDiv">
+                                                <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                            </div>
+                                            <div class="col-md-9" style="padding:0">
+                                                <input type="datetime-local" name="StartDate" ng-model="bannerImage.OfferEndTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="margin-left: 462px;margin-top: -43px;">
+                                        <button class="btn saveSliderButton" title="Save this Banner/Slider" id="button" ng-click="SaveSection($parent.$index)">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Slider under Banner HTML Started-->
+                        <div class="col-md-10 sectionSelectionBanner" ng-if="$index == level" ng-show="trade.IsBanner == true && trade.SectionSubType=='Slider'">
+                            <div class="col-md-12 sectionSelectionBanner-plus">
+                                <input class="btn btn-primary" id="fileSlider" type="file" nv-file-select="" uploader="uploaderSliderImage" ng-show="" />
+                                <div class="col-md-1 plusButton" ng-repeat="selectedindex in trade.AppItemsList" ng-click="selectedBannerImage($index)" ng-class="{'plusButtonBeforeClick':selectedbannerImageIndex!=$index}">
+                                    <p class="slider-fafas">{{$index+1}}</p>
+                                </div>
+                                <div class="col-md-1 plusButton" ng-click="addBannerImage()">
+                                    <p class="slider-fafas"><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                </div>
+                                <div class="col-md-1 deleteButton" ng-click="deleteBannerImage()" ng-class="{'deleteBeforeUploadSlider':trade.AppItemsList.length==0}">
+                                    <p class="slider-fafas"><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                </div>
+                               
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12 SliderImageDiv" ng-repeat="bannerImage in trade.AppItemsList" ng-show="selectedbannerImageIndex==$index">
+                                    <img class="SliderImage" src="{{bannerImage.BannerImage}}" /><br />
+                                    <!--<div class="col-md-12" style="margin-left: -8px;margin-top:5px">
+
+        <label>Banner Activity</label><br />
+        <select class="selectSection" ng-model="bannerImage.BannerActivity">
+            <option value="Game" data-ng-selected="bannerImage.BannerActivity">Game</option>
+            <option value="Prime">Prime</option>
+            <option value="Target">Target</option>
+        </select>
+    </div>-->
+
+                                    <div class="col-md-12">
+                                        <div class="col-md-5 redirectionType">
+                                            <select ng-model="bannerImage.RedirectionType">
+                                                <option value="" ng-selected="bannerImage.RedirectionType==undefined">Redirection Type</option>
+                                                <option value="Category" ng-selected="bannerImage.RedirectionType=='Category'">Category</option>
+                                                <!--<option value="Base Category" ng-selected="bannerImage.RedirectionType=='Base Category'">Base Category</option>-->
+                                                <option value="Item" ng-selected="bannerImage.RedirectionType=='Item'">Item</option>
+                                                <option value="Brand" ng-selected="bannerImage.RedirectionType=='Brand'">Brand</option>
+                                                <option value="Other" ng-selected="bannerImage.RedirectionType=='Other'">Other</option>
+                                                <!--<option value="Page" ng-selected="bannerImage.RedirectionType=='Page'">Page</option>-->
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 redirectionType">
+                                            <div ng-if="bannerImage.RedirectionType=='Base Category'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Base Category</option>
+                                                    <option value="{{BCategories.BaseCategoryId}}" ng-selected="bannerImage.RedirectionID == BCategories.BaseCategoryId" ng-repeat="BCategories in BaseCategories"> {{BCategories.BaseCategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='Category'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Category</option>
+                                                    <option value="{{ccategorys.Categoryid}}" ng-selected="bannerImage.RedirectionID == ccategorys.Categoryid" ng-repeat="ccategorys in categorys"> {{ccategorys.CategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="popup.RedirectionType=='SubCategory'">
+                                                <select class="form-control" ng-model="popup.RedirectionID">
+                                                    <option value="" ng-selected="popup.RedirectionID==0">SubCategory</option>
+                                                    <option value="{{ccategorys.SubCategoryId}}" ng-selected="popup.RedirectionID == ccategorys.SubCategoryId" ng-repeat="ccategorys in subcategorys"> {{ccategorys.SubcategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='Brand'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Brand</option>
+                                                    <option value="{{Ssubsubcats.SubsubCategoryid}}" ng-selected="bannerImage.RedirectionID == Ssubsubcats.SubsubCategoryid" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="bannerImage.RedirectionType=='Item'">
+                                                <select class="form-control" ng-model="bannerImage.RedirectionID">
+                                                    <option value="" ng-selected="bannerImage.RedirectionID==0">Item</option>
+                                                    <option value="{{Item.ItemId}}" ng-selected="bannerImage.RedirectionID == Item.ItemId" ng-repeat="Item in Items"> {{Item.itemname}}</option>
+                                                </select>
+                                            </div>
+
+                                            <div ng-if="bannerImage.RedirectionType=='Other'">
+                                                <select class="form-control" ng-model="bannerImage.BannerActivity">
+                                                    <option value="games" ng-selected="bannerImage.BannerActivity=='games'">Game</option>
+                                                    <option value="prime" ng-selected="bannerImage.BannerActivity=='prime'">Prime</option>
+                                                    <option value="target" ng-selected="bannerImage.BannerActivity=='target'">Target</option>
+                                                    <option value="shoppingcart" ng-selected="bannerImage.BannerActivity=='shoppingcart'">shoppingcart</option>
+                                                    <option value="wallet" ng-selected="bannerImage.BannerActivity=='wallet'">wallet</option>
+                                                    <option value="category" ng-selected="bannerImage.BannerActivity=='category'">category</option>
+                                                    <option value="tradeoffer" ng-selected="bannerImage.BannerActivity=='tradeoffer'">tradeoffer</option>
+                                                    <option value="allbrands" ng-selected="bannerImage.BannerActivity=='allbrands'">allbrands</option>
+                                                    <option value="myorder" ng-selected="bannerImage.BannerActivity=='myorder'">myorder</option>
+                                                    <option value="freebies" ng-selected="bannerImage.BannerActivity=='freebies'">freebies</option>
+                                                    <option value="direct" ng-selected="bannerImage.BannerActivity=='direct'">direct</option>
+                                                    <option value="Clearance" ng-selected="bannerImage.BannerActivity=='Clearance'">Clearance</option>
+                                                    <option value="ExternalURL" ng-selected="bannerImage.BannerActivity=='ExternalURL'">ExternalURL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 redirectionType-Level">
+                                            <select class="imageLevel" ng-model="bannerImage.ImageLevel" style="margin: 0">
+                                                <option value="" ng-selected="bannerImage.ImageLevel==undefined">Level</option>
+                                                <option value="1" ng-selected="bannerImage.ImageLevel==1">Level 1</option>
+                                                <option value="2" ng-selected="bannerImage.ImageLevel==2">Level 2</option>
+                                                <option value="3" ng-selected="bannerImage.ImageLevel==3">Level 3</option>
+                                                <option value="4" ng-selected="bannerImage.ImageLevel==4">Level 4</option>
+                                                <option value="5" ng-selected="bannerImage.ImageLevel==5">Level 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-if="bannerImage.RedirectionType=='Other' && bannerImage.BannerActivity=='ExternalURL' ">
+                                        URL: <input type="text" class="inputSection" ng-model="bannerImage.RedirectionUrl" style="width:300px" />
+                                    </div>
+                                    <div class="col-md-12 sectionSelection-button">
+                                        <div class="col-md-10">
+                                            <button ng-click="buttonClicked()" ng-class="{'buttonSelected':buttonSelected == true,
+                                              'buttonDeselected':buttonSelected == false}">
+                                                Color
+                                            </button>
+                                            <br /> <br />
+                                        </div>
+                                        <div class="col-md-2 Color-Removal" ng-if="colourButton">
+                                            <button ng-click="removeBannerBackgroundColor()">
+                                                <i class="fa fa-ban"></i>
+                                            </button>
+                                            <br /> <br />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-if="colourButton" style="width: 509px;height: 100px;margin-left: -15px;">
+                                        <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                            <button class="Color-slider" ng-click="changeColorReverse()" ng-disabled="colorDisplayMin<=0">&#10094;</button>
+                                        </div>
+                                        <div class="col-md-10" style="margin-left: 7px;">
+                                            <button style="background-color: {{tilecolor.hexString}};" ng-class="{'Color-selected':trade.BannerBackgroundColor==tilecolor.hexString,
+                                                 'Color':trade.BannerBackgroundColor!=tilecolor.hexString}"
+                                                    ng-if="colorDisplayMax>tilecolor.colorId && tilecolor.colorId>=colorDisplayMin"
+                                                    ng-repeat="tilecolor in TileColors" ng-click="SliderColor(tilecolor.hexString)" title="{{tilecolor.name}}"></button>
+                                            <br /><br />
+                                        </div>
+                                        <div class="col-md-1" style="margin-left: -24px;margin-top: 21px;">
+                                            <button class="Color-slider" ng-click="changeColorForward()" ng-disabled="colorDisplayMax>=TileColors.length">&#10095;</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="font-size: 15px;font-family: cursive;"> Header Text Size :</span>
+                                        <input id="HeaderTextSize" type="number" class="form-control" ng-model="trade.HeaderTextSize" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <br />
+                                            <span style="font-size: 20px;font-family: cursive;">Has any Offer Period?</span>
+                                        </div>
+                                        <div class="col-md-4 round" style="margin: 21px 0px 0px 0px;">
+                                            <br />
+                                            <input type="checkbox" id="checkboxfive{{$index}}" ng-model="bannerImage.HasOffer" />
+                                            <label for="checkboxfive{{$index}}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 datetime" ng-if="bannerImage.HasOffer">
+                                        <br />
+                                        <span>Start Date</span>
+                                        <div class="col-md-12" style="margin-left:-16px">
+                                            <div class="col-md-1 calendarDiv">
+                                                <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                            </div>
+                                            <div class="col-md-9" style="padding:0">
+                                                <input type="datetime-local" name="StartDate" ng-model="bannerImage.OfferStartTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 datetime" ng-if="bannerImage.HasOffer">
+                                        <br />
+                                        <span>End Date</span>
+                                        <div class="col-md-12" style="margin-left:-16px">
+                                            <div class="col-md-1 calendarDiv">
+                                                <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                            </div>
+                                            <div class="col-md-9" style="padding:0">
+                                                <input type="datetime-local" name="StartDate" ng-model="bannerImage.OfferEndTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style=" margin-left: 462px; margin-top: -43px; ">
+                                        <button class="btn saveSliderButton" title="Save this Banner/Slider" id="button" ng-click="SaveSection($parent.$index)">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Pop Up HTML Started-->
+                        <div class="col-md-10 sectionSelectionBanner" ng-if="$index == level" ng-show="trade.IsPopUp == true">
+                            <div class="col-md-12 sectionSelectionBanner-plus">
+                                <input class="btn btn-primary" id="fileSlider" type="file" nv-file-select="" uploader="uploaderSliderImage" ng-show="" />
+                                <div class="col-md-1 plusButton" ng-class="{'plusButtonDisabled':trade.AppItemsList[0].BannerImage}" ng-click="addBannerImage()">
+                                    <p class="slider-fafas"><i class="fa fa-plus" aria-hidden="true"></i></p>
+                                </div>
+                                <div class="col-md-1 ">
+                                    <p style="margin-top: 5px; font-size: 20px; font-family: cursive;">or</p>
+                                </div>
+                                <div class="col-md-6 sectionCategory">
+                                    <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryBannerImage(LogoUrl)" ng-disabled="trade.AppItemsList[0].BannerImage" ng-class="{'sectionCategoryDisabled':trade.AppItemsList[0].BannerImage}" ng-if="trade.SectionSubType=='Brand'">
+                                        <option value="">Brand</option>
+                                        <option value="{{Ssubsubcats.LogoUrl}},{{Ssubsubcats.SubsubCategoryid}}" ng-selected="(trade.AppItemsList[0].BannerImage == Ssubsubcats.LogoUrl)" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                                    </select>
+                                    <select class="form-control" ng-model="LogoUrl" ng-change="sectionCategoryBannerImage(LogoUrl)" ng-disabled="trade.AppItemsList[0].BannerImage" ng-class="{'sectionCategoryDisabled':trade.AppItemsList[0].BannerImage}" ng-if="trade.SectionSubType=='Item' || trade.SectionSubType=='Offer' || trade.SectionSubType=='Flash Deal'">
+                                        <option value="">Item</option>
+                                        <option value="{{ Item.LogoUrl }},{{Item.ItemId}}" ng-selected="(trade.AppItemsList[0].BannerImage == Item.LogoUrl)" ng-repeat="Item in Items"> {{Item.itemname}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 deleteButton" ng-click="deleteOnlyBanner()" ng-class="{'deleteBeforeUploadSlider':trade.AppItemsList.length==0}">
+                                    <p class="slider-fafas"><i class="fa fa-trash-o" aria-hidden="true"></i></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12 SliderImageDiv" ng-repeat="popup in trade.AppItemsList">
+                                    <img class="popUpImage" src="{{popup.BannerImage}}" /><br />
+                                    <div class="col-md-12" ng-show="redirectionStatus">
+                                        <div class="col-md-5 redirectionType">
+                                            <select ng-model="popup.RedirectionType">
+                                                <option value="" ng-selected="popup.RedirectionType==undefined">Redirection Type</option>
+                                                <option value="Category" ng-selected="popup.RedirectionType=='Category'">Category</option>
+                                                <option value="Base Category" ng-selected="popup.RedirectionType=='Base Category'">Base Category</option>
+                                                <option value="Item" ng-selected="popup.RedirectionType=='Item'">Item</option>
+                                                <option value="Brand" ng-selected="popup.RedirectionType=='Brand'">Brand</option>
+                                                <option value="Other" ng-selected="popup.RedirectionType=='Other'">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 redirectionType">
+                                            <div ng-if="popup.RedirectionType=='Base Category'">
+                                                <select class="form-control" ng-model="popup.RedirectionID">
+                                                    <option value="" ng-selected="popup.RedirectionID==0">Base Category</option>
+                                                    <option value="{{BCategories.BaseCategoryId}}" ng-selected="popup.RedirectionID == BCategories.BaseCategoryId" ng-repeat="BCategories in BaseCategories"> {{BCategories.BaseCategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="popup.RedirectionType=='Category'">
+                                                <select class="form-control" ng-model="popup.RedirectionID">
+                                                    <option value="" ng-selected="popup.RedirectionID==0">Category</option>
+                                                    <option value="{{ccategorys.Categoryid}}" ng-selected="popup.RedirectionID == ccategorys.Categoryid" ng-repeat="ccategorys in categorys"> {{ccategorys.CategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="popup.RedirectionType=='SubCategory'">
+                                                <select class="form-control" ng-model="popup.RedirectionID">
+                                                    <option value="" ng-selected="popup.RedirectionID==0">SubCategory</option>
+                                                    <option value="{{ccategorys.SubCategoryId}}" ng-selected="popup.RedirectionID == ccategorys.SubCategoryId" ng-repeat="ccategorys in subcategorys"> {{ccategorys.SubcategoryName}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="popup.RedirectionType=='Brand'">
+                                                <select class="form-control" ng-model="popup.RedirectionID">
+                                                    <option value="" ng-selected="popup.RedirectionID==0">Brand</option>
+                                                    <option value="{{Ssubsubcats.SubsubCategoryid}}" ng-selected="popup.RedirectionID == Ssubsubcats.SubsubCategoryid" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="popup.RedirectionType=='Item'">
+                                                <select class="form-control" ng-model="popup.RedirectionID">
+                                                    <option value="" ng-selected="popup.RedirectionID==0">Item</option>
+                                                    <option value="{{Item.ItemId}}" ng-selected="popup.RedirectionID == Item.ItemId" ng-repeat="Item in Items"> {{Item.itemname}}</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="popup.RedirectionType=='Other'" ng-model="popup.RedirectionID=-1">
+                                                <select class="form-control" ng-model="popup.BannerActivity">
+                                                    <option value="games" ng-selected="popup.BannerActivity=='games'">Game</option>
+                                                    <option value="prime" ng-selected="popup.BannerActivity=='prime'">Prime</option>
+                                                    <option value="target" ng-selected="popup.BannerActivity=='target'">Target</option>
+                                                    <option value="shoppingcart" ng-selected="popup.BannerActivity=='shoppingcart'">shoppingcart</option>
+                                                    <option value="wallet" ng-selected="popup.BannerActivity=='wallet'">wallet</option>
+                                                    <option value="category" ng-selected="popup.BannerActivity=='category'">category</option>
+                                                    <option value="tradeoffer" ng-selected="popup.BannerActivity=='tradeoffer'">tradeoffer</option>
+                                                    <option value="allbrands" ng-selected="popup.BannerActivity=='allbrands'">allbrands</option>
+                                                    <option value="myorder" ng-selected="popup.BannerActivity=='myorder'">myorder</option>
+                                                    <option value="freebies" ng-selected="popup.BannerActivity=='freebies'">freebies</option>
+                                                    <option value="ExternalURL" ng-selected="bannerImage.BannerActivity=='ExternalURL'">ExternalURL</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-2 redirectionType-Level">
+                                            <select class="imageLevel" ng-model="popup.ImageLevel" style="margin:0">
+                                                <option value="" ng-selected="popup.ImageLevel==undefined">Level</option>
+                                                <option value="1" ng-selected="popup.ImageLevel==1">Level 1</option>
+                                                <option value="2" ng-selected="popup.ImageLevel==2">Level 2</option>
+                                                <option value="3" ng-selected="popup.ImageLevel==3">Level 3</option>
+                                                <option value="4" ng-selected="popup.ImageLevel==4">Level 4</option>
+                                                <option value="5" ng-selected="popup.ImageLevel==5">Level 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-show="!redirectionStatus">
+                                        <div class="col-md-10 redirectionType-Level">
+                                            <select class="imageLevel" ng-model="popup.ImageLevel" style="margin: 0">
+                                                <option value="" ng-selected="popup.ImageLevel==undefined">Level</option>
+                                                <option value="1" ng-selected="popup.ImageLevel==1">Level 1</option>
+                                                <option value="2" ng-selected="popup.ImageLevel==2">Level 2</option>
+                                                <option value="3" ng-selected="popup.ImageLevel==3">Level 3</option>
+                                                <option value="4" ng-selected="popup.ImageLevel==4">Level 4</option>
+                                                <option value="5" ng-selected="popup.ImageLevel==5">Level 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" ng-if="bannerImage.RedirectionType=='Other' && bannerImage.BannerActivity=='ExternalURL' ">
+                                        URL: <input type="text" class="inputSection" ng-model="bannerImage.RedirectionUrl" style="width:300px" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span style="font-size: 15px;font-family: cursive;"> Header Text Size :</span>
+                                        <input id="HeaderTextSize" type="number" class="form-control" ng-model="trade.HeaderTextSize" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-6">
+                                            <br />
+                                            <span style="font-size: 20px;font-family: cursive;">Has any Offer Period?</span>
+                                        </div>
+                                        <div class="col-md-4 round" style="margin: 21px 0px 0px 0px;">
+                                            <br />
+                                            <input type="checkbox" id="checkboxfour" ng-model="popup.HasOffer" ng-click="hasOfferClicked($index)" />
+                                            <label for="checkboxfour"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 datetime" ng-if="popup.HasOffer">
+                                        <br />
+                                        <span>Start Date</span>
+                                        <div class="col-md-12" style="margin-left:-16px">
+                                            <div class="col-md-1 calendarDiv">
+                                                <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                            </div>
+                                            <div class="col-md-9" style="padding:0">
+                                                <input type="datetime-local" name="StartDate" ng-model="popup.OfferStartTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 datetime" ng-if="popup.HasOffer">
+                                        <br />
+                                        <span>End Date</span>
+                                        <div class="col-md-12" style="margin-left:-16px">
+                                            <div class="col-md-1 calendarDiv">
+                                                <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
+                                            </div>
+                                            <div class="col-md-9" style="padding:0">
+                                                <input type="datetime-local" name="StartDate" ng-model="popup.OfferEndTime">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="margin-left: 462px; margin-top: -43px;">
+                                        <button class="btn saveSliderButton" title="Save this Banner/Slider" id="button" ng-click="SaveSection($parent.$index)">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 card-body" ng-show="SectionData.WarehouseId">
+                        <br /> <br />
+                        <button class="btn buttons text skaddsection" id="button" ng-click="open()">Add New Sections</button>
+                        <br /> <br />
+                    </div>
+                    <div class="col-md-12 card-body" ng-show="SectionData.WarehouseId">
+                        <br /> <br />
+                        <button class="btn saveAll sksave" id="button" ng-click="saveCompleteAppHome()">
+                            <i class="fa fa-save" aria-hidden="true"></i>   Save
+                        </button>
+                        <button class="btn deleteAll skremove" id="button" ng-click="deleteCompleteAppHome()"><i class="fa fa-trash-o" aria-hidden="true"></i>    Delete</button>
+                        <button class="btn deleteAppHomeCancel" ng-click="deleteCompleteAppHomeCancel()" ng-show="deteteAppHomeModal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        <button class="btn deleteAppHomeConfirm" ng-click="deleteCompleteAppHomeConfirm()" ng-show="deteteAppHomeModal"><i class="fa fa-check" aria-hidden="true"></i></button>
+                        <button ng-if="publishSectionButton && wId == SectionData.WarehouseId && apptype == SectionData.AppType" class="btn saveAll skpublish" id="button" ng-click="publishCompleteAppHome()" style="float:right">
+                            <i class="fa fa-android" aria-hidden="true"></i>
+                            Publish
+                        </button>
+                        <!--<br /><span style="color:red; font-size:17px">* </span><span>Save individual sections first before saving complete module</span> <br />-->
+                    </div>
+                    <div class="col-md-12" ng-if="publishSectionButton && wId == SectionData.WarehouseId && apptype == SectionData.AppType">
+                        <div class="col-md-3">
+                            <br />
+                            <span style="font-size: 20px;font-family: cursive;">Make Clone</span>
+                        </div>
+                        <div class="col-md-2 round" style="margin: 21px 0px 0px 0px;">
+                            <br />
+                            <input type="checkbox" id="checkboxseven" ng-click="makeClone($index)" />
+                            <label for="checkboxseven"></label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="cloneReady">
+                        <div class="col-md-4 form-group">
+                            <label for="site-name">Select App Type</label><br />
+                                                                          <select class="selectSection form-control" id="site-name" ng-model="ClonetoAppType">
+                                                                              <option value="">--Select App Type--</option>
+                                                                              <option value="Retailer App">Retailer App</option>
+                                                                              <option value="Sales App">Sales App</option>
+                                                                              <option value="DON App">Direch Open Network App</option>
+                                                                          </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="site-name">Select Warehouse</label><br />
+                            <select class="selectSection form-control" id="site-name" ng-disabled="!ClonetoAppType" ng-model="ClonetoWarehouse">
+                                <option value="">--Select Warehouse--</option>
+                                <option value="{{warehouses.WarehouseId}},{{warehouses.WarehouseName}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group" ng-if="ClonetoWarehouse" style="margin-top: 4%;">
+                            <button class="saveAll" ng-click="cloneAppHome(ClonetoAppType,ClonetoWarehouse)">
+                                <i class="fa fa-files-o" aria-hidden="true"></i>   Clone It
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br /> <br />
+            </div>
+        </div>
+        <div data-ng-app="app" class="col-md-1" style="cursor:pointer;margin-top: 97px;margin-left: -216px;padding: 0;width: 0;" id='container' ng-show="showdrag==true">
+            <ul class='list'>
+                <reorder list='AppHomeSections'>
+                    <li class="repeatDivDrag">
+                        <p style="width: 39px;" class="repeatp"><i class="fa fa-hand-o-up" aria-hidden="true"></i></p>
+                    </li>
+                </reorder>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="emulatorDiv" ng-show="SectionData.WarehouseId">
+                <span style="font-size: 14px;font-weight: bolder;color: aliceblue;margin-left: 176px;position: absolute;margin-top: 14px;">SONY</span>
+                <div class="col-md-12 emulator-Container" id="scroller">
+                    <div class="col-md-12" style="border:7px solid #2b539b">
+                    </div>
+                    <div class="col-md-12" style="width:220px;margin-left:2px" ng-repeat="trade in AppHomeSections">
+                        <!--Preview for Tile-->
+                        <div class="col-md-12" ng-if="trade.IsTile==true" style="margin-left: -26px;">
+                            <div class="col-md-12" style="background-color:{{trade.TileHeaderBackgroundColor}};width:253px;min-height:32px;border-radius:21px;margin:10px 5px 5px 4px" ng-if="trade.HasHeaderBackgroundColor==true">
+                                <p class="baseCategory" style="Color:{{trade.HeaderTextColor}}">{{trade.SectionSubType}} </p>
+                            </div>
+                            <div class="col-md-12 tileBackgroundImage" style="background-image:url('{{trade.TileAreaHeaderBackgroundImage}}');width:253px;min-height:auto;border-radius:21px;margin:10px 5px 5px 4px;background-size: contain;" ng-if="trade.HasHeaderBackgroundImage==true">
+                                <div class="col-md-12 tileBackgroundImage" style="background-image:url('{{trade.TileHeaderBackgroundImage}}');width:270px;min-height:auto;border-radius:21px;margin:10px 5px 5px -14px;background-size: contain;">
+                                    <div class="col-md-12">
+                                        <p class="baseCategory">{{trade.SectionSubType}} </p>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-12 " style="background-color:{{trade.TileBackgroundColor}};width:260px;min-height:{{trade.RowCount*100}}px;border-radius:21px;" ng-if="trade.HasBackgroundColor==true">
+                                <div class="col-md-{{12/trade.ColumnCount}}" ng-repeat="tileimage in trade.AppItemsList" ng-class="{'tileImageDivLevel0': tileimage.ImageLevel==''
+                        ,'tileImageDivLevel1': tileimage.ImageLevel==1
+                        ,'tileImageDivLevel2':tileimage.ImageLevel==2
+                        ,'tileImageDivLevel3':tileimage.ImageLevel==3
+                        ,'tileImageDivLevel4':tileimage.ImageLevel==4
+                        ,'tileImageDivLevel5':tileimage.ImageLevel==5}">
+                                    <div class="col-md-12 " style="background-image:url('{{tileimage.TileSectionBackgroundImage}}');width:120px;height:auto;border-radius:21px;background-size: cover;">
+
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((200) / trade.ColumnCount) - (34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 35}}px" ng-if="tileimage.ImageLevel==5" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((120) / trade.ColumnCount) - 2*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 1.5*35}}px" ng-if="tileimage.ImageLevel==4" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((120) / trade.ColumnCount) - 3.2*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 2*35}}px" ng-if="tileimage.ImageLevel==3" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((120) / trade.ColumnCount) - 4*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 4*35}}px" ng-if="tileimage.ImageLevel==2" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((120) / trade.ColumnCount) - 5*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 5*35}}px" ng-if="tileimage.ImageLevel==1" />
+
+                                    </div>
+                                    <div class="ImageDisplayName">
+                                        <p>{{tileimage.TileName}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 tileBackgroundImage" style="background-image:url('{{trade.TileBackgroundImage}}');width:260px;height:auto;border-radius:21px;background-size: cover;" ng-if="trade.HasBackgroundImage==true">
+                                <div class="col-md-12 tileBackgroundImage" style="background-image:url('{{trade.sectionBackgroundImage}}');width:240px;height:auto;border-radius:21px;background-size: cover;" ng-if="trade.HasBackgroundImage==true">
+                                    <div class="col-md-{{12/trade.ColumnCount}}" ng-repeat="tileimage in trade.AppItemsList" ng-class="{'tileImageDivLevel0': tileimage.ImageLevel=='',
+                        'tileImageDivLevel1': tileimage.ImageLevel==1
+                        ,'tileImageDivLevel2':tileimage.ImageLevel==2
+                        ,'tileImageDivLevel3':tileimage.ImageLevel==3
+                        ,'tileImageDivLevel4':tileimage.ImageLevel==4
+                        ,'tileImageDivLevel5':tileimage.ImageLevel==5}">
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((260) / trade.ColumnCount) - (34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 35}}px" ng-if="tileimage.ImageLevel==5" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((260) / trade.ColumnCount) - 2*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 1.5*35}}px" ng-if="tileimage.ImageLevel==4" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((260) / trade.ColumnCount) - 3.2*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 2*35}}px" ng-if="tileimage.ImageLevel==3" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((260) / trade.ColumnCount) - 4*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 4*35}}px" ng-if="tileimage.ImageLevel==2" />
+                                        <img class="tileImages" src="{{tileimage.TileImage}}" style="width:{{((260) / trade.ColumnCount) - 5*(34 /trade.ColumnCount)}}px;height:{{((trade.RowCount*130) / trade.RowCount) - 5*35}}px" ng-if="tileimage.ImageLevel==1" />
+                                        <div class="ImageDisplayName">
+                                            <p>{{tileimage.TileName}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Preview for Banner with Slider style="margin-bottom: -19px"-->
+                        <div class="col-md-12" style="background-color:{{trade.BannerBackgroundColor}};width:260px;min-height:{{trade.RowCount*100}}px;border-radius:21px;margin-bottom: -19px;" ng-if="trade.IsBanner == true && trade.SectionSubType=='Slider'">
+                            <div class="col-md-12 sliderEmulatorDiv" ng-repeat="bannerimage in trade.AppItemsList" ng-show="sliderImagePreviewIndex[$parent.$index]==$index">
+                                <img ng-class="{'sliderEmulator0': bannerimage.ImageLevel==undefined || bannerimage.ImageLevel==''
+                        ,'sliderEmulator1': bannerimage.ImageLevel==1
+                        ,'sliderEmulator2':bannerimage.ImageLevel==2
+                        ,'sliderEmulator3':bannerimage.ImageLevel==3
+                        ,'sliderEmulator4':bannerimage.ImageLevel==4
+                        ,'sliderEmulator5':bannerimage.ImageLevel==5}" src="{{bannerimage.BannerImage}}" title="{{bannerimage.OfferStartTime | date:'shortDate'}} - {{bannerimage.OfferEndTime | date:'shortDate'}}" />
+                                <div style="position:absolute;bottom: 3px;right: -77px;color:white;font-size: 9px; ">
+                                    <strong>Offer Period</strong> {{bannerimage.OfferStartTime | date:'shortDate'}} - {{bannerimage.OfferEndTime | date:'shortDate'}}
+                                </div>
+                                <a class="prev" ng-click="changeSliderImage(-1,$parent.$index)">&#10094;</a>
+                                <a class="nextButton" id="nextBanner" ng-click="changeSliderImage(1,$parent.$index)">&#10095;</a>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="text-align:center;width: 242px;" ng-if="trade.IsBanner == true && trade.SectionSubType=='Slider'">
+                            <span style="padding-left: 1px;" ng-repeat="bannerimage in trade.AppItemsList">
+                                <button ng-click="changeSliderImagedot($index,$parent.$index)" ng-class="{'slider-dot-selected':sliderImagePreviewIndex[$parent.$index]==$index,
+                     'slider-dots':sliderImagePreviewIndex[$parent.$index]!=$index}"></button>
+                            </span>
+                        </div>
+                        <!--Preview for Banner without Slider-->
+                        <div class="col-md-12" style="margin-bottom: -19px" ng-if="trade.IsBanner == true && trade.SectionSubType!='Slider'">
+                            <div class="col-md-12 sliderEmulatorDiv" ng-repeat="bannerimage in trade.AppItemsList">
+                                <img ng-class="{'sliderEmulator0': bannerimage.ImageLevel==undefined || bannerimage.ImageLevel==''
+                        ,'sliderEmulator1': bannerimage.ImageLevel==1
+                        ,'sliderEmulator2':bannerimage.ImageLevel==2
+                        ,'sliderEmulator3':bannerimage.ImageLevel==3
+                        ,'sliderEmulator4':bannerimage.ImageLevel==4
+                        ,'sliderEmulator5':bannerimage.ImageLevel==5}" src="{{bannerimage.BannerImage}}" title="{{bannerimage.OfferStartTime | date:'shortDate'}} - {{bannerimage.OfferEndTime | date:'shortDate'}}" />
+                                <div style="position:absolute;bottom: 3px;right: -77px;color:white;font-size: 9px; ">
+                                    <strong>Offer Period</strong> {{bannerimage.OfferStartTime | date:'shortDate'}} - {{bannerimage.OfferEndTime | date:'shortDate'}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="border:3px solid aliceblue">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="border: 2px solid #999999" ng-if="AppHomeSections[level].SectionSubType=='Flash Deal'">
+                <label for="site-name">Flash Deal Item</label><br />
+                <table width="100%" border="1">
+                    <thead>
+                        <tr>
+                            <th width="40%">Item Name</th>
+                            <!--<th>MOQ</th>-->
+                            <th width="15%">Start Time</th>
+                            <th width="15%">End Time</th>
+                            <th width="15%">Qty Avaiable</th>
+                            <th width="15%">Special Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="AppItem in AppHomeSections[level].AppItemsList| filter:{ TileName: ''}">
+                            <td>{{AppItem.TileName}}</td>
+                            <!--<td>{{AppItem.MOQ}}</td>-->
+                            <td>{{AppItem.OfferStartTime | date:'dd/MM/yyyy HH:mm a'}}</td>
+                            <td>{{AppItem.OfferEndTime | date:'dd/MM/yyyy HH:mm a'}}</td>
+                            <td>{{AppItem.FlashDealQtyAvaiable}}</td>
+                            <!--<td>{{AppItem.FlashDealMaxQtyPersonCanTake}}</td>-->
+                            <td>{{AppItem.FlashDealSpecialPrice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <!--Preview for Pop Up-->
+            <div class="col-md-12" style="width:220px;margin-left:2px" ng-repeat="trade in AppHomeSections">
+                <!--Preview for Pop Up-->
+                <div class="col-md-12" style="margin-bottom: -19px" ng-if="trade.IsPopUp == true && $index==level" ng-show="showPopUp[$index]">
+                    <div class="col-md-12 sliderEmulatorDiv" ng-repeat="popupimage in trade.AppItemsList">
+                        <div class="col-md-12 popUpEmulator">
+                            <label ng-click="hidePopUp()" ng-if="popupimage.ImageLevel>0">X</label>
+                            <img ng-class="{'popImage0': popupimage.ImageLevel==undefined || popupimage.ImageLevel==''
+                        ,'popImage1': popupimage.ImageLevel==1
+                        ,'popImage2':popupimage.ImageLevel==2
+                        ,'popImage3':popupimage.ImageLevel==3
+                        ,'popImage4':popupimage.ImageLevel==4
+                        ,'popImage5':popupimage.ImageLevel==5}" src="{{popupimage.BannerImage}}" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="addApphomesection.html">
+    <div>
+        <!--<div class="modal-body" style="height: 579px !important; border-radius:153px; background:#fff;">-->
+        <div class="modal-body" style="border-radius:153px; background:#fff; overflow: visible; display: inline-block;">
+            <div class="col-md-12">
+                <label class="close" ng-click="cancel()">X</label>
+            </div>
+            <br />
+            <h4 class="heading">Add New Sections</h4>
+            <div class="col-md-12">
+                <div class="col-md-3 tiles-slider">
+                    <h4>Tiles</h4>
+                    <div class="col-md-12">
+                        <img src="../../notificationimages/icons8-medium-icons-64.png" />
+                    </div>
+                    <div class="col-md-12 round">
+                        <br />
+                        <input type="checkbox" id="checkbox" ng-model="data.tile" ng-click="buttonSwaptile(data); returnArrayValue(data);" />
+                        <label for="checkbox"></label>
+                    </div>
+                </div>
+                <div class="col-md-3 tiles-slider">
+                    <h4>Banner</h4>
+                    <div class="col-md-12">
+                        <img src="../../notificationimages/BannerSlider.png" />
+                    </div>
+                    <div class="col-md-12 round">
+                        <br />
+                        <input type="checkbox" id="checkboxtwo" ng-model="data.banner" ng-click="buttonSwapslider(data); returnArrayValue(data);" />
+                        <label for="checkboxtwo"></label>
+                    </div>
+                </div>
+                <div class="col-md-3 tiles-slider">
+                    <h4>Pop-Up</h4>
+                    <div class="col-md-12">
+                        <img src="../../notificationimages/icons8-popup-64.png" />
+                    </div>
+                    <div class="col-md-12 round">
+                        <br />
+                        <input type="checkbox" id="checkboxthree" ng-model="data.popup" ng-click="buttonSwappopup(data)" />
+                        <label for="checkboxthree"></label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12" style="margin-left: -8px;">
+                <div class="col-md-6">
+                    <br /><br />
+                    <label>Select Section Sub Type</label><br />
+                    <select class="selectSection" ng-model="data.sectionSubType" ng-hide="popUpSelected == true" ng-disabled="!sectionSelected">
+                        <option value="">--select--</option>
+                        <option value="{{subtype.type}}" ng-repeat="subtype in SubSectionType" ng-hide="((subtype.type=='Flash Deal') && data.banner==true) || (subtype.type=='Slider' && data.tile==true) ">{{subtype.type}}</option>
+                    </select>
+                    <select class="selectSection" ng-model="data.sectionSubType" ng-show="popUpSelected == true" ng-disabled="!sectionSelected">
+                        <option value="">--select--</option>
+                        <option value="{{subtype.type}}" ng-repeat="subtype in sectionSubTypeforPopUp">{{subtype.type}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <br /><br />
+                    <label>Enter Section Name</label><br />
+                    <input class="inputSection" type="text" ng-model="data.sectionName" placeholder="Enter Section Name" /><br />
+                </div>
+
+            </div>
+            <div class="col-md-12" style="margin-left: -8px;margin-top:5px">
+                <div class="col-md-6">
+                    <label>Section HindiName</label><br />
+                    <input class="inputSection" type="text" ng-model="data.sectionHindiName" placeholder="Enter Section Name" /><br />
+                </div>
+                <div class="col-md-6">
+                    <label>View Type</label><br />
+                    <select class="selectSection" ng-model="data.ViewType" ng-disabled="!sectionSelected || data.sectionSubType == 'Other' || data.sectionSubType == 'DynamicHtml' ">
+                        <option value="AppView" data-ng-selected="data.ViewType">App View</option>
+                        <option value="WebView">Web View</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12" ng-show="data.ViewType == 'WebView'">
+                <label>Web Url</label><br />
+                <input class="inputSection" type="text" ng-model="data.WebViewUrl" placeholder="Enter Web Url" />
+            </div>
+            <div class="col-md-12" ng-hide="data.ViewType == 'WebView'">
+                <br><br><br>
+            </div>
+
+            <!--<div class="col-md-12" ng-if="data.BannerActivity == 'DynamicHtml'">
+                <label>Html</label><br />
+                <input class="inputSection" type="text" ng-model="data.DynamicHtml" placeholder="Enter Web Html" />
+            </div>-->
+
+            <div class="col-md-12">
+                <button class="btn next" id="nextsectionButton" ng-click="AddHomeSection(data)">Next</button>
+            </div>
+        </div>
+
+    </div>
+</script>
+<script></script>

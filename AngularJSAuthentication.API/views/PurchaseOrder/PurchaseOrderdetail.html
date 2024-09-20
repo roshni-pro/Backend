@@ -1,0 +1,671 @@
+﻿<div class="page page-table">
+    <section id="divtoPrint" class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>Purchase Order Details</strong></div>
+        <div class="panel-body">
+            <form name="form_constraints" id="divtoPrint" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <h4 class="title">Orders</h4>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Invoice  </label>
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.PoInvoiceNo" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Purchase order Id  </label>
+                    <span ng-if="PurchaseOrderData.IsAdjustmentPo==true" class="badge badge-primary"> Adjustment Po</span><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.PurchaseOrderId" disabled />
+
+                </div>
+                <!--<div class="form-group col-md-3">
+        <label for="site-name"> Transaction Number </label><br />
+        <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.TransactionNumber" disabled />
+    </div>-->
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Suplier Name</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.SupplierName" disabled />
+                    <span ng-if="PurchaseOrderData.IsCashPurchase">
+
+                        Cash Purchase: {{PurchaseOrderData.CashPurchaseName}}
+
+                    </span>
+                </div>
+                <!-- by Anushka  start-->
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Depo Name</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.DepoName" disabled />
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">Picker Type</label><br />
+                    <select class="form-control" id="site-name" ng-model="PurchaseOrderData.PickerType" ng-disabled="PurchaseOrderData.Status=='Closed' || PurchaseOrderData.Status=='Auto Closed'">
+                        <!--<option value="" selected>--Select--</option>-->
+                        <option value="Pick" selected>Pick</option>
+                        <option value="DeliveryfromSupplier">Delivery from Supplier-Freight</option>
+                        <option value="DeliveryfromSupplierFor">Delivery from Supplier-For</option>
+                    </select>
+                </div>
+                <!-- by Anushka end-->
+                <div class="form-group col-md-3">
+                    <label for="site-name">Status</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.Status" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Created Date</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.CreationDate" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> PO Type  </label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.PoType" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Level</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.Level" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Created by</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PurchaseOrderData.CreatedBy" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Buyer</label><br />
+                    <div class="col-md-8">
+                        <select id="site-name" class="form-control" ng-model="PurchaseOrderData.BuyerId" ng-disabled="PurchaseOrderData.Status =='CN Partial Received' || PurchaseOrderData.Status == 'CN Received'|| 'Partial Received' || PurchaseOrderData.Status == 'Received' || PurchaseOrderData.Status == 'Auto Closed' || PurchaseOrderData.Status == 'Closed'">
+                            <option value="0">--Select--</option>
+                            <option value="{{ppl.PeopleId}}" ng-repeat="ppl in Buyer" data-ng-selected="PurchaseOrderData.BuyerId == ppl.PeopleId"> {{ppl.DisplayName}} </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Freight Charge</label><br />
+                    <div class="col-md-8">
+                        <input id="site-name" type="number" min="0" class="form-control" ng-model="PurchaseOrderData.FreightCharge" ng-disabled="PurchaseOrderData.Status=='Closed' || PurchaseOrderData.Status=='Auto Closed' || PurchaseOrderData.PickerType=='Pick' || PurchaseOrderData.PickerType =='DeliveryfromSupplierFor' " />
+                    </div>
+                </div>
+                <div class="form-group col-md-3" ng-if="PurchaseOrderData.Status =='Approved' || PurchaseOrderData.Status =='Self Approved' || PurchaseOrderData.Status =='Send for Approval' ">
+                    <button type="button" class="btn btn-success" ng-click="savechangebuyer(PurchaseOrderData)" ng-model="PurchaseOrderData.PeopleID" ng-disabled="PurchaseOrderData.Status=='Closed' || PurchaseOrderData.Status=='Auto Closed' ">
+                        <span class="glyphicon glyphicon-edit"></span> SaveChange
+                    </button>
+                </div>
+                <div class="form-group col-md-3" ng-if=" (PurchaseOrderData.Status =='UN Partial Received' || PurchaseOrderData.Status =='CN Received' || PurchaseOrderData.Status =='UN Received' || PurchaseOrderData.Status =='CN Partial Received')&&(isenabled==true)">
+                    <button type="button" class="btn btn-success" ng-click="savechangebuyer(PurchaseOrderData)" ng-model="PurchaseOrderData.PeopleID" ng-disabled="PurchaseOrderData.Status=='Closed' || PurchaseOrderData.Status=='Auto Closed' ">
+                        <span class="glyphicon glyphicon-edit"></span> SaveChange
+                    </button>
+                </div>
+</div>
+               
+                <!--<div class="form-group col-md-3">-->
+                <!--<label for="site-name">&nbsp;</label><br />
+    <label for="site-name">Is Lock</label>
+    <input type="checkbox" style="width:50px; height:20px;" ng-change="LockPO(PurchaseOrderData.IsLock)" ng-model="PurchaseOrderData.IsLock" />-->
+                <!--</div>-->
+                <div class="form-group col-md-6">
+                    <div class="col-md-3">
+                        <label for="site-name" style="color:red;">Advance Amt:</label><br />
+                        {{AdvanceAmountDetails && AdvanceAmountDetails.TotalPayment ?  AdvanceAmountDetails.TotalPayment: 'N/A'}}
+                    </div>
+                    <div class="col-md-3">
+                        <label for="site-name" style="color:red;">Bank payment:</label><br />
+                        {{AdvanceAmountDetails && AdvanceAmountDetails.BankPayment ?  AdvanceAmountDetails.BankPayment: 'N/A'}}
+
+                    </div>
+                    <div class="col-md-3">
+                        <label for="site-name" style="color:red;">Settle payment:</label><br />
+                        {{AdvanceAmountDetails && AdvanceAmountDetails.SettledPayment ?  AdvanceAmountDetails.SettledPayment: 'N/A'}}
+
+                    </div>
+                    <div class="col-md-3">
+                        <label for="site-name" style="color:red;">Freight Charge:</label><br />
+                        <i class="fa fa-inr"></i>&nbsp; {{PurchaseOrderData && PurchaseOrderData.FreightCharge ?  PurchaseOrderData.FreightCharge: 'N/A'}}
+                    </div>
+
+                </div>
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                <div class="th">
+                                    PODetailId
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('PurchaseOrderDetailId')"
+                                          data-ng-class="{active: row == 'PurchaseOrderDetailId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-PurchaseOrderDetailId')"
+                                          data-ng-class="{active: row == '-PurchaseOrderDetailId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Number
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('ItemId')"
+                                          data-ng-class="{active: row == 'ItemId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-ItemId')"
+                                          data-ng-class="{active: row == '-ItemId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ABC Classification
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('ItemId')"
+                                          data-ng-class="{active: row == 'ItemId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-ItemId')"
+                                          data-ng-class="{active: row == '-ItemId'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Purchase Item Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('itemname')"
+                                          data-ng-class="{active: row == 'itemname'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-itemname')"
+                                          data-ng-class="{active: row == '-itemname'}"></span>
+                                </div>
+                            </th>
+                            <th> 
+                                <div class="th">ROC</div>
+                                
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Item Weight
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('itemname')"
+                                          data-ng-class="{active: row == 'itemname'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-itemname')"
+                                          data-ng-class="{active: row == '-itemname'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Sku
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('PurchaseSku')"
+                                          data-ng-class="{active: row == 'PurchaseSku'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-PurchaseSku')"
+                                          data-ng-class="{active: row == '-PurchaseSku'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Company Stock Code
+                                    <!--<span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('ItemId')"
+                  data-ng-class="{active: row == 'ItemId'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-ItemId')"
+                  data-ng-class="{active: row == '-ItemId'}"></span>-->
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Unit Price
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('UnitPrice')"
+                                          data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-UnitPrice')"
+                                          data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    MOQ
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('MOQ')"
+                                          data-ng-class="{active: row == 'MOQ'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-MOQ')"
+                                          data-ng-class="{active: row == '-MOQ'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Quantity
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('qty')"
+                                          data-ng-class="{active: row == 'qty'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-qty')"
+                                          data-ng-class="{active: row == '-qty'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total No of pieces
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="rder('TotalQuantity')"
+                                          data-ng-class="{active: row == 'TotalQuantity'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-TotalQuantity')"
+                                          data-ng-class="{active: row == '-TotalQuantity'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total Amount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('TotalAmount')"
+                                          data-ng-class="{active: row == 'TotalAmount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-TotalAmount')"
+                                          data-ng-class="{active: row == '-TotalAmount'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Status
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Status')"
+                                          data-ng-class="{active: row == 'Status'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Status')"
+                                          data-ng-class="{active: row == '-Status'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CreationDate')"
+                                          data-ng-class="{active: row == ' CreationDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- CreationDate')"
+                                          data-ng-class="{active: row == '- CreationDate'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Edit Item
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CreationDate')"
+                                          data-ng-class="{active: row == ' CreationDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- CreationDate')"
+                                          data-ng-class="{active: row == '- CreationDate'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Remove
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CreationDate')"
+                                          data-ng-class="{active: row == ' CreationDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- CreationDate')"
+                                          data-ng-class="{active: row == '- CreationDate'}"></span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="PurchaseOrderDetail in PurchaseOrderDetail">
+                            <td>
+                                <span ng-if="PurchaseOrderDetail.IsFreeItem == true" ng-style="{ 'color' : (PurchaseOrderDetail.IsFreeItem == true) ? 'red' : ''  }">
+                                    (Free)
+                                </span> {{PurchaseOrderDetail.PurchaseOrderDetailId}}
+                            </td>
+                            <td>
+                                {{PurchaseOrderDetail.ItemNumber}}
+                            </td>
+                            <td>
+                                {{PurchaseOrderDetail.Category}}
+                            </td>
+                            <td>{{PurchaseOrderDetail.PurchaseName}}</td>
+                            <td>{{PurchaseOrderDetail.Tag?PurchaseOrderDetail.Tag:'--'}}</td>
+                            <td ng-if="PurchaseOrderDetail.weighttype != 'pc'">{{PurchaseOrderDetail.Weight}} {{PurchaseOrderDetail.WeightType}}</td>
+                            <td ng-if="PurchaseOrderDetail.weighttype == 'pc'">{{PurchaseOrderDetail.Weight}} {{PurchaseOrderDetail.WeightInGram}}</td>
+                            <td>{{PurchaseOrderDetail.PurchaseSku}}</td>
+                            <td>{{PurchaseOrderDetail.CompanyStockCode}}</td>
+                            <td>{{PurchaseOrderDetail.Price| number:2}}</td>
+                            <td>{{PurchaseOrderDetail.MOQ}}</td>
+                            <td>{{((PurchaseOrderDetail.TotalQuantity)/(PurchaseOrderDetail.MOQ))}}</td>
+                            <td>{{PurchaseOrderDetail.TotalQuantity}}</td>
+                            <td>{{((PurchaseOrderDetail.Price)*(PurchaseOrderDetail.TotalQuantity)) | number:2}}</td>
+                            <td><span class="label label-info">{{PurchaseOrderDetail.Status}}</span></td>
+                            <td>{{PurchaseOrderDetail.CreationDate}}</td>
+
+                            <td><button type="button" ng-disabled="PurchaseOrderData.Status == 'CN Received' || PurchaseOrderData.Status == 'UN Received' ||PurchaseOrderData.Status == 'Received'  || PurchaseOrderData.Status == 'Partial Received'|| PurchaseOrderData.Status == 'UN Partial Received' || PurchaseOrderData.Status == 'CN Partial Received' || PurchaseOrderData.Status == 'Accepted by supplier' || PurchaseOrderData.Status == 'Rejected by supplier' || PurchaseOrderData.Status == 'Canceled'  || PurchaseOrderData.Status == 'Auto Closed' || PurchaseOrderData.Status == 'Closed' || PurchaseOrderData.IsAdjustmentPo==true  " class="btn btn-primary active" ng-click="edit(PurchaseOrderDetail)"><span class="glyphicon glyphicon-edit"> </span> Open</button></td>
+                            <td><button type="button" ng-disabled="PurchaseOrderData.Status == 'CN Received' || PurchaseOrderData.Status == 'UN Received' || PurchaseOrderData.Status == 'Received' || PurchaseOrderData.Status == 'Partial Received' || PurchaseOrderData.Status == 'UN Partial Received' || PurchaseOrderData.Status == 'CN Partial Received' ||  PurchaseOrderData.Status == 'Accepted by supplier' || PurchaseOrderData.Status == 'Rejected by supplier' || PurchaseOrderData.Status == 'Canceled'  || PurchaseOrderData.Status == 'Auto Closed' || PurchaseOrderData.Status == 'Closed' || PurchaseOrderData.IsAdjustmentPo==true  " class="btn btn-danger active" ng-click="removeitem(PurchaseOrderDetail)"><span class="glyphicon glyphicon-trash"> </span> Remove</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <label ng-show="PurchaseOrderData.BuyerId !=null || PurchaseOrderData.BuyerId != 0" for="site-name">Buyer:</label>&nbsp;&nbsp;{{PurchaseOrderData.BuyerName}}<br />
+                            <label ng-show="PurchaseOrderData.Status == 'Approved' || PurchaseOrderData.Status == 'Self Approved' || PurchaseOrderData.Status == 'Received' || PurchaseOrderData.Status == 'Partial Received' || PurchaseOrderData.Status == 'Accepted by supplier' || PurchaseOrderData.Status == 'Rejected by supplier' || PurchaseOrderData.Status == 'CN Received' || PurchaseOrderData.Status == 'UN Received'|| PurchaseOrderData.Status == 'UN Partial Received' || PurchaseOrderData.Status == 'CN Partial Received'" for="site-name">Approved By:</label>&nbsp;&nbsp;<span class="label label-info">{{PurchaseOrderData.ApprovedBy}}</span><br />
+                            <label ng-show="PurchaseOrderData.ApprovalName1 != null" for="site-name">Approval 1:</label>&nbsp;&nbsp;{{PurchaseOrderData.ApprovalName1}}<br />
+                            <label ng-show="PurchaseOrderData.ApprovalName2 != null" for="site-name">Approval 2:</label>&nbsp;&nbsp;{{PurchaseOrderData.ApprovalName2}}<br />
+                            <label ng-show="PurchaseOrderData.ApprovalName3 != null" for="site-name">Approval 3:</label>&nbsp;&nbsp;{{PurchaseOrderData.ApprovalName3}}<br />
+                            <label ng-show="PurchaseOrderData.ApprovalName4 != null" for="site-name">Approval 4:</label>&nbsp;&nbsp;{{PurchaseOrderData.ApprovalName4}}<br />
+                            <label ng-show="PurchaseOrderData.ApprovalName5 != null" for="site-name">Approval 5:</label>&nbsp;&nbsp;{{PurchaseOrderData.ApprovalName5}}<br />
+                        </div>
+                        <div class="col-md-4">
+                            <label ng-show="PurchaseOrderData.Status == 'Rejected'" for="site-name">Rejected By:</label>&nbsp;&nbsp;<span class="label label-danger">{{PurchaseOrderData.RejectedBy}}</span><br />
+                            <label ng-show="PurchaseOrderData.RewieverName1 != null" for="site-name">Rewiever 1:</label>&nbsp;&nbsp;{{PurchaseOrderData.RewieverName1}}<br />
+                            <label ng-show="PurchaseOrderData.RewieverName2 != null" for="site-name">Rewiever 2:</label>&nbsp;&nbsp;{{PurchaseOrderData.RewieverName2}}<br />
+                            <label ng-show="PurchaseOrderData.RewieverName3 != null" for="site-name">Rewiever 3:</label>&nbsp;&nbsp;{{PurchaseOrderData.RewieverName3}}<br />
+                            <label ng-show="PurchaseOrderData.RewieverName4 != null" for="site-name">Rewiever 4:</label>&nbsp;&nbsp;{{PurchaseOrderData.RewieverName4}}<br />
+                            <label ng-show="PurchaseOrderData.RewieverName4 != null" for="site-name">Rewiever 5:</label>&nbsp;&nbsp;{{PurchaseOrderData.RewieverName5}}<br />
+                        </div>
+                        <!--<div class="col-md-4">
+                                <div class="col-md-12">
+                             <label for="site-name"><input type="checkbox" name="checkbox2" disabled value="value" ng-model="purchaseorderdata.issendsupplierapp" readonly>is send to supplier app.</label>
+                            </div>
+            <div class="col-md-12">
+                <label for="site-name"><input type="checkbox" name="checkbox" disabled value="value" ng-model="purchaseorderdata.ispdfsentgmail" readonly>is pdf send to gmail.</label>
+            </div>
+            <div class="col-md-12">
+                <label for="site-name"><input type="checkbox" name="checkbox2" disabled value="value" ng-model="purchaseorderdata.ispdfsentwhatsapp" readonly>is pdf send to whats app.</label>
+            </div>
+                            </div>-->
+                        <div class="col-md-4">
+                            <label ng-show="PurchaseOrderData.IsPR == true" for="site-name">Payment Approved By:</label>&nbsp; <label for="site-name"><span class="label label-success">{{PaymentApprovalName.DisplayName}}</span></label>
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+
+                        <br />
+                        <br />
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-1">
+                            <a type="button" class="btn btn-primary btn-sm" href="#/PurchaseOrderMaster"><span class="glyphicon glyphicon-step-backward"> </span> Back</a>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" ng-hide="PurchaseOrderData.Status == 'Rejected'|| PurchaseOrderData.Status=='Received' || PurchaseOrderData.Status=='UN Received' || PurchaseOrderData.Status=='CN Received' || PurchaseOrderData.Status=='UN Partial Received' || PurchaseOrderData.Status=='CN Partial Received' ||  PurchaseOrderData.Status == 'Partial Received' || PurchaseOrderData.Status == 'Accepted by supplier' || PurchaseOrderData.Status == 'Rejected by supplier' || PurchaseOrderData.Status == 'Canceled'  || PurchaseOrderData.Status == 'Auto Closed' || PurchaseOrderData.Status == 'Closed' || PurchaseOrderData.IsAdjustmentPo==true " class="btn btn-primary btn-sm" ng-click="open()" data-dismiss="modal"><span class="glyphicon glyphicon-plus"> </span> Add item</button>
+                        </div>
+                        <div class="col-md-1" ng-show="PurchaseOrderData.Approval1 == userid || PurchaseOrderData.Approval2 == userid || PurchaseOrderData.Approval3 == userid || PurchaseOrderData.Approval4 == userid || PurchaseOrderData.Approval5 == userid ">
+                            <button type="button" ng-show="PurchaseOrderData.Status == 'Send for Approval'" class="btn btn-primary" ng-click="sendapproval(PurchaseOrderData)">Approved</button>
+                        </div>
+
+
+
+                        <div class="col-md-1">
+                            <button type="button" ng-show="PurchaseOrderData.Status=='Draft'" class="btn btn-primary btn-sm" ng-click="Save(PurchaseOrderData)" data-dismiss="modal"><span class="glyphicon glyphicon-send"> </span> Save and send to approval</button>
+                        </div>
+                        <div class="col-md-1">
+                            <!--<button type="button" ng-show="PurchaseOrderData.Status == 'Approved' ||PurchaseOrderData.Status == 'Self Approved'" class="btn btn-primary btn-sm" ng-click="SendPdf(PurchaseOrderData)" data-dismiss="modal"><span class="glyphicon glyphicon-send"> </span> Send Pdf</button>-->
+                        </div>
+                        <div class="col-md-1">
+                            <!--<button type="button" ng-show="PurchaseOrderData.Status == 'Approved' ||PurchaseOrderData.Status == 'Self Approved'" class="btn btn-primary btn-sm" ng-click="reSendPdf(PurchaseOrderData)" data-dismiss="modal"><span class="glyphicon glyphicon-send"> </span> Resend Pdf</button>-->
+                        </div>
+                        <div class="col-md-1">
+                            <!--<button type="button" ng-show="PurchaseOrderData.Status == 'Approved' ||PurchaseOrderData.Status == 'Self Approved'" class="btn btn-primary btn-sm" ng-click="Send(PurchaseOrderData)" data-dismiss="modal"><span class="glyphicon glyphicon-send"> </span> Send to supplier</button>-->
+                        </div>
+                        <!--<div class="col-md-1">
+                <button class="btn btn-sm btn-primary" ng-click="downloadpdf()" style="float:right; margin-right: 15px;"> <span class="glyphicon glyphicon-print"> </span>&nbsp;PRINT PO</button><br />
+            </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label ng-show="PurchaseOrderData.CommentApvl != null" for="site-name">Approver Comment:</label>&nbsp; <label for="site-name">{{PurchaseOrderData.CommentApvl}}</label>
+                    </div>
+                    <div class="col-md-12">
+                        <label ng-show="PurchaseOrderData.Comment != null" for="site-name">Reviewer Comment:</label>&nbsp; <label for="site-name">{{PurchaseOrderData.Comment}}</label>
+                    </div>
+                </div>
+                <div class="row" ng-if="PurchaseOrderData.IsAdjustmentPo==true">
+                    <table class="table table-bordered table-responsive " style="width: 500px !important;margin: 13px;">
+                        <tr>
+                            <th colspan="4" style="background-color: #ffd55f;color:black; ">Adjustment PO Details</th>
+                        </tr>
+                        <tr>
+                            <td>Purchase Order Id</td>
+                            <td>Closed PO Id</td>
+                            <td>Closed PO Amount</td>
+                            <td>Adjustment Amount</td>
+                        </tr>
+                        <tr ng-repeat="po in ClosedPODetails">
+                            <td>{{po.PurchaseOrderId}}</td>
+                            <td>{{po.ClosedPOId}}</td>
+                            <td>{{po.totalamtofClosedPO}}</td>
+                            <td>{{po.Amount}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row" id="motherPOdtls" ng-if="IsMotherPO==true">
+                    <table class="table table-bordered table-responsive " style="width: 500px !important;margin: 13px;">
+                        <tr>
+                            <th colspan="4" style="background-color: #ffd55f;color:black; ">Mother PO Details</th>
+                        </tr>
+                        <tr>
+                            <td>Purchase Order Id</td>
+                            <td>Child PO Ids</td>
+                            <td>PO Amount</td>
+                            <td>Date (DD/MM/YYYY)</td>
+                        </tr>
+                        <tr ng-repeat="po in MotherPODetails">
+                            <td>{{po.PurchaseOrderId}}</td>
+                            <td>{{po.ChildPOid}}</td>
+                            <td>{{po.usedAmount}}</td>
+                            <td>{{po.Date}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>
+<script type="text/ng-template" id="myputmodal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Purchase Order List</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="site-name">Supplier :&nbsp; {{data.SupplierName}}</label><br />
+                </div>
+                <label for="site-name">Search Item:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="data.searchkey" /><br />
+                <button type="button" class="btn btn-ar btn-primary" style="float:right;" ng-click="getItem(data.searchkey)">Search</button><br />
+                <label for="site-name">Purchase Item:</label><br />
+                <select class="form-control" id="site-name" ng-model="data.ItemId" ng-change="Minqty(data.ItemId)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{item.ItemId}}" ng-repeat="item in itemMasterrr"> {{item.itemname}} => PORate ({{item.POPurchasePrice}})</option>
+                </select>
+            </div>
+
+            <!-- CheckEligibleQtyForPo start -->
+           
+            <div class="row" ng-if="EligibleQtyForPo!=null && EligibleQtyForPo!='' && EligibleQtyForPo!=undefined && data.IsPR==true">
+
+                <div class="col-xs-6">
+                    <label>Current Inventory</label><br />
+                    <input class="form-control" ng-model="EligibleQtyForPo.CurrentInventory" readonly />
+                </div>
+                <div class="col-xs-6">
+                    <label>Available Qty For PO(ItemForecast)</label><br />
+                    <input class="form-control" ng-model="EligibleQtyForPo.QtyForAction" readonly />
+                </div>
+            </div>
+            <br />
+            <!-- CheckEligibleQtyForPo end-->
+
+            <div class="form-group ">
+                <label for="site-name">MOQ </label><br />
+                <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="data.PurchaseMinOrderQty">
+                    <option value="">Select</option>
+                    <option value="{{ss.PurchaseMinOrderQty}}" ng-repeat="ss in itmdata">{{ss.PurchaseMinOrderQty}}</option>
+                </select>
+            </div>
+            <div class="form-group ">
+                <label for="site-name">Number Of Set </label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="data.Noofset" />
+            </div>
+            <div class="row">
+                <div class="col-xs-3" ng-if="itemWeight">
+                    <label>Single Item Unit</label><br />
+                    <select name="itemWeightInput" class="form-control" ng-model="itemWeight.weighttype">
+                        <option value="">Select</option>
+                        <option value="Kg">KG</option>
+                        <option value="Gm">GM</option>
+                        <!--<option value="Ltr">Ltr</option>
+                <option value="Ml">ML</option>
+                <option value="Pc">Pc</option>-->
+                    </select>
+                </div>
+                <div class="col-xs-3" ng-if="itemWeight">
+                    <label>Single Item Value</label><br />
+                    <input class="form-control" ng-model="itemWeight.weight" />
+                </div>
+
+                <div class="col-xs-3" ng-if="itemWeight && itemWeight.weighttype == 'pc'">
+                    <label>Weight in Gram</label><br />
+                    <input class="form-control" ng-model="itemWeight.WeightInGram" />
+                </div>
+            </div>
+            <!--<div class="form-group">
+        <label for="site-name">Quantity:</label><br />
+        <input class="form-control" ng-model="quantity" />
+    </div>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Put(data)">Save</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="myEditmodal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Purchase Order Edit</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="site-name">Supplier :&nbsp; {{data.SupplierName}}</label><br />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Depo :&nbsp; {{data.DepoName}}</label><br />
+                </div>
+                <label for="site-name">Purchase Item:</label>
+                <label for="site-name">{{data.PurchaseName}}</label><br />
+            </div>
+            <!-- CheckEligibleQtyForPo start -->
+            <div class="row" ng-if="EligibleQtyForPo!=null && EligibleQtyForPo!='' && EligibleQtyForPo!=undefined && data.IsPR==true">
+
+                <div class="col-xs-6">
+                    <label>Current Inventory</label><br />
+                    <input class="form-control" ng-model="EligibleQtyForPo.CurrentInventory" readonly />
+                </div>
+                <div class="col-xs-6">
+                    <label>Available Qty For PO(ItemForecast)</label><br />
+                    <input class="form-control" ng-model="EligibleQtyForPo.QtyForAction" readonly />
+                </div>
+            </div>
+            <br />
+            <!-- CheckEligibleQtyForPo end-->
+
+
+            <div class="form-group ">
+                <label for="site-name">MOQ </label>
+                <label for="site-name">{{data.MOQ}}</label><br />
+            </div>
+            <div class="form-group ">
+                <label for="site-name">Number Of Set </label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="data.Noofset">{{((data.TotalQuantity)/(data.MOQ))}}</input>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Putedit(data)">Save</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="myRemovemodal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Purchase Order Item Remove</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000">You want to delete item {{itemdetail.PurchaseName}} ?</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="removeitem(data)">Yes</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="printpdf.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Print PO </h4>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="myResendmodal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Send PO to Email</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group ">
+                <label for="site-name">Email: </label><br />
+                <input id="site-name" type="email" class="form-control" ng-model="data.reSendemail" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="resendBtn(data)">Send PO</button>
+        </div>
+    </form>
+</script>

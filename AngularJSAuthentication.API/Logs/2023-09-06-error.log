@@ -1,0 +1,1 @@
+2023-09-06 19:49:27.1061|ERROR|AngularJSAuthentication.API.Controllers.ProfilesController|Error in getting Company The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).

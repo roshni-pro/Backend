@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+
+<style>
+    .tab {
+        width: 100%;
+        border-radius: 100px;
+        margin-bottom: 41px;
+        margin-top: 10px;
+    }
+
+    input:disabled {
+        cursor: default !important;
+    }
+
+    select:disabled {
+        cursor: default !important;
+    }
+
+    .error-message {
+        color: red;
+        display: block;
+    }
+
+    .help-block {
+        color: red !important;
+    }
+</style>
+
+
+<style>
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+</style>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Dispatch Order List
+            </strong>
+        </div>
+        <br />
+
+
+        <div class="row">
+            <!--<div class="form-group col-md-3">-->
+        <!--<label for="site-name">Select Warehouse</label><br />
+        <select class="form-control" id="site-name" ng-model="params.WarehouseId" data-ng-change="getWarehousebyId(params.WarehouseId)">
+             data-ng-change="getData(pageno)"
+            <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+        </select>-->
+        <!--<input type="text" placeholder="search" class="form-control" ng-model="param.warehouseID">-->
+        <!--<input type="text" placeholder="search" class="form-control" ng-model="srch.orderId">-->
+    <!--</div>-->
+            <div class="form-group col-md-2">
+                <label for="site-name">Warehouses</label><br>
+                <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse" selected-model="examplemodel" extra-settings="examplesettings"></div>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Delivery boys</label><br>
+                <select class="form-control" id="site-name" ng-model="db.Mobile">
+                    <option value="select">-Select-</option>
+                    <option value="{{db.Mobile}}" ng-repeat="db in DBoys"> {{db.DisplayName}}</option>
+                </select>
+                <!--<input type="text" placeholder="search" class="form-control" ng-model="param.dBoy">-->
+                <!--<input type="text" placeholder="search" class="form-control" ng-model="srch.orderId">-->
+            </div>
+            <!--<div class="form-group col-md-2">
+        <label for="site">Select Date Range</label><br>
+        <div class="form-group">
+            <div class='input-group date'>
+                <input name="date" id="dat1" type='text' title="Select Date" class="form-control date-picker" onkeydown="return false" />
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>-->
+            <!--<div class="col-md-2">
+        <label for="site-name">Start And End Time :</label><br />
+        <div class="form-group">
+            <div class='input-group date'>
+                <input name="daterangeV1" id="dat" type='text' title="Select Date" autocomplete="off" class="form-control date-picker" />
+                <span class="input-group-addon ">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>-->
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <!--<button type="button" class="btn btn-ar btn-primary" ng-click="searchdata(params, db.Mobile)">Search</button>-->
+                <button type="button" class="btn btn-ar btn-primary" ng-click="searchdata(warehouse, db.Mobile)">Search</button>
+
+                <button type="button" class="btn btn-primary" ng-click="export()" ng-disabled="isDisabled"> <span class="glyphicon glyphicon-plus"> </span>Generate ExcelSheet</button>
+            </div>
+
+        </div>
+        <input class="form ng-pristine ng-valid" data-ng-model="searchKeywords" data-ng-keyup="search()" placeholder="search">
+        <br />
+        <br />
+
+
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+
+                    <th>
+                        <div class="th">
+                            Date Of Dispatch(Issued)
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DateOFDispached')"
+                                  data-ng-class="{active: row == 'DateOFDispached'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DateOFDispached')"
+                                  data-ng-class="{active: row == '-DateOFDispached'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Ordered Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderID')"
+                                  data-ng-class="{active: row == 'OrderID'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderID')"
+                                  data-ng-class="{active: row == '-OrderID'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Ordered Amount(Rs.)
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderedAmount')"
+                                  data-ng-class="{active: row == 'OrderedAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderedAmount')"
+                                  data-ng-class="{active: row == '-OrderedAmount'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Dispatch Amount(Rs.)
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DispachedAmount')"
+                                  data-ng-class="{active: row == 'DispachedAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DispachedAmount')"
+                                  data-ng-class="{active: row == '-DispachedAmount'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Delivery Boy Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DBoyName')"
+                                  data-ng-class="{active: row == 'DBoyName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DBoyName')"
+                                  data-ng-class="{active: row == '-DBoyName'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Assignment Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('AssignmentID')"
+                                  data-ng-class="{active: row == 'AssignmentID'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssignmentID')"
+                                  data-ng-class="{active: row == '-AssignmentID'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Status')"
+                                  data-ng-class="{active: row == 'Status'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Status')"
+                                  data-ng-class="{active: row == '-Status'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Updated Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('UpdatedDate')"
+                                  data-ng-class="{active: row == 'UpdatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UpdatedDate')"
+                                  data-ng-class="{active: row == '-UpdatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+
+
+
+
+
+                    <!--<th ng-show="(UserRole.email== 'masteradmin@shopkirana.com' || UserRole.email=='mahima@shopkirana.com' ||  UserRole.email =='Chaitanya@shopKirana.com' )">
+        <div class="th">
+            Edit
+        </div>
+    </th>
+    <th ng-show="(UserRole.email== 'masteradmin@shopkirana.com' || UserRole.email=='mahima@shopkirana.com' ||  UserRole.email =='Chaitanya@shopKirana.com' )">
+        <div class="th">
+            Delete
+        </div>
+    </th>-->
+                </tr>
+
+            </thead>
+            <tbody>
+                <!--for binding-->
+                <tr data-ng-repeat="test in currentPageData">
+
+
+                    <!--<td>{{$index +1}}</td>-->
+
+                    <td>{{test.DateOFDispached| date:'medium'}}</td>
+                    <td>{{test.OrderID}}</td>
+                    <td>{{test.OrderedAmount}}</td>
+                    <td>{{test.DispachedAmount}}</td>
+                    <td>{{test.DBoyName}}</td>
+                    <td>{{test.AssignmentID}}</td>
+                    <td>{{test.Status}}</td>
+                    <td>{{test.UpdatedDate| date:'medium'}}</td>
+                    <td>{{test.WarehouseName}}</td>
+
+                    <!--<td>{{test.CreatedDate| date:'medium'}}</td>-->
+                    <!--<td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' || UserRole.email=='mahima@shopkirana.com' ||  UserRole.email =='Chaitanya@shopKirana.com' )"><button class="btn-sm btn-primary" ng-click="edit(test)">Edit</button> </td>-->
+                    <!--<td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' || UserRole.email=='mahima@shopkirana.com' ||  UserRole.email =='Chaitanya@shopKirana.com' )"><button class="btn-sm btn-danger" ng-click="opendelete(test,$index)">Remove</button> </td>-->
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+

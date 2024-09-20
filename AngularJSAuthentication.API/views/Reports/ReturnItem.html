@@ -1,0 +1,205 @@
+﻿<div class="page page-table"  button-permission-binder parentName="Reports" pageName="Return Item">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span>Rerurn Order Details</strong></div>
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                <h4 class="title">Return Order</h4>
+                <div>
+                    <div class="col-md-3">
+                        <a type="button" class="btn btn-primary btn-lg" href="#/SearchPurchaseOrder">Back</a>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary btn-lg" ng-click="open()" data-dismiss="modal">Add item</button>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Return ID
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('PurchaseReturnId')"
+                                          data-ng-class="{active: row == 'PurchaseReturnId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-PurchaseReturnId')"
+                                          data-ng-class="{active: row == '-PurchaseReturnId'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Suplier Code
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('supplierCode')"
+                                          data-ng-class="{active: row == 'supplierCode'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-supplierCode')"
+                                          data-ng-class="{active: row == '-supplierCode'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Suplier Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('supplierName')"
+                                          data-ng-class="{active: row == 'supplierName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-supplierName')"
+                                          data-ng-class="{active: row == '-supplierName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Return Item Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('itemname')"
+                                          data-ng-class="{active: row == 'itemname'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-itemname')"
+                                          data-ng-class="{active: row == '-itemname'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Sku
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('PurchaseSku')"
+                                          data-ng-class="{active: row == 'PurchaseSku'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-PurchaseSku')"
+                                          data-ng-class="{active: row == '-PurchaseSku'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Unit Price
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('UnitPrice')"
+                                          data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-UnitPrice')"
+                                          data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total No of pieces
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('TotalQuantity')"
+                                          data-ng-class="{active: row == 'TotalQuantity'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-TotalQuantity')"
+                                          data-ng-class="{active: row == '-TotalQuantity'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total Amount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('TotalAmount')"
+                                          data-ng-class="{active: row == 'TotalAmount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-TotalAmount')"
+                                          data-ng-class="{active: row == '-TotalAmount'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Status
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Status')"
+                                          data-ng-class="{active: row == 'Status'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Status')"
+                                          data-ng-class="{active: row == '-Status'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CreationDate')"
+                                          data-ng-class="{active: row == ' CreationDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- CreationDate')"
+                                          data-ng-class="{active: row == '- CreationDate'}"></span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="PurchaseorderDetail in PurchaseOrderData">
+                            <td>{{PurchaseorderDetail.PurchaseReturnId}}</td>
+                            <td>{{PurchaseorderDetail.supplierCode}}</td>
+                            <td>{{PurchaseorderDetail.supplierName}}</td>
+                            <td>{{PurchaseorderDetail.itemname}}</td>
+                            <td>{{PurchaseorderDetail.PurchaseSku}}</td>
+                            <td>{{PurchaseorderDetail.UnitPrice}}</td>
+                            <td>{{PurchaseorderDetail.TotalQuantity}}</td>
+                            <td>{{PurchaseorderDetail.TotalAmount | number:2}}</td>
+                            <td><span class="label label-info">{{PurchaseorderDetail.Status}}</span></td>
+                            <td>{{PurchaseorderDetail.CreationDate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myputmodal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Purchase Order List</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="Supplier.WarehouseId">
+                    <option value="">-Select-</option>
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Supplier:</label><br />
+                <select class="form-control" id="site-name" ng-model="Supplier.supp" ng-change="supplietItems(Supplier)" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{s}}" ng-repeat="s in supplier"> {{s.Name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Return Item:</label><br />
+                <select class="form-control" id="site-name" ng-model="item" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{item}}" ng-repeat="item in itemMasterrr"> {{item.PurchaseUnitName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">No Of Piece :</label><br />
+                <input class="form-control" ng-model="quantity" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Price:</label><br />
+                <input class="form-control" ng-model="Price" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddItem(item ,quantity, Price)">Save</button>
+        </div>
+    </form>
+</script>

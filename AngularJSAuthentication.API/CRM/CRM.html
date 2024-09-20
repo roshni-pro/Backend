@@ -1,0 +1,194 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="CRM" pageName="CRM Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> CRM
+            </strong>
+        </div>
+        <br />
+        <div>
+            <div class="form-group col-md-12 clear-both">
+
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select:</label><br />
+                    <select class="form-control" id="site-name" ng-model="data.type" ng-change="selectedtypeChanged(data)">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-3" ng-if="data.type==2">
+                    <label for="site-name">Hub</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.id">
+                        <option value="">---SELECT---</option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in dataselect"> {{warehouses.WarehouseName}}  {{warehouses.CityName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3" ng-if="data.type==3">
+                    <label for="site-name">City</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.id">
+                        <option value="">---SELECT---</option>
+                        <option value="{{citys.Cityid}}" ng-repeat="citys in dataselect"> {{citys.CityName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3" ng-if="data.type==4">
+                    <label for="site-name">Executive</label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.id">
+                        <option value="">--Select--</option>
+                        <option value="{{obj1.PeopleID}}" ng-repeat="obj1 in dataselect"> {{obj1.DisplayName}}</option>
+                    </select>
+                </div>
+                <!--<div class="form-group col-md-3">
+                    <label for="site-name">Select Customer type<span style="color:red;">*</span></label><br />
+                    <select class="form-control" id="site-name" ng-model="CRMData.custtype">
+                        <option value="">---SELECT---</option>
+                        <option value="Aware/Intereseted">Aware/Intereseted</option>
+                        <option value="Ordered">Ordered</option>
+                        <option value="EngagedCustomer">Engaged Customer</option>
+                        <option value="RelyingCustomer">Relying Customer</option>
+                        <option value="EnabledCustomer">Enabled Customer</option>
+                        <option value="EmpoweredCustomer">Empowered Customer</option>
+                        <option value="Keep/DropCustomer">Keep/DropCustomer</option>
+                    </select>
+                </div>-->
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select Date Range</label><br>
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="site-name">  .</label><br />
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="getdata(data)" data-dismiss="modal"> <span class="glyphicon glyphicon-search"> </span> Search</button>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name">. </label><br />
+                    <button class="btn-sm btn-dark skexport" ng-click="exportData(data)"> <span class="glyphicon glyphicon-export"> </span> Export</button>
+                </div>
+                <!--<div class="form-group col-md-3">
+                    <label for="site-name">Change Graph-Filter:</label><br />
+                    <select class="form-control" id="site-name" ng-model="type" ng-change="changeGraph(type)">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in selType">{{a.text}}</option>
+                    </select>
+                </div>-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div id="chartContainer" style="height:700px!important; width: 100%;">
+                </div>
+            </div>
+        </div>
+        <!--<table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            <input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />
+                            #
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shop Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CityName')"
+                                  data-ng-class="{active: row == 'CityName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CityName')"
+                                  data-ng-class="{active: row == '-CityName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cluster Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ClusterName')"
+                                  data-ng-class="{active: row == 'ClusterName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ClusterName')"
+                                  data-ng-class="{active: row == '-ClusterName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                           Mobile
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Mobile')"
+                                  data-ng-class="{active: row == 'Mobile'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Mobile')"
+                                  data-ng-class="{active: row == '-Mobile'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Order count
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('thisordercount')"
+                                  data-ng-class="{active: row == 'thisordercount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-thisordercount')"
+                                  data-ng-class="{active: row == '-thisordercount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Order Value
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('thisordervalue')"
+                                  data-ng-class="{active: row == 'thisordervalue'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-thisordervalue')"
+                                  data-ng-class="{active: row == '-thisordervalue'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Details
+                        </div>
+                    </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in customers">
+                    <td><input type="checkbox" value="{{trade.check}}" ng-model="trade.check" />{{$index+1}}</td>
+                    <td>{{trade.ShopName}}</td>
+                     <td>{{trade.ClusterName}}</td>
+                    <td>{{trade.Mobile}}</td>
+                    <td>{{trade.thisordercount}}</td>
+                    <td>{{trade.thisordervalue}}</td>
+                    <td>{{trade.thisordercount}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="open(trade)">Details</button> </td>
+                </tr>
+            </tbody>
+        </table>-->
+        <footer class="table-footer">
+            <div class="modal-footer">
+                <br /><br />
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+    </section>
+
+</div>
+
+

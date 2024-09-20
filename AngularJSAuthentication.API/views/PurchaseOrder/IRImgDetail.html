@@ -1,0 +1,269 @@
+﻿
+<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<style>
+    .accordion {
+        background-color: #03A9F4;
+        color: #fff;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 20px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+<style>
+    .imgWth {
+        width: 80px;
+        height: 80px;
+    }
+    .invoiceImg img{
+        max-width:100%;
+    }
+    .modal-body {
+        max-height:750px;
+        overflow-y: auto;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="container-fluid">
+            <h4 class="title">GR Draft Detail</h4>
+            <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>SNo.</th>
+                        <th>Purchase OrderId</th>
+                        <th>Gr Number</th>
+                        <th>Invoice Number</th>
+                        <th>Invoice Date</th>
+                        <th>Invoice Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="CX"><span style="color: red;">+</span></td>
+                        <td>{{$index+1}}</td>
+                        <td>{{GRDraft.PurchaseOrderId}}</td>
+                        <th>{{GRDraft.GrSerialNumber}}</th>
+                        <td>{{GRDraft.InvoiceNumber}}</td>
+                        <td>{{GRDraft.InvoiceDate}}</td>
+                        <td>
+                            <div data-toggle="modal" data-target="#myModal">
+                                <!--<img alt="" src="{{baseurl}}{{data.InvoiceImage}}" class="imgWth">-->
+                                <img alt="" src="{{GRDraft.InvoiceImage}}" class="imgWth">
+                            </div>
+
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+
+
+
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6 invoiceImg" ng-repeat="data in InvoiceReceiptdetails">
+                                    <img src="{{data.InvoiceImage}}" alt="Chicago">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding:15px;">
+                            <div class="form-group">
+                                <label for="site-name">Select Invoice Number</label>
+                                <select class="form-control" id="site-name" ng-model="GRDraft.IRID">
+                                    <option value="{{ir.IRID}}" ng-repeat="ir in InvoicNumbers"> {{ir.IRID}} </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="site-name">IR Date:</label>
+                                <input type="date" class="form-control" ng-model="GRDraft.IRDate" />
+                            </div>
+                        </div>
+                   
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-ar btn-primary"  ng-click="moveGRtoIR(GRDraft)">Move GR Draft To IR Invoice</button>
+                        <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

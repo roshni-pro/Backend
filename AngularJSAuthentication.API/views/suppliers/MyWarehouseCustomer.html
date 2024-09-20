@@ -1,0 +1,355 @@
+﻿
+<div class="page page-table" button-permission-binder parentName="Customer" pageName="My Customers">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> My customers</strong>
+        </div>
+
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Select City</label><br>
+                            <select class="form-control" id="site-name" ng-model="Cityid" ng-change="getWarehosues(Cityid)">
+                                <option value="">---SELECT---</option>
+                                <option value="{{city.Cityid}}" ng-repeat="city  in cities" ng-if="city.active === true"> {{city.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Warehouses</label><br>
+                            <select class="form-control" id="site-name" ng-disabled="exportenable==false" ng-model="WarehouseId" ng-change="SelectFilterClust(WarehouseId)">
+                                <option value="">---SELECT---</option>
+                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse | filter:{Cityid:Demanddata.Cityid}"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class='control-label' for="site-name">Cluster:</label><br />
+                            <select class="form-control" id="site-name" ng-disabled="exportenable==false" ng-model="ClusterId" ng-change="IsSelectCluster(ClusterId)">
+                                <option value="">---SELECT---</option>
+                                <option value="{{cluster.ClusterId}}" ng-repeat="cluster in Clust">{{cluster.ClusterName}} {{cluster.WarehouseName}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-3">
+                            <label for="site-name">SKcode</label><br>
+                            <input class="form-control" ng-model="skcode" placeholder="Enter Sk code" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="site-name">Select Date Range</label><br>
+                            <div class="form-group">
+                                <div class='input-group date'>
+                                    <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group col-md-2" style="margin-left:100px">
+                            <label for="site-name">&nbsp;</label><br>
+                            <button class="btn btn-primary" ng-disabled="exportenable==false" ng-click="Search()">Search</button>
+                        </div>
+                        <!--</div>-->
+                        <div class="form-group col-md-2" style="margin-left:100px">
+                            <label for="site-name">&nbsp;</label><br>
+                            <button class="btn btn-dark skexport" ng-disabled="exportenable==false" style="margin-left:50px" ng-click="exportData1()">Export Customer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+
+                                    Select
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Skcode
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    ShopName
+                                </div>
+                            </th>
+                            <!--<th>
+                                <div class="th">
+                                    Mobile
+                                </div>
+                            </th>-->
+                            <th>
+                                <div class="th">
+                                    Warehouse
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Cluster
+                                </div>
+                            </th>
+
+
+                            <!--<th>
+                                <div class="th">
+                                    Address
+                                </div>
+                            </th>-->
+                            <!--<th>
+                                <div class="th">
+                                    SalesMan
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Day
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Beat
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Agent
+                                </div>
+                            </th>-->
+                            <th>
+                                <div class="th">
+                                    Update
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                </div>
+                            </th>
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                        <tr data-ng-repeat="trade2 in currentPageStores">
+                            <td> {{(vm.currentPage-1)*vm.rowsPerPage + ($index+1) }}</td>
+                            <td>{{trade2.Skcode}}</td>
+                            <td>{{trade2.ShopName}}</td>
+                            <!--<td>{{trade2.Mobile}}</td>-->
+                            <td>{{trade2.WarehouseName}}</td>
+                            <td>{{trade2.ClusterName}}</td>
+
+                            <!--<td>{{trade2.BillingAddress}}</td>-->
+                            <!--<td>
+                                <select class="form-control" id="site-name" ng-model="trade2.ExecutiveId" style="width:-webkit-fill-available;">
+                                    <option>--Select--</option>
+                                    n>
+                                    <option value="{{Exe.PeopleID}}" ng-selected="(trade2.ExecutiveId == Exe.PeopleID)" ng-repeat="Exe in getExecutive"> {{Exe.PeopleFirstName}} {{Exe.PeopleLastName}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select ng-model="trade2.Day" class="form-control">
+                                    <option value="">--Select--{{trade2.Day}}</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                    <option value="Saturday">Saturday</option>
+                                    <option value="Sunday">Sunday</option>
+                                </select>
+                            </td>
+                            <td><input type="number" ng-model="trade2.BeatNumber" min="1" max="100" /> </td>
+                            <td>
+                                <select class="form-control" id="site-name" ng-model="trade2.AgentCode">
+                                    <option>--Select--</option>
+                                    <option value="{{agen.AgentId}}" ng-selected="(trade2.AgentCode == agen.AgentId)" ng-repeat="agen in getAgent"> {{agen.AgentName}}</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <button class="btn-sm btn-primary" ng-click="postassighn(trade2)">Assign</button>
+                            </td>-->
+                            <td>
+                                <button class="btn-sm btn-primary" ng-click="Details(trade2)">Details</button>
+                            </td>
+                            <td>{{trade2.CreatedDate}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selected"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="vm.currentPage"
+                                total-items="vm.count"
+                                max-size="4"
+                                on-select-page="changePage(page)"
+                                items-per-page="vm.rowsPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+
+    </section>
+</div>
+
+<script type="text/ng-template" id="CustomerExecutiveDetails.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">
+                Details : {{CustomerExecutiveDetail.ShopName}} ({{CustomerExecutiveDetail.Skcode}})
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-3">
+
+                        <span ng-if="getStoreExecutives.length>0">
+                            <label for="published">Sales Executive<span style="color:red"> *</span></label><br>
+                            <select ng-model="PostDc.ExecutiveId" class="form-control" name="disss" id="site-namsse">
+                                <option>--Select--</option>
+                                <option value="{{Exe.ExecutiveId}}" ng-repeat="Exe in getStoreExecutives"> {{Exe.ExecutiveName}}</option>
+                            </select>
+                        </span>
+                        <span ng-if="getStoreExecutives.length==0" style="color:red">
+                            These is no store mapped to Executives
+                        </span>
+                    </div>
+                    <div class="col-md-3" ng-if="getStoreExecutives.length>0">
+                        <label for="published">Day<span style="color:red"> *</span></label><br>
+                        <select ng-model="PostDc.Day" class="form-control">
+                            <option value="">--Select</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3" ng-if="getStoreExecutives.length>0">
+                        <label for="published">Beat<span style="color:red"> *</span></label><br>
+                        <input type="number" ng-model="PostDc.Beat" min="1" max="100" />
+                    </div>
+                </div>
+                <div class="form-group" ng-if="getStoreExecutives.length>0">
+                    <button type="button" class="btn btn-primary" ng-click="CustomerExecutiveInsert(PostDc)">Add New </button>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <div class="row">
+                <div class="form-group">
+                    <table class="table table-bordered table-striped table-responsive ">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        SNo.
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Executive Name
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        Day
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Beat
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Update
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Delete
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="trade in CustomerExecutivesMappedList">
+                                <td>{{$index+1}}</td>
+                                <td>
+                                    <span ng-if="getStoreExecutives.length>0">
+                                        <select class="form-control" id="site-name" ng-model="trade.ExecutiveId">
+                                            <option>--Select--</option>
+                                            <option value="{{Exe.ExecutiveId}}" ng-selected="(trade.ExecutiveId == Exe.ExecutiveId)" ng-repeat="Exe in getStoreExecutives"> {{Exe.ExecutiveName}}</option>
+                                        </select>
+                                    </span>
+                                    <span ng-if="getStoreExecutives.length==0">
+                                        {{trade.ExecutiveName}}
+                                    </span>
+                                </td>
+                                <td>
+                                    <select ng-model="trade.Day" class="form-control">
+                                        <option value="Monday" ng-selected="(trade.Day == 'Monday')">Monday</option>
+                                        <option value="Tuesday" ng-selected="(trade.Day == 'Tuesday')">Tuesday</option>
+                                        <option value="Wednesday" ng-selected="(trade.Day == 'Wednesday')">Wednesday</option>
+                                        <option value="Thursday" ng-selected="(trade.Day == 'Thursday')">Thursday</option>
+                                        <option value="Friday" ng-selected="(trade.Day == 'Friday')">Friday</option>
+                                        <option value="Saturday" ng-selected="(trade.Day == 'Saturday')">Saturday</option>
+                                        <option value="Sunday" ng-selected="(trade.Day == 'Sunday')">Sunday</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    {{trade.Beat}}
+                                    <input type="number" ng-model="trade.Beat"  />
+                                </td>
+                                <td>
+                                    <a class="btn glyphicon glyphicon-ok-sign" ng-click="CustomerExecutiveUpdate(trade)"></a>
+                                </td>
+                                <td>
+                                    <a  class="btn glyphicon glyphicon-trash" ng-click="CustomerExecutiveDelete(trade)"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</script>
+

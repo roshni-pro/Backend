@@ -1,0 +1,407 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<style>
+
+
+    .contentsstotalsell {
+        position: relative;
+    }
+
+    .overlaysstotalsell {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlaysstotalsell-contentsstotalsell {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+    .overlayss {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlayss-contentss {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+
+    /*table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 25px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }*/
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .notification {
+        background-color: #555;
+        color: white;
+        text-decoration: none;
+        padding: 15px 26px;
+        position: relative;
+        display: inline-block;
+        border-radius: 2px;
+    }
+
+        .notification .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+        }
+</style>
+<div class="page page-table"  button-permission-binder parentName="Current Stock" pageName="Item Movement Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Item Movement Report
+            </strong>
+        </div>
+        <br />
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group col-md-12">
+                        <label for="site-name"> Search:</label><br />
+                        <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                    </div>
+                </div>
+                <!--<div class="col-md-2">
+                    <label for="site-name"> Zone </label><br />
+                    <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                        <option value="">---Select Zone---</option>
+                        <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> Region </label><br />
+                    <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetWarehouses(RegionId)">
+                        <option value="">---Select Region---</option>
+                        <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> Hub </label><br />
+                    <select class="form-control" id="site-name" ng-model="Item.WarehouseId" ng-change="GetItemValue(Item.WarehouseId)">
+                        <option value="">--Select Hub--</option>
+                        <option value="{{warehouse.WarehouseId}}" ng-repeat="warehouse in warehouses">{{warehouse.WarehouseName}} </option>
+                    </select>
+                </div>-->
+                <div class="col-md-4">
+                    <label for="site-name"> Warehouse:</label><br />
+                    <select class="form-control" id="site-name" ng-change="GetItemValue(Item.WarehouseId)" ng-model="Item.WarehouseId">
+                        <option value="">--Default--</option>
+                        <option value="{{a.value}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.value">{{a.label}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> Select:</label><br />
+                    <select class="form-control" ng-change="ItemStatus(Item.status)" id="site-name" ng-model="Item.status">
+                        <option value="true" ng-selected="Item.status == undefined">Active</option>
+                        <option value="false">Deactive</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name">&nbsp;</label><br />
+                    <button type="button" class="btn-sm btn-primary" ng-click="getcurrentstock(Item)" data-dismiss="modal">Search</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">  Deactive Item value:</h3>
+                        </div>
+
+                       
+
+                            <div class="panel-body" style="background-color: white!important;">
+
+                                <span class="label label-danger ng-binding">{{DactValue | currency:"₹ "}}</span>
+                            </div>
+                      
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"> Active Item value:</h3>
+                        </div>
+
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-info ng-binding">{{ActValue| currency:"₹ "}}</span>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Sr.No.
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemNumber
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ABC Classification
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CurrentInventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventory')"
+                                  data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventory')"
+                                  data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Last Seven Day
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Last fifteen Days
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Barcode')"
+                                  data-ng-class="{active: row == 'Barcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Barcode')"
+                                  data-ng-class="{active: row == '-Barcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Last thirty days
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('BarcodeImage')"
+                                  data-ng-class="{active: row == 'BarcodeImage'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-BarcodeImage')"
+                                  data-ng-class="{active: row == '-BarcodeImage'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Is Active
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{1+$index}}</td>
+                    <td>{{trade.ItemNumber}}</td>
+                    <td>{{trade.Category}}</td>
+                    <td>{{trade.itemname}}</td>
+                    <td>
+                        <span ng-if="trade.ClosingStock!=0" class="badge badge-primary ml-2">{{trade.ClosingStock}}</span>
+                        <span ng-if="trade.ClosingStock==0" class="badge badge-danger ml-2">{{trade.ClosingStock}}</span>
+                    </td>
+                    <td>{{trade.Lastsavendays}}</td>
+                    <td>{{trade.Lastfifteendays}}</td>
+                    <td>{{trade.LastThirtydays}}</td>
+                    <td>{{trade.IsActivate}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

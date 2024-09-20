@@ -1,0 +1,316 @@
+﻿<head>
+    <style>
+
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+        .modal-dialog
+        {
+            width:60% !important;
+        }
+
+        .modal-footer {
+            padding: 18px !important;
+            padding-right: 35px !important;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+       
+    </style>
+</head>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Net Purchase Price History
+            </strong>
+        </div>
+        <br />
+        <div>
+            <!-------------------------------------------------------------------------------------------------------------------------------------->
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <div class="form-group col-md-2">
+                    <label for="site-name">Select City</label><br>
+                    <select class="form-control" id="site-name" ng-model="Demanddata.Cityid">
+                        <option value="">---SELECT---</option>
+                        <option value="{{city.Cityid}}" ng-repeat="city in cities"> {{city.CityName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name">Category</label><br>
+                    <select class="form-control" id="site-name" data-ng-disabled="!Demanddata.Cityid" ng-model="Demanddata.Categoryid">
+                        <option value="">---SELECT---</option>
+                        <option value="{{categorys.Categoryid}}" ng-repeat="categorys in category"> {{categorys.CategoryName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name"> SubCategory</label><br>
+                    <select class="form-control" id="site-name" data-ng-disabled="!Demanddata.Categoryid" ng-model="Demanddata.SubCategoryId">
+                        <option value="">---SELECT---</option>
+                        <option value="{{subcategorys.SubCategoryId}}" ng-repeat="subcategorys in subcategory | filter:{Categoryid:Demanddata.Categoryid}"> {{subcategorys.SubcategoryName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name">SubsubCategory</label><br>
+                    <select class="form-control" id="site-name" data-ng-disabled="!Demanddata.SubCategoryId" ng-model="Demanddata.SubsubCategoryid">
+                        <option value="">---SELECT---</option>
+                        <option value="{{subsubcategorys.SubsubCategoryid}}" ng-repeat="subsubcategorys in subsubcategory | filter:{SubCategoryId:Demanddata.SubCategoryId} "> {{subsubcategorys.SubsubcategoryName}}</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name">Select Date Range</label><br />
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon ">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                    </div>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name"></label><br />
+                    <button type="button" class="btn btn-ar btn-primary" data-ng-disabled="!Demanddata.Categoryid" ng-click="Search(Demanddata)">Filter Search</button>
+                </div>
+            </div>
+
+            <!----------------------------------------------------------------------------------------------------------------------------------------->
+            <br />
+            <br />
+        </div>
+        <table class="table table-bordered table-striped table-responsive" ng-show="order">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Item ID
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemId')"
+                                  data-ng-class="{active: row == 'ItemId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemId')"
+                                  data-ng-class="{active: row == '-ItemId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Selling Sku
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemId')"
+                                  data-ng-class="{active: row == 'ItemId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click=" order('-ItemId') "
+                                  data-ng-class="{active: row == '-ItemId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            SellingUnitName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click=" order('SellingUnitName') "
+                                  data-ng-class="{active: row == 'SellingUnitName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click=" order('-SellingUnitName') "
+                                  data-ng-class="{active: row == '-SellingUnitName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Net Purchase Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click=" order('price') "
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click=" order('-price') "
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Discount %
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click=" order('price') "
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click=" order('-price') "
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+                
+                    <th>
+                        <div class="th">
+                            Purchase Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th> 
+                    <th>
+                        <div class="th">
+                            Margin
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+                    <th>                 
+                        <div class="th">
+                            MRP Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th> 
+                    <th>
+                        <div class="th">
+                            Selling Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('UnitPrice')"
+                                  data-ng-class="{active: row == 'UnitPrice'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UnitPrice')"
+                                  data-ng-class="{active: row == '-UnitPrice'}"></span>
+                        </div>
+                    </th>  
+                    <th>
+                        <div class="th">
+                           On Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('UnitPrice')"
+                                  data-ng-class="{active: row == 'UnitPrice'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UnitPrice')"
+                                  data-ng-class="{active: row == '-UnitPrice'}"></span>
+                        </div>
+                    </th>   
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.ItemId}}</td>
+                    <td>{{trade.SellingSku}}</td>
+                    <td>{{trade.SellingUnitName}}</td>
+                    <td>{{trade.NetPurchasePrice}}</td>
+                    <td>{{trade.Discount}}</td>     
+                    <td>{{trade.PurchasePrice}}</td>
+                    <td>{{trade.Margin | number : 2}}</td>
+                    <td>{{trade.price | number : 2}}</td>
+                    <td>{{trade.UnitPrice | number : 2}}</td>
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

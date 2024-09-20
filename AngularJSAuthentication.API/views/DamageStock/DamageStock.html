@@ -1,0 +1,306 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        img.img80_80 {
+            width: 60px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<div class="page page-table" button-permission-binder parentName="Damage Stock" pageName="Transfer To DS">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>Transfer Item in damage stock</strong> </div>
+        <br />
+        <div class="form-group">
+            <label for="site-name"> Please select Item to Transfer in Damage</label><br />
+        </div>
+        <div class="form-group col-md-2">
+            <p>Select Warehouse</p>
+            <select class="form-control" id="site-name" name="Warename" ng-model="warehouses.WarehouseId" data-ng-change="getWareitemMaster(warehouses)">
+                <option value="">---SELECT---</option>
+                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-2">
+
+            <label for="site-name">Select Items  then Click GetData </label>
+            <div ng-dropdown-multiselect="" style="min-width:75px;" options="WarehouseFilterData" selected-model="examplemodel" extra-settings="examplesettings"></div>
+        </div>
+
+        <div class="form-group col-md-2">
+            <p>Select Stock Type to transfer</p>
+            <select class="form-control" id="site-name" name="Stocktype" data-ng-change="onchange()" ng-model="Stocktype">
+                <option value="0">---SELECT---</option>
+                <option value="1">Damage stock</option>
+                <option value="2">Clearance Stock</option>
+                <!--<option value="2">Expired stock</option>-->
+            </select>
+        </div>
+
+        <div class="form-group col-md-2" ng-app data-ng-init="disableBtn=true">
+            <button type="button" class="btn btn-ar btn-primary" ng-disabled="disableBtn" ng-click="Search(itemMasterData)">GetData</button>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group col-md-12">
+
+                <a class="btn-sm btn-primary" href="#/DamageStockitem"> DAMAGE STOCK ITEM >> </a>
+
+            </div>
+
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+
+                    <th>
+                        <div class="th">
+                            Stock Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('itemname')"
+                                  data-ng-class="{active: row == 'itemname'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-itemname')"
+                                  data-ng-class="{active: row == '-itemname'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            ABC Classification
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemMultiMRPId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            MRP
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Available Qty
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Batch Code
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            MFG Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Expiry Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Qty
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Reason
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('price')"
+                                  data-ng-class="{active: row == 'price'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-price')"
+                                  data-ng-class="{active: row == '-price'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Submit
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('LogoUrl')"
+                                  data-ng-class="{active: row == 'LogoUrl'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-LogoUrl')"
+                                  data-ng-class="{active: row == '-LogoUrl'}"></span>
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in item" style="color:black">
+                    <!--<tr ng-if="item.ItemId!=null" >-->
+                    <td>{{trade.StockId}}</td>
+                    <td>{{trade.ItemName}}</td>
+                    <td>{{trade.ABCClassification}}</td>
+                    <td>{{trade.ItemNumber}}</td>
+                    <td>{{trade.ItemMultiMRPId}}</td>
+                    <td>{{trade.MRP | number:2}}</td>
+                    <!--<td>{{trade.CurrentInventory}}</td>-->
+                    <td>{{trade.Qty}}</td>
+                    <td>{{trade.BatchCode}}</td>
+                    <td>{{trade.MFGDate | date : "dd-MM-yyyy"}}</td>
+                    <td>{{trade.ExpiryDate | date : "dd-MM-yyyy"}}</td>
+                    <td><input type="number" min="0" ng-model="trade.qty" value="{{trade.qty}}"></td>
+                    <td><input type="text" ng-model="trade.reasontotransfer"></td>
+                    <td><button type="button" id="{{trade.StockId}}" class="btn btn-ar btn-primary" ng-confirm-click="Are you sure to delete this record ?" ng-disabled="IsConfirmDisble" ng-click="Addamagestock(trade)">Confirm</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </section>
+</div>
+
+
+
+
+
+
+

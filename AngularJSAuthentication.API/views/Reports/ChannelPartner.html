@@ -1,0 +1,359 @@
+﻿
+
+<head>
+
+    <!--<script>
+        $('#chartContainer').hide();
+        $('#showDetails').click(function () {
+            $('#channel-partner-table').show();
+            $('#chartContainer').hide();
+        });
+        $('#showCharts').click(function () {
+            $('#channel-partner-table').hide();
+            $('#chartContainer').show();
+            $('#chartContainer').css('width', '100%');
+        });
+    </script>-->
+
+    <style>
+
+       
+        #channel-partner-table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 25px;
+            font-family: fantasy;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 12px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .date-range-picker{
+            font-size: 18px;
+            font-family: Arial;
+        }
+
+        .modal-dialog {
+            width: 70% !important;
+        }
+
+        .redispatch {
+            color: blue;
+        }
+
+        .delivered {
+            color: forestgreen;
+        }
+
+        .canceled {
+            color: red;
+        }
+
+        @media screen {
+            #printSection {
+                display: none;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printSection, #printSection * {
+                visibility: visible;
+            }
+
+            #printSection {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+
+            #printThisElement {
+                display: block !important;
+            }
+
+            #page-break {
+                display: block;
+                page-break-before: always;
+            }
+        }
+
+        #printThisElement {
+            display: none;
+        }
+
+        /* =============================================================
+          GENERAL STYLES
+        ============================================================ */
+        /*body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            line-height: 30px;
+        }*/
+
+        .pad-top-botm {
+            padding-bottom: 40px;
+            padding-top: 22px;
+        }
+
+        h4 {
+            text-transform: uppercase;
+        }
+        /* =============================================================
+          PAGE STYLES
+        ============================================================ */
+
+        .contact-info span {
+            font-size: 14px;
+            padding: 0px 50px 0px 50px;
+        }
+
+        .contact-info hr {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .client-info {
+            font-size: 15px;
+        }
+
+        .ttl-amts {
+            text-align: right;
+            padding-right: 50px;
+        }
+
+        .containers {
+            padding-left: 45px;
+            padding-right: 45px;
+        }
+
+        .box-size {
+            font-size: 16px !important;
+            height: 30px;
+            width: 50%;
+        }
+
+        @media print {
+            btn-sm.btn-primary.no-print {
+                display: none !important;
+            }
+
+            glyphicon.glyphicon-print.no-print {
+                display: none !important;
+            }
+        }
+
+        .modal-dialog {
+            width: 90% !important;
+        }
+
+        .hd {
+            display: none;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    
+</head>
+
+
+
+<div class="page page-table"  button-permission-binder parentName="Reports" pageName="Channel Partner">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> Channel Partner Dashboard</strong> </div>
+        <br />
+
+
+        <div class="row" style="align-items:center">
+            <div class="form-group col-md-12 clear-both">
+                <!--<div class="form-group col-md-3">
+        <label for="site-name"> City</label><br>
+        <select id="site-name" class="form-control" ng-model="ChannelPartner.CityId">
+            <option value="">---SELECT---</option>
+            <option value="{{city.Cityid}}" ng-repeat="city in cities">{{city.CityName}}</option>
+        </select>
+    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <div class="form-group col-md-2">
+                    <label for="site-name">Zone</label><br>
+                    <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                        <option value="">---Select Zone---</option>
+                        <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name">Region</label><br>
+                    <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetWarehouses(RegionId)">
+                        <option value="">---Select Region---</option>
+                        <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="site-name">Warehouses <span style="color:red;">*</span></label><br>
+                    <select class="form-control" id="site-name" ng-model="WarehouseId">
+                        <option value="">---SELECT---</option>
+                        <option value="{{warehouse.WarehouseId}}" ng-repeat="warehouse in warehouses">{{warehouse.WarehouseName}} </option>
+                    </select>
+                </div>
+                <!--<div class="form-group col-md-2">
+                    <label for="site-name">Cluster</label><br>
+                    <select class="form-control" id="site-name" ng-model="ClusterId">
+                        <option value="">---Select Cluster---</option>
+                        <option value="{{cluster.ClusterId}}" ng-repeat="cluster in clusters"> {{cluster.ClusterName}}</option>--> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                    <!--</select>
+                </div>-->
+
+                <div class="form-group col-md-2">
+                    <label for="site-name"> Agent/Kpp</label><br>
+                    <input type="radio" name="Agent" value="Agent" ng-model="ChannelPartner.Agent"> Agent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="Agent" value="kpp" ng-model="ChannelPartner.Agent"> Warehouse/KPP
+                </div>
+
+
+                <div class="form-group col-md-2">
+                    <label for="site-name">Select Date Range</label><br>
+                    <div class="form-group">
+                        <div class='input-group date'>
+                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="agentchange(ChannelPartner)">Search</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Chart Filters</label>
+                    <select id="site-name" class="form-control" ng-model="ChannelPartner.Filters">
+                        <option value="">---SELECT---</option>
+                        <option value="Sales">Sales</option>
+                       <option value="Cancellation">Cancellation</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"></label><br />
+                    <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="getChart(ChannelPartner.Filters,ChannelPartner.Date,ChannelPartner.CityId)">Show Chart</button>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="row" id="detail">
+            <div>
+                <div style="overflow:auto;width:100%">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table id="channel-partner-table">
+                                <tr>
+                                    <th class="col-md-5">Agents/KPP</th>
+                                    <th ng-repeat="q in peopledata">{{ q.agents}}</th>
+
+                                </tr>
+                                <tr>
+                                    <td>Signed Up</td>
+                                    <td ng-repeat="a in peopledata">{{a.custsignedup}}</td>
+
+
+
+                                </tr>
+                                <tr>
+                                    <td>Active</td>
+                                    <td ng-repeat="b in peopledata">{{b.custactive }}</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Sales <i class="fa fa-rupee"></i></td>
+                                    <td ng-repeat="c in peopledata">{{c.sales  | number : 2}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Delivery %</td>
+                                    <td ng-repeat="d in peopledata">{{d.DeliveryPerc | number : 2}}</td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>Cancellation %</td>
+                                    <td ng-repeat="e in peopledata">{{e.CancelPerc  | number : 2}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>TAT</td>
+                                    <td ng-repeat="f in peopledata">{{f.totTat}}</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Commission <i class="fa fa-rupee"></i></td>
+                                    <td ng-repeat="f in peopledata">{{f.totCom | number : 2}}</td>
+
+                                </tr>
+
+
+
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+
+        <div class="row" id="chart">
+            <div id="chartContainer" style="width: 100%"></div>
+        </div>
+
+
+
+       
+ </section>
+</div>
+
+
+
+
+<!--<div class="form-group col-md-3 pull-right">
+    <button type="button" class="btn btn-ar btn-success" ng-click="PostDashData()" data-dismiss="modal">Agent report</button>
+</div>-->
+
+<br />
+
+
+
+
+
+
+
+
+
+
+
+
+
+

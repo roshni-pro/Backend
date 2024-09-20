@@ -1,0 +1,390 @@
+<style>
+    #canvas .circle {
+        display: inline-block;
+        margin: 1em;
+    }
+
+    .circles-decimals {
+        font-size: .4em;
+    }
+
+    ul {
+        font-size: 14px;
+        text-decoration: none;
+        line-height: 20px;
+        list-style-type: none;
+    }
+
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+
+    ul span.billable-percent-key {
+        background: #41b419;
+        border-radius: 2px;
+        float: left;
+        height: 9px;
+        margin: 6px 6px 0 0;
+        text-indent: -5000px;
+        width: 9px;
+    }
+
+    .progress-bar {
+        float: left;
+        width: 0%;
+        height: 100%;
+        font-size: 12px;
+        line-height: 20px;
+        color: #b5e5a5;
+        text-align: center;
+        background-color: #41b419 !important;
+        -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+        -webkit-transition: width 0.6s ease;
+        -o-transition: width 0.6s ease;
+        transition: width 0.6s ease;
+    }
+
+    ul span.billable-percent-key.key-unbillable {
+        background: #b5e5a5;
+    }
+       #legend {
+        height: 50px;
+        background: rgba(127, 127, 127, 0.5)
+    }
+    #legend span {
+        display: inline-block;
+        padding: 15px 30px;
+        position: relative;
+    }
+    #legend span:after {
+        padding-left: 4px;
+        content: '\00a0\00a0\00a0\00a0\00a0\00a0';
+    text-decoration: line-through;
+    }
+</style>
+
+<script>
+
+    var colors = [
+            ['#D3B6C6', '#4B253A'], ['#FCE6A4', '#EFB917'], ['#BEE3F7', '#45AEEA'], ['#F8F9B6', '#D2D558'], ['#F4BCBF', '#D43A43']
+    ],
+        circles = [];
+
+
+        var child = document.getElementById('circles-1' ),
+            percentage = 31.42 + (1 * 9.84),
+
+            circle = Circles.create({
+                id: child.id,
+                value: percentage,
+                radius: 38.55,
+                width: 10,
+                colors: ['#41b419', '#b5e5a5']
+            });
+
+        circles.push(circle);
+
+
+    window.onresize = function (e) {
+        for (var i = 0; i < circles.length; i++) {
+            console.log("Circle Width" + getWidth());
+            circles[i].updateRadius(getWidth());
+        }
+    };
+
+    function getWidth() {
+        return window.innerWidth / 20;
+    }
+
+</script>
+<div class="page">
+    <div class="row">
+        <div class="timesheet-header">
+            <div class="f-left">
+                <h1 class="test-week-20150406 test-user-973600">
+
+
+                    <div class="button-toggle">
+                        <div class="btn-group-sm">
+                            <label class="btn-sm btn-primary" ng-model="radioModel" ng-click="previous()"><i class="fa fa-angle-left"></i></label>
+                            <label class="btn-sm btn-primary" ng-model="radioModel" ng-click="current()">{{selectedFilterValue}}</label>
+                            <label class="btn-sm btn-primary" ng-model="radioModel" ng-click="next()"><i class="fa fa-angle-right"></i></label>
+                        </div>
+
+                    </div>
+                    <span>{{textstring}}</span>
+                </h1>
+
+            </div>
+            <div class="f-right ">
+
+                <!--<div class="button-toggle" ng-show="day">
+                    <div class="btn-group-sm">
+                        <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Left'" ng-click="previousday()"><i class="fa fa-angle-left"></i></label>
+                        <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Middle'" ng-click="thisDay()">{{selectedFilterValue}}</label>
+                        <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Right'" ng-click="forwardDay()"><i class="fa fa-angle-right"></i></label>
+                    </div>
+
+                </div>-->
+
+
+
+                <span class="ui-select">
+                    <select ng-model="selectedItem" ng-change="update()">
+                        <option value="Day">Day</option>
+                        <option value="Week" selected>Week</option>
+                        <option value="Semimonthly">Semimonthly</option>
+                        <option value="Month">Month</option>
+                        <option value="Quarter">Quarter</option>
+                        <option value="Year">Year</option>
+                    </select>
+                </span>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- stats -->
+    <div class="row">
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+                <span class="box-icon bg-success">
+                    <i class="fa fa-rocket"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{weekTotal()}} </p>
+                    <p class="text-muted"><span data-i18n="Hours Tracked"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+
+                <div class="circle col-xs-6" id="circles-1"></div>
+
+                <div class="box-info">
+                    <p class="text-muted"><span data-i18n="Billed Hours"></span></p>
+                    <p class="size-h2">
+                        <ul>
+                            <li>
+                                <span class="billable-percent-key ">Non-Billable</span>
+                                {{billableHours()}}
+                                <span>Billable</span>
+                            </li>
+                            <li>
+                                <span class="billable-percent-key key-unbillable">Non-Billable</span>
+                                {{nonBillableHours()}}
+                                <span>Non-Billable</span>
+                            </li>
+                        </ul>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+                <span class="box-icon bg-warning">
+                    <i class="fa fa-dollar"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{billableAmount()}}</p>
+                    <p class="text-muted"><span data-i18n="Billable Amount"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xsm-6">
+            <div class="panel mini-box">
+                <span class="box-icon bg-danger">
+                    <i class="fa fa-dollar"></i>
+                </span>
+                <div class="box-info">
+                    <p class="size-h2">{{nonBillableAmount()}}</p>
+                    <p class="text-muted"><span data-i18n="Non-Billable Amount"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end stats -->
+
+    <div class="row">
+        <div class="col-md-8">
+            <section class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Data"><span style="color:#41b419;"> Billable</span> <span style="color:#b5e5a5;"> NonBillable</span></span></strong></div>
+                <div class="panel-body" >
+                    <div><ul>
+    <li>
+        <span class="billable-percent-key ">Non-Billable</span>
+        {{billableHours()}}
+        <span>Billable Hours</span>
+    </li>
+    <li>
+        <span class="billable-percent-key key-unbillable">Non-Billable</span>
+        {{nonBillableHours()}}
+        <span>Non-Billable Hours</span>
+    </li>
+</ul></div>
+                    <div id="barchart"     style="height: 300px;">
+
+                    </div>
+                   
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Task Type Bifercation"></span></strong></div>
+                <div class="panel-body" >
+                    <div id="floatchart"
+                         style="width: 100%; height: 300px;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <section>
+        <tabset>
+
+            <tab heading="Staff">
+                <div class="panel panel-default table-dynamic">
+                    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Staff Hours"></span></strong></div>
+                    <div class="table-filters">
+                        <div class="row">
+                            <div class="col-sm-4 col-xs-6">
+                                <form>
+                                    <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                                </form>
+                            </div>
+                            <div class="col-sm-3 col-xs-6 filter-result-info">
+                                <span>
+                                    Showing {{filteredStores.length}}/{{stores.length}} entries
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>
+                                    <div class="th">
+                                        Name
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Name'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Name')"
+                                              data-ng-class="{active: row == '-Name'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Date
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('eventDate')"
+                                              data-ng-class="{active: row == 'eventDate'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-eventDate')"
+                                              data-ng-class="{active: row == '-eventDate'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Hours
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('Name')"
+                                              data-ng-class="{active: row == 'Hours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-Hours')"
+                                              data-ng-class="{active: row == '-Hours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Billable Hours
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('billablehours')"
+                                              data-ng-class="{active: row == 'billablehours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-billablehours')"
+                                              data-ng-class="{active: row == '-billablehours'}"></span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        NonBillable
+                                        <span class="glyphicon glyphicon-chevron-up"
+                                              data-ng-click="order('nonbillablehours')"
+                                              data-ng-class="{active: row == 'nonbillablehours'}"></span>
+                                        <span class="glyphicon glyphicon-chevron-down"
+                                              data-ng-click="order('-nonbillablehours')"
+                                              data-ng-class="{active: row == '-NonBillable'}"></span>
+                                    </div>
+                                </th>
+                                <th>Task Type</th>
+                                <th>Is Billable ?</th>
+                                <th>Project Name</th>
+                                <th>Customer Name</th>
+                                <th>Approved</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="i in weekGridRows">
+                                <td>1</td>
+                                <td><span class="color-success"><i class="fa fa-level-up"></i></span> {{i.userName}} </td>
+                               <td>{{i.eventDate}}</td>                               
+                                <td>{{i.hours}}</td>
+                                <td>{{i.billablehours}}</td>
+                                <td>{{i.nonbillablehours}}</td>
+                                <td>{{i.taskType}}</td>
+                                <td>{{i.billable}}</td>
+                                <td>{{i.projectName}}</td>
+                                 <td>{{i.clientName}}</td>
+                               <td><span class="label label-info">{{i.approved}} </span></td>                           
+                             
+                                
+                              
+                            </tr>
+                      
+                        </tbody>
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()"></select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="currentPage"
+                                            total-items="filteredStores.length"
+                                            max-size="4"
+                                            on-select-page="select(page)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </tab>
+          
+        </tabset>
+
+    </section>
+
+
+
+</div>

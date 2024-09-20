@@ -1,0 +1,335 @@
+﻿<style>
+    .contentsstotalsell {
+        position: relative;
+    }
+
+    .overlaysstotalsell {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlaysstotalsell-contentsstotalsell {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+    .overlayssD {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+
+    .overlayss {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlayss-contentss {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+    .overlayss-contentsDirect {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 25px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .notification {
+        background-color: #555;
+        color: white;
+        text-decoration: none;
+        padding: 15px 26px;
+        position: relative;
+        display: inline-block;
+        border-radius: 2px;
+    }
+
+        .notification .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+        }
+</style>
+
+<div class="page page-table" button-permission-binder parentName="StatisticalRep" pageName="Dashboard Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Statistics
+            </strong>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Month Sale(Central)</h3>
+                    </div>
+
+                    <div class="contentsstotalsell">
+                        <div class="overlaysstotalsell"><div class="overlaysstotalsell-contentsstotalsell"><img src="../../Content/Preloader_61.gif" alt="Loading..." width="30" height="30" /></div></div>
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-primary ng-binding">{{MonthSales.MSale | currency:"₹ "}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Todays Sale(Central)</h3>
+                    </div>
+
+                    <div class="contentsstotalsell">
+                        <div class="overlaysstotalsell"><div class="overlaysstotalsell-contentsstotalsell"><img src="../../Content/Preloader_61.gif" alt="Loading..." width="30" height="30" /></div></div>
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-info ng-binding">{{MonthSales.TSale | currency:"₹ "}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<Direct Data >-->
+            <div class="col-lg-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Todays Sale(Direct)</h3>
+                    </div>
+
+                    <div class="contentsstotalsell">
+                        <div class="overlaysstotalsell"><div class="overlaysstotalsell-contentsstotalsell"><img src="../../Content/Preloader_61.gif" alt="Loading..." width="30" height="30" /></div></div>
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-info ng-binding">{{MonthSales.DTSale | currency:"₹ "}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Month Sale(Direct)</h3>
+                    </div>
+
+                    <div class="contentsstotalsell">
+                        <div class="overlaysstotalsell"><div class="overlaysstotalsell-contentsstotalsell"><img src="../../Content/Preloader_61.gif" alt="Loading..." width="30" height="30" /></div></div>
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-info ng-binding">{{MonthSales.DMSale | currency:"₹ "}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Today Sale(Direct+SK)</h3>
+                    </div>
+
+                    <div class="contentsstotalsell">
+                        <div class="overlaysstotalsell"><div class="overlaysstotalsell-contentsstotalsell"><img src="../../Content/Preloader_61.gif" alt="Loading..." width="30" height="30" /></div></div>
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-info ng-binding">{{MonthSales.DSKTSale | currency:"₹ "}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+  <div class="panel panel-primary">                    <div class="panel-heading">
+                        <h3 class="panel-title"> Month Sale(Direct+SK)</h3>
+                    </div>
+
+                    <div class="contentsstotalsell">
+                        <div class="overlaysstotalsell"><div class="overlaysstotalsell-contentsstotalsell"><img src="../../Content/Preloader_61.gif" alt="Loading..." width="30" height="30" /></div></div>
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-primary ng-binding">{{MonthSales.DSKMSale | currency:"₹ "}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Month Sale(KK):</h3>
+                    </div>
+
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.KKMSale| currency:"₹ "}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Todays Sale(KK):</h3>
+                    </div>
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.KKTodSale| currency:"₹"}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Month Sale(Safoya):</h3>
+                    </div>
+
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.MSafoyaSale| currency:"₹ "}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Todays Sale(Safoya):</h3>
+                    </div>
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.TSafoyaSale| currency:"₹"}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Month Sale(C&B):</h3>
+                    </div>
+
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.CBMSale| currency:"₹ "}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Todays Sale(C&B):</h3>
+                    </div>
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.CBTodSale| currency:"₹"}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Month Sale(Store-3):</h3>
+                    </div>
+
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.MStore3| currency:"₹ "}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Todays Sale(Store-3):</h3>
+                    </div>
+                    <div class="panel-body" style="background-color: white!important;">
+                        <span class="label label-default ng-binding">{{MonthSales.TStore3| currency:"₹"}}</span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-lg-2">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> OrderFillRate:</h3>
+
+                        <label for="site-name">Warehouse:</label><br />
+                        <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="Monthfillrate(WarehouseId)">
+                            <option value="0">--All--</option>
+                            <option value="{{a.WarehouseId}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.WarehouseId">{{a.WarehouseName}} ({{a.CityName}})</option>
+                        </select>
+
+                        <button class="btn-sm btn-dark" ng-click="Monthfillrate(WarehouseId)" style="float: right;">
+                            <span class="glyphicon glyphicon-refresh"> </span>
+                        </button>
+                    </div>
+                    <div class="contentss">
+                        <div class="overlayss"><div class="overlayss-contentss"><img src="../../Content/Preloader_10.gif" alt="Loading..." width="30" height="30" /></div></div>
+                        <div class="panel-body" style="background-color: white!important;">
+                            <span class="label label-danger ng-binding">{{Fillrate |number:4}} %</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+</section>
+</div>

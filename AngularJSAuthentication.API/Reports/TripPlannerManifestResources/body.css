@@ -1,0 +1,92 @@
+﻿td {
+    padding: 5px;
+}
+
+
+.tbll {
+    width: 100%;
+    font-size: 13px;
+}
+
+    .tbll td {
+        width: 50%
+    }
+
+        .tbll td:nth-child(2) {
+            text-align: right;
+        }
+
+.tbl tr {
+    padding: 10px;
+}
+
+.trn-tbl {
+    width: 100%;
+    font-size: 12px;
+    border-spacing: 0px;
+}
+
+    .trn-tbl tr td {
+        border: solid 0px white;
+    }
+
+    .trn-tbl .hd {
+        background: #ecc171;
+        border-bottom: none;
+    }
+
+    .trn-tbl th {
+        padding: 10px 15px;
+        text-align: center;
+        font-weight: bold;
+        background: #ecc171;
+    }
+
+    .trn-tbl td {
+        padding: 10px 15px;
+        font-weight: bold;
+        color: gray;
+    }
+
+    .trn-tbl .mdl {
+        text-align: center;
+    }
+
+    .trn-tbl .brdr td {
+        border-bottom: solid 1px gray;
+    }
+
+    .trn-tbl .rt {
+        text-align: right;
+    }
+
+    .trn-tbl .lft {
+        text-align: left;
+    }
+
+    .trn-tbl .paid {
+        text-align: center;
+        font-size: 29px;
+        color: red;
+        font-style: italic;
+    }
+
+    .trn-tbl .pending {
+        text-align: center;
+        font-size: 29px;
+        color: green;
+        font-style: italic;
+    }
+
+
+.tt-b td {
+    text-align: center;
+}
+
+.ex-m td {
+    padding-top: 20px;
+}
+
+.mr-22 {
+    padding-top: 20px;
+}

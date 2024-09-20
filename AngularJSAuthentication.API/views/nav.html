@@ -1,0 +1,27 @@
+﻿
+<div id="nav-wrapper" style="overflow-y: auto;" data-ng-controller="NavCtrl">
+    <input class="form-control" style="margin-bottom: 10px; margin-top: 5px" type="text" placeholder="search menu items" ng-keyup="setSearchItems($event.target.value)" />
+    <ul class="nav-sb" id="nav" data-collapse-nav="menu" data-slim-scroll data-highlight-active style="margin-bottom: 0px" ng-repeat="menu in permissions" >
+        <li ng-class="getRow(menu)">
+            <a href="#/{{menu.ChildPageDcs.length>0? 'form':menu.RouteName}}">
+                <i class="{{menu.ClassName}}">
+                    <span class="{{menu.IconClassName}}"></span>
+                </i>
+                <span data-i18n="{{menu.PageName}}"></span>
+            </a>
+            <ul ng-show="menu.ChildPageDcs.length>0" ng-style="getStyle(menu)">
+                <li ng-repeat="submenu in menu.ChildPageDcs">
+                    <a href="#/{{submenu.RouteName}}" ng-if="!submenu.IsNewPortalUrl">
+                        <i class="{{submenu.ClassName}}">
+                        </i> <span data-i18n="{{submenu.PageName}}"></span>
+                    </a>
+
+                    <a href="" ng-if="submenu.IsNewPortalUrl" ng-click="openNewApp(submenu)">
+                        <i class="{{submenu.ClassName}}">
+                        </i> <span data-i18n="{{submenu.PageName}}"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

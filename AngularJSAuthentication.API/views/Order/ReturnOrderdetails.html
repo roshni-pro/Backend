@@ -1,0 +1,301 @@
+﻿<style>
+    .btn-sm btn-primary[disabled] {
+  background-color: #FF85A1
+}
+</style>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Order Details</strong></div>
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                <h4 class="title">Orders... {{msg}}</h4>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Invoice ID  </label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.invoice_no" disabled />
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Customer Name</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.CustomerName" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Customer Phone Number</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.Customerphonenum" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name"> Billing Address</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.BillingAddress" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Shipping Address</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.ShippingAddress" disabled />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Total Amount</label><br />                 
+                    <input id="site-name" type="text" class="form-control" ng-model="OrderData.TotalAmount" disabled />
+                </div>
+                <div class="form-group col-md-3" ng-show="count">
+                    
+                    <b>Select Delivery Boy:</b><br />
+                    <select  id="dpd" class="form-control dropdown-header" ng-model="Dboy">
+                        <option ng-repeat="boy in User | filter:{ Type:'Delivery Boy'}" ng-selected="{{ boy.DisplayName == DBname }}" value="{{boy}}">{{boy.PeopleFirstName}}&nbsp;{{boy.PeopleLastName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <b>Delivery By:</b><br /><h3>{{DBname}}</h3> 
+                </div>
+
+                <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Item ID
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('ItemId')"
+                                          data-ng-class="{active: row == 'ItemId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-ItemId')"
+                                          data-ng-class="{active: row == '-ItemId'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Item Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('itemname')"
+                                          data-ng-class="{active: row == 'itemname'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-itemname')"
+                                          data-ng-class="{active: row == '-itemname'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Code
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('itemcode')"
+                                          data-ng-class="{active: row == 'itemcode'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-itemcode')"
+                                          data-ng-class="{active: row == '-itemcode'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Unit Price
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('UnitPrice')"
+                                          data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-UnitPrice')"
+                                          data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    MRP Price
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('price')"
+                                          data-ng-class="{active: row == 'price'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-price')"
+                                          data-ng-class="{active: row == '-price'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                   M.O.Q.
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('MinOrderQty')"
+                                          data-ng-class="{active: row == 'MinOrderQty'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-MinOrderQty')"
+                                          data-ng-class="{active: row == '-MinOrderQty'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Quantity
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('qty')"
+                                          data-ng-class="{active: row == 'qty'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-qty')"
+                                          data-ng-class="{active: row == '-qty'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                   Input Return Qty.
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('qty')"
+                                          data-ng-class="{active: row == 'qty'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-qty')"
+                                          data-ng-class="{active: row == '-qty'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Tax
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('TaxPercentage')"
+                                          data-ng-class="{active: row == 'TaxPercentage'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-TaxPercentage')"
+                                          data-ng-class="{active: row == '-TaxPercentage'}"></span>
+                                </div>
+                            </th>
+                            <th>
+
+                                <div class="th">
+                                    Tax Amount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('TaxAmmount')"
+                                          data-ng-class="{active: row == 'TaxAmmount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-TaxAmmount')"
+                                          data-ng-class="{active: row == '-TaxAmmount'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Discount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('DiscountPercentage')"
+                                          data-ng-class="{active: row == 'DiscountPercentage'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-DiscountPercentage')"
+                                          data-ng-class="{active: row == '-DiscountPercentage'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    NetAmmount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('NetAmmount')"
+                                          data-ng-class="{active: row == 'NetAmmount'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-NetAmmount')"
+                                          data-ng-class="{active: row == '-NetAmmount'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    GrossAmmount
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' TotalAmt')"
+                                          data-ng-class="{active: row == ' TotalAmt'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- TotalAmt')"
+                                          data-ng-class="{active: row == '- TotalAmt'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Item Image
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Itempic')"
+                                          data-ng-class="{active: row == 'Itempic'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Itempic')"
+                                          data-ng-class="{active: row == '-Itempic'}"></span>
+                                </div>
+                            </th>
+                            <!--<th>
+                                <div class="th">
+                                    Delete
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CurrentStock')"
+                                          data-ng-class="{active: row == 'Delete'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CurrentStock')"
+                                          data-ng-class="{active: row == '-Delete'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    CurrentStock
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CurrentStock')"
+                                          data-ng-class="{active: row == 'CurrentStock'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CurrentStock')"
+                                          data-ng-class="{active: row == '-CurrentStock'}"></span>
+                                </div>
+                            </th>-->
+
+                            <!--<th>
+                        <div class="th">
+                            Updated Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedDate')"
+                                  data-ng-class="{active: row == '- CreatedDate'}"></span>
+                        </div>
+                    </th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="orderDetail in orderDetails" ng-style="set_color(orderDetail)">
+                            <td>{{orderDetail.ItemId}}</td>
+                            <td>
+                                {{orderDetail.itemname}}
+                                <span ng-if="orderDetail.MinOrderQty==0">
+                                    <b style="color:red">(Free Item)</b>
+                                </span>
+                            </td>
+                            <td>{{orderDetail.itemcode}}</td>
+                            <td>{{orderDetail.UnitPrice}}</td>
+                            <td><input type="number" value="{{orderDetail.price}}" ng-model="orderDetail.price" style="width:60px;" disabled/></td>
+                            <td>{{orderDetail.MinOrderQty}}</td>
+                            <td ng-init="originalQty =orderDetail.qty" >{{originalQty}}</td>
+                            <!--<td><input type="number" value="{{originalQty}}" ng-init="originalQty =orderDetail.qty" style="width:60px;" readonly/></td>-->
+                            <td><input type="number" value="{{orderDetail.qty}}" ng-model="orderDetail.qty" style="width:60px;" disabled/></td>
+                            <td>{{orderDetail.TaxPercentage}}</td>
+                            <td>{{orderDetail.TaxAmmount | number : 2}}</td>
+                            <td>{{orderDetail.DiscountPercentage}}</td>
+                            <!--<td >{{orderDetail.NetAmmount}}</td>-->
+                        <td ng-model="orderDetail.NetAmmount" value="{{orderDetail.UnitPrice * orderDetail.qty}}" ng-init="orderDetail.NetAmmount = orderDetail.UnitPrice * orderDetail.qty;">{{orderDetail.NetAmmount | number : 2}}</td>
+                            <td>{{orderDetail.TotalAmt}}</td>
+
+                            <!--<input type="number" value="{{PurchaseorderDetail.PriceRecived}}" ng-model="PurchaseorderDetail.PriceRecived" style="width:60px;" />-->
+                            <td>
+                                <div class="form-group">
+                                    <img alt="" src="{{orderDetail.Itempic}}" class="img-square img64_64">
+                                </div>
+                            </td> 
+                            <!--<td><input id="{{orderDetail.ItemId}}" type="checkbox" value="" class="" ng-model="orderDetail.isDeleted" /></td>
+                            <td>{{orderDetail.CurrentStock}}</td>-->
+                            <!--<td>{{orderDetail.CreatedDate | date:'medium'}}</td>
+                    <td>{{orderDetail.UpdatedDate | date:'medium'}}</td>-->
+
+                        </tr>
+                    </tbody>
+
+                </table>
+               
+
+                <div class="row">
+                    <div>
+                        <spam style="float:left; color:red">{{discountmsg}}</spam></br>
+                        <a type="button" class="btn btn-primary" style="float:left" ng-click="backpage()">Back</a> 
+                        <button id="btnSaveReturn" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-if="UserRoleBackend.rolenames.indexOf('Online Order Cancel')>-1" ng-show="OrderData.Status=='Delivery Canceled'" ng-click="saveReturn(orderDetail)"> Cancel Order</button>
+
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+</div>

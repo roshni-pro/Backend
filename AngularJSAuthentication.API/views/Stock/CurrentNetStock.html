@@ -1,0 +1,524 @@
+﻿
+
+<div class="page page-table" button-permission-binder parentName="Current Stock" pageName="Current Net Stock">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Current Net Stock (Demand Excluded)
+            </strong>
+        </div>
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="site-name"> Hub </label><br />
+                    <select class="form-control" id="site-name" ng-model="WarehouseId">
+                        <option value="">--Select Hub--</option>
+                        <option value="{{warehouses.value}}" ng-repeat="warehouses in warehouse">{{warehouses.label}} </option>
+                    </select>
+                </div>
+                <div class="col-sm-1">
+                    <label for="site-name"></label><br />
+                    <button type="button" class="btn-sm btn-primary" data-ng-click="getcurrentstock(WarehouseId)">Search</button>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group col-md-12">
+                        <label for="site-name"> Search:</label><br />
+                        <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> </label><br />
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+                <div class="col-sm-1 col-xs-6 filter-result-info">
+                    <button class="btn-sm btn-dark skexport" ng-click="exportData1()"> <span class="glyphicon glyphicon-export"> </span> Export Net stock</button>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="site-name">Net Stock Amount </label>
+                    <span class="badge badge-danger ml-2">
+                        {{NetTotalamount | number:2}}
+                    </span>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="site-name">Is Active : </label><br />
+                    <select class="form-control" id="site-name" ng-model="Filtertype" data-ng-change="getFilterData(Filtertype)">
+                        <option value="">All</option>
+                        <option value="Active">Active</option>
+                        <option value="InActive">InActive</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+
+
+                    <th>
+                        <div class="th">
+                            ItemNumber
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemNumber')"
+                                  data-ng-class="{active: row == 'ItemNumber'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemNumber')"
+                                  data-ng-class="{active: row == '-ItemNumber'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ROC
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            MultiMRPId(MRP)
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('MultiMRPId')"
+                                  data-ng-class="{active: row == 'MultiMRPId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-MultiMRPId')"
+                                  data-ng-class="{active: row == '-MultiMRPId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Active
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Net Inventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == 'CurrentDeliveryCanceledInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == '-CurrentDeliveryCanceledInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CurrentNetInventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventory')"
+                                  data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventory')"
+                                  data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            LiveQty
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            OpenPOQTy
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == 'CurrentDeliveryCanceledInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == '-CurrentDeliveryCanceledInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Del Can Inventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == 'CurrentDeliveryCanceledInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == '-CurrentDeliveryCanceledInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            AverageAging
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == 'CurrentDeliveryCanceledInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == '-CurrentDeliveryCanceledInventory'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            AverageAging Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == 'CurrentDeliveryCanceledInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentDeliveryCanceledInventory')"
+                                  data-ng-class="{active: row == '-CurrentDeliveryCanceledInventory'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            FreestockNetInventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('FreestockNetInventory')"
+                                  data-ng-class="{active: row == 'FreestockNetInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-FreestockNetInventory')"
+                                  data-ng-class="{active: row == '-FreestockNetInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ABC Classification
+
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Unit Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('UnitPrice')"
+                                  data-ng-class="{active: row == 'UnitPrice'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UnitPrice')"
+                                  data-ng-class="{active: row == '-UnitPrice'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Amt
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == 'CurrentInventoryAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == '-CurrentInventoryAmount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            AveragePurchasePrice
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == 'CurrentInventoryAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == '-CurrentInventoryAmount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            MarginPercent
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == 'CurrentInventoryAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == '-CurrentInventoryAmount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            PurchaseMinOrderQty
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == 'CurrentInventoryAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventoryAmount')"
+                                  data-ng-class="{active: row == '-CurrentInventoryAmount'}"></span>
+                        </div>
+                    </th>
+
+
+                    <!-- <th>
+                        <div class="th">
+                            Purchases Price
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('PurchasePrice')"
+                                  data-ng-class="{active: row == 'PurchasePrice'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PurchasePrice')"
+                                  data-ng-class="{active: row == '-PurchasePrice'}"></span>
+                        </div>
+                    </th>
+                   <th>
+        <div class="th">
+            Warehouse Name
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('WarehouseName')"
+                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-WarehouseName')"
+                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+        </div>
+    </th>
+    <th>
+        <div class="th">
+            Barcode
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('Barcode')"
+                  data-ng-class="{active: row == 'Barcode'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-Barcode')"
+                  data-ng-class="{active: row == '-Barcode'}"></span>
+        </div>
+    </th>-->
+                    <!--<th>
+        <div class="th">
+            BarcodeImage
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('BarcodeImage')"
+                  data-ng-class="{active: row == 'BarcodeImage'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-BarcodeImage')"
+                  data-ng-class="{active: row == '-BarcodeImage'}"></span>
+        </div>
+    </th>-->
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+
+                <tr data-ng-repeat="trade in currentPageStores track by $index">
+
+
+                    <td>
+                        <span class="badge badge-warning ml-2">{{trade.ItemNumber}}</span>
+                    </td>
+                    <td>{{trade.ItemName}}</td>
+                    <td>{{trade.Tag?trade.Tag:'--'}}</td>
+                    <td>
+                        {{trade.ItemMultiMrpId}} ( {{trade.MRP}})
+                    </td>
+                    <td ng-if="trade.IsActive>0" ng-style="{'background-color':'palegreen'}">True</td>
+                    <td ng-style="{'background-color':'lightcoral'}" ng-if="trade.IsActive==0">False</td>
+                    <!--<td ng-style="trade.IsActive && {'background-color':'palegreen'} || {'background-color': 'lightcoral'}">{{trade.IsActive}}</td>-->
+                    <!-- <td>{{trade.OpenPOQTy+trade.CurrentInventory+trade.CurrentDeliveryCanceledInventory}}</td>-->
+                    <td>
+                        {{trade.NetInventory}}
+                    </td>
+
+                    <td>
+                        <span ng-if="trade.CurrentNetInventory!=0" class="badge badge-primary ml-2">{{trade.CurrentNetInventory}}</span>
+                        <span ng-if="trade.CurrentNetInventory==0" class="badge badge-danger ml-2">{{trade.CurrentNetInventory}}</span>
+                    </td>
+                    <td><span class="badge badge-success ml-2">{{trade.LiveQty}}</span></td>
+                    <td>{{trade.OpenPOQTy}}</td>
+                    <td>
+
+                        <span ng-if="trade.CurrentDeliveryCanceledInventory>0" class="badge badge-info ml-2">
+                            {{trade.CurrentDeliveryCanceledInventory}}
+                        </span>
+                        <span ng-if="trade.CurrentDeliveryCanceledInventory>0">
+                            <button type="button" class="glyphicon glyphicon-export" ng-click="exportDeliveryCancelDetails(trade.ItemMultiMrpId)">
+                            </button>
+                        </span>
+                    </td>
+                    <td><span class="btn btn-primary skopen" ng-click="AverageDetail(trade)">{{trade.AverageAging}}</span></td>
+                    <td>
+
+                        {{trade.AgingAvgPurchasePrice  | number:3}}
+
+                    </td>
+                    <td>
+
+                        <span class="badge badge-danger ml-2">
+                            {{trade.FreestockNetInventory}}
+                        </span>
+
+
+                    </td>
+
+                    <td>{{trade.ABCClassification }}</td>
+                    <td>{{trade.Unitprice | number:3}}</td>
+                    <td>{{trade.CurrentNetStockAmount | number:3}}</td>
+                    <td>{{trade.AveragePurchasePrice | number:3}}</td>
+                    <td>{{trade.MarginPercent | number:2}}</td>
+                    <td>{{trade.PurchaseMinOrderQty}}</td>
+
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<script type="text/ng-template" id="myAveragedetail.html">
+    <form name="myModaldeleteOrder">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Averaging Details </h4>
+            <div>
+                <button type="button" class="btn btn-ar btn-warning" ng-click="exportaverage()" data-dismiss="modal">Export</button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="page page-table">
+
+
+
+
+                <section class="panel panel-default table-dynamic">
+
+
+                    <div class="panel-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+
+
+                            <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                                <thead>
+                                    <tr>
+
+
+                                        <th>
+                                            <div class="th">
+                                                ItemMultiMRPID
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemname')"
+                                                      data-ng-class="{active: row == 'itemname'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemname')"
+                                                      data-ng-class="{active: row == '-itemname'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Warehouse Name
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemcode')"
+                                                      data-ng-class="{active: row == 'itemcode'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemcode')"
+                                                      data-ng-class="{active: row == '-itemcode'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                IN Date
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('UnitPrice')"
+                                                      data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-UnitPrice')"
+                                                      data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Aging
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('price')"
+                                                      data-ng-class="{active: row == 'price'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-price')"
+                                                      data-ng-class="{active: row == '-price'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Closing quantity
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('MinOrderQty')"
+                                                      data-ng-class="{active: row == 'MinOrderQty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-MinOrderQty')"
+                                                      data-ng-class="{active: row == '-MinOrderQty'}"></span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="th">
+                                                Closing Amount
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('MinOrderQty')"
+                                                      data-ng-class="{active: row == 'MinOrderQty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-MinOrderQty')"
+                                                      data-ng-class="{active: row == '-MinOrderQty'}"></span>
+                                            </div>
+                                        </th>
+
+                                        
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="A in Aeging">
+                                        <td>{{A.ItemMultiMRPId}}</td>
+                                        <td>{{A.WarehouseName}}</td>
+                                        <td>{{A.InDate | date : "dd/MM/yyyy"}}</td>
+                                        <td>{{A.Ageing}}</td>
+                                        <td>{{A.ClosingQty}}</td>
+                                        <td>{{A.ClosingAmount|number:2}}</td>
+                                      
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </form>
+</script>
+

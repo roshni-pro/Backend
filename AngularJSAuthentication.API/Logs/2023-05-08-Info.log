@@ -1,0 +1,36 @@
+2023-05-08 18:10:03.4195|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:10:03.4635|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:10:04.2176|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:10:04.2913|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:10:04.2913|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:10:04.8990|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:14:19.3481|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:14:19.3481|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:14:19.9836|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:14:20.0026|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:14:20.0026|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:14:20.7208|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:14:35.5381|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:14:35.5391|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:14:36.3861|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:14:36.4221|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:14:36.4221|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:14:37.1997|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:20:53.0854|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:20:53.0854|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:20:54.2274|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:20:54.2544|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2023-05-08 18:20:54.2544|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 1717
+2023-05-08 18:20:55.2704|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2023-05-08 18:28:56.1016|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-05-08 18:28:56.1016|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : 1 , Company Id : 1717
+2023-05-08 18:28:56.1576|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 
+2023-05-08 18:30:50.0417|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-05-08 18:30:50.0417|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : 1 , Company Id : 1717
+2023-05-08 18:30:50.0417|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 
+2023-05-08 18:31:01.9579|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-05-08 18:31:01.9579|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : 1 , Company Id : 1717
+2023-05-08 18:31:01.9872|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 
+2023-05-08 18:33:00.8232|INFO|AngularJSAuthentication.API.Controllers.SupplierController|start Depo: 
+2023-05-08 18:33:00.8232|INFO|AngularJSAuthentication.API.Controllers.SupplierController|User ID : 1 , Company Id : 1717
+2023-05-08 18:33:00.8232|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  Depo: 

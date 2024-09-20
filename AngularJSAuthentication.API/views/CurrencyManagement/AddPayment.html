@@ -1,0 +1,349 @@
+﻿<head>
+    <style>
+        .btn-info.disabled, .btn-info.disabled:hover, .btn-info.disabled:focus, .btn-info.disabled:active, .btn-info.disabled.active, .btn-info[disabled], .btn-info[disabled]:hover, .btn-info[disabled]:focus, .btn-info[disabled]:active, .btn-info[disabled].active, fieldset[disabled] .btn-info, fieldset[disabled] .btn-info:hover, fieldset[disabled] .btn-info:focus, fieldset[disabled] .btn-info:active, fieldset[disabled] .btn-info.active {
+            background-color: #009a71;
+            border-color: #009a71;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+            color: #382121;
+            background-color: #39e4b1;
+            border: 1px solid #dad9d9;
+            border-bottom-color: transparent;
+            cursor: default;
+            border-radius: 30px;
+            border-bottom: 81px;
+        }
+
+        .btn-info {
+            color: white;
+            background-color: #097b5c;
+            border-color: #097b5c;
+            border-radius: 15px;
+        }
+
+        .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+            border-color: #ffa500;
+            color: #fff;
+            background-color: #ffa500;
+            margin-left: 63%;
+            margin-bottom: 1%;
+            margin-top: -68px;
+            border-radius: 15px;
+        }
+
+        .form-control {
+            border-width: 1px;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            margin-top: 10px;
+        }
+
+        .btn-link:hover, .btn-link:focus {
+            color: #fff;
+            background-color: #ffa500;
+        }
+
+        .btn-success {
+            color: white;
+            background-color: #ea210c;
+            border-color: #ff1700;
+            border-radius: 20px;
+        }
+
+        .btn-warning.disabled, .btn-warning.disabled:hover, .btn-warning.disabled:focus, .btn-warning.disabled:active, .btn-warning.disabled.active, .btn-warning[disabled], .btn-warning[disabled]:hover, .btn-warning[disabled]:focus, .btn-warning[disabled]:active, .btn-warning[disabled].active, fieldset[disabled] .btn-warning, fieldset[disabled] .btn-warning:hover, fieldset[disabled] .btn-warning:focus, fieldset[disabled] .btn-warning:active, fieldset[disabled] .btn-warning.active {
+            background-color: #2ec1cc;
+            border-color: #2ec1cc;
+        }
+
+        .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open > .btn-success.dropdown-toggle {
+            color: white;
+            background-color: #b13d31;
+            border-color: #b13d31;
+        }
+
+        .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .btn-default.dropdown-toggle {
+            color: #f9f9f9;
+            background-color: #ffb619;
+            border-color: #ffb619;
+        }
+
+        .btn-default {
+            color: #ffffff;
+            background-color: #ffb619;
+            border-color: #ffb619;
+            margin-left: 34%;
+            margin-top: -34%;
+            border-radius: 13px;
+            /* margin-right: 19%; */
+        }
+
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .nav-tabs {
+            border-bottom: 1px solid #dddddd;
+            /*float: right;*/
+            margin: 30px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin: 10px 2px 1px;
+            margin-top: 1px \9;
+            line-height: normal;
+        }
+
+        .panel-default > .panel-heading {
+            color: #767676;
+            background-color: #f3f3f3;
+            border-color: #e9e9e9;
+        }
+
+        .btn-primary {
+            color: white;
+            background-color: #00a4e9;
+            border-color: #00a4e9;
+            border-radius: 16px;
+        }
+
+        b, strong {
+            font-weight: bold;
+            font-family: serif;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #2ec1cc;
+            border-color: #2ec1cc;
+            border-radius: 21px;
+            margin-left: 80%;
+        }
+
+            .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open > .btn-warning.dropdown-toggle {
+                color: white;
+                background-color: #0b929c;
+                border-color: #0b929c;
+            }
+
+        .btn-danger {
+            color: white;
+            background-color: #e94b3b;
+            border-color: #e63624;
+            border-radius: 21px;
+            margin-right: 100px;
+        }
+
+        .panel-default > .panel-heading {
+            color: #252020;
+            background-color: #ffffff;
+            border-color: #eb5a00;
+            border-bottom: solid 3px #8c8b8b;
+        }
+
+        input[type="radio"] {
+            -webkit-appearance: checkbox; /* Chrome, Safari, Opera */
+            -moz-appearance: checkbox; /* Firefox */
+            -ms-appearance: checkbox; /* not currently supported */
+        }
+    </style>
+
+</head>
+<div class="modal-header w1-red">
+    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+        <span class="icon icon-x" aria-hidden="true">
+        </span>
+        <span class="sr-only">Close</span>
+    </button>
+    <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+    <h4 class="modal-title">Agent Due payement Details</h4>
+</div>
+<!--<tabset>-->
+<!--<tab heading="Cash Payment">-->
+
+<div class="col-lg-12" style="background-color: #f3f3f3;">
+    <div class="col-lg-6">
+        <div class="form-group col-md-3">
+            <label for="site-name">Total Amount</label>
+            <input type="text" class="form-control" ng-model="TotalDeuAmount" disabled>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="site-name">Agent Name</label>
+            <input type="text" class="form-control" ng-model="AgentName" disabled>
+        </div>
+        <div class="panel-success panel div-highlight">
+            <div class="panel-heading text-center">
+                <h3>Cash Payment</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr style="background-color: #ffffff;">
+                            <th>
+                                <div class="th">
+                                    Denomination
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Quantity
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Amount
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td colspan="3"><b>Notes</b></td>
+                        </tr>
+                        <tr ng-repeat="trade in Denomination | filter: { currencyType: 'Notes'}">
+                            <td>
+                                <b> &#8377;{{trade.Title}}</b>
+                            </td>
+                            <td>
+                                <input type="number" value="0" ng-model="trade.CurrencyCount">
+
+                            </td>
+                            <td>
+                                &#8377;{{trade.Title * trade.CurrencyCount}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><b>Coins</b></td>
+                        </tr>
+                        <tr ng-repeat="trade in Denomination | filter: { currencyType: 'Coin'}">
+                            <td>
+                                <b> &#8377;{{trade.Title}}</b>
+                            </td>
+                            <td>
+                                <input type="text" ng-model="trade.CurrencyCount" placeholder="">
+                            </td>
+                            <td>
+                                &#8377;{{trade.Title * trade.CurrencyCount}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1"><b>Total</b></td>
+                            <td><b>{{ Denomination |totalSingle:'CurrencyCount'}} </b></td>
+                            <td><b>&#8377;{{ Denomination | total:'CurrencyCount':'Title' }}</b></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--</tab>-->
+    <!--<tab heading="Other Mod Payment">-->
+    <!--<div class="form-group col-md-3">
+        <label for="site-name">Total Amount</label>
+        <input type="text" class="form-control" ng-model="TotalDeuAmount" disabled>
+    </div>-->
+    <div class="panel-success panel div-highlight">
+        <div class="panel-heading text-center">
+            <h3>Other Payment</h3>
+        </div>
+        <div class="col-lg-6">
+            <div class="col-md-6">
+                <label for="UOM">Select Mod:<span style="color:red;"></span></label><br />
+                <select class="form-control" id="site-name" ng-model="pay.Mod">
+                    <option value="">--Select--</option>
+                    <option value="1">Cheque</option>
+                    <option value="2">Online</option>
+                </select>
+            </div>
+
+            <div class="col-md-6" ng-if="pay.Mod=='1'">
+                <label for="site-name">ChequeDate:</label>
+                <div class="form-group">
+                    <input id="dat" type='date' title="Select Date" ng-model="pay.Date" autocomplete="off" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6" ng-if="pay.Mod=='2'">
+                <label for="site-name">OnlineDate:</label>
+                <div class="form-group">
+                    <input id="dat" type='date' title="Select Date" ng-model="pay.Date" autocomplete="off" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6" ng-if="pay.Mod=='1'">
+                <lable for="site-name">Select Bank Name:</lable>
+                <select class="form-control" id="site-name" ng-model="pay.BankId">
+                    <option value="">--Select --</option>
+                    <option value="{{bankdt.Id}}" ng-repeat="bankdt in bankname">{{bankdt.BankName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6" ng-if="pay.Mod=='1'">
+                <label for="site-name">Cheque No:</label>
+                <input type="text" class="form-control" ng-model="pay.ChequeNumber" placeholder="Enter Cheque No">
+            </div>
+
+
+            <div class="col-md-6" ng-if="pay.Mod=='1'">
+                <lable for="site-name">Select OrderId:</lable>
+                <select class="form-control" id="site-name" ng-model="pay.OrderId">
+                    <option value="">--Select --</option>
+                    <option value="{{orderid}}" ng-repeat="orderid in orderids">{{orderid}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6" ng-if="pay.Mod=='2'">
+                <label for="site-name">Online Payment Type:</label>
+                <select class="form-control" id="site-name" ng-model="pay.PaymentType">
+                    <option value="">--Select--</option>
+                    <option value="Mpos">Mpos</option>
+                    <option value="RTGS/NFT">RTGS/NFT</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6" ng-if="pay.PaymentType=='Mpos'">
+                <label for="site-name">MPOS Refrence No:</label>
+                <input type="text" class="form-control" ng-model="pay.MPOSReferenceNo" placeholder="xxxx-xxxx-xx">
+            </div>
+            <div class="form-group col-md-6" ng-if="pay.PaymentType=='RTGS/NFT'">
+                <label for="site-name">Payment ReferenceNO:</label>
+                <input type="text" class="form-control" ng-model="pay.PaymentReferenceNO" placeholder="xxxx-xxxx-xx">
+            </div>
+            <div class="form-group col-md-6" ng-if="pay.PaymentType=='Mpos'">
+                <label for="site-name">Collect MPOS Amount:</label>
+                <input type="number" class="form-control" ng-model="pay.CollectAmount" placeholder="Enter Collect Amount">
+            </div>
+            <div class="col-md-6" ng-if="pay.Mod=='2'">
+                <lable for="site-name">Select OrderId:</lable>
+                <select class="form-control" id="site-name" ng-model="pay.OrderId">
+                    <option value="">--Select --</option>
+                    <option value="{{orderid}}" ng-repeat="orderid in orderids">{{orderid}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6" ng-if="pay.PaymentType=='RTGS/NFT'">
+                <label for="site-name">Collect Payment Amount:</label>
+                <input type="number" class="form-control" ng-model="pay.CollectAmount" placeholder="Enter Collect MPOS Amount">
+            </div>
+            <div class="form-group col-md-6" ng-if="pay.Mod=='1'">
+                <label for="site-name">Collect Cheque Amount:</label>
+                <input type="number" class="form-control" ng-model="pay.CollectAmount" placeholder="Enter Cheque Amount">
+            </div>
+            <div class="form-groupcol-md-6" ng-if="pay.Mod=='1'">
+                <label for="uploadAdvertisements">Upload File:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-model="uploader.queue[0].FileUrl" ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group text-right">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-ar btn-success" ng-disabled="TotalDeuAmount!=(Denomination | total:'CurrencyCount':'Title')+pay.CollectAmount" ng-click="Addcashpayment(Denomination,TotalDeuAmount,pay)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--</tab>-->
+<!--</tabset>-->

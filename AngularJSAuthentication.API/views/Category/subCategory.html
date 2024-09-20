@@ -1,0 +1,380 @@
+﻿
+<div class="page page-table"  button-permission-binder parentName="Item Category" pageName="Sub-Category">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Sub-Category
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">
+                <span class="glyphicon glyphicon-plus">
+                </span> New Sub-Categories
+            </button>
+            <br />
+            <br />
+            <input class="form ng-pristine ng-valid" data-ng-model="searchKeywords" data-ng-keyup="search()">
+        </div>
+       
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CategoryName')"
+                                  data-ng-class="{active: row == 'CategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CategoryName')"
+                                  data-ng-class="{active: row == '-CategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Category
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CategoryName')"
+                                  data-ng-class="{active: row == 'CategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CategoryName')"
+                                  data-ng-class="{active: row == '-CategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub-Category
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SubcategoryName')"
+                                  data-ng-class="{active: row == 'SubcategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SubcategoryName')"
+                                  data-ng-class="{active: row == 'SubcategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Hindi Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' HindiName')"
+                                  data-ng-class="{active: row ==  HindiName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- HindiName')"
+                                  data-ng-class="{active: row == '- HindiName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Discription')"
+                                  data-ng-class="{active: row == 'Discription'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Discription')"
+                                  data-ng-class="{active: row == '-Discription'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub Category Image
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            IsActive
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('IsActive')"
+                                  data-ng-class="{active: row == 'IsActive'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-IsActive')"
+                                  data-ng-class="{active: row == '-IsActive'}"></span>
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">
+                        <div class="th">
+                            Active/Deactive
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{1+$index}}</td>
+                    <td>{{trade.GroupedCategoryName}}</td>
+                    <td>{{trade.SubcategoryName}}</td>
+                    <td>{{trade.HindiName}}</td>
+                    <td>{{trade.Discription}}</td>
+                    <td>
+                        <div class="form-group">
+                            <img alt="" src="{{trade.LogoUrl}}" class="img-square img80_80">
+                        </div>
+                    </td>
+                    <td>{{trade.IsActive}}</td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)" ng-if="trade.IsActive == false"><button class="btn-sm btn-primary skactive" ng-click="SetActive(trade)">Activate</button> </td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)" ng-if="trade.IsActive == true"><button class="btn-sm btn-danger skdeactivate" ng-click="SetActive(trade)">Deactivate</button> </td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)"><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)"><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="mySubCategoryModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Create  Categories </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Select Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="SubCategoryData.Categoryid" required>
+                    <option value="">--select--</option>
+                    <option value="{{category.Categoryid}}" ng-repeat="category in categorys" ng-click="showDetails = ! showDetails"> {{category.CategoryName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Sub-Category Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="SubCategoryData.SubcategoryName" placeholder="Enter Sub-Category name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Hindi Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="SubCategoryData.HindiName" placeholder="Enter Sub-Category name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Sub-Category Code:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="SubCategoryData.Code" placeholder="Enter Sub-Category Code" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Sub-Category Description:</label><br />
+                <textarea id="site-name" class="form-control" rows="3" required="" ng-model="SubCategoryData.Discription" placeholder="EnterSub-Category description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="uploadAdvertisements">Upload Image:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SubCategoryData.IsActive" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddSubCategory(SubCategoryData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="mySubCategoryModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Sub-category</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Select Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="SubCategoryData.Categoryid" required>
+                    <option value="">{{SubCategoryData.CategoryName}}</option>
+                    <option value="{{category.Categoryid}}" ng-repeat="category in categorys" ng-click="showDetails = ! showDetails"> {{category.CategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Sub-Category Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="SubCategoryData.SubcategoryName" placeholder="Enter Sub-Category name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Hindi Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="SubCategoryData.HindiName" placeholder="Enter Sub-Category name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Sub-Category Code:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="SubCategoryData.Code" placeholder="Enter Sub-Category Code" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Sub-Category Description:</label><br />
+                <textarea id="site-name" class="form-control" rows="3" required="" ng-model="SubCategoryData.Discription" placeholder="EnterSub-Category description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="uploadAdvertisements">Upload Image:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+                <img alt="" src="{{SubCategoryData.LogoUrl}}" class="img-square img80_80">
+            </div>
+            <div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SubCategoryData.IsActive" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutSubcategory(SubCategoryData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteSubCategory.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete </h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletesubCategory(SubCategoryData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myactivemodal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit OnlineItems </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SubCategoryData.IsActive" />
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutSubcategory(SubCategoryData)">Set</button>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,437 @@
+﻿<style>
+    .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+        border-color: #126912;
+        background-color: #126912;
+        color: #ffffff;
+    }
+
+        .btn-link:hover, .btn-link:focus {
+            color: #fff;
+            text-decoration: underline;
+            background-color: #126912;
+        }
+
+        .btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+            border-color: #126912;
+            background-color: #126912;
+            color: #ffffff;
+            border-radius: 15px;
+        }
+
+    .btn-primary {
+        color: white;
+        background-color: #00a4e9;
+        border-color: #00a4e9;
+        border-radius: 15px;
+    }
+
+    .btn-warning {
+        color: white;
+        background-color: #ffb61c;
+        border-color: #ffae02;
+        border-radius: 15px;
+    }
+
+
+    .mdl {
+        display: block !important;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .img-sml {
+        width: 100px;
+        width: 50px;
+    }
+
+    .img-big {
+        background: lightgray;
+        width: 100%;
+    }
+    .form-control {
+    border-width: 1px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-radius: 15px;
+}
+   .input-group-addon {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color: #333333;
+    text-align: center;
+    background-color: #2ccca0;
+    border: 1px solid #34bf9a;
+    border-radius: 15px;
+}
+    
+
+</style>
+<div class="page page-table" ngEnter="enter">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>&nbsp; HQ Return Cheque History
+            </strong>
+        </div>
+        <div class="col-md-2" style="margin-top: 7px;">
+            <label for="site-name">Select Warehouse:</label><br>
+            <select class="form-control" id="Warehouseid" ng-model="Warehouseid" data-ng-change="getChequeCollenction()">
+                <option value="" selected>--ALL--</option>
+                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="Warehouseid == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+            </select>
+        </div>
+        <br />
+
+        <div class="form-group col-md-2" style="margin-top: -12px;">
+            <label for="site-name">Select Date Range</label><br />
+            <div class="form-group">
+                <div class='input-group date'>
+                    <input name="daterange" id="Chequedate" type='text' title="Select Date" autocomplete="off" class="form-control date-picker" />
+                    <span class="input-group-addon ">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2" style="margin-top: -12px;">
+            <label for="site-name">Bounce Cheque Status:</label><br />
+            <select ng-model="ChequeStatusFilter" class="form-control">
+                <option value="" selected>Select Cheque Status</option>
+                <option value="1">Return</option>
+                <option value="2">Received At HQ</option>
+                <option value="3">Couriered</option>
+                <option value="4">Received At Hub</option>
+                <option value="5">HandOvertoAgent</option>
+            </select>
+        </div>
+        <!--<div class="col-md-2" style="margin-top: -12px;">
+        <label for="site-name">Cheque Date:</label><br>
+        <div class="form-group">
+            <input id="dat" type='date' title="Select Date" ng-model="FilterChequeDate" autocomplete="off" class="form-control" />
+        </div>
+    </div>-->
+        <div class="col-md-2" style="margin-top: -12px;">
+            <label for="site-name">Search:</label><br>
+            <div class="form-group">
+                <input id="dat" type='text' title="Enter Search Filter" placeholder="Enter Search Filter" ng-model="searchfilter" autocomplete="off" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-2 " style="margin-top: 10px;">
+            <button ng-click="getChequeCollenction()" ngEnter="getChequeCollenction()" class="btn btn-link">Search</button>
+            <button class="btn-sm btn-primary" ng-click="exportData1()"> Export </button>
+            <button type="button" class="btn btn-warning" ng-click="Back()">Back</button>
+        </div>
+        <br />
+        <div class="row" ng-if="Warehouseid != '0'">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+
+                        <tr>
+                            <th rowspan="2">SR#</th>
+                            <th colspan="7" class="text-center">Cheque Detail</th>
+                            <th colspan="5" class="text-center">HQ Detail</th>
+                            <th colspan="5" class="text-center">Warehouse Detail</th>
+                            <th rowspan="2">Status</th>
+                            <th rowspan="2">Action</th>
+
+                        </tr>
+                        <tr>
+                            <th>Warehouse Name</th>
+                            <th>Assignment Id</th>
+                            <th>Order Id</th>
+                            <th>Bank Name</th>
+                            <th>ChequeDate</th>
+                            <th>Cheque No.</th>
+                            <th>Amount</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Courier Name</th>
+                            <th>Courier Date</th>
+                            <th>Pod No.</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Hand Over By</th>
+                            <th>Date</th>
+                            <th>Agent Name</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cheque in chequeCollection">
+
+                            <td>{{1+$index}}</td>
+                            <td>
+                                <div ng-bind="cheque.WarehouseName"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.Deliveryissueid"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.OrderId"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.ChequeBankName"></div>
+                            </td>
+                            <td>
+                                {{cheque.ChequeDate| date:'medium'}}
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.ChequeNumber"></div>
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.ChequeAmt"></div>
+                            </td>
+
+
+                            <td>
+                                <div ng-bind="cheque.HQReceiverName"></div>
+                            </td>
+                            <td>
+                                {{cheque.HQReceiveDate| date:'medium'}}
+
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.CourierName"></div>
+                            </td>
+
+                            <td>
+                                {{cheque.CourierDate| date:'medium'}}
+
+
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.PodNo"></div>
+                            </td>
+
+                            <td>
+                                <div ng-bind="cheque.HubReceiverName"></div>
+                            </td>
+
+                            <td>{{cheque.HubReceiveDate| date:'medium'}}</td>
+                            <td>
+                                <div ng-bind="cheque.HubSenderName"></div>
+                            </td>
+                            <td>
+                                {{cheque.HandOverDate| date:'medium'}}
+
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.HandOverAgentName"></div>
+
+                            </td>
+                            <td>
+                                <div ng-bind="cheque.StatusText"></div>
+
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" ng-click="open(cheque)" ng-if="(UserRole.rolenames.indexOf('HQ Master login') > -1 || UserRole.rolenames.indexOf('Banking Executives') > -1 || UserRole.rolenames.indexOf('Accounts executive') > -1)">Add Details</button>
+                                <button class="btn btn-primary" ng-click="Whopen(cheque)" ng-if="(UserRole.rolenames.indexOf('WH Master login') > -1 || UserRole.rolenames.indexOf('WH cash manager') > -1 || UserRole.rolenames.indexOf('WH Service lead') > -1)">Add Details</button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select name="page" ng-model="vm.rowsPerPage" ng-change="onNumPerPageChange()">
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="vm.currentPage"
+                                        total-items="vm.count"
+                                        max-size="4"
+                                        on-select-page="changePage(page)"
+                                        items-per-page="vm.rowsPerPage"
+                                        rotate="false"
+                                        boundary-links="true">
+                            </pagination>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <div class="row" ng-if="Warehouseid == '0'">
+            <div class="col-lg-12">
+                <span> You are not authorize person to access warehouse dashboard</span>
+            </div>
+        </div>
+    </section>
+</div>
+<style>
+    .modal-body {
+        position: relative;
+        padding: 0px;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+
+    .w2-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+
+    .btn-info {
+        color: white;
+        background-color: #2ec1cc;
+        border-color: #29adb7;
+        border-radius: 15px;
+    }
+</style>
+<script type="text/ng-template" id="myReturnModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">HQ Add Details</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12" style="margin-top: 15px;">
+                <div class="form-group col-md-6">
+                    <label for="site-name">Receive At HQ</label><br />
+                 
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="chequeData.HQReceiverName"  readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="site-name">Receive Date:</label><br />
+                     <div class="form-group">                                                                   
+                       <input id="dat" type='date' ng-disabled="chequeData.IsHQReceive" title="Select Date" ng-model="chequeData.HQReceiveDate" value="{{chequeData.HQReceiveDate}}" autocomplete="off" class="form-control" />
+                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary"  ng-disabled="chequeData.IsHQReceive"  click-and-disable="HQAddDetails(chequeData,'HQReceive')">Save</button>
+        </div>
+        <div class="modal-header">
+            <h4 class="modal-title">Courier Details:</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12" style="margin-top: 15px;">
+                <div class="form-group col-md-6">
+                    <label for="site-name">Courier Date:</label><br />                 
+                        <input id="dat" type='date' title="Select Date" ng-model="chequeData.CourierDate" autocomplete="off" class="form-control" />
+                    
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="site-name">Courier Name:</label><br />
+                    <input id="site-name" type="text" class="form-control" autocomplete="off" ng-model="chequeData.CourierName" placeholder="Enter Courier Name" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="site-name">POD No:</label><br />
+                    <div class="form-group">
+                        <input id="site-name" type="text" class="form-control" autocomplete="off" ng-model="chequeData.PodNo" placeholder="Enter POD NO." />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-info"  ng-disabled="chequeData.IsHQSentCourier" click-and-disable="HQAddDetails(chequeData,'HQCourier')">Save</button>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="myWhReturnModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Cheque Warehouse Details</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12" style="margin-top: 15px;">
+                <div class="form-group col-md-6">
+                    <label for="site-name">Receiver Name:</label><br />
+
+                    <input type="text" class="form-control ng-pristine ng-valid" ng-model="chequeData.HubReceiverName" readonly>
+                
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="site-name">Receive Date:</label><br />
+                   <div class="form-group">
+                <input id="dat" type='date'  ng-disabled="chequeData.IsHubReceive" title="Select Date" ng-model="chequeData.HubReceiveDate" value="{{chequeData.HubReceiveDate}}" autocomplete="off" class="form-control" />
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary"  ng-disabled="chequeData.IsHubReceive" click-and-disable="AddDetails(chequeData,'WarehouseReceive')">Save</button>
+        </div>
+        <div class="modal-header ">
+            <h4 class="modal-title">Cheque Hand Over to Agent:</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="col-md-12" style="margin-top: 15px;">
+                <div class="form-group col-md-6">
+                    <label for="site-name">Agent Name:</label><br>
+                    <select class="form-control" id="ddlreturnchequeagent" ng-model="chequeData.PeopleID" >
+                        <option value="">-Select-</option>
+                        <option value="{{db.PeopleID}}" ng-repeat="db in getAgent"> {{db.DisplayName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="site-name">Handover By:</label><br />
+                    <div class="form-group">
+                        <input id="site-name" type="text" class="form-control" autocomplete="off" ng-model="chequeData.HubSenderName" placeholder="Enter Receiver Name" disabled/>
+                    </div>
+                </div>            
+                <div class="form-group col-md-6">
+                    <label for="site-name">HandOver Date:</label><br />
+                    <div class="form-group">
+                        <input id="dat" type='date' title="Select Date" ng-disabled="chequeData.IsHubHandOverAgent" ng-model="chequeData.HandOverDate" autocomplete="off" class="form-control" />
+                    </div>
+                </div>               
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-info" ng-disabled="chequeData.IsHubHandOverAgent" click-and-disable="AddDetails(chequeData,'HandOver')">Save</button>
+        </div>
+    </form>
+</script>

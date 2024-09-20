@@ -1,0 +1,162 @@
+2023-09-25 12:38:32.4056|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 12:38:32.4456|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 12:39:01.9636|ERROR|AngularJSAuthentication.API.Controllers.SupplierController|Error in Brand System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at AngularJSAuthentication.API.Controllers.SupplierController.getBrandwithcategoryname() in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\SupplierController.cs:line 1914
+2023-09-25 12:39:01.9636|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  get brand: 
+2023-09-25 12:40:02.7590|ERROR|AngularJSAuthentication.API.Controllers.StateController|Error in state The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2023-09-25 12:40:02.7590|INFO|AngularJSAuthentication.API.Controllers.StateController|End  state: 
+2023-09-25 12:41:14.4204|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 12:41:14.4204|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 12:41:55.4644|ERROR|AngularJSAuthentication.API.Controllers.SupplierController|Error in Brand System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at AngularJSAuthentication.API.Controllers.SupplierController.getBrandwithcategoryname() in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\SupplierController.cs:line 1914
+2023-09-25 12:41:55.4644|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  get brand: 
+2023-09-25 12:42:05.2624|ERROR|AngularJSAuthentication.API.Controllers.StateController|Error in state The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2023-09-25 12:42:05.2624|INFO|AngularJSAuthentication.API.Controllers.StateController|End  state: 
+2023-09-25 12:43:20.6508|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 12:43:20.6508|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 12:44:10.4398|ERROR|AngularJSAuthentication.API.Controllers.StateController|Error in state The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2023-09-25 12:44:10.4468|INFO|AngularJSAuthentication.API.Controllers.StateController|End  state: 
+2023-09-25 12:44:39.4868|ERROR|AngularJSAuthentication.API.Controllers.SupplierController|Error in Brand System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at AngularJSAuthentication.API.Controllers.SupplierController.getBrandwithcategoryname() in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\SupplierController.cs:line 1914
+2023-09-25 12:44:39.4868|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  get brand: 
+2023-09-25 14:26:18.8829|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 14:26:18.9269|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 14:26:38.9433|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 14:34:39.0128|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 14:34:39.0128|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 14:34:39.0378|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 14:48:09.3902|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 14:48:09.3902|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 14:48:09.4222|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 14:57:43.2984|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 14:57:43.2984|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 14:57:43.3134|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 14:59:31.8311|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 14:59:31.8311|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 14:59:31.8581|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:00:14.4317|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:00:14.4317|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:00:14.4657|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:02:12.5662|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:02:12.5662|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:02:12.6082|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:19:04.1347|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:19:04.1347|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:19:04.1627|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:19:28.0320|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:19:28.0320|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:19:28.0560|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:21:29.0774|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:21:29.0774|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:21:29.1204|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:24:27.5306|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:24:27.5306|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:24:27.5666|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:27:14.8794|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:27:14.8794|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:27:14.8974|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:30:07.6960|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:30:07.6960|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:30:07.7680|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:36:06.1221|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:36:06.1221|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:36:06.1421|INFO|AngularJSAuthentication.API.Controllers.StateController|End  Stste: 
+2023-09-25 15:58:48.3585|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 15:58:48.4105|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 15:59:02.2284|ERROR|AngularJSAuthentication.API.Controllers.SupplierController|Error in Brand System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at AngularJSAuthentication.API.Controllers.SupplierController.getBrandwithcategoryname() in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\SupplierController.cs:line 1914
+2023-09-25 15:59:02.2284|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  get brand: 
+2023-09-25 15:59:11.9634|ERROR|AngularJSAuthentication.API.Controllers.StateController|Error in state The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2023-09-25 15:59:11.9634|INFO|AngularJSAuthentication.API.Controllers.StateController|End  state: 
+2023-09-25 16:01:05.5666|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 16:01:05.5666|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 16:01:25.6620|INFO|AngularJSAuthentication.API.Controllers.StateController|start State: 
+2023-09-25 16:01:25.6620|INFO|AngularJSAuthentication.API.Controllers.StateController|User ID : 1 , Company Id : 1717
+2023-09-25 16:01:59.3622|ERROR|AngularJSAuthentication.API.Controllers.SupplierController|Error in Brand System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at AngularJSAuthentication.API.Controllers.SupplierController.getBrandwithcategoryname() in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\SupplierController.cs:line 1914
+2023-09-25 16:01:59.3622|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  get brand: 
+2023-09-25 16:02:08.6636|ERROR|AngularJSAuthentication.API.Controllers.StateController|Error in state The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2023-09-25 16:02:08.6636|INFO|AngularJSAuthentication.API.Controllers.StateController|End  state: 
+2023-09-25 16:02:44.3033|ERROR|AngularJSAuthentication.API.Controllers.SupplierController|Error in Brand System.InvalidOperationException: The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+   at System.Data.Entity.CreateDatabaseIfNotExists`1.InitializeDatabase(TContext context)
+   at System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   at System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   at System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   at System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   at System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   at System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   at System.Data.Entity.Internal.Linq.InternalSet`1.GetEnumerator()
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.OrderedEnumerable`1.<GetEnumerator>d__1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at AngularJSAuthentication.API.Controllers.SupplierController.getBrandwithcategoryname() in C:\BackEndSaral\AngularJSAuthentication.API\Controllers\SupplierController.cs:line 1914
+2023-09-25 16:02:44.3033|INFO|AngularJSAuthentication.API.Controllers.SupplierController|End  get brand: 
+2023-09-25 16:02:53.2928|ERROR|AngularJSAuthentication.API.Controllers.StateController|Error in state The model backing the 'AuthContext' context has changed since the database was created. Consider using Code First Migrations to update the database (http://go.microsoft.com/fwlink/?LinkId=238269).
+2023-09-25 16:02:53.2928|INFO|AngularJSAuthentication.API.Controllers.StateController|End  state: 

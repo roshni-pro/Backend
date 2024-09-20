@@ -1,0 +1,11 @@
+2023-05-15 11:19:42.2893|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 
+2023-05-15 12:10:54.2517|INFO|AngularJSAuthentication.API.Controllers.clusterController|start Warehouse: 
+2023-05-15 12:10:54.2947|INFO|AngularJSAuthentication.API.Controllers.clusterController|User ID : 1 , Company Id : 1717
+2023-05-15 12:10:54.3727|INFO|AngularJSAuthentication.API.Controllers.clusterController|End Cluster: 
+2023-05-15 12:15:55.8044|INFO|AngularJSAuthentication.API.Controllers.clusterController|start Warehouse: 
+2023-05-15 12:15:55.8044|INFO|AngularJSAuthentication.API.Controllers.clusterController|User ID : 1 , Company Id : 1717
+2023-05-15 12:15:55.8274|INFO|AngularJSAuthentication.API.Controllers.clusterController|End Cluster: 
+2023-05-15 12:15:59.3509|INFO|AngularJSAuthentication.API.Controllers.clusterController|start Warehouse: 
+2023-05-15 12:15:59.3509|INFO|AngularJSAuthentication.API.Controllers.clusterController|User ID : 1 , Company Id : 1717
+2023-05-15 12:15:59.3698|INFO|AngularJSAuthentication.API.Controllers.clusterController|End Cluster: 
+2023-05-15 14:26:56.8625|INFO|AngularJSAuthentication.API.Controllers.ProfilesController|Get Company: 

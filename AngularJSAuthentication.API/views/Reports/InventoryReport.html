@@ -1,0 +1,204 @@
+﻿<style>
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+
+    .Divcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* fraction*/
+        padding-left: 10px;
+    }
+    .btn-primary {
+        color: white;
+        background-color: #00a4e9;
+        border-color: #00a4e9;
+        margin-bottom: -60px;
+    }
+</style>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Inventory Report
+            </strong>
+        </div>
+        <br />
+        <div class="form-group col-md-12">
+            <div class="form-group col-md-2">
+                <label for="site-name">Zone</label><br>
+                <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                    <option value="">---Select Zone---</option>
+                    <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Region</label><br>
+                <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetWarehouses(RegionId)">
+                    <option value="">---Select Region---</option>
+                    <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Warehouses <span style="color:red;">*</span></label><br>
+                <select class="form-control" id="site-name" ng-model="WarehouseId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{warehouse.WarehouseId}}" ng-repeat="warehouse in warehouses">{{warehouse.WarehouseName}} </option>
+                </select>
+            </div>
+            <!--<div class="form-group col-md-3">
+                <label for="site-name">Cluster</label><br>
+                <select class="form-control" id="site-name" ng-model="ClusterId">
+                    <option value="">---Select Cluster---</option>
+                    <option value="{{cluster.ClusterId}}" ng-repeat="cluster in clusters"> {{cluster.ClusterName}}</option> 
+                </select>
+            </div>-->
+
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Date Range</label><br>
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="ExportData(WarehouseId)">Search</button>
+                <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="ExportAllD()">Export Data</button>
+            </div>
+        </div>
+            <br /><br /><br /><br />
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th><div class="th"> SN </div> </th>
+                        <th><div class="th"> Item Name </div> </th>
+                        <th><div class="th"> Tax </div> </th>
+                        <th><div class="th"> Opening Qty </div> </th>
+                        <th><div class="th"> Opening Amt </div></th>
+                        <th><div class="th"> Inward Qty </div></th>
+                        <th><div class="th"> Inward W/O Tax Amt </div></th>
+                        <th><div class="th"> Outward Qty </div> </th>
+                        <th><div class="th"> Outward W/O Tax Amt </div> </th>
+                        <th><div class="th"> Closing Qty </div> </th>
+                        <th><div class="th"> Adjust Closing Amt </div> </th>
+                        <th><div class="th"> Difference in Qty </div></th>
+                        <th><div class="th"> Pilf </div></th>
+                        <th><div class="th"> Gross Margin </div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in currentPageStores">
+                        <td>{{$index+1}}</td>
+                        <td>{{trade.ItemName}}</td>
+                        <td>{{trade.Tax}}</td>
+                        <td>{{trade.OpeningStock}}</td>
+                        <td>{{trade.OpeningStockAmount | number : 2}}</td>
+                        <td>{{trade.InWardTotal}}</td>
+                        <td>{{trade.InwardTotalAmountWithoutTax | number : 2}}</td>
+                        <td>{{trade.OutwardQuantity}}</td>
+                        <td>{{trade.OutwardWithoutTaxAmount | number : 2}}</td>
+                        <td>{{trade.ClosingQty}}</td>
+                        <td>{{trade.AdjClosingAmount | number : 2}}</td>
+                        <td>{{trade.DifferenceQty}}</td>
+                        <td>{{trade.pilferageAmount}}</td>
+                        <td>{{trade.GrossMargin | number : 2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                        <span>
+                            Show
+                            <select data-ng-model="numPerPage"
+                                    data-ng-options="num for num in numPerPageOpt"
+                                    data-ng-change="onNumPerPageChange()"></select>
+                            entries per page
+                        </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    page="currentPage"
+                                    total-items="filteredStores.length"
+                                    max-size="10"
+                                    on-select-page="select(page)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </footer>
+    </section>
+</div>

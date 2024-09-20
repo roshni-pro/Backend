@@ -1,0 +1,471 @@
+﻿
+<div class="page page-table"  button-permission-binder parentName="Current Stock" pageName="Adj Current Stock">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Adjustment Current Stock
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn-sm btn-primary skexport" ng-click="exportData1()"> <span class="glyphicon glyphicon-plus"> </span> Export full Current stock</button>
+        </div>
+        <br />
+       
+
+        <div class="table-filters">
+            <div class="row">
+               
+
+                <div class="col-sm-2 col-xs-3">
+                    <label for="site-name"> Warehouse:</label><br />
+                    <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getcurrentstock(WarehouseId)">
+                        <option value="">--Default--</option>
+                        <option value="{{a.WarehouseId}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.WarehouseId">{{a.WarehouseName}} {{a.CityName}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-4 col-xs-6">
+                    <div class="form-group col-md-12">
+                        <label for="site-name"> Search:</label><br />
+                        <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()">
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <label for="site-name"> </label><br />
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            ItemNumber
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingSku')"
+                                  data-ng-class="{active: row == 'SellingSku'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SKUCode')"
+                                  data-ng-class="{active: row == '-SellingSku'}"></span>
+                        </div>
+
+                    </th>
+                    <th>
+                        <div class="th">
+                            MultiMRPId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('MultiMRPId')"
+                                  data-ng-class="{active: row == 'MultiMRPId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-MultiMRPId')"
+                                  data-ng-class="{active: row == '-MultiMRPId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            MRP
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('MRP')"
+                                  data-ng-class="{active: row == 'MRP'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-MRP')"
+                                  data-ng-class="{active: row == '-MRP'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            UOM
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('UOM')"
+                                  data-ng-class="{active: row == 'UOM'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-UOM')"
+                                  data-ng-class="{active: row == '-UOM'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ABC Classification
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingSku')"
+                                  data-ng-class="{active: row == 'SellingSku'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SKUCode')"
+                                  data-ng-class="{active: row == '-SellingSku'}"></span>
+                        </div>
+
+                    </th>
+                    <th>
+                        <div class="th">
+                            ItemName
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ItemName')"
+                                  data-ng-class="{active: row == 'ItemName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ItemName')"
+                                  data-ng-class="{active: row == '-ItemName'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            CurrentInventory
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventory')"
+                                  data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventory')"
+                                  data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            PlannedStock
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CurrentInventory')"
+                                  data-ng-class="{active: row == 'CurrentInventory'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CurrentInventory')"
+                                  data-ng-class="{active: row == '-CurrentInventory'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Barcode
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Barcode')"
+                                  data-ng-class="{active: row == 'Barcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Barcode')"
+                                  data-ng-class="{active: row == '-Barcode'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Manual Push
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Stock History
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>
+                        <span class="badge badge-primary ml-2">{{trade.ItemNumber}}</span>
+                    </td>
+                    <td>
+                        {{trade.ItemMultiMRPId}}
+                    </td>
+                    <td>
+                        {{trade.MRP}}
+                    </td>
+                    <td>
+                        {{trade.UOM}}
+                    </td>
+                    <td>
+                        <span>{{trade.ABCClassification}}</span>
+                    </td>
+                    <td>{{trade.itemname}}</td>
+
+                    <td>
+                        <span ng-if="trade.CurrentInventory!=0" class="badge badge-primary ml-2">{{trade.CurrentInventory}}</span>
+                        <span ng-if="trade.CurrentInventory==0" class="badge badge-danger ml-2">{{trade.CurrentInventory}}</span>
+                    </td>
+                    <td>
+                        <span ng-if="trade.PlannedStock!=0" class="badge badge-primary ml-2">{{trade.PlannedStock}}</span>
+                        <span ng-if="trade.PlannedStock==0" class="badge badge-danger ml-2">{{trade.PlannedStock}}</span>
+                    </td>
+                    <td>{{trade.WarehouseName}} {{CityName}}</td>
+                    <td>{{trade.Barcode}}</td>
+                    <td>{{trade.CreationDate| date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Manual Edit</button> </td>
+                    <td><button class="btn-sm btn-primary skhistory" data-toggle="modal" data-target="#oldstock" ng-click="oldStock(trade)"> Stock History</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!--price model-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: #171616 !important;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<div class="modal fade " id="oldstock" role="dialog">
+    <div class="modal-dialog modal-lg" style="width: auto;">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div id="divtoPrint">
+                <style type="text/css">
+                    @media print {
+                        .no-print {
+                            display: none !important;
+                        }
+
+                        .border {
+                            border: 1px solid #000 !important;
+                        }
+
+
+                        th, td {
+                            border: solid #000 !important;
+                            border-width: 1px 1px 1px 0 !important;
+                            border-top-width: 10px;
+                            border-spacing: 0;
+                            padding: 0;
+                            text-align: center;
+                        }
+                    }
+                </style>
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="float:left;" onclick="javascript: printDiv('divtoPrint')"> <span class="glyphicon glyphicon-print no-print"> </span> Print</button>
+                    <button class="btn-sm btn-dark" style="float:right;" ng-click="HistoryexportData()"> <span class="glyphicon glyphicon-plus"> </span> Export  List</button>
+
+                    <h3 class="modal-title" style="text-align: center;">Item Stock History</h3>
+
+
+                </div>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr class="w1-red">
+
+                            <th>
+                                <div class="th">
+                                    ItemName
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Manual Inventory
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    PO Receive
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Order Sale
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Damage Inventory
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Purchase Return
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Order Cancel In
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Inventory
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    OderId/PoId/ToId
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Ware House Name
+
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Edit By
+
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Date
+
+                                </div>
+                            </th>
+
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                        <tr dir-paginate="trade in OldStockData|itemsPerPage:itemsPerPage" total-items="total_count">
+                            <!--<td>{{trade.ItemNumber}}</td>-->
+                            <td>{{trade.itemname}}</td>
+                            <td id="trade.id" data-toggle="tooltip" title="Hooray!">{{trade.ManualInventoryIn}}({{trade.ManualReason}})</td>
+                            <td><span ng-if="trade.InventoryIn > 0 " class="label label-primary ng-binding">+{{trade.InventoryIn}}</span></td>
+                            <td><span ng-if="trade.InventoryOut > 0 " class="label label-danger ng-binding">-{{trade.InventoryOut}}</span></td>
+                            <td><span ng-if="trade.DamageInventoryOut > 0 " class="label label-danger ng-binding">-{{trade.DamageInventoryOut}}</span></td>
+                            <td><span ng-if="trade.PurchaseInventoryOut > 0 " class="label label-danger ng-binding">-{{trade.PurchaseInventoryOut}}</span></td>
+                            <td><span ng-if="trade.OrderCancelInventoryIn > 0 " class="label label-primary ng-binding"> +{{trade.OrderCancelInventoryIn}}</span></td>
+                            <td><span class="label label-info">{{trade.TotalInventory}}</span></td>
+                            <td><span ng-if="trade.OdOrPoId > 0 " class="label label-default ng-binding">{{trade.OdOrPoId}}</span></td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td><span ng-if="trade.UserName!=null " class="label label-danger ng-binding">{{trade.UserName}}</span></td>
+                            <td>{{trade.CreationDate| date:'medium'}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="oldStocks(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    function printDiv(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrint");
+        onRouteChangeOff();
+        window.location.reload();
+    }
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+</script>

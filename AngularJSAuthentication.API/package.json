@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-bundle-assets": "^2.29.0",
+    "gulp-htmlclean": "^2.7.22",
+    "gulp-jshint": "^2.1.0",
+    "gulp-jsvalidate": "^4.0.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-uglify": "^3.0.2",
+    "jshint": "^2.10.2"
+  }
+}

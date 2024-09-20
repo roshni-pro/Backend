@@ -1,0 +1,558 @@
+﻿<div class="page page-table "button-permission-binder parentName="Supplier" pageName="SupplierStatus">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span>Supplier Status</strong>
+        </div>
+        <div class="panel-body">
+            <div class="form-group col-md-2">
+                <label for="site-name">Payment Status:</label><br />
+                <select class="form-control" id="site-name" ng-model="SearchIrData.StatusOption">
+                    <option value="">--Select Payment Type--</option>
+                    <option value="{{StatusOptions.id}}" ng-repeat="StatusOptions in StatusOption"> {{StatusOptions.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Warehouse</label><br />
+                <select class="form-control" id="site-name" ng-model="SearchIrData.WarehouseId">
+                    <option value="">--Select Payment Type--</option>
+                    <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2 ">
+                <label for="site-name">Select Suppiler</label><br />
+                <select class="form-control" id="site-name" ng-model="SearchIrData.SupplierId">
+                    <option value="">--Select Payment Type--</option>
+                    <option value="{{suppliers.SupplierId}}" ng-repeat="suppliers in supplier"> {{suppliers.Name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="SearchIRData(SearchIrData)">Search</button>
+            </div>
+            <button class="btn-sm btn-primary skexportsupplierlist" ng-click="exportData()"> <span class="glyphicon glyphicon-plus"> </span>Export Supplier List</button>
+        </div>
+        <table class="table table-bordered table-striped table-responsive " ng-show="order">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            SNo.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Supplier Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SupplierName')"
+                                  data-ng-class="{active: row == 'SupplierName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SupplierName')"
+                                  data-ng-class="{active: row == '-SupplierName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Payment Status
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Status1')"
+                                  data-ng-class="{active: row == 'Status1'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Status1')"
+                                  data-ng-class="{active: row == '-Status1'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Add Payment
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Status1')"
+                                  data-ng-class="{active: row == 'Status1'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Status1')"
+                                  data-ng-class="{active: row == '-Status1'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            TotalAmount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' TotalAmount')"
+                                  data-ng-class="{active: row == ' TotalAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- TotalAmount')"
+                                  data-ng-class="{active: row == '- TotalAmount'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Remaining Amount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' TotalAmount')"
+                                  data-ng-class="{active: row == ' TotalAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- TotalAmount')"
+                                  data-ng-class="{active: row == '- TotalAmount'}"></span>
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            ShowPayment
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' TotalAmount')"
+                                  data-ng-class="{active: row == ' TotalAmount'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- TotalAmount')"
+                                  data-ng-class="{active: row == '- TotalAmount'}"></span>
+                        </div>
+                    </th>-->
+
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Payment Due Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' PaymentDueDate')"
+                                  data-ng-class="{active: row == ' PaymentDueDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PaymentDueDate')"
+                                  data-ng-class="{active: row == '-PaymentDueDate'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            Payment Term
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('  PaymentTerm')"
+                                  data-ng-class="{active: row == ' PaymentTerm'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-PaymentTerm')"
+                                  data-ng-class="{active: row == '-PaymentTerm'}"></span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in Getdata" ng-style="{ 'color' : (trade.TotalAmountRemaining>0) ? 'red' : 'black'  }">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.SupplierName}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.PaymentStatus}}</td>
+                    <td>
+                        <button class="btn btn-primary skadd" ng-if="trade.TotalAmountRemaining>0" ng-click="open(trade)"> <span class="glyphicon glyphicon-plus"> </span> Add Payment</button>
+                        <button class="btn btn-primary skcreditnote" ng-click="credit(trade)"> <span class="glyphicon glyphicon-plus"> </span> Credit Note</button>
+                        <button class="btn btn-primary skdebitnote" ng-click="debit(trade)"> <span class="glyphicon glyphicon-minus"> </span> Debit Note</button>
+                    </td>
+                    <td>{{trade.TotalAmount | number:2}}</td>
+                    <td>{{trade.TotalAmountRemaining | number:2}}</td>
+                    <!--<td>
+                        <button class="btn btn-primary" ng-click="openPaymentDetail(trade)"> <span class="glyphicon glyphicon"> </span>Payment Detail</button>
+                    </td>-->
+                    <td>{{trade.CreationDate | date:'medium'}}</td>
+                    <td>{{trade.PaymentTermDate | date:'medium' }}</td>
+                    <td>{{trade.PaymentTerms}}</td>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</div>
+
+<script type="text/ng-template" id="AddPaymentModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add  Payment Supplier</h4>
+        </div>
+
+
+        <div class="modal-body">
+            <table class="table table-bordered table-striped table-responsive ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Supplier Name
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Amount Remaining
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{InvoiceData.SupplierName}}</td>
+                        <td>{{InvoiceData.TotalAmountRemaining | number:2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Payment Type:</label><br />
+                <select class="form-control" id="site-name" ng-model="PaymentData.PaymentType">
+                    <option value="">--Select Payment Type--</option>
+                    <option value="{{PaymentTypes.id}}" ng-repeat="PaymentTypes in PaymentType"> {{PaymentTypes.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Payment Mode:</label><br />
+                <select class="form-control" id="site-name" ng-model="PaymentData.PaymentMode">
+                    <option value="">--Select Payment Mode--</option>
+                    <option value="{{PaymentModes.id}}" ng-repeat="PaymentModes in PaymentMode"> {{PaymentModes.name}}</option>
+                </select>
+            </div>
+            <div class="form-group" ng-show="PaymentData.PaymentMode=='Cheque' || PaymentData.PaymentMode=='IMPS'  || PaymentData.PaymentMode=='RTGS' || PaymentData.PaymentMode=='NEFT' ">
+                <label for="site-name">Reference number :</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="PaymentData.Referencenumber" placeholder="Enter  Refrence Number" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Particular :</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="PaymentData.Perticular" placeholder="Enter Perticular" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Amount:</label><br />
+                <input id="site-name" type="number" min="0" class="form-control" ng-model="PaymentData.Amount" placeholder="Enter Amount" />
+            </div>
+            <div class="form-group">
+                <label for="uploadAdvertisements">Upload Transtion Image:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddPaymentSupplier(PaymentData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+
+
+
+<script type="text/ng-template" id="AddCreditNote.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Credit Note</h4>
+        </div>
+
+
+        <div class="modal-body">
+            <table class="table table-bordered table-striped table-responsive ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Supplier Name
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Amount Remaining
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{InvoiceData.SupplierName}}</td>
+                        <td>{{InvoiceData.TotalAmountRemaining}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped table-responsive ">
+                <div class="form-group">
+                    <label for="site-name">Amount:</label><br />
+                    <input id="site-name" type="number" min="0" class="form-control" ng-model="PaymentData.Amount" placeholder="Enter Credit Amount" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Issued Date :</label><br />
+                    <input id="site-name" type="date" class="form-control" ng-model="PaymentData.IssuedOnDate" placeholder="Enter Issued Date" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Enter Refrence :</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PaymentData.Refrence" placeholder="Enter refrence" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Enter Remarks :</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PaymentData.Remarks" placeholder="Enter Credit Remarks" />
+                </div>
+            </table>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="AddCreditNote(PaymentData)">Save</button>
+            </div>
+
+        </div>
+
+
+
+    </form>
+
+</script>
+
+
+
+
+
+
+<script type="text/ng-template" id="AddDebitNote.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Debit Note</h4>
+        </div>
+
+
+        <div class="modal-body">
+            <table class="table table-bordered table-striped table-responsive ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Supplier Name
+
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Amount Remaining
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{InvoiceData.SupplierName}}</td>
+                        <td>{{InvoiceData.TotalAmountRemaining}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped table-responsive ">
+                <div class="form-group">
+                    <label for="site-name">Amount:</label><br />
+                    <input id="site-name" type="number" min="0" class="form-control" ng-model="PaymentData.Amount" placeholder="Enter Debit Amount" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Issued Date :</label><br />
+                    <input id="site-name" type="date" class="form-control" ng-model="PaymentData.IssuedOnDate" placeholder="Enter Issued Date " />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Enter Refrence   :</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PaymentData.Refrence" placeholder="Enter refrence" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Enter Remarks :</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="PaymentData.Remarks" placeholder="Enter Debit Remarks" />
+                </div>
+            </table>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="AddDebitNote(PaymentData)">Save</button>
+            </div>
+
+        </div>
+
+
+
+    </form>
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<script type="text/ng-template" id="ShowPaymentModal.html">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">View  Payment</h4>
+        </div>
+        <div class="modal-body">
+            <table class="table table-bordered table-striped table-responsive ">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                Ir Id
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Supplier Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Warehouse Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                               Parchase Order Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Payment Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Payment Mode
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Refrence Number
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Transaction image
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Amount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Created Date
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in supplierPayment">
+                        <td>{{trade.IrId}}</td>
+                        <td>{{trade.SupplierName}}</td>
+                        <td>{{trade.WarehouseName}}</td>
+                        <td>{{trade.PurchaseOrderId}}</td>
+                        <td>{{trade.PaymentTypes}}</td>
+                        <td>{{trade.PaymentMode}}</td>
+                        <td>{{trade.RefrenceNumber}}</td>
+                        <td>
+                            <div class="form-group">
+                                <img alt="" src="{{trade.RefrenceImage}}" class="img-square img80_80">
+                            </div>
+                        </td>
+                        <td>{{trade.Amount}}</td>
+                        <td>{{trade.CreatedDate  | date:'medium'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+</script>-->

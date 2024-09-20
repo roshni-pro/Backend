@@ -1,0 +1,338 @@
+﻿<style>
+    table { <!--
+        /*Created by Vinayak// -->*/
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 16px;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="page page-table" button-permission-binder parentName="Offer" pageName="Offer Zone">
+    <section class="panel panel-default table-dynamic">
+        <tabset>
+            <tab heading="Order Processss">
+                <div class="page page-table" button-permission-binder parentName="Order" pageName="OP Report">
+                    <section class="panel panel-default table-dynamic">
+                        <div class="panel-heading">
+                            <strong>
+                                <span class="glyphicon glyphicon-th"> </span> Order Process Reports
+                            </strong>
+                        </div>
+                        <br>
+                        <div class="form-group col-md-12">
+                            <div class="form-group col-md-2">
+                                <label for="site-name">Select Warehouses</label>
+                                <div ng-dropdown-multiselect="" id="WarehouseId" options="warehouse" selected-model="examplemodel" extra-settings="examplesettings"></div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-ar btn-primary" id="Search" ng-click="Search(warehouse)">Search</button>
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <label for="site-name"></label><br />
+                                <button type="button" style="float:right" class="btn btn-ar btn-dark glyphicon glyphicon-export" id="ExportAll" ng-click="ExportAll()">ExportAll</button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <table>
+                                        <tr>
+                                            <th colspan="1"></th>
+                                            <th colspan="2" class="text-center">LTD</th>
+                                            <th colspan="2" class="text-center">MTD</th>
+                                            <th colspan="2" class="text-center">Today</th>
+                                            <th colspan="1"></th>
+                                        </tr>
+                                        <tr>
+                                            <!--<th class="col-md-5"></th>-->
+                                            <th>Order Status</th>
+                                            <th>Order value</th>
+                                            <th>Order count</th>
+                                            <th>Order value</th>
+                                            <th>Order count</th>
+                                            <th>Order value</th>
+                                            <th>Order count</th>
+                                            <th>Export</th>
+                                            <!--<th>Warehouse Name</th>
+                                            <th>Status</th>
+                                            <th>UpdatedDate</th>-->
+                                        </tr>
+                                        <tr>
+                                            <td>Failed</td>
+                                            <td>{{dbReport.TotFailedAmnt|number:2}}</td>
+                                            <td>{{dbReport.Failed}} </td>
+                                            <td>{{dbReport.MTDTotalFailedAmnt |number:2}} </td>
+                                            <td>{{dbReport.MTDFailed}} </td>
+                                            <td>{{dbReport.TodayTotalFailedAmnt |number:2}} </td>
+                                            <td>{{dbReport.TodayFailed}} </td>
+                                            <td><button ng-if="dbReport.Failed>0" type="button" class="btn-dark glyphicon glyphicon-export" ng-click="Export(dbReport.FailedOrderDetail)"></button></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Payment Pending</td>
+                                            <td>{{dbReport.TotPaymentPendingAmnt|number:2}}</td>
+                                            <td>{{dbReport.PaymentPending}} </td>
+                                            <td>{{dbReport.MTDTotalPaymentPendingAmnt |number:2}} </td>
+                                            <td>{{dbReport.MTDPaymentPending}} </td>
+                                            <td>{{dbReport.TodayTotalPaymentPendingAmnt |number:2}} </td>
+                                            <td>{{dbReport.TodayPaymentPending}} </td>
+                                            <td><button ng-if="dbReport.PaymentPending>0" type="button" class="btn-submit glyphicon glyphicon-export" ng-click="Export(dbReport.PaymentPendingOrderDetail)"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pending</td>
+                                            <td>{{dbReport.TotPendingAmnt|number:2}}</td>
+                                            <td>{{dbReport.Pending}} </td>
+                                            <td>{{dbReport.MTDTotalPendingAmnt |number:2}} </td>
+                                            <td>{{dbReport.MTDPending}} </td>
+                                            <td>{{dbReport.TodayTotalPendingAmnt |number:2}} </td>
+                                            <td>{{dbReport.TodayPending}} </td>
+                                            <td><button ng-if="dbReport.Pending>0" type="button" class="btn-danger glyphicon glyphicon-export" ng-click="Export(dbReport.PendingOrderDetail)"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ReadyToPick</td>
+                                            <td>{{dbReport.TotReadyToPick|number:2}}</td>
+                                            <td>{{dbReport.ReadyToPick}} </td>
+                                            <td>{{dbReport.MTDTotalReadyToPick |number:2}} </td>
+                                            <td>{{dbReport.MTDReadyToPick}} </td>
+                                            <td>{{dbReport.TodayTotalReadyToPick |number:2}} </td>
+                                            <td>{{dbReport.TodayReadyToPick}} </td>
+                                            <td><button ng-if="dbReport.ReadyToPick>0" type="button" class="btn-danger glyphicon glyphicon-export" ng-click="Export(dbReport.ReadyToPickDetail)"></button></td>
+                                        </tr>
+
+
+                                        <!-- Change on 29-12-2022   ReAttempt count  by vishal -->
+                                        <tr>
+                                            <td>ReAttempt</td>
+
+                                            <td>{{dbReport.TotReattemptCount|number:2}}</td>
+                                            <td>{{dbReport.ReAttemptCount}} </td>
+                                            <td>{{dbReport.MTDTotalReattemptCount |number:2}} </td>
+                                            <td>{{dbReport.MTDReattemptCount}} </td>
+                                            <td>{{dbReport.TodayTotalReattemptCount |number:2}} </td>
+                                            <td>{{dbReport.TodayReattemptCount}} </td>
+                                            <td><button ng-if="dbReport.ReAttemptCount>0" type="button" class="btn-danger glyphicon glyphicon-export" ng-click="Export(dbReport.ReattemptDetail)"></button></td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td>Ready to dispatch </td>
+                                            <td>{{dbReport.TotReadytodispatchAmnt|number:2}}</td>
+                                            <td>{{dbReport.Readytodispatch}}</td>
+                                            <td>{{dbReport.MTDTotalReadytodispatchAmnt |number:2}}</td>
+                                            <td>{{dbReport.MTDReadytodispatch}}</td>
+                                            <td>{{dbReport.TodayTotalReadytodispatchAmnt |number:2}}</td>
+                                            <td>{{dbReport.TodayReadytodispatch}}</td>
+                                            <td><button ng-if="dbReport.Readytodispatch>0" type="button" class="btn-primary glyphicon glyphicon-export" ng-click="Export(dbReport.ReadytodispatchOrderDetail)"></button></td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td>Issued </td>
+                                            <td>{{ dbReport.TotIssuedAmnt|number:2}}</td>
+                                            <td>{{dbReport.Issued}}</td>
+                                            <td>{{dbReport.MTDTotalIssuedAmnt |number:2}}</td>
+                                            <td>{{dbReport.MTDIssued}}</td>
+                                            <td>{{dbReport.TodayTotalIssuedAmnt |number:2}}</td>
+                                            <td>{{dbReport.TodayIssued}}</td>
+                                            <td><button ng-if="dbReport.Issued>0" type="button" class="btn-info glyphicon glyphicon-export" ng-click="Export(dbReport.IssuedOrderDetail)"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipped</td>
+                                            <td>{{ dbReport.TotShippedAmnt|number:2}}</td>
+                                            <td>{{ dbReport.Shipped}} </td>
+                                            <td>{{ dbReport.MTDTotalShippedAmnt |number:2}} </td>
+                                            <td>{{ dbReport.MTDShipped}} </td>
+                                            <td>{{ dbReport.TodayTotalShippedAmnt |number:2}} </td>
+                                            <td>{{ dbReport.TodayShipped}} </td>
+                                            <td><button ng-if="dbReport.Shipped>0" type="button" class="btn-dark glyphicon glyphicon-export" ng-click="Export(dbReport.ShippedOrderDetail)"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Delivery Cancelled</td>
+                                            <td>{{dbReport.TotDeliveryCancelledAmnt|number:2}}</td>
+                                            <td>{{dbReport.DeliveryCancelled}}</td>
+                                            <td>{{dbReport.MTDTotalDeliveryCancelledAmnt |number:2}}</td>
+                                            <td>{{dbReport.MTDDeliveryCancelled}}</td>
+                                            <td>{{dbReport.TodayTotalDeliveryCancelledAmnt |number:2}}</td>
+                                            <td>{{dbReport.TodayDeliveryCancelled}}</td>
+                                            <td><button ng-if="dbReport.DeliveryCancelled>0" type="button" class="btn-primary  glyphicon glyphicon-export" ng-click="OrderDeliveryCanceled(dbReport.DeliveryCancelledOrderDetail)"></button></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Delivered Re-Dispatch </td>
+                                            <td>{{dbReport.TotDeliveredRedispatchedAmnt|number:2}}</td>
+                                            <td>{{dbReport.DeliveredRedispatched}}</td>
+                                            <td>{{dbReport.MTDTotalDeliveredRedispatchedAmnt |number:2}}</td>
+                                            <td>{{dbReport.MTDDeliveredRedispatched}}</td>
+                                            <td>{{dbReport.TodayTotalDeliveredRedispatchedAmnt |number:2}}</td>
+                                            <td>{{dbReport.TodayDeliveredRedispatched}}</td>
+                                            <td><button ng-if="dbReport.DeliveredRedispatched>0" type="button" class=" btn-default glyphicon glyphicon-export" ng-click="ExportV(dbReport.DeliveredRedispatchedOrderDetail)"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Delivered</td>
+                                            <td>{{dbReport.TotDeliveredAmnt|number:2}}</td>
+                                            <td>{{dbReport.Delivered}}</td>
+                                            <td>{{dbReport.MTDTotalDeliveredAmnt |number:2}}</td>
+                                            <td>{{dbReport.MTDDelivered}}</td>
+                                            <td>{{dbReport.TodayTotalDeliveredAmnt |number:2}}</td>
+                                            <td>{{dbReport.TodayDelivered}}</td>
+                                            <td><button ng-if="dbReport.Delivered>0" type="button" class="btn-info glyphicon glyphicon-export" ng-click="ExportV(dbReport.DeliveredOrderDetail)"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sattled (Today's Only)</td>
+                                            <td>{{dbReport.TotsattledAmnt|number:2}}</td>
+                                            <td>{{dbReport.sattled}}</td>
+                                            <td>{{dbReport.MTDTotalsattledAmnt |number:2}}</td>
+                                            <td>{{dbReport.MTDsattled}}</td>
+                                            <td>{{dbReport.TodayTotalsattledAmnt |number:2}}</td>
+                                            <td>{{dbReport.Todaysattled}}</td>
+                                            <td><button ng-if="dbReport.sattled>0" type="button" class="btn-info glyphicon glyphicon-export" ng-click="ExportV(dbReport.sattledOrderDetail)"></button></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </section>
+                </div>
+            </tab>
+            <tab heading="Order Queue ">
+                <div class="page page-table" button-permission-binder parentName="Order" pageName="PO Reports">
+                    <section class="panel panel-default table-dynamic">
+                        <div class="panel-heading">
+                            <strong>
+                                <span class="glyphicon glyphicon-th"> </span> Order Queue Reports
+                            </strong>
+                        </div>
+                        <br>
+                        <div class="form-group col-md-12">
+                            <div class="form-group col-md-2">
+                                <label for="site-name">Select Warehouses</label>
+                                <div ng-dropdown-multiselect="" id="Warehouse" ng-model="WarehouseId" options="warehouse" selected-model="examplemodell" extra-settings="examplesetting"></div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="site-name">Enter Hours</label>
+                                <div><input id="site-name" type="number" class="form-control" ng-model="Waithrs" />    </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="site-name"></label><br />
+                                <button type="button" class="btn btn-ar btn-primary" id="Search" ng-click="SearchQReports(WarehouseId,Waithrs)">Search</button>
+                            </div>
+
+                            <!--<div class="form-group col-md-8">
+                                <label for="site-name"></label><br />
+                                <button type="button" s
+                                tyle="float:right" class="btn btn-ar btn-dark glyphicon glyphicon-export" id="ExportAlls" ng-click="ExportAlls()">ExportAll</button>
+                            </div>-->
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <table>
+                                        <tr>
+                                            <th colspan="1"></th>
+                                            <!--<th colspan="2" class="text-center">LTD</th>
+                                            <th colspan="2" class="text-center">MTD</th>-->
+                                            <th colspan="2" class="text-center">Till Today</th>
+                                            <th colspan="1"></th>
+                                        </tr>
+                                        <tr>
+                                            <!--<th class="col-md-5"></th>-->
+                                            <th>Order Status</th>
+                                            <th>Order value</th>
+                                            <th>Order count</th>
+                                            <th>Export</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Pending</td>
+                                            <td>{{pendingAmount}} </td>
+                                            <td>{{pendingcount}} </td>
+                                            <td><button ng-if="pendingcount>0" type="button" class="btn-dark glyphicon glyphicon-export" ng-click="ExportQRreport(pendingwaithr,pendingStatus,Waithrs)"></button></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>ReadyToPick</td>
+                                            <td>{{RTPAmount}} </td>
+                                            <td>{{RTPcount}} </td>
+                                            <td><button ng-if="RTPcount>0" type="button" class="btn-submit glyphicon glyphicon-export" ng-click="ExportQRreport(RTPwaithr, RTPstatus,Waithrs )"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ready to dispatch</td>
+                                            <td>{{RTDAmount}} </td>
+                                            <td>{{RTDcount}} </td>
+                                            <td><button ng-if="RTDcount>0" type="button" class="btn-danger glyphicon glyphicon-export" ng-click="ExportQRreport(RTDwaithr ,RTDstatus,Waithrs )"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Issued</td>
+                                            <td>{{IssuedAmount}} </td>
+                                            <td>{{Issuedcount}} </td>
+                                            <td><button ng-if="Issuedcount>0" type="button" class="btn-danger glyphicon glyphicon-export" ng-click="ExportQRreport(Issuedwaithr ,Issuedstatus,Waithrs )"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipped</td>
+                                            <td>{{ShippedAmount}} </td>
+                                            <td>{{Shippedcount}} </td>
+                                            <td><button ng-if="Shippedcount>0" type="button" class="btn-danger glyphicon glyphicon-export" ng-click="ExportQRreport(Shippedwaithr ,Shippedstatus,Waithrs )"></button></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Delivered</td>
+                                            <td>{{DeliveredAmount}}</td>
+                                            <td>{{Deliveredcount}}</td>
+                                            <td><button ng-if="Deliveredcount>0" type="button" class="btn-primary glyphicon glyphicon-export" ng-click="ExportQRreport(Deliveredwaithr ,Deliveredstatus,Waithrs )"></button></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Delivered Re-Dispatch</td>
+                                            <td>{{DeliveredRedispatchAmount}}</td>
+                                            <td>{{DeliveredRedispatchcount}}</td>
+                                            <td><button ng-if="DeliveredRedispatchcount>0" type="button" class="btn-info glyphicon glyphicon-export" ng-click="ExportQRreport(DeliveredRedispatchwaithr ,DeliveredRedispatchstatus,Waithrs)"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>ReAttempt</td>
+                                            <td>{{ ReAttemptAmount}} </td>
+                                            <td>{{ ReAttemptcount}} </td>
+                                            <td><button ng-if="ReAttemptcount>0" type="button" class="btn-dark glyphicon glyphicon-export" ng-click="ExportQRreport(ReAttemptwaithr ,ReAttemptstatus,Waithrs )"></button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Delivery Cancelled</td>
+                                            <td>{{DeliveryCanceledAmount}}</td>
+                                            <td>{{DeliveryCanceledcount}}</td>
+                                            <td><button ng-if="DeliveryCanceledcount > 0" type="button" class="btn-primary  glyphicon glyphicon-export" ng-click="ExportQRreport(DeliveryCanceledwaithr ,DeliveryCanceledstatus,Waithrs )"></button></td>
+
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+
+                    </section>
+                </div>
+            </tab>
+        </tabset>
+    </section>
+</div>

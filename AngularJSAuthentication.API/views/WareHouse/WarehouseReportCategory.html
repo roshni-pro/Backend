@@ -1,0 +1,233 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+<style>
+    .ui-autocomplete-input {
+        border: none;
+        font-size: 14px;
+        /*width: 300px;
+    height: 24px;*/
+        margin-bottom: 5px;
+        padding-top: 2px;
+        border: 1px solid #DDD !important;
+        padding-top: 0px !important;
+        z-index: 1511;
+        position: relative;
+    }
+
+    .ui-menu .ui-menu-item a {
+        font-size: 12px;
+    }
+
+    .ui-autocomplete {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1510 !important;
+        float: left;
+        display: none;
+        min-width: 160px;
+        width: 160px;
+        padding: 4px 0;
+        margin: 2px 0 0 0;
+        list-style: none;
+        background-color: #ffffff;
+        border-color: #ccc;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+    }
+
+    .ui-menu-item > a.ui-corner-all {
+        display: block;
+        padding: 3px 15px;
+        clear: both;
+        font-weight: normal;
+        line-height: 18px;
+        color: #555555;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .ui-state-hover, .ui-state-active {
+        color: #ffffff;
+        text-decoration: none;
+        background-color: #0088cc;
+        border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        background-image: none;
+    }
+
+    #modalIns {
+        width: 500px;
+    }
+
+    .Divcontainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* fraction*/
+        padding-left: 10px;
+    }
+</style>
+
+
+<div class="page page-table"  button-permission-binder parentName="Sales" pageName="PDCA Category">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> PDCA Category </strong>
+        </div>
+        <div class="panel-body">
+            <div name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label for="site-name"> Warehouse:</label><br />
+                                <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getBaseCategory(WarehouseId)">
+                                    <option value="">--Select--</option>
+                                    <option value="{{a.WarehouseId}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.WarehouseId">{{a.WarehouseName}} {{a.CityName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="site-name"> Base Catogory </label><br />
+                                <select class="form-control" id="site-name" ng-model="BaseCategoryId" ng-change="getCategory(WarehouseId,BaseCategoryId)">
+                                    <option value="">--Select--</option>
+                                    <option value="{{a.BaseCategoryId}}" ng-repeat="a in BaseCategory">{{a.BaseCategoryName}} </option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr bgcolor="white">
+                            <th>
+                                <div class="th">
+                                    SNo.
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Category Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Percentage %                                   
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr bgcolor="white">
+                            <td></td>
+                            <td>Total Percentage</td>
+                            <td>{{totalamt | number:2}}</td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr data-ng-repeat="trade in Category">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.CategoryName}}</td>
+                            <td><input id="Percentage" type="number" min="0" max="99" class="form-control" ng-model="trade.Percentage" ng-change="Calculation(Category)" value="0" ng-required /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ar btn-primary skadd " ng-click="AddData(Category,WarehouseId,BaseCategoryId)"> Add </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

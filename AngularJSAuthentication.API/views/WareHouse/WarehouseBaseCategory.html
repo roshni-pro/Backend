@@ -1,0 +1,201 @@
+<div class="page page-table" button-permission-binder parentName="Warehouse" pageName="WH BaseCategory">
+    <section class="panel panel-default table-dynamic">
+        <div class="page page-table">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span> Warehouse Base Category
+                </strong>
+            </div>
+            <br>
+            <div>
+                <a href="#/MappWHBaseCategory" target="_blank"><button class="btn btn-primary skadd"><span class="glyphicon glyphicon-plus"> </span>Mapp Base Category</button></a>
+            </div>
+            <br>
+            <section class="panel panel-default table-dynamic">
+                <div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData(WarehouseId)">
+                            <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                        </select>
+                    </div>
+                </div>
+                    <span class="panel-heading" style="background-color:burlywood">Search</span><input class="form ng-pristine ng-valid" style="padding: 8px 0px 8px 0px; margin: 21px 0px 0px 0px;" ; data-ng-model="searchKeywords" data-ng-keyup="search()">
+          <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    S.No
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('  S.No')"
+                                          data-ng-class="{active: row == '  S.No'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-  S.No')"
+                                          data-ng-class="{active: row == '-  S.No'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('WarehouseName')"
+                                          data-ng-class="{active: row == 'WarehouseName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-WarehouseName')"
+                                          data-ng-class="{active: row == '-WarehouseName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Brand Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CategoryName')"
+                                          data-ng-class="{active: row == 'CategoryName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CategoryName')"
+                                          data-ng-class="{active: row == '-CategoryName'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Brand code
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Discription')"
+                                          data-ng-class="{active: row == 'Discription'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Discription')"
+                                          data-ng-class="{active: row == '-Discription'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Brand Image
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Discription')"
+                                          data-ng-class="{active: row == 'Discription'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Discription')"
+                                          data-ng-class="{active: row == '-Discription'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    IsActive
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Discription')"
+                                          data-ng-class="{active: row == 'Discription'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Discription')"
+                                          data-ng-class="{active: row == '-Discription'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' CreatedDate')"
+                                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- CreatedDate')"
+                                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                                </div>
+                            </th>
+
+
+
+                            <th>
+                                <div class="th">
+                                    Active/Deactive
+                                </div>
+                            </th>
+
+                            <!--<th>
+                                <div class="th">
+                                    Edit
+                                </div>
+                            </th>-->
+
+
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in currentPageStores">
+                            <td>{{1+$index}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <td>{{trade.BaseCategoryName}}</td>
+                            <td>{{trade.Code}}</td>
+                            <td><img alt="" src="{{trade.LogoUrl}}" class="img-square img80_80"></td>
+                            <td>{{trade.IsActive}}</td>
+                            <td>{{trade.CreatedDate | date:'medium'}}</td>
+                            <td ng-if="trade.IsActive == false"><button class="btn-sm btn-primary" ng-click="Activecate(trade)">Activate</button> </td>
+                            <td ng-if="trade.IsActive == true"><button class="btn-sm btn-danger" ng-click="Activecate(trade)">Deactivate</button> </td>
+
+
+
+                            <!--<td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>-->
+                            <!--<td><button class="btn-sm btn-danger" ng-click="opendelete(trade,$index)">Remove</button> </td>-->
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
+                                Show
+                                <select data-ng-model="numPerPage"
+                                        data-ng-options="num for num in numPerPageOpt"
+                                        data-ng-change="onNumPerPageChange()"></select>
+                                entries per page
+                            </span>
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm"
+                                        page="currentPage"
+                                        total-items="filteredStores.length"
+                                        max-size="4"
+                                        on-select-page="select(page)"
+                                        items-per-page="numPerPage"
+                                        rotate="false"
+                                        boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>
+            </section>
+        </div>
+        <!-- /site tiles -->
+
+    </section>
+</div>
+<script type="text/ng-template" id="activebasewarehousecmodal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit OnlineItems </h4>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="CategoryData.IsActive" />
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="putwarehouseBasecat(CategoryData)">Set</button>
+        </div>
+    </form>
+</script>

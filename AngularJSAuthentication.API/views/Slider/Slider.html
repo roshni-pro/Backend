@@ -1,0 +1,265 @@
+﻿<div class="page page-table"  button-permission-binder parentName="Sales" pageName="Slider">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Sliders
+            </strong>
+        </div>
+        <div class="panel-body">
+            <button class="btn btn-primary skadd " ng-click="open()">
+                <span class="glyphicon glyphicon-plus">
+                </span> Add Sliders
+            </button>
+        </div>
+        <div class="">
+           
+            <div class="col-xs-12 col-md-12">
+                <h3>Slider Images</h3>
+
+                <table class="table table-bordered table-striped table-responsive col-xs-6 col-md-6">
+                    <thead>
+                        <tr>
+                           
+
+                            <th>
+                                <div class="th">
+                                    Slider Image
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Pic')"
+                                          data-ng-class="{active: row == 'Pic'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Pic')"
+                                          data-ng-class="{active: row == '-Pic'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    isWeb
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('isWeb')"
+                                          data-ng-class="{active: row == 'isWeb'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-isWeb')"
+                                          data-ng-class="{active: row == '-isWeb'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    SequianceNumber
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('SequianceNumber')"
+                                          data-ng-class="{active: row == 'SequianceNumber'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-SequianceNumber')"
+                                          data-ng-class="{active: row == '-SequianceNumber'}"></span>
+                                </div>
+                            </th>
+                           
+                            <th>
+                                <div class="th">
+                                    Created Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('CreatedDate')"
+                                          data-ng-class="{active: row == 'CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-CreatedDate')"
+                                          data-ng-class="{active: row == '-CreatedDate'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Edit
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Delete
+                                </div>
+                            </th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="trade in currentPageStores|filter:{Type:'Slider'}">
+                            <!--<td>{{trade.Type}}</td>-->
+                            <td>
+                               
+                                <div class="form-group">
+                                    <img alt="" src="/Sliderimages/{{trade.Pic}}" class="img-square img80_80">
+                                </div>
+                            </td>
+                            <td>{{trade.isWeb}}</td>
+                            <td>{{trade.SequianceNumber}}</td>
+                            <td>{{trade.CreatedDate| date:'medium'}}</td>
+                            <td><button class="btn-sm btn-primary skedit " ng-click="edit(trade)">Edit</button> </td>
+                            <td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myADDModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Create Slider </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Select Slider Type:</label><br />
+                <select class="form-control" id="site-name" ng-model="saveData.Type" required>
+                    <option value="">--select--</option>
+                   
+                    <option value="Slider">Slider</option>
+                </select> 
+              </div>
+            <div class="form-group">
+                <label for="site-name">SequianceNumber:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.SequianceNumber" placeholder="Enter SequianceNumber" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">isWeb:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="saveData.isWeb" />
+            </div>
+
+            <div class="form-group">
+                <label for="uploadAdvertisements">Upload Image:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+            </div>
+           
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Add(saveData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myputmodal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Slider </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <select class="form-control" id="site-name" ng-model="saveData.Type" required>
+                    <option value="">--select--</option>
+                    
+                    <option value="Slider">Slider</option>
+                </select> 
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">SequianceNumber:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="saveData.SequianceNumber" placeholder="Enter SequianceNumber" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">isWeb:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="saveData.isWeb"  />
+            </div>
+            <div class="form-group">
+                <label for="uploadAdvertisements">Upload Image:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <div ng-repeat="item in uploader.queue">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Put(saveData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="mydeletemodal.html">
+
+    <form name="myFormdeleteModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete </h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="delete(saveData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,246 @@
+﻿<style>
+    .btn-warning {
+    color: white;
+    background-color: #ffb61c;
+    border-color: #ffae02;
+    border-radius: 15px;
+}
+   .btn-primary {
+    color: white;
+    background-color: #00a4e9;
+    border-color: #00a4e9;
+    border-radius: 15px;
+}
+</style>
+<div id="myOverlay" class="block" style="display: none;">
+    <div id="loading-img"></div>
+</div>
+<div class="page page-table">
+    <form name="BankWithdrawForm">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span>Bank Withdraw Detail
+                </strong>
+            </div>
+            <br />
+
+            <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Withdraw Type :</label>
+                <div class="col-sm-4">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" ng-model="BankDepositDetail.DepositType" value="0">
+                        <label class="form-check-label" for="inlineRadio1">Both</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-model="BankDepositDetail.DepositType" value="1">
+                        <label class="form-check-label" for="inlineRadio2">Cash</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-model="BankDepositDetail.DepositType" value="2">
+                        <label class="form-check-label" for="inlineRadio3">Cheque</label>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <button class="btn btn-primary" ng-click="GetStartActionBtn(true)" ng-show="ButtonShowStart == true">Start</button>
+                    <button class="btn btn-primary" ng-click="GetStartActionBtn(true)" ng-show="ButtonShowStop == true">Stop</button>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Bank Name</label>
+                <div class="col-sm-4">                    
+                    <select class="form-control" id="site-name" ng-model="BankDepositDetail.SettlementSource" ng-required="true">
+                        <option value="">Select Bank</option>
+                        <option value="{{Bankname.BankName}}" ng-repeat="Bankname in BankDepositDetail.CurrencySettlementBankDcs" ng-selected="BankDepositDetail.SettlementSource==Bankname.BankName"> {{Bankname.BankName}}</option>
+                    </select>
+                    <span ng-show="BankDepositDetail.SettlementSource.$touched && BankDepositDetail.SettlementSource.$invalid">Bank Name is required.</span><br />
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+
+            <div class="form-group row">
+                <label for="staticEmail" class="col-sm-2 col-form-label">Other Comment</label>
+                <div class="col-sm-10">
+                    <textarea name="Note" ng-model="BankDepositDetail.Note" cols="75" rows="3"></textarea>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+            <div class="form-group row">
+                <div class="col-lg-6 " ng-if="BankDepositDetail.DepositType == 0 || BankDepositDetail.DepositType == 1">
+
+                    <div class="col-lg-6">
+                        <b>Cash Withdraw</b>
+                    </div>
+                    <div class="col-lg-12">
+                        <table class="table table-bordered table-striped table-responsive">
+                            <tbody>
+                                <tr>
+                                    <th> Denomination </th>
+                                    <th> Avalialbe Qty</th>
+                                    <th> Withdraw Qty</th>
+                                    <th> Withdraw Amt</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><b>Notes</b></td>
+                                </tr>
+                                <tr ng-repeat="cash in BankDepositDetail.hubCashCollectionDcs" ng-if="cash.CashCurrencyType == 'Notes'">
+                                    <td>
+                                        &#8377;  {{cash.CurrencyDenominationTitle}}
+                                    </td>
+                                    <td>
+                                        {{cash.CurrencyCount}}
+                                    </td>
+                                    <td>
+                                        <ng-form name="{{$index}}">
+                                            <input ng-model="cash.BankDepositCurrencyCount" numberMask class="form-control text100px" name="BankDepositCurrencyCount" type="text" ng-keypress="onlyNumbers($event)" ng-max="cash.CurrencyCount" ng-class="{'errorboarder': this[$index].BankDepositCurrencyCount.$invalid}" />
+                                            <span ng-if="this[$index].BankDepositCurrencyCount.$invalid" style="color:red"> Can't greater than availble quantity</span>
+                                        </ng-form>
+                                    </td>
+                                    <td>
+                                        &#8377; {{cash.BankDepositCurrencyCount * cash.CurrencyDenominationValue}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">Coins</td>
+                                </tr>
+                                <tr ng-repeat="cash in BankDepositDetail.hubCashCollectionDcs" ng-if="cash.CashCurrencyType == 'Coins'">
+                                    <td>
+                                        &#8377; {{cash.CurrencyDenominationTitle}}
+                                    </td>
+                                    <td>
+                                        {{cash.CurrencyCount}}
+                                    </td>
+                                    <td>
+                                        <ng-form name="{{$index}}">
+                                            <input ng-model="cash.BankDepositCurrencyCount" numberMask class="form-control text100px" name="BankDepositCurrencyCount" type="text" ng-keypress="onlyNumbers($event)" ng-max="cash.CurrencyCount" ng-class="{'errorboarder': this[$index].BankDepositCurrencyCount.$invalid}" />
+                                            <span ng-if="this[$index].BankDepositCurrencyCount.$invalid" style="color:red"> Can't greater than availble quantity</span>
+                                        </ng-form>
+                                    </td>
+                                    <td>
+                                        <!--ng-init="$parent.total = $parent.total + cash.BankDepositCurrencyCount * cash.CurrencyDenominationValue; $parent.TotalBankDepositqty = $parent.TotalBankDepositqty  + cash.BankDepositCurrencyCount">-->
+                                        &#8377; {{cash.BankDepositCurrencyCount * cash.CurrencyDenominationValue}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Total</b></td>
+                                    <td>{{ BankDepositDetail.hubCashCollectionDcs|totalSingle:'BankDepositCurrencyCount'}} </td>
+                                    <td>&#8377; {{ BankDepositDetail.hubCashCollectionDcs | total:'BankDepositCurrencyCount':'CurrencyDenominationValue' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 " ng-if="BankDepositDetail.DepositType == 0 || BankDepositDetail.DepositType == 2" style="min-height:300px;">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <b>Cheque Withdraw</b>
+                           </div>
+                        <div class="col-lg-6" style="background: #035f2c;color: white;">
+                            <b>TotalChequeAmount:</b> &#8377;{{TotalchequeAmount}}
+                        </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <tbody>
+                                    <tr>
+                                        <th>Select</th>
+                                        <th>SR No.</th>
+                                        <th>Cheque Date</th>
+                                        <th>Bank Name</th>
+                                        <th>Cheque #</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                    <tr ng-repeat="cheque in BankDepositDetail.ChequeCollectionDcs">
+                                        <td>
+                                            <input type="checkbox" class="form-check-input" ng-model="cheque.Ischecked" ng-change="calculateAmt(cheque)">
+                                        </td>
+                                        <td>{{1+$index}}</td>
+                                        <td>
+                                            {{cheque.ChequeDate| date:'dd/MM/yyyy'}}
+                                        </td>
+                                        <td>
+                                            {{cheque.ChequeBankName}}
+                                        </td>
+                                        <td>
+                                            {{cheque.ChequeNumber}}
+                                        </td>
+                                        <td>
+                                            &#8377;{{cheque.ChequeAmt}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5"><b>Total Cheque Amount</b></td>
+                                        <td>&#8377;{{ BankDepositDetail.ChequeCollectionDcs | totalSingle:'ChequeAmt'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <div class="col-lg-12 text-right">
+                    <button type="button" class="btn btn-ar btn-warning" ngEnter="cancel()" ng-click="cancel()">Cancel</button>
+                    <button type="button" class="btn btn-ar btn-primary" ngEnter="updateBankDetail(BankDepositDetail)" ng-click="updateBankDetail(BankDepositDetail)" ng-disabled=" ButtonShowStart == true " id="NISave" name="NIconfirm">Save & Generate Slip</button>
+                    
+                    <!--<button type="button" class="btn btn-ar btn-primary" ngEnter="updateBankDetail(BankDepositDetail)" click-and-disable="updateBankDetail(BankDepositDetail)" ng-disabled="BankWithdrawForm.$invalid" id="NISave" name="NIconfirm">Save & Generate Slip</button>-->
+                </div>
+            </div>         
+        </section>
+    </form>
+</div>
+
+<script type="text/ng-template" id="myUploadImageModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Chaque collection </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Settlement Type :</label>
+            <div class="col-sm-4">              
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-model="uploadSettlementImage.settlementimagetype" value="Deposit">
+                    <label class="form-check-label" for="inlineRadio2">Deposit Slip</label>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="form-group col-md-12">
+
+            <input class="btn btn-success" id="file" type="file" nv-file-select="" uploader="WithdrawImage" />
+            <div ng-repeat="item in WithdrawImage.queue">
+                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+
+        </div>
+        <div class="form-group col-md-12">
+            <label for="site-name" class="col-sm-2 col-form-label">Comment</label>
+            <textarea name="Note" ng-model="uploadSettlementImage.Comment" placeholder="Please Enter Comment" cols="75" rows="3"></textarea>
+
+            <div class="col-sm-6"></div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <img src={{uploadSettlementImage.settlementimage}} class="img-square img80_80" />
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ngEnter="cancel()" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class=" btn btn-ar btn-info" ngEnter="PutImage(data)" ng-click="PutImage(data)">Save</button>
+        </div>
+    </form>
+</script>

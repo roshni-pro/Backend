@@ -1,0 +1,550 @@
+﻿<div class="page">
+
+    <div class="timesheet-header">
+        <div class="f-left">
+            <h1 class="test-week-20150406 test-user-973600">
+
+
+
+                <span>{{textstring}}</span>
+
+
+            </h1>
+
+        </div>
+        <div class="f-right ">
+
+            <!--<div class="button-toggle" ng-show="day">
+                <div class="btn-group-sm">
+                    <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Left'" ng-click="previousday()"><i class="fa fa-angle-left"></i></label>
+                    <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Middle'" ng-click="thisDay()">{{selectedFilterValue}}</label>
+                    <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Right'" ng-click="forwardDay()"><i class="fa fa-angle-right"></i></label>
+                </div>
+
+            </div>-->
+
+            <div class="button-toggle" >
+                <div class="btn-group-sm">
+                    <label class="btn-sm btn-primary" ng-model="radioModel" ng-click="previousMonth()"><i class="fa fa-angle-left"></i></label>
+                    <label class="btn-sm btn-primary" ng-model="radioModel" ng-click="thisMonth()">{{selectedFilterValue}}</label>
+                    <label class="btn-sm btn-primary" ng-model="radioModel" ng-click="forwardMonth()"><i class="fa fa-angle-right"></i></label>
+                </div>
+
+            </div>
+
+
+            <!--<div class="button-toggle" ng-show="month">
+                <div class="btn-group-sm">
+                    <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Left'" ng-click="previousMonth()"><i class="fa fa-angle-left"></i></label>
+                    <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Middle'" ng-click="thisMonth()">{{selectedFilterValue}}</label>
+                    <label class="btn-sm btn-primary" ng-model="radioModel" btn-radio="'Right'" ng-click="forwardMonth()"><i class="fa fa-angle-right"></i></label>
+                </div>
+
+            </div>-->
+            &nbsp;
+
+
+
+
+
+            &nbsp;
+
+            <div class="btn-group-lg">
+
+
+                <a class="btn-lg btn-primary" href="#/daytimesheet"><span data-i18n="Day"></span></a>
+                <a class="btn-lg btn-primary"  href="#/weektimesheet"><span data-i18n="Week"></span></a>
+                <a class="btn-lg btn-primary" onclick="return false;" href="#"><span data-i18n="Month"></span></a>
+                <!--<label class="btn-sm btn-primary ng-valid ng-dirty active" ng-model="radioModel1" ng-click="selectDayCalendar()" btn-radio="'Left'">Day</label>
+                <label class="btn-sm btn-primary" ng-model="radioModel1" ng-click="selectWeekCalendar()" btn-radio="'Middle'"> Week</label>
+                <label class="btn-sm btn-primary" ng-model="radioModel1" ng-click="selectMonthCalendar()" btn-radio="'Right'"> Month</label>-->
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Responsive Table - Simple</strong></div>
+        <div class="panel-body">
+            <div class="table-responsive">
+             
+                <table border="0" cellpadding="0" cellspacing="0" class="table table-striped table-bordered"  >
+                    <thead>
+                        <tr>
+                            <td class="name"> Search Projects</td>
+                            <td class="type">Task Type </td>
+                            <td class="day">
+                                <a class="js-backbone test-Monday js-day test-not-today" tabindex="1" title="Monday">
+
+                                    <span>{{md1}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Tuesday js-day test-not-today" tabindex="1" title="Tuesday">
+
+                                    <span>{{md2}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Wednesday js-day test-not-today" tabindex="1" title="Wednesday">
+
+                                    <span>{{md3}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Thursday js-day test-not-today" tabindex="1" title="Thursday">
+
+                                    <span>{{md4}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Friday js-day test-not-today" tabindex="1" title="Friday">
+
+                                    <span>{{md5}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Saturday js-day today" tabindex="1" title="Saturday">
+
+                                    <span>{{md6}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Sunday">
+
+                                    <span>{{md7}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Monday">
+
+                                    <span>{{md8}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Tuesday">
+
+                                    <span>{{md9}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Wednesday">
+
+                                    <span>{{md10}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Thrusday">
+
+                                    <span>{{md11}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Friday">
+
+                                    <span>{{md12}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Saturday">
+
+                                    <span>{{md13}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Sunday">
+
+                                    <span>{{md14}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Monday">
+
+                                    <span>{{md15}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Tuesday">
+
+                                    <span>{{md16}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Wednesday">
+
+                                    <span>{{md17}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Thrusday">
+
+                                    <span>{{md18}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Friday">
+
+                                    <span>{{md19}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Saturday">
+
+                                    <span>{{md20}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Sunday">
+
+                                    <span>{{md21}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Monday">
+
+                                    <span>{{md22}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Tuesday">
+
+                                    <span>{{md23}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Wednesday">
+
+                                    <span>{{md24}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Thrusday">
+
+                                    <span>{{md25}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Friday">
+
+                                    <span>{{md26}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Saturday">
+
+                                    <span>{{md27}}</span>
+                                </a>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Sunday">
+
+                                    <span>{{md28}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Monday">
+
+                                    <span>{{md29}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Tuesday">
+
+                                    <span>{{md30}}</span>
+                                </a>
+                            </td>
+                            <td class="day">
+                                <a class="js-backbone test-Sunday js-day test-not-today" tabindex="1" title="Wednesday">
+
+                                    <span>{{md31}}</span>
+                                </a>
+                            </td>
+
+                            <td class="total">&nbsp;</td>
+                            <td class="deletetab">&nbsp;</td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td class="name">
+                                <a class="button button-new-row test-button-new-row js-new-week-row" href="javascript:void(0)" tabindex="2">
+                                    <span class="ss-plus" ng-click="addMothRow()">Add Row</span>
+                                </a>
+                                &nbsp;
+                                <a class="button button-primary test-week-view-save week-view-save button-disabled" href="javascript:void(0)" tabindex="1">Save</a>
+
+                            </td>
+                            <td></td>
+                            <td class="day test-not-today test-day-total-1">
+                                {{md1Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-2">
+                                {{md2Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-3">
+                                {{md3Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-4">
+                                {{md4Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-5">
+                                {{md5Total()}}
+                            </td>
+                            <td class="day today test-day-total-6">
+                                {{md6Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md7Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md8Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md9Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md10Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md11Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md12Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md13Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md14Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md15Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md16Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md17Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md18Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md19Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md20Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md21Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md22Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md23Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md24Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md25Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md26Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md27Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md28Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md29Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md30Total()}}
+                            </td>
+                            <td class="day test-not-today test-day-total-0">
+                                {{md31Total()}}
+                            </td>
+                            <td class="total">{{monthAllTotal()}}</td>
+                            <td class="deletetab">&nbsp;</td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+
+
+                        <tr class="month-view-entry" data-project-id="7781822" data-task-id="4137742" ng-repeat="i in monthGridRows">
+
+                            <td>
+                                <input type="text"
+                                       ng-model="selected"
+                                       typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                       class="form-control"
+                                       placeholder="Search">
+                            </td>
+                            <td>
+                                <span class="ui-select">
+                                    <select>
+                                        <option value="Mustard" selected>Select Task Type</option>
+                                        <option value="Mustard" ng-repeat="t in tasktypes">{{t.Name}}</option>
+
+                                    </select>
+                                </span>
+                            </td>
+
+
+                            <td class="{{i[2].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day096_project7781822_task4137742" tabindex="1" type="text" ng-model="i[2].d1">
+
+                            </td>
+                            <td class="{{i[3].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day097_project7781822_task4137742" tabindex="1" type="text" ng-model="i[3].d2">
+
+                            </td>
+                            <td class="{{i[4].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day098_project7781822_task4137742" tabindex="1" type="text" ng-model="i[4].d3">
+
+                            </td>
+                            <td class="{{i[5].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day099_project7781822_task4137742" tabindex="1" type="text" ng-model="i[5].d4">
+
+                            </td>
+                            <td class="{{i[6].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day100_project7781822_task4137742" tabindex="1" type="text" ng-model="i[6].d5">
+
+                            </td>
+                            <td class="{{i[7].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day101_project7781822_task4137742" tabindex="1" type="text" ng-model="i[7].d6">
+
+                            </td>
+                            <td class="{{i[8].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[8].d7">
+
+                            </td>
+                            <td class="{{i[9].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[9].d8">
+
+                            </td>
+                            <td class="{{i[10].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[10].d9">
+
+                            </td>
+                            <td class="{{i[11].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[11].d10">
+
+                            </td>
+                            <td class="{{i[12].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[12].d11">
+
+                            </td>
+                            <td class="{{i[13].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[13].d12">
+
+                            </td>
+                            <td class="{{i[14].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[14].d13">
+
+                            </td>
+                            <td class="{{i[15].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[15].d14">
+
+                            </td>
+                            <td class="{{i[16].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[16].d15">
+
+                            </td>
+                            <td class="{{i[17].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[17].d16">
+
+                            </td>
+                            <td class="{{i[18].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[18].d17">
+
+                            </td>
+                            <td class="{{i[19].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[19].d18">
+
+                            </td>
+                            <td class="{{i[20].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[20].d19">
+
+                            </td>
+                            <td class="{{i[21].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[21].d20">
+
+                            </td>
+                            <td class="{{i[22].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[22].d21">
+
+                            </td>
+                            <td class="{{i[23].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[23].d22">
+
+                            </td>
+                            <td class="{{i[24].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[24].d23">
+
+                            </td>
+                            <td class="{{i[25].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[25].d24">
+
+                            </td>
+                            <td class="{{i[26].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[26].d25">
+
+                            </td>
+                            <td class="{{i[27].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[27].d26">
+
+                            </td>
+                            <td class="{{i[28].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[28].d27">
+
+                            </td>
+                            <td class="{{i[29].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[29].d28">
+
+                            </td>
+                            <td class="{{i[30].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[30].d29">
+
+                            </td>
+                            <td class="{{i[31].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[31].d30">
+
+                            </td>
+                            <td class="{{i[32].class}}">
+                                <input class="input js-compound-entry" data-unique-name="day102_project7781822_task4137742" tabindex="1" type="text" ng-model="i[32].d31">
+
+                            </td>
+                            <td class="total">
+                                {{getMothRowTotal(i)}}
+                            </td>
+                            <td class="deletetab js-end-of-week-row ">
+
+                                <div class="pop-over-wrap">
+                                    <a class="js-remove-row js-bubble week-row-delete button button-small button-no-border" href="javascript:void(0)" rel="#pop-over-week-delete" tabindex="1" title="Delete Row">
+                                        <span class="ss-icon" title="Delete Row" ng-click="removeMonthRow($index)">Delete</span>
+                                    </a>
+                                    <div class="pop-over pop-over-down-right pop-over-submit pop-over-week-delete">
+                                        Remove entries from timesheet?
+                                        <div>
+                                            <a class="button button-small button-important js-confirm-delete-entry js-bubble" href="https://moreyeahs12.harvestapp.com/time/week/2015/04/06/973600#">Delete</a>
+                                            <a class="button button-small button-cancel js-cancel-delete-entry js-bubble" href="https://moreyeahs12.harvestapp.com/time/week/2015/04/06/973600#">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+
+
+
+

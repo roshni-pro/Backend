@@ -1,0 +1,665 @@
+﻿<style>
+    #htc_one_emulator {
+        background-image: url('../../images/HTC_One_portrait.png');
+        width: 599px;
+        height: 800px;
+        margin-top: -100px !important;
+    }
+
+    #samsung_galaxy_y_emulator, #iphone_5_emulator, #htc_one_emulator, #nokia_lumia_920_emulator, #google_nexus_7_emulator, #ipad_mini_emulator, #samsung_galaxy_y_emulator_landscape, #iphone_5_emulator_landscape, #htc_one_emulator_landscape, #nokia_lumia_920_emulator_landscape, #google_nexus_7_emulator_landscape, #ipad_mini_emulator_landscape {
+        background-repeat: no-repeat;
+        background-position: top left;
+        margin: 0 auto 0 auto;
+        text-align: center;
+    }
+
+
+    @media screen and (min-width: 768px) {
+        .modal-dialog {
+            width: 700px; /* New width for default modal */
+        }
+
+        .modal-sm {
+            width: 350px; /* New width for small modal */
+        }
+    }
+
+    @media screen and (min-width: 992px) {
+        .modal-lg {
+            width: 950px; /* New width for large modal */
+        }
+    }
+
+    #canvas .circle {
+        display: inline-block;
+        margin: 1em;
+    }
+
+    .circles-decimals {
+        font-size: .4em;
+    }
+
+    ul {
+        font-size: 14px;
+        text-decoration: none;
+        line-height: 20px;
+        list-style-type: none;
+    }
+
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+
+    ul span.billable-percent-key {
+        background: #41b419;
+        border-radius: 2px;
+        float: left;
+        height: 9px;
+        margin: 6px 6px 0 0;
+        text-indent: -5000px;
+        width: 9px;
+    }
+
+    .progress-bar {
+        float: left;
+        width: 0%;
+        height: 100%;
+        font-size: 12px;
+        line-height: 20px;
+        color: #b5e5a5;
+        text-align: center;
+        background-color: #41b419 !important;
+        -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+        -webkit-transition: width 0.6s ease;
+        -o-transition: width 0.6s ease;
+        transition: width 0.6s ease;
+    }
+
+    ul span.billable-percent-key.key-unbillable {
+        background: #b5e5a5;
+    }
+
+    #legend {
+        height: 50px;
+        background: rgba(127, 127, 127, 0.5)
+    }
+
+        #legend span {
+            display: inline-block;
+            padding: 15px 30px;
+            position: relative;
+        }
+
+            #legend span:after {
+                padding-left: 4px;
+                content: '\00a0\00a0\00a0\00a0\00a0\00a0';
+                text-decoration: line-through;
+            }
+
+    .wizard > .steps > ul > li, .wizard > .actions > ul > li {
+        float: left;
+    }
+
+    .wizard > .steps .current a, .wizard > .steps .current a:hover, .wizard > .steps .current a:active {
+        background: #1c7ebb;
+        color: #fff;
+        cursor: default;
+    }
+</style>
+<!-- /site tiles -->
+<!-- new site modal -->
+<div class="page">
+    <tabset>
+        <tab heading="Edit Section">
+            <div class="panel panel-default table-dynamic">
+                <div class="row form-group">
+                    <!--<div class="col-xs-12">
+                        <ul class="nav nav-pills nav-justified thumbnail setup-panel">
+                            <li id="s1" class="active" ng-click="ChangeActive(1)">
+                                <a>
+                                    <h4 class="list-group-item-heading">Step 1</h4>
+
+                                    <p class="list-group-item-text">Pick Section</p>
+                                </a>
+                            </li>
+                            <li id="s2" class="" ng-click="ChangeActive(2)">
+                                <a>
+                                    <h4 class="list-group-item-heading">Step 2</h4>
+                                    <p class="list-group-item-text">Pick Section Details</p>
+                                </a>
+                            </li>
+                            <li id="s3" class="" ng-click="ChangeActive(3)">
+                                <a>
+                                    <h4 class="list-group-item-heading">Step 3</h4>
+                                    <p class="list-group-item-text">Third step description</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>-->
+                </div>
+                <div class="row setup-content" id="st1">
+                    <div class="col-xs-12">
+                        <div class="col-md-12 well">
+                            <h1> STEP 1</h1>
+                            <div class="table-filters">
+                                <div class="row">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                                            <span class="icon icon-x" aria-hidden="true">
+                                            </span>
+                                            <span class="sr-only">Close</span>
+                                        </button>
+                                        <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                                        <h4 class="modal-title">Add App Home Section </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Select Warehouse</label><br />
+                                                            <select class="form-control" id="site-name" ng-disabled="true" ng-selected="warehouses.WarehouseId==SectionData.Wid" ng-model="SectionData.Wid">
+                                                                <option value="">--Select--</option>
+                                                                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse">{{warehouses.WarehouseName}}</option>
+                                                            </select>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Sequence No:</label><br />
+                                                            <select class="form-control" id="site-name" ng-model="SectionData.sequenceno" ng-selected="SequenceNumberDatas.SequenceNumber == SectionData.sequenceno)">
+                                                                <option value="">--Select--</option>
+                                                                <option value="{{SequenceNumberDatas.SequenceNumber}}" ng-repeat="SequenceNumberDatas in SequenceNumberData"> {{SequenceNumberDatas.SequenceNumber}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Section Text:</label><br />
+                                                            <input id="site-name" type="text" class="form-control" ng-model="SectionData.titles" placeholder="Enter Section Text" ng-required />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Section Hindi Name:</label><br />
+                                                            <input id="site-name" type="text" class="form-control" ng-model="SectionData.titleshindi" placeholder="Enter Tile Name" ng-required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Section Header BackColor:</label><br />
+                                                            <input id="site-name" type="color" class="form-control" ng-model="SectionData.AppHomeBackColor" ng-required />
+                                                            <input id="site-name" type="text" class="form-control" ng-model="SectionData.AppHomeBackColor" placeholder="Section Header BackColor" />
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="uploadAdvertisements">SectionHeader Image:</label>
+                                                            <input class="btn btn-primary" id="file" type="file" accept="image/*" nv-file-select="" uploader="SectionImage" />
+                                                            <div ng-repeat="item in SectionImage.queue">
+                                                                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                                    <span class="glyphicon glyphicon-upload"></span> Upload
+                                                                </button>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <img alt="" src="{{SectionData.AppHomeImage}}" class="img-square img80_80">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">
+                                                                Is Section BackColor(Checked-Color):
+                                                            </label>&nbsp;
+                                                            <input id="site-name" type="checkbox" class="form-control" ng-model="SectionData.IsSectionBackColor" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Total Tiles No:</label><br />
+                                                            <input id="site-name" type="number" class="form-control" ng-model="SectionData.tiles" placeholder="Enter No of tiles" ng-required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label for="site-name">Tile or Banner :</label>
+                                                        <input type="radio" ng-model='SectionData.TileType' value=1> Tile
+                                                        <input type="radio" ng-model='SectionData.TileType' value=0> Banner
+                                                        <input type="radio" ng-model='SectionData.TileType' value="2"> Popup
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                    <div class="col-md-12" ng-show="SectionData.TileType != '2'">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Select Section Type:</label><br />
+                                                            <select class="form-control" id="SFreebie" ng-disabled="true" ng-model="SectionData.SectionType">
+                                                                <option value="">---SELECT---</option>
+                                                                <option value="Base Category">Base Category</option>
+                                                                <option value="Slider">Slider</option>
+                                                                <option value="Category">Category</option>
+                                                                <option value="Brand">Brand</option>
+                                                                <option value="Item">Item</option>
+                                                                <option value="FlashDeal">Flash Deal</option>
+                                                                <!--<option ng-show="SectionData.IsTileType != 'Popup'"  value="Random">Random</option>-->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12" ng-show="SectionData.TileType == '2'">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Select Section Type:</label><br />
+                                                            <select class="form-control" id="SFreebie" ng-disabled="true" ng-model="SectionData.SectionType">
+                                                                <option value="">---SELECT---</option>                                                                
+                                                                <option value="Brand">Brand</option>
+                                                                <option value="Item">Item</option>
+                                                                <option value="Other">Other</option>
+                                                                <!--<option ng-show="SectionData.IsTileType != 'Popup'"  value="Random">Random</option>-->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="col-lg-6">
+        <div class="form-group">
+            <label for="uploadAdvertisements">Tile Image:</label>
+            <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploaderTileImage" />
+            <div ng-repeat="item in uploaderTileImage.queue">
+                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group">
+                <img alt="" src="{{SectionData.TileImage}}" class="img-square img80_80">
+            </div>
+        </div>
+    </div>-->
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="uploadAdvertisements">Tile Background Image:</label>
+                                                            <input class="btn btn-primary" id="file" type="file" accept="image/*" nv-file-select="" uploader="uploaderTileBackgroundImage" />
+                                                            <div ng-repeat="item in uploaderTileBackgroundImage.queue">
+                                                                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                                    <span class="Tile Background Colorpload"></span> Upload
+                                                                </button>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <img alt="" src="{{SectionData.TileBackImage}}" class="img-square img80_80">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Tile Background Color:</label><br />
+                                                            <input id="site-name" type="color" class="form-control" ng-model="SectionData.TileBackgroundColor" placeholder="Tile Background Color" ng-required />
+                                                            <input id="site-name" type="text" class="form-control" ng-model="SectionData.TileBackgroundColor" placeholder="Tile Background Color" ng-required />
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="col-lg-6">
+        <div class="form-group">
+            <label for="site-name">Tile Text:</label><br />
+            <input id="site-name" type="text" class="form-control" ng-model="SectionData.TileText" placeholder="Tile Text" ng-required />
+        </div>
+    </div>-->
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">Is Horizontal Section :</label>&nbsp;
+                                                            <input id="site-name" type="checkbox" class="form-control" ng-model="SectionData.IsHorizontalSection" placeholder="Enter No of tiles" ng-required />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label for="site-name">
+                                                                Is Background color or image(Checked-Color):
+                                                            </label>&nbsp;
+                                                            <input id="site-name" type="checkbox" class="form-control" ng-model="SectionData.IsBackgroundImageOrColor" placeholder="Enter No of tiles" ng-required />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="st2">
+                        <h1 class="text-center"> STEP 2</h1>
+                        <div class="col-xs-12">
+                            <div id="panel_BaseCategory" class="panel panel-default" ng-show="SectionData.SectionType =='Base Category'">
+                                <h3>Base Category Add Panel</h3>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Base Category</label><br />
+                                        <select class="form-control" ng-model="SectionData.ItemId">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{BCategories.BaseCategoryId}},{{BCategories.BaseCategoryName}}, {{BCategories.LogoUrl}}" ng-selected="(SectionData.BaseCategoryId == BCategories.BaseCategoryId)" ng-repeat="BCategories in BaseCategories"> {{BCategories.BaseCategoryName}}</option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="AddData(SectionData)">Add</button>
+                                </div>
+                            </div>
+
+
+                            <div id="panel_Category" class="panel panel-default" ng-show="SectionData.SectionType == 'Category'">
+                                <h3>Category Add Panel</h3>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Category</label><br />
+                                        <select class="form-control" ng-model="SectionData.ItemId">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{ccategorys.Categoryid}},{{ccategorys.CategoryName}},{{ccategorys.LogoUrl}}" ng-selected="(SectionData.Categoryid == ccategorys.Categoryid)" ng-repeat="ccategorys in categorys"> {{ccategorys.CategoryName}}</option>
+                                        </select>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="AddData(SectionData)">Add</button>
+                                </div>
+                            </div>
+                            <div id="panel_Brand" class="panel panel-default" ng-show="SectionData.SectionType == 'Brand'">
+                                <h3>Brand Add Panel</h3>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Brand</label><br />
+                                        <select class="form-control" ng-model="SectionData.ItemId">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{Ssubsubcats.SubsubCategoryid}},{{Ssubsubcats.SubsubcategoryName}},{{Ssubsubcats.LogoUrl}}" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="AddData(SectionData)">Add</button>
+                                </div>
+                            </div>
+                            <div id="panel_Brand" class="panel panel-default" ng-show="SectionData.SectionType == 'Item'">
+                                <h3>Item</h3>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="site-name">Select Item</label><br />
+                                        <select class="form-control" ng-model="SectionData.ItemId">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{Item.ItemId}},{{ Item.itemname }},{{ Item.LogoUrl }},{{ Item.SellingSku }}" ng-repeat="Item in Items"> {{Item.itemname}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="AddData(SectionData)">Add</button>
+                                </div>
+                            </div>
+                            <div id="panel_Slider" class="panel panel-default" ng-show="SectionData.SectionType == 'Slider'">
+                                <h3>Slider Add Panel</h3>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="site-name">Select Section Type:</label><br />
+                                        <select class="form-control" id="SFreebie" ng-model="SectionData.SliderSectionType">
+                                            <option value="">---SELECT---</option>
+                                            <option value="Brand">Brand</option>
+                                            <option value="Item">Item</option>
+                                            <!--<option value="FlashDeal">Flash Deal</option>-->
+                                            <option value="Offer">Offer</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="SectionData.SliderSectionType=='Brand'">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Brand</label><br />
+                                        <select class="form-control" id="sliderBrand" ng-model="SectionData.ItemId">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{Ssubsubcats.SubsubCategoryid}},{{Ssubsubcats.SubsubcategoryName}},{{Ssubsubcats.LogoUrl}}" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}}, ({{Ssubsubcats.CategoryName}}) </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="SectionData.SliderSectionType=='Item'">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Item</label><br />
+                                        <select class="form-control" id="sliderItem" ng-model="SectionData.ItemId">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{Item.ItemId}},{{ Item.itemname }},{{ Item.LogoUrl }},{{ Item.SellingSku }}" ng-repeat="Item in Items"> {{Item.itemname}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="SectionData.SliderSectionType=='Offer'">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Offer</label><br />
+                                        <select class="form-control" id="sliderOffer" ng-model="SectionData.ItemId">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{Offer.OfferId}},{{Offer.OfferName}},{{Offer.OfferLogoUrl}},{{Offer.OfferCode}}" ng-repeat="Offer in Offers"> {{Offer.OfferName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="uploadAdvertisements">Slider Image:</label>
+                                            <input class="btn btn-primary sliderimgeupload" id="file" type="file" nv-file-select="" uploader="uploaderSliderImage" />
+                                            <div ng-repeat="item in uploaderSliderImage.queue">
+                                                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                    <span class="Tile Background Colorpload"></span> Upload
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="AddData(SectionData)">Add</button>
+                                </div>
+                            </div>
+                            <div id="panel_Brand" class="panel panel-default" ng-show="SectionData.SectionType == 'FlashDeal'">
+                                <h3>Item</h3>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Item</label><br />
+                                        <select class="form-control" ng-model="SectionData.ItemId" ng-change="Minqtry(SectionData.ItemId)">
+                                            <option value="">---SELECT---</option>
+                                            <option value="{{Item.ItemId}},{{ Item.itemname }},{{ Item.LogoUrl }},{{ Item.SellingSku }},{{ Item.UnitPrice }},{{ Item.PurchasePrice }}" ng-repeat="Item in flashDealItem"> {{Item.itemname}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="site-name">MOQ</label>
+                                    <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="SectionData.MaxQtyPersonCanTake" ng-change="GetUnitPurchasePrice(SectionData.MaxQtyPersonCanTake)">
+                                        <option value="">Select</option>
+                                        <option value="{{ss.ItemId}},{{ ss.itemname }},{{ ss.LogoUrl }},{{ ss.SellingSku }},{{ss.MinOrderQty}},{{ ss.UnitPrice }},{{ ss.PurchasePrice }}" ng-repeat="ss in itmdata">{{ss.MinOrderQty}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="site-name">Unit Price:</label>
+                                    <input id="UnitPrice" type="text" ng-disabled="true" class="form-control" ng-model="UnitPrice" />
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="site-name">Purchase Price:</label>
+                                    <input id="UnitPrice" type="text" ng-disabled="true" class="form-control" ng-model="PurchasePrice" />
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="site-name">Total Qty Available:<span style="color:red;">(Total QTY must be multiple of MOQ)</span></label>
+                                    <input id="QtyAvaiable" type="number" class="form-control" ng-model="SectionData.QtyAvaiable" placeholder="Enter Total Qty Available" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label for="site-name">Select Date Range</label><br />
+                                        <div class='input-group date'>
+                                            <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                            <span class="input-group-addon ">
+                                                <span class="fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="site-name">Max Quanity Person Take:<span style="color:red;">(Must be multiple of MOQ)</span></label>
+                                    <input id="QtyAvaiable" type="number" class="form-control" ng-model="SectionData.FlashDealMaxQtyPersonCanTake" placeholder="Enter Max Quantity" />
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <label for="site-name">FlashDeal Special Price:</label>
+                                    <input id="QtyAvaiable" type="number" class="form-control" ng-model="SectionData.FlashDealSpecialPrice" placeholder="Enter Total Qty Available" />
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="AddData(SectionData)">Add</button>
+                                </div>
+                            </div>
+                            <div id="panel_Other" class="panel panel-default" ng-show="SectionData.SectionType == 'Other'">
+                                <h3>Slider Add Panel</h3>
+                                <input type="hidden" id="SliderSectionType" ng-model="SectionData.SliderSectionType" value="Other" />
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="uploadAdvertisements">Slider Image:</label>
+                                            <input class="btn btn-primary sliderimgeupload" id="file" type="file" nv-file-select="" uploader="uploaderSliderImage" />
+                                            <div ng-repeat="item in uploaderSliderImage.queue">
+                                                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                                    <span class="Tile Background Colorpload"></span> Upload
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="AddData(SectionData)">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="col-md-12 well">
+
+
+                                <table class="table table-bordered table-striped table-responsive ">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="th">
+                                                    SNo.
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Title
+                                                </div>
+                                            </th>
+                                            <th >
+                                                <div class="th">
+                                                    ItemId
+                                                </div>
+                                            </th>
+                                            <th >
+                                                <div class="th">
+                                                    Item Name
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Section Type
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Image
+                                                </div>
+                                            </th>
+                                            <th ng-if="SectionData.SectionType=='FlashDeal'">
+                                                <div class="th">
+                                                    Qty Avaiable
+                                                </div>
+                                            </th>
+                                            <th ng-if="SectionData.SectionType=='FlashDeal'">
+                                                <div class="th">
+                                                    MaxQtyPersonCanTake
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Remove
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="trade in SetionDetail">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{trade.titles}}</td>
+                                            <td>{{trade.SliderSectionType}}</td>
+                                            <td>{{trade.ItemId}}</td>
+                                            <td>{{trade.ItemName}}</td>
+                                            <td><img alt="" src="{{trade.image}}" class="img-square img80_80"></td>
+                                            <td ng-if="SectionData.SectionType == 'FlashDeal'">{{trade.FlashDealQtyAvaiable}}</td>
+                                            <td ng-if="SectionData.SectionType == 'FlashDeal'">{{trade.FlashDealMaxQtyPersonCanTake}}</td>
+                                            <td><button class="btn-sm btn-danger" ng-click="RemoveSectionTile(trade)">Remove Tile</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row" id="st3">
+
+                        <div class="col-lg-6">
+                            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="PutSection(SectionData)">Save</button>
+                        </div>
+                    </div>
+
+                </div>
+                </div>
+
+           </div>
+                </tab>
+        <!--<tab heading="Preview Home Page">
+
+            <div class="panel panel-default table-dynamic">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Preview Home Page"></span></strong></div>
+                <div class="row">
+                    <div id="phone_placeholder" style="display: block; ">
+                        <div id="htc_one_emulator" style="transform: scale(1); transform-origin: 0px 0px;">
+                            <div id="frame_htc_one_emulator" class="frame_scroller">
+                                <iframe src="http://localhost:26265/#/dashboard" frameborder="0" style="background-color: #fff;height:600px;width:360px;margin-top:180px;"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tab>-->
+    </tabset>
+
+
+
+
+
+</div>
+<!--Update AssetsCategory-->
+
+
+<!--<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">-->
+<script type="text/javascript">
+    $('#SFreebie').on('change', function () {
+
+        if ($(this).val() == "Base Category") {
+            $("#panel_BaseCategory").slideToggle("slow");
+        }
+    });
+</script>
+
+<!--Update AssetsCategory-->

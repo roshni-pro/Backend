@@ -1,0 +1,303 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ShopKirana - Empowering Retailers</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta HTTP-EQUIV=”refresh”>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic" rel="stylesheet" type="text/css">
+    <!-- needs images, font... therefore can not be part of ui.css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css">
+    <link href="App_Start/bower_components/font-awesome/css/font-awesome.minNew.css" rel="stylesheet" />
+
+    <!--<link href="styles/styles_timesheets-1c161cfbef2ca54c47143503d901cf4b.css" rel="stylesheet" />-->
+    <link href="styles/loading-bar.min.css" rel="stylesheet" />
+    <!-- end needs images -->
+
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="styles/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="styles/ui.css" rel="stylesheet" />
+    <link href="styles/daterangepicker-bs3.css" rel="stylesheet" />
+    <link href="Content/jquery.simple-dtpicker.css" rel="stylesheet" />
+    <link href="Content/ng-table.css" rel="stylesheet" />
+    <link href="Content/daterangepicker-bs3.css" rel="stylesheet" />
+    <style>
+        #loading-img {
+            background: url(../images/Velocity.gif) center center no-repeat;
+            height: 100%;
+            z-index: 20;
+        }
+
+        .overlay {
+            background: #040303;
+            display: none;
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            opacity: 0.5;
+        }
+
+        .overlayWait {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0, 0.9);
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        @@media only screen and (max-width: 768px) {
+            .mth {
+                display: none;
+            }
+        }
+
+
+        .w3-red {
+            color: #fff !important;
+            background-color: saddlebrown;
+        }
+
+        .w1-red {
+            color: #fff !important;
+            background-color: #4c4948 !important;
+        }
+
+         #myOverlay {
+                    position: absolute;
+                    height: 100%;
+                    width: 100%;
+                    background: black;
+                    opacity: .7;
+                    z-index: 20000;
+                    display: none;
+                }
+
+        #loading-img {
+             background: url('/Content/lg.comet-spinner.gif') center center no-repeat;
+             height: 100%;
+             z-index: 20;
+             background-size: 8%;
+        }
+
+        .ldrr{
+            position: fixed;
+            z-index: 9999;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            opacity: .2;
+        }
+    </style>
+</head>
+<body data-ng-app="app" id="app" data-custom-background="" data-off-canvas-nav="">
+    <div id="myOverlay" class="block" style="display: none;">
+        <div id="loading-img"></div>
+    </div>
+    
+    <div data-ng-controller="AppCtrl">
+        <div class="ldrr" ng-if="showHide">
+            <div id="loading-img"></div>
+        </div>
+
+        <div data-ng-hide="isSpecificPage()" data-ng-cloak="">
+            <section data-ng-include="'views/header.html'" id="header" class="top-header"></section>
+            <aside data-ng-include="'views/nav.html'" id="nav-container"></aside>
+        </div>
+        <div class="view-container">
+            <section data-ng-view="" id="content" class="animate-fade-up"></section>
+
+            <script type="text/ng-template" id="myModalhistory.html">
+
+                <div class="modal-header w3-red">
+                    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                        <span class="icon icon-x" aria-hidden="true">
+                        </span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                    <h4 class="modal-title">{{EntityHistory.AuditEntity}} History</h4>
+                </div>
+                <div class="modal-body" style="overflow-x: scroll; overflow-y: scroll;">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr class="w1-red">
+                                <th>
+                                    User
+                                </th>
+                                <th>
+                                    Audit Timestamp
+                                </th>
+                                <th data-ng-repeat="data in EntityHistory.FieldNames">{{data}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr data-ng-repeat="data in EntityHistory.AuditHistory">
+                                <td>
+                                    {{data.AuditAction}} by <b>{{data.UserName}}</b>
+                                </td>
+                                <td>
+                                    {{data.AuditDate| date:'medium'}}
+                                </td>
+                                <td data-ng-repeat="row in data.AuditFields" ng-style="data.AuditAction != 'Added' && row.NewValue!=row.OldValue && {'color':'red'} || {'color': ''}">
+                                    {{row.NewValue}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer w3-red">
+                    <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Close</button>
+                </div>
+
+            </script>
+
+
+        </div>
+    </div>
+    <script src="scripts/aes256.js"></script>
+    <script src="scripts/vendor.js"></script>
+
+
+    <script src="scripts/jquery.min.js"></script>
+
+    <script src="scripts/jquery.simple-dtpicker.js"></script>
+    <script src="scripts/angular-input-date.js"></script>
+    <script src="scripts/timepickerpop.js"></script>
+    <script src="scripts/jquery-2.1.4.js"></script>
+    <script src="scripts/moment.js"></script>
+    <script src="scripts/moment.min.js"></script>
+    <script src="scripts/vendor/angular-daterangepicker.min.js"></script>
+    <script src="scripts/vendor/daterangepicker.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/bootbox.js"></script>
+    <script src="scripts/ngBootbox.js"></script>
+
+
+    <link href="../../styles/simple-autocomplete.css" rel="stylesheet" />
+    <script src="../../scripts/simple-autocomplete.js"></script>
+    <script src="scripts/vendor/ng-table-export.js"></script>
+    <script src="scripts/vendor/animate.js"></script>
+    <script src="scripts/vendor/moment.min.js"></script>
+    <script src="scripts/vendor/circles.min.js"></script>
+    <script src="scripts/vendor/daterangepicker.js"></script>
+    <script src="scripts/vendor/bootstrap-select.js"></script>
+    <script src="scripts/ui.js"></script>
+    <script src="scripts/vendor/angular-local-storage.min.js"></script>
+
+    <script src="scripts/lodash.min.js"></script>
+
+    <script src="scripts/highlight.min.js"></script>
+
+    <script src="scripts/angular-highlightjs.js"></script>
+
+    <script src="scripts/angularjs-dropdown-multiselect.js"></script>
+    <script src="scripts/dirPagination.js"></script>
+    <script src="scripts/ng-table.js"></script>
+    <script src="scripts/angular-drag-and-drop-lists.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/appmain.js"></script>
+    <script src="scripts/angular-file-upload.min.js"></script>
+    <script src="scripts/angular-file-upload.js"></script>
+    <script src="scripts/ng-text-truncate.js"></script>
+    <script src="scripts/loading-bar.min.js"></script>
+    <script src="scripts/example.js"></script>
+    <script src="scripts/xlsx.core.min.js"></script>
+    <script src="scripts/alasql.min.js"></script>
+    <!--<script src="scripts/canvasjs.js"></script>-->
+    <script src="scripts/canvasjs.min.js"></script>
+    <link href="Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <script src="scripts/bootstrap-multiselect.js"></script>
+    <script src="scripts/ui-bootstrap-tpls.js"></script>
+    <script src="scripts/vendor/angular-daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+    <script src="scripts/ExpandCollaps.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+
+    @*@Scripts.Render("~/bundles/servicesJs")
+        @Scripts.Render("~/bundles/controllerJs")
+        @Scripts.Render("~/bundles/controllerLogJs")
+        @Scripts.Render("~/bundles/controllerPermissionJs")
+        @Scripts.Render("~/bundles/controllerCashMgmtJs")*@
+
+
+    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>-->
+    <!-- Load services -->
+    <!--add group-->
+    @*<script src="services/authInterceptorService.js"></script>
+        <script src="services/authService.js"></script>
+        <script src="services/tokensManagerService.js"></script>*@
+
+    @*@Scripts.Render("~/bundles/GroupSmsJs")*@
+
+    @Scripts.Render("~/bundles/Alljs")
+
+    @Scripts.Render("~/bundles/AllNewJs")
+    <script type="text/javascript">
+        function showTime() {
+            var d = new Date();
+            var t = d.toLocaleTimeString();
+            if (t == '8:00:00 PM') {
+                var url = serviceBase + "api/DashboardReport";
+                $.post(url, function (data, status) {
+                });
+            }
+        }
+        $(document).ready(function () {
+            //myVar = setInterval("showTime()", 1000);
+        });
+
+    </script>
+    <script type="text/ng-template" id="PopUpModel.html">
+        <style>
+            .modal-dialog {
+                width: 30% !important;
+            }
+        </style>
+        <h1>!Alert!</h1>
+        <form name="myFormTaskTypeModal1" style="background:#cfd0bf">
+            <div class="modal-header">
+                <h4 class="modal-title" style="text-align:center"><b>ShopKirana Alert</b></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="text-align:center">
+                    <label for="TaskType-name">{{alrt.msg}}</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">OK</button>
+            </div>
+        </form>
+    </script>
+    <style>
+        .bootbox {
+            width: 35%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</body>
+</html>

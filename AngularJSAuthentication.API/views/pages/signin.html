@@ -1,0 +1,358 @@
+<style>
+    body, html {
+        height: 100%;
+    }
+
+    .center_div {
+        margin: 0 auto;
+        width: 80% /* value of your choice which suits your alignment */
+    }
+
+    .bg {
+        /* The image used */
+        background-image: url("img_girl.jpg");
+        /* Full height */
+        height: 100%;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url('https://er15.xyz:4436/background.jpg');
+    }
+
+    .img {
+        border-top: 0px solid #f8f8f8;
+        height: 970px;
+        top: 0;
+        position: absolute;
+        background-image: url('https://er15.xyz:4436/background.jpg');
+        width: 1903px;
+        left: 0;
+        z-index: 1000;
+        background-color: #fff;
+    }
+</style>
+<div class="page-signin bg">
+    <div class="signin-body">
+        <div class="container-fluid text-center">
+            <section class="logo">
+                <img src="https://er15.xyz:4436/Logo.svg" class="img-fluid" alt="Logo">
+
+               
+            </section>
+        </div>
+    </div>
+
+    <div class="signin-body">
+        <div class="container center_div">
+            <form class="form-horizontal">
+
+                <section id="loginform" class="outer-wrapper">
+
+                    <div class="inner-wrapper">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 col-sm-offset-4">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1" style="color:white">Username</label>
+                                            <input type="text" class="form-control" id="exampleInputEmail1" data-ng-model="loginData.userName" placeholder="Enter username" style=" height: 51px; width: 310px;border-radius:25px; margin: 10px;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1"style="color:white">Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword1" data-ng-model="loginData.password" placeholder="Password" style=" height: 51px; width: 310px;border-radius:25px; margin: 10px;">
+                                        </div>
+                                        <div class="checkbox"style="color:whitesmoke">
+                                            <label>
+                                                <input type="checkbox"> Remember me
+                                            </label>
+                                        </div>
+                                        <button class="btn btn-primary btn-lg btn-block" style="
+                                    border-radius:25px;
+                                   position:absolute;
+                                    width: 310px;
+                                    height:51px;
+                                    margin: 10px 0px 10px 0px;
+                                    background-color:orangered !important;
+                                    border-color:slategrey;" type="submit"
+                                                data-ng-click="login()">
+                                            Login
+                                        </button>
+                                        <div data-ng-hide="message == ''" class="alert alert-danger" style="border-radius: 25px;
+                                                                                        margin: 70px 0px 0px 0px;
+                                                                                        width: 310px;
+                                                                                        height:51px;
+                                                                                        text-align: center;">
+                                            Please Enter Password
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:80px;">
+                                <p class="text-center">
+                                    <a href="javascript:;" style="color:white; font-size:14px;margin: 0px 0px 0px -44px;">
+                                        Forgot Password?
+                                    </a>
+                                </p>
+                                <p class="text-center text-muted text-small" style="color:white;font-size:16px; margin: 0px 0px 0px -55px;">
+                                    Don't have an account! Sign Up
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+</div>
+<!--<style>
+    .img {
+        border-top: 0px solid #f8f8f8;
+        height: 970px;
+        top: 0;
+        position: absolute;
+        background-image: url('http://103.39.134.250:8888/backgrouns.svg');
+        width: 1903px;
+        left: 0;
+        z-index: 1000;
+        background-color: #fff;
+    }
+</style>
+<div class="page-signin img">
+    <div class="signin-body">
+        <div class="container text-center">
+            <section class="logo">
+                <img src="http://103.39.134.250:8888/logo.svg" class="mpcth-standard-logo" alt="Logo">
+            </section>
+        </div>
+    </div>
+
+    <div class="signin-body">
+               <div class="container">
+                   <form class="form-horizontal">
+
+                       <div class="form-group">
+                           <i class="fa fa-user fa-2x cust" aria-hidden="true" style="
+                                    color: silver;
+                                    background: border-box;
+                                    margin-right: 20px;
+                                    margin-top: 145px;
+                                    width: 21px;
+                                    height: 22px;
+                                    padding-top: 6px;
+                                    margin: 137px 0px 0px 330px;">
+                           </i>
+                           <input type="text" style="color:white;
+                                               border-color:gray;
+                                               height: 50px;
+                                               padding-left:41px;
+                                               font-size:18px;
+                                               background-color: gray;
+                                               border-radius: 25px;
+                                               width: 307px;margin: 131px 315px;
+                                               transition-duration: 0.15s, 0.15s;
+                                               transition-property: none;
+                                               transition-duration: 0.15s, 0.15s;"
+                                  class="form-control ng-animate ng-pristine-remove ng-dirty-add ng-invalid-remove ng-valid-add ng-invalid-required-remove ng-valid-required-add ng-pristine-remove-active ng-dirty ng-dirty-add-active ng-invalid-remove-active ng-valid-add-active ng-invalid-required-remove-active ng-valid-required-add-active ng-valid ng-valid-required"
+                                  id="name" name="name" placeholder="user@shopkirana.com" data-ng-model="loginData.userName" required="" autofocus="">
+                       </div>
+
+
+
+                       <div class="form-group">
+                           <i class="fa fa-lock fa-2x cust" aria-hidden="true" style="
+                                    color: silver;
+
+                                    background: border-box;
+                                    margin-right: 20px;
+                                    margin-top: 145px;
+                                    width: 21px;
+                                    height: 22px;
+                                    padding-top: 6px;
+                                    margin: 7px 10px 11px 408px;">
+                           </i>
+                           <input type="password" style="color:white;border-color:gray;background-color:gray;padding-left:41px;font-size:18px;height: 50px;border-radius: 25px;width: 308px;margin: -59px 0px 33px 296px;transition-duration: 0.15s, 0.15s;transition-property: none;transition-duration: 0.15s, 0.15s;"
+                                  class="form-control ng-animate ng-pristine-remove ng-dirty-add ng-invalid-remove ng-valid-add ng-invalid-required-remove ng-valid-required-add ng-pristine-remove-active ng-dirty ng-dirty-add-active ng-invalid-remove-active ng-valid ng-valid-add-active ng-invalid-required-remove-active ng-valid-required ng-valid-required-add-active" id="pass" placeholder="password" data-ng-model="loginData.password" required="">
+                       </div>
+                   </form>
+               </div>
+               <div class="form-group">
+                   <button class="btn btn-primary btn-lg btn-block" type="submit" style="
+                                    border-radius:25px;
+                                   position:absolute;
+                                    width: 310px;
+                                    height:51px;
+                                    margin: 10px 0px 0px 765px;
+                                    background-color:orangered;
+                                    border-color:slategrey;"
+                           data-ng-click="login()">
+                       Login
+                   </button>
+                   <div data-ng-hide="message == ''" class="alert alert-danger" style="
+                                    border-radius: 31px;
+                                    margin: 0px 0px 0px 762px;
+                                    width: 315px;
+                                    text-align: center;">
+                       {{message}}
+                   </div>
+               </div>
+               <section>
+                   <p class="text-center">
+                       <a href="javascript:;" style="color:white;
+                                                                 font-size:14px;
+                                                                 margin: 0 0px 0px -44px;">
+                           Forgot Password?
+                       </a>
+                   </p>
+                   <p class="text-center text-muted text-small" style="color:white;
+                                                                                       font-size:16px;
+                                                                                       margin: 0px 0px 0px -55px;">
+                       Don't have an account sing up
+                   </p>
+               </section>
+
+           </div>
+    </div>-->
+<!--<div class="page-signup">
+
+    <style>
+        .img {
+            border-top: 0px solid #f8f8f8;
+            position:absolute;
+            background-image: url('http://103.39.134.250:8888/backgrouns.svg');
+            width: 1903px;
+            height: 970px;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #fff;
+
+        }
+    </style>
+    <div class="page-signin img">
+        <div class="signin-body">
+            <div class="container text-center">
+                <section class="logo">
+                    <img src="http://103.39.134.250:8888/logo.svg" class="mpcth-standard-logo" alt="Logo">
+                </section>
+            </div>
+        </div>
+    <!--<div class="signin-header">
+        <div class="container text-center">
+            <section class="logo">
+                <a href="#/">{{main.brand}}</a>
+            </section>
+        </div>
+    </div>-->
+<!--<div class="signup-body">
+    <div class="container">
+        <div class="form-container">-->
+<!--<section class="row signin-social text-center">
+    <a href="javascript:;" class="btn-twitter-round"><i class="fa fa-twitter"></i></a>
+    <div class="space"></div>
+    <a href="javascript:;" class="btn-facebook-round"><i class="fa fa-facebook"></i></a>
+    <div class="space"></div>
+    <a href="javascript:;" class="btn-google-plus-round"><i class="fa fa-google-plus"></i></a>
+</section>-->
+<!--<span class="line-thru">OR</span>-->
+<!--<section>
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </span>
+                                <i class="fa fa-user fa-2x cust" aria-hidden="true" style="
+                                    color: silver;
+                                    background: border-box;
+                                    margin-right: 20px;
+                                    margin-top: 145px;
+                                    width: 21px;
+                                    height: 22px;
+                                    padding-top: 6px;
+                                    margin: 137px 0px 0px 330px;">
+                                </i>
+                                <input type="text" style="color:white;
+                                               border-color:gray;
+                                               height: 50px;
+                                               padding-left:41px;
+                                               font-size:18px;
+                                               background-color: gray;
+                                               border-radius: 25px;
+                                               width: 307px;margin: -60px 51px;
+                                               transition-duration: 0.15s, 0.15s;
+                                               transition-property: none;
+                                               transition-duration: 0.15s, 0.15s;"
+                                       class="form-control ng-animate ng-pristine-remove ng-dirty-add ng-invalid-remove ng-valid-add ng-invalid-required-remove ng-valid-required-add ng-pristine-remove-active ng-dirty ng-dirty-add-active ng-invalid-remove-active ng-valid-add-active ng-invalid-required-remove-active ng-valid-required-add-active ng-valid ng-valid-required"
+                                       id="name" name="name" placeholder="user@shopkirana.com" data-ng-model="loginData.userName" required="" autofocus="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+
+                                <i class="fa fa-lock fa-2x cust" aria-hidden="true" style="
+                                    color: silver;
+                                    background: border-box;
+                                    margin-right: 20px;
+                                    margin-top: 145px;
+                                    width: 21px;
+                                    height: 22px;
+                                    padding-top: 6px;
+                                    margin: 7px 10px 11px 408px;">
+                                </i>
+                                <input type="password" style="color:white;border-color:gray;
+                                        background-color:gray;padding-left:41px;font-size:18px;
+                                        height: 50px;border-radius: 25px;width: 308px;margin: -15px 0px 0px 51px;
+                                        transition-duration: 0.15s, 0.15s;transition-property: none;transition-duration: 0.15s, 0.15s;"
+                                       class="form-control ng-animate ng-pristine-remove ng-dirty-add ng-invalid-remove ng-valid-add ng-invalid-required-remove ng-valid-required-add ng-pristine-remove-active ng-dirty ng-dirty-add-active ng-invalid-remove-active ng-valid ng-valid-add-active ng-invalid-required-remove-active ng-valid-required ng-valid-required-add-active"
+                                       id="pass" placeholder="password" data-ng-model="loginData.password" required="">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" style="
+                                    border-radius:25px;
+                                   position:absolute;
+                                    width: 310px;
+                                    height:51px;
+                                    margin: 33px 0px 0px 51px;
+                                    background-color:orangered;
+                                    border-color:slategrey;"
+                                    data-ng-click="login()">
+                                Login
+                            </button>
+                        </div>
+                        <div data-ng-hide="message == ''" class="alert alert-danger" style="
+                                    border-radius: 31px;
+                                    margin: 0px 0px 0px 762px;
+                                    width: 315px;
+                                    text-align: center;">
+                            {{message}}
+                        </div>
+
+                    </form>
+                </section>
+
+
+                <section>
+                       <p class="text-center"><a href="javascript:;" style="color:white;
+                                                                     font-size:14px;
+                                                                     margin: 0 0px 0px -44px;">
+                               Forgot Password?
+                           </a>
+                       </p>
+                       <p class="text-center text-muted text-small" style="color:white;
+                                                                            font-size:16px;
+                                                                            margin: 0px 0px 0px -55px;">
+                           Don't have an account sing up
+                       </p>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>-->

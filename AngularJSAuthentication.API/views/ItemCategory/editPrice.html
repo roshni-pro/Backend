@@ -1,0 +1,296 @@
+﻿
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<div class="page page-table" button-permission-binder parentName="Item Master" pageName="Edit Price">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Edit Price
+            </strong>
+        </div>
+        <br />
+        <div>
+            <!-------------------------------------------------------------------------------------------------------------------------------------->
+            <div class="col-md-12 col-sm-12 col-lg-12">
+               
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name">Warehouses</label><br>
+                    <select class="form-control" id="site-name" ng-model="Demanddata.WarehouseId" ng-change="IsWarehouseChange()">
+                        <option value=""> ---SELECT--- </option>
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse "> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name">Category</label><br>
+                    <select class="form-control" id="site-name" ng-model="Demanddata.Categoryid" data-ng-disabled="!Demanddata.WarehouseId" ng-change="SelectSubCat(Demanddata)">
+                        <option value="">---SELECT---</option>
+                        <option value="{{categorys.Categoryid}}" ng-repeat="categorys in category"> {{categorys.CategoryName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name"> SubCategory</label><br>
+                    <select class="form-control" id="site-name" data-ng-disabled="!Demanddata.Categoryid" ng-model="Demanddata.SubCategoryId" ng-change="SelectSubSubCat(Demanddata)">
+                        <option value="">---SELECT---</option>
+                        <option name="{{subcategorys.SubCategoryId}}" value="{{subcategorys.SubCategoryId}}" ng-repeat="subcategorys in vm.subcategoryss"> {{subcategorys.SubcategoryName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name">SubsubCategory</label><br>
+                    <select class="form-control" id="site-name" data-ng-disabled="!Demanddata.SubCategoryId" ng-model="Demanddata.SubsubCategoryid">
+                        <option value="">---SELECT---</option>
+                        <option value="{{subsubcategorys.SubsubCategoryid}}" ng-repeat="subsubcategorys in vm.subsubcategoryss | filter:{SubCategoryId:Demanddata.SubCategoryId} "> {{subsubcategorys.SubsubcategoryName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-2 col-sm-2 col-lg-2">
+                    <label for="site-name"></label><br />
+                    <button type="button" class="btn btn-ar btn-primary" data-ng-disabled="!Demanddata.Categoryid" ng-click="Search(Demanddata)">Filter Search</button>
+                </div>
+            </div>
+            <div class="form-group col-md-3 col-sm-3 col-lg-3">
+                <label for="site-name">Enter Selling Unit Name</label><br />
+                <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"><span>
+                    Showing {{filteredStores.length}}/{{stores.length}} entries
+                </span>
+            </div>
+            <!----------------------------------------------------------------------------------------------------------------------------------------->
+            <br />
+            <br />
+        </div>
+        <table class="table table-bordered table-striped table-responsive" ng-show="order">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            ABCCategory/SKU
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CategoryName')"
+                                  data-ng-class="{active: row == 'CategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click=" order('-CategoryName') "
+                                  data-ng-class="{active: row == '-CategoryName'}"></span>
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            SKU
+                        </div>
+                    </th>-->
+                    <th>
+                        <div class="th">
+                            UnitName
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            ROC / Segment
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Segment
+                        </div>
+                    </th>-->
+
+                    <!--<th>
+                        FE
+                    </th>-->
+
+                    <th>
+                        <div class="th">
+                            PO Price
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            APP /  NPP(Tax Incl.)
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Supplier
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            NPP(Tax Incl.)
+
+                        </div>
+                    </th>-->
+                    <th>
+                        <div class="th">
+                            Dis %
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Price
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Retailer Margin
+
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            MRP
+
+                        </div>
+                    </th>-->
+                    <th>
+                        <div class="th">
+                            Retailer Unit Price
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Wholesaler Margin
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Wholesaler Unit Price
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Trade Margin
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Trade Unit Price
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Update
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>
+                        {{trade.CategoryName}} /
+                        <br />{{trade.SellingSku}} /
+                        <br /> (MRP : {{trade.price}})
+                    </td>
+                    <!--<td>{{trade.SellingSku}}</td>-->
+                    <td>{{trade.SellingUnitName}}</td>
+                    <td>
+                        {{trade.Tag?trade.Tag:'--'}} /
+                        <br /> {{trade.Classification != null ? trade.Classification : "N/A"}}
+                    </td>
+                    <!--<td>{{trade.Classification != null ? trade.Classification : "N/A"}}</td>-->
+
+                    <!--<td ng-style="trade.eFutureType==null && {'background-color':'white'}  || trade.eFutureType!=null && {'background-color':'palegoldenrod'}">
+                        <span>
+                            <select class="form-control" ng-model="trade.eFutureType">
+                                <option value="" ng-selected="trade.eFutureType==null"> ---Select Type--- </option>
+                                <option value="Percentage" ng-selected="trade.eFutureType=='Percentage'"> Percentage </option>
+                                <option value="Value" ng-selected="trade.eFutureType=='Value'"> Value </option>
+                            </select>
+                        </span>
+                        <span ng-if="trade.eFutureType">
+                            <input type="number" ng-model="trade.eFutureValue">
+                        </span>
+                    </td>-->
+                    <td><input type="number" style=" width: 125px;" ng-model="trade.POPurchasePrice"></td>
+                    <td>
+                        <span class="label label-info">{{trade.AveragePurchasePrice | number : 3}} </span>
+                        / <br /> {{trade.WithTaxNetPurchasePrice}}
+                    </td>
+                    <td>
+                        <button class="btn-sm btn-danger" ng-click="EditSupplier(trade)">Edit</button>
+
+                    </td>
+                    <!--<td> {{trade.WithTaxNetPurchasePrice}} </td>-->
+                    <td><input type="number" style=" width: 75px;" ng-model="trade.Discount" value="{{trade.Discount}}"></td>
+                    <td><input type="number" style=" width: 125px;" ng-model="trade.PurchasePrice"></td>
+                    <td><input type="number" style=" width: 75px;" ng-model="trade.Margin"></td>
+                    <!--<td>{{trade.price}}</td>-->
+                    <td>{{trade.UnitPrice | number : 3}}</td>
+                    <td><input type="number" style=" width: 75px;" ng-model="trade.WholesaleMargin"></td>
+                    <td>{{trade.WholeSalePrice | number : 3}}</td>
+                    <td><input type="number" style=" width: 75px;" ng-model="trade.TradeMargin"></td>
+                    <td>{{trade.TradePrice | number : 3}}</td>
+                    <td>
+                        <button type="button" id="st{{trade.ItemId}}" class="btn btn-primary" ng-click="marginupdate(trade)">Update</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+      
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+
+
+<script type="text/ng-template" id="UpdateItemSupplier.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">update Supplier</h4>
+        </div>
+        <div class="modal-body">
+
+            <label for="site-name"> Selling Unit Name<span style="color:red;">* {{itemMasterData.SellingUnitName}}</span>  - Number(SellingSKu) : <span style="color:green;">{{itemMasterData.Number}} </span>({{itemMasterData.SellingSku}})</label><br>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Supplier:</label><br />
+                <select class="form-control" ng-model="itemMasterData.SupplierId" ng-options="suppliers.SupplierId as suppliers.Name for suppliers in supplier" ng-change="GetDepodetails(itemMasterData.SupplierId)"></select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Depo:</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.DepoId">
+                    <option value="0">--Select--</option>
+                    <option value="{{ppl.DepoId}}" ng-repeat="ppl in Depo" data-ng-selected="itemMasterData.DepoId == ppl.DepoId"> {{ppl.DepoName}} </option>
+                </select>
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="MappedSupplier(itemMasterData.ItemId,itemMasterData.DepoId,itemMasterData.SupplierId)">Save</button>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,102 @@
+﻿<style>
+    .marButton {
+        margin-top: 22px;
+        margin-left: 30px;
+    }
+</style>
+<div class="page page-table"  button-permission-binder parentName="Unit Economic" pageName="UE Report">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Unit Economic Report
+            </strong>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-inline" role="form">                        
+                        <div class="form-group">
+                            <label for="site-name">Select Hub:</label><br />
+                            <select class="form-control" id="site-name" ng-model="data.WarehouseId">
+                                <option value="">--select--</option>
+                                <option value="{{a.WarehouseId}}" ng-repeat="a in warehouses">{{a.WarehouseName}}</option>
+                            </select>
+                        </div>                        
+                        <div class="form-group">
+                            <label for="site-name">Select Label1</label><br />
+                            <div ng-dropdown-multiselect="" options="label1type" selected-model="examplemodel" extra-settings="examplesettings"></div>
+
+                        </div> 
+                        <!--<div class="form-group">
+                            <label for="site-name">Select Label2</label><br />
+                            <div ng-dropdown-multiselect="" options="label2type" selected-model="subexamplemodel" extra-settings="subexamplesettings"></div>
+
+                        </div>-->                                                    
+                        <div class="form-group">
+                            <label for="site-name">Select Date Range</label><br>
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>                       
+                        <div class="form-group">
+                            <button class="btn btn-primary marButton skimport" ng-click="genereteReport(data)">
+                                <span class="glyphicon glyphicon-plus">
+                                </span> Generate Report
+                            </button>
+                        </div>
+                        <div class="form-group" style="margin-left:40px!important">
+                            <div class="form-group">
+                                <label for="site-name">Filter:</label><br />
+                                <select class="form-control" id="site-name" ng-model="type" ng-change="changeGraph(type)">
+                                    <option value="">--select--</option>
+                                    <option value="{{a.value}}" ng-repeat="a in selType">{{a.text}}</option>
+                                </select>
+                            </div>                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+        <div class="row">
+            <div class="col">
+                <div id="chartContainer" style="height:700px!important; width: 100%;">
+                </div>
+            </div>   
+        </div><br />
+        <!--<div class="row">
+            <div class="col-md-12">
+                <table>
+                    <tr>
+                        <th class="col-md-3"></th>
+                        <th>{{data | date: "MM-yyyy"}}</th> 
+                    </tr>
+                    <tr>
+                        <td>Sales Exp</td>
+                        <td>{{}}</td>                       
+                    </tr>
+                    <tr>
+                        <td>Operation Exp</td>
+                        <td>{{}}</td>                        
+                    </tr>
+                    <tr>
+                        <td>Logistics Exp</td>
+                        <td>{{}}</td>                        
+                    </tr>
+                    <tr>
+                        <td>TotalExp</td>
+                        <td>{{}}</td>     
+                    </tr>  
+                </table>
+            </div>
+        </div>-->
+        <br />
+        <br />        
+    </section>
+</div>

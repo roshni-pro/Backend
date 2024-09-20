@@ -1,0 +1,154 @@
+﻿<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+
+<div class="page page-table"  button-permission-binder parentName="Offer" pageName="Milestone Point">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Reward Point
+            </strong>
+        </div><br />
+        <div>
+            <button class="btn btn-primary skmilestonepoint" ng-click="open()" ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )">
+                <span class="glyphicon glyphicon-plus"> </span> Milestone Point 
+            </button>
+        </div><br /><br />
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Used Reward Point
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Milestone Point
+                        </div>
+                    </th> 
+                    <th>
+                        <div class="th">
+                            Discription
+                        </div>
+                    </th>        
+                    <th ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"> 
+                        <div class="th">
+                            Active/Deactive
+                        </div>
+                    </th>  
+                    <th ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )">
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>                     
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in milestoneData">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.rPoint}}</td>
+                    <td>{{trade.mPoint}}</td>
+                    <td>get extra {{trade.mPoint}} point on {{trade.rPoint}} reward point</td>
+                    <td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )" ng-if="trade.active == false"><button class="btn-sm btn-primary skactive" ng-click="SetActive(trade)">Activate</button> </td>
+                    <td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )" ng-if="trade.active == true"><button class="btn-sm btn-danger skdeactivate" ng-click="SetActive(trade)">Deactivate</button> </td>
+                    <td ng-show="(UserRole.email== 'masteradmin@shopkirana.com' )"><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="milestoneADDModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add\Edit </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12" style="Top:20px;">
+                <div class="form-group row">
+                    <label for="site-name">Use Reward Point's :</label>
+                    <input id="site-name" type="text" class="form-control" ng-model="data.rPoint" placeholder="Enter use point" />
+                </div>
+                <div class="form-group row">
+                    <label for="site-name">Milestone Point:</label>
+                    <input id="site-name" type="text" class="form-control" ng-model="data.mPoint" placeholder="milestone point" />
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AddmilestoneData()">Save</button>
+            <br /><br />           
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myactivemodal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit OnlineItems </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="data.active" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AddmilestoneData(data)">Set</button>
+        </div>
+    </form>
+</script>
+

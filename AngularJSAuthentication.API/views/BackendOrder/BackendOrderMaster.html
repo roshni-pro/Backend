@@ -1,0 +1,2429 @@
+﻿<style>
+    .modal-dialog {
+        width: 70% !important;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<style>
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #printThisElement {
+            display: block !important;
+        }
+
+        #page-break {
+            display: block;
+            page-break-before: always;
+        }
+    }
+
+    #printThisElement {
+        display: none;
+    }
+
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    .box-size {
+        font-size: 16px !important;
+        height: 30px;
+        width: 50%;
+    }
+</style>
+<style>
+    @media print {
+        btn-sm.btn-primary.no-print {
+            display: none !important;
+        }
+
+        glyphicon.glyphicon-print.no-print {
+            display: none !important;
+        }
+    }
+
+    .modal-dialog {
+        width: 90% !important;
+    }
+</style>
+
+<div class="page page-table"  button-permission-binder parentName="Damage Stock" pageName="DS Ordered">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> Backend Created Order Master</strong>
+        </div>
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="site-name"> Zone </label><br />
+                    <select class="form-control" id="site-name" ng-model="ZoneId" ng-change="GetRegions(ZoneId)">
+                        <option value="">---Select Zone---</option>
+                        <option value="{{zone.ZoneId}}" ng-repeat="zone in zones"> {{zone.ZoneName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> Region </label><br />
+                    <select class="form-control" id="site-name" ng-model="RegionId" ng-change="GetWarehouses(RegionId)">
+                        <option value="">---Select Region---</option>
+                        <option value="{{region.RegionId}}" ng-repeat="region in regions"> {{region.RegionName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="site-name"> Hub </label><br />
+                    <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getWData(WarehouseId)">
+                        <option value="">--Select Hub--</option>
+                        <option value="{{warehouse.WarehouseId}}" ng-repeat="warehouse in warehouses">{{warehouse.WarehouseName}} </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <!--<form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">-->
+            <!--<div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-6">
+                <div class="form-group col-md-3">
+                    <label for="site-name">Enter OrderId</label><br />
+
+                    <input type="text" placeholder="search" class="form-control" ng-model="srch.orderId">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">OR Skcode</label><br />
+                    <input type="text" placeholder="search" class="form-control" ng-model="srch.skcode">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">OR ShopName</label><br />
+                    <input type="text" placeholder="search" class="form-control" ng-model="srch.shopName">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">OR Mobile</label><br />
+                    <input type="text" placeholder="search" class="form-control" ng-model="srch.mobile">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="site-name">Select Status</label><br />
+                    <select ng-model="statusname" ng-options="item.name for item in filterOptions.stores"></select>
+                </div>
+            </div>
+            <div class="form-group col-md-2">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group col-md-4">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="searchdata(Demanddata)">Search</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="exportData(DemandData)">Export to Excel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="exportDataAll(DemandData)" style="background-color:#d2a613">Export All</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="Refresh()">Refresh</button>
+
+            </div>
+        </div>-->
+            <!--<div class="form-group col-md-12 clear-both">
+            <div class="form-group  col-md-3">
+                <button class="btn btn-primary" onclick="printDi1('printThisElement')">Print All Invoice</button>
+            </div>
+            <div class="form-group  col-md-6">
+            </div>
+            <div class="form-group  col-md-3">
+                <button class="btn btn-primary" ng-click="orderAutomation()">Order Automation</button>
+            </div>
+        </div>-->
+
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                SNo.
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Order No.
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('OrderId')"
+                                      data-ng-class="{active: row == 'OrderId'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-OrderId')"
+                                      data-ng-class="{active: row == '-OrderId'}"></span>
+                            </div>
+                        </th>
+                        <!--<th>
+                        <div class="th">
+                            Order By
+                        </div>
+                    </th>-->
+                        <!--<th>
+                        <div class="th">
+                            Sales Person
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderId')"
+                                  data-ng-class="{active: row == 'OrderId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderId')"
+                                  data-ng-class="{active: row == '-OrderId'}"></span>
+                        </div>
+                    </th>-->
+                        <th>
+                            <div class="th">
+                                SK Code
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Skcode')"
+                                      data-ng-class="{active: row == 'Skcode'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Skcode')"
+                                      data-ng-class="{active: row == '-Skcode'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Shop Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('ShopName')"
+                                      data-ng-class="{active: row == 'ShopName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-ShopName')"
+                                      data-ng-class="{active: row == '-ShopName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Customer Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('Discription')"
+                                      data-ng-class="{active: row == 'Discription'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-Discription')"
+                                      data-ng-class="{active: row == '-Discription'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Warehouse Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('WarehouseName')"
+                                      data-ng-class="{active: row == 'WarehouseName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-WarehouseName')"
+                                      data-ng-class="{active: row == '-WarehouseName'}"></span>
+                            </div>
+                        </th>
+                        <!--<th>
+                        <div class="th">
+                            Customer Phone
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Discription')"
+                                  data-ng-class="{active: row == 'Discription'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Discription')"
+                                  data-ng-class="{active: row == '-Discription'}"></span>
+                        </div>
+                    </th>-->
+                        <th>
+                            <div class="th">
+                                Cluster Name
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order(' ClusterName')"
+                                      data-ng-class="{active: row == ' ClusterName'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('- ClusterName')"
+                                      data-ng-class="{active: row == '- ClusterName'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Amount
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order('GrossAmount')"
+                                      data-ng-class="{active: row == 'GrossAmount'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('-GrossAmount')"
+                                      data-ng-class="{active: row == '-GrossAmount'}"></span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Order Date
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order(' CreatedDate')"
+                                      data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('- CreatedDate')"
+                                      data-ng-class="{active: row == '- CreatedDate'}"></span>
+                            </div>
+                        </th>
+
+                        <!--<th>
+                        <div class="th">
+                            Status
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' Status')"
+                                  data-ng-class="{active: row == ' Status'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- Status')"
+                                  data-ng-class="{active: row == '- Status'}"></span>
+                        </div>
+                    </th>-->
+                        <th>
+                            <div class="th">
+                                Open order details
+                                <span class="glyphicon glyphicon-chevron-up"
+                                      data-ng-click="order(' CreatedDate')"
+                                      data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down"
+                                      data-ng-click="order('- CreatedDate')"
+                                      data-ng-class="{active: row == '- CreatedDate'}"></span>
+                            </div>
+                        </th>
+                        <!--<th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>-->
+                        <!--<th>
+                        <div class="th">
+                            Edit Status & Reason
+                        </div>
+                    </th>-->
+                        <!--<th>
+                        <div class="th">
+                            Return Order
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Comments
+                        </div>
+                    </th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="trade in customers|itemsPerPage:itemsPerPage" total-items="total_count">
+                    <tr data-ng-repeat="trade in customers" ng-include="getTemplate(trade)">
+                        <script type="text/ng-template" id="display">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.DamageOrderId}}</td>
+                            <!--<td ng-if="(trade.OrderTakenSalesPersonId > 0)">Salesperson</td>
+                        <td ng-if="(trade.OrderTakenSalesPersonId == 0)">Self</td>-->
+                            <!--<td>{{trade.SalesPerson}}</td>-->
+                            <td>{{trade.Skcode}}</td>
+                            <td>{{trade.ShopName}}</td>
+                            <td>{{trade.CustomerName}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <!--<td>{{trade.Customerphonenum}}</td>-->
+                            <td>{{trade.ClusterName}}</td>
+                            }<
+                            <!--<td>{{trade.TotalAmount}}</td>-->
+                            <td>{{trade.CreatedDate | date:'medium'}}</td>
+                            e:
+                            <td>{{trade.GrossAmount}}</td>
+                            <!--<td id="st{{trade.OrderId}}" ng-class="{canceled:(trade.Status=='Delivery Canceled'||trade.Status=='Pending'), delivered : (trade.Status=='Delivered'), redispatch :(trade.Status=='Delivery Redispatch') }">{{trade.Status}}</td>-->
+                            <td><button type="button" class="btn btn-primary" ng-click="showDetail(trade)">Open</button></td>
+                            <!--<td><button id="re{{trade.OrderId}}" class="btn-sm btn-primary" ng-show="(trade.Status == 'Pending')" ng-click="editstatus(trade)">edit</button> {{trade.ReasonCancle}}</td>
+                        <td><button type="button" class="btn btn-primary" ng-hide="trade.Status == 'sattled' ||trade.Status == 'Delivery Redispatch' || trade.Status == 'Delivered' ||trade.Status == 'Pending'||trade.Status == 'Order Canceled'||trade.Status == 'Shipped'||trade.Status == 'Issued'||trade.Status == 'Assigned' ||trade.Status == 'Account settled' ||trade.Status == 'Partial settled'||trade.Status == 'Partial receiving -Bounce'" ng-click="Return(trade)">Return</button></td>
+                        <td>{{trade.comments}}</td>-->
+                        </script>
+                        "t
+                        <script type="text/ng-template" id="edit">
+                            <td>{{$index+1}}</td>
+                            <td>{{trade.DamageOrderId}}</td>
+                            <!--<td ng-if="(trade.OrderTakenSalesPersonId > 0)">Salesperson</td>
+                        <td ng-if="(trade.OrderTakenSalesPersonId == 0)">Self</td>-->
+                            <!--<td>{{trade.SalesPerson}}</td>-->
+                            <td>{{trade.Skcode}}</td>
+                            <td>{{trade.ShopName}}</td>
+                            <td>{{trade.CustomerName}}</td>
+                            <td>{{trade.WarehouseName}}</td>
+                            <!--<td>{{trade.Customerphonenum}}</td>-->
+                            <td>{{trade.ClusterName}}</td>
+                            }<
+                            <td>{{trade.TotalAmount}}</td>
+                            <td>{{trade.CreatedDate | date:'medium'}}</td>
+                            <!--<td>{{trade.GrossAmount}}</td>-->
+                            <!--<td>
+                            <select class="form-control input-sm" ng-model="trade.Status">
+                                <option value="{{trade.Status}}">{{trade.Status}}</option>
+                                <option value="{{status.text}}" ng-repeat="status in statuses"> {{status.text}}</option>
+                            </select>
+                        </td>-->
+                            <td><button type="button" class="btn btn-primary skopen" ng-click="showDetail(trade)">Open</button></td>
+                            <!--<td>
+                            <select class="form-control input-sm" id="orderStatus" ng-if="trade.Status == 'Order Canceled'" ng-model="trade.ReasonCancle">
+                                <option value="Wrong order">Wrong order</option>
+                                <option value="Test order">Test order</option>
+                                <option value="Price issue">Price issue</option>
+                                <option value="Payment issue">Payment issue</option>
+                                <option value="No more required">No more required</option>
+                                <option value="Delivery delay">Delivery delay</option>
+                                <option value="Product unavailability">Product unavailability</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-primary saveBtn" ng-click="updatestatus(trade)" disabled>Save</button>
+                            <button type="button" class="btn btn-danger" ng-click="reset()">Cancel</button>
+                        </td>-->
+                        </script>
+
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true"
+                                     on-page-change="getData(newPageNumber)">
+                //get method call every time when page changes
+            </dir-pagination-controls>
+            <!--</form>-->
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selected"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                        entries per page
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<script type="text/ng-template" id="myModaldeleteOrderGet.html">
+    <form name="myModaldeleteOrderGet">
+        <div class="page page-table">
+            <section class="panel panel-default table-dynamic">
+                <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Order Details</strong></div>
+                <div class="panel-body">
+                    <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                        <h4 class="title">Orders</h4>
+                        <div class="form-group col-md-3">
+                            <label for="site-name"> Invoice ID  </label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="OrderData.invoice_no" disabled />
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="site-name"> Customer Name</label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="OrderData.CustomerName" disabled />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name"> Customer Phone Number</label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="OrderData.Customerphonenum" disabled />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name"> Billing Address</label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="OrderData.BillingAddress" disabled />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Shipping Address</label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="OrderData.ShippingAddress" disabled />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Total Amount</label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="OrderData.TotalAmount" disabled />
+                        </div>
+                        <table class="table table-bordered table-striped table-responsive ">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th">
+                                            Item ID
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('ItemId')"
+                                                  data-ng-class="{active: row == 'ItemId'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-ItemId')"
+                                                  data-ng-class="{active: row == '-ItemId'}"></span>
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="th">
+                                            Item Name
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('itemname')"
+                                                  data-ng-class="{active: row == 'itemname'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-itemname')"
+                                                  data-ng-class="{active: row == '-itemname'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Item Code
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('itemcode')"
+                                                  data-ng-class="{active: row == 'itemcode'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-itemcode')"
+                                                  data-ng-class="{active: row == '-itemcode'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Unit Price
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('UnitPrice')"
+                                                  data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-UnitPrice')"
+                                                  data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                           Default Unit Price
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('UnitPrice')"
+                                                  data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-UnitPrice')"
+                                                  data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            MRP Price
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('price')"
+                                                  data-ng-class="{active: row == 'price'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-price')"
+                                                  data-ng-class="{active: row == '-price'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Minimum Order Quantity
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('MinOrderQty')"
+                                                  data-ng-class="{active: row == 'MinOrderQty'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-MinOrderQty')"
+                                                  data-ng-class="{active: row == '-MinOrderQty'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Quantity
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('qty')"
+                                                  data-ng-class="{active: row == 'qty'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-qty')"
+                                                  data-ng-class="{active: row == '-qty'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Tax
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('TaxPercentage')"
+                                                  data-ng-class="{active: row == 'TaxPercentage'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-TaxPercentage')"
+                                                  data-ng-class="{active: row == '-TaxPercentage'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+
+                                        <div class="th">
+                                            Tax Amount
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('TaxAmmount')"
+                                                  data-ng-class="{active: row == 'TaxAmmount'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-TaxAmmount')"
+                                                  data-ng-class="{active: row == '-TaxAmmount'}"></span>
+                                        </div>
+                                    </th>
+
+                                    <th>
+                                        <div class="th">
+                                            Discount
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('DiscountPercentage')"
+                                                  data-ng-class="{active: row == 'DiscountPercentage'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-DiscountPercentage')"
+                                                  data-ng-class="{active: row == '-DiscountPercentage'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            NetAmmount
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('NetAmmount')"
+                                                  data-ng-class="{active: row == 'NetAmmount'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-NetAmmount')"
+                                                  data-ng-class="{active: row == '-NetAmmount'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            GrossAmmount
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order(' TotalAmt')"
+                                                  data-ng-class="{active: row == ' TotalAmt'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('- TotalAmt')"
+                                                  data-ng-class="{active: row == '- TotalAmt'}"></span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            Item Image
+                                            <span class="glyphicon glyphicon-chevron-up"
+                                                  data-ng-click="order('Itempic')"
+                                                  data-ng-class="{active: row == 'Itempic'}"></span>
+                                            <span class="glyphicon glyphicon-chevron-down"
+                                                  data-ng-click="order('-Itempic')"
+                                                  data-ng-class="{active: row == '-Itempic'}"></span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="orderDetail in orderDetails">
+                                    <td>{{orderDetail.ItemId}}</td>
+                                    <td>{{orderDetail.itemname}}</td>
+                                    <td>{{orderDetail.itemcode}}</td>
+                                    <td>{{orderDetail.UnitPrice}}</td>
+                                    <td>{{orderDetail.DefaultUnitPrice}}</td>
+                                    <td>{{orderDetail.price}}</td>
+                                    <td>{{orderDetail.MinOrderQty}}</td>
+                                    <td>{{orderDetail.qty}}</td>
+                                    <td>{{orderDetail.TaxPercentage}}</td>
+                                    <td>{{orderDetail.TaxAmmount| number:2}}</td>
+                                    <td>{{orderDetail.DiscountPercentage}}</td>
+                                    <td>{{orderDetail.NetAmmount| number:2}}</td>
+                                    <td>{{orderDetail.TotalAmt| number:2}}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <img alt="" src="{{orderDetail.Itempic}}" class="img-square img64_64">
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </form>
+</script>
+
+<script>
+    function printDi1(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+		window.location.reload();
+    }
+</script>
+
+<div id="printThisElement">
+    <form>
+        <div ng-repeat="OrderData1 in dataList">
+            <div class="containers">
+                <div class="row contact-info">
+                    <span style="float:right;padding-right:20px!important">
+                        <strong>Call : </strong>  0731-2386122
+                    </span>
+                    <hr />
+                </div><br />
+                <div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="float:left">
+                            <!--<img src="./images/logo.PNG" style="width:70%" />-->
+                            <b class="col-md-3">Invoice Id : </b><strong class="col-md-9">{{OrderData1.invoice_no}}</strong>
+                            <br />
+                            <b class="col-md-3">D Boy name : </b><strong class="col-md-9">{{OrderData1.DboyName}}</strong>
+                            <br />
+                            <b class="col-md-3">Cluster Name : </b><strong class="col-md-9">{{OrderData1.ClusterName}}</strong>
+                            <br />
+                            <b class="col-md-3">Excecutive Name : </b><strong class="col-md-9">{{OrderData1.SalesPerson}}</strong>
+                            <br />
+                            <b class="col-md-3" ng-if="OrderData1.Tin_No!=null">Ref/TIN No. : </b>
+                            <strong class="col-md-9" ng-if="OrderData1.Tin_No!=null"> {{OrderData1.Tin_No}}</strong>
+                            <br />
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="float:right!important;">
+
+                            <span>Gstin Number : </span><u></u>
+                            <strong>   ShopKirana E Trading Pvt. Ltd.</strong><br />
+                            <span>TIN Number : </span><u>23489146465</u><br />
+                            <span>Address :</span> 08 Scheme no 71, Sector-D, <br />
+                            Near Vedant Hospital, Indore, MP
+                        </div>
+                    </div>
+                </div><br />
+                <div class="row text-center contact-info">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row pad-top-botm client-info" style="height:160px;">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="width:100% !important">
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="float:left">
+                            <h4>  <strong>Client Information</strong></h4>
+                            <b>Shop Name :</b>
+                            <strong style="font-size: 11px; padding-left:10px!important">{{OrderData1.ShopName}}</strong>
+                            <br />
+                            <b>SK Code :</b>
+                            <strong style="font-size: 14px; padding-left:10px!important"> {{OrderData1.Skcode}}</strong>
+                            <br />
+                            <b>Customer Name :</b>
+                            <strong style="font-size: 13px; padding-left:10px!important"> {{OrderData1.CustomerName}}</strong>
+                            <br />
+                            <b>Mobile :</b>
+                            <strong style="font-size: 13px; padding-left:10px!important">{{OrderData1.Customerphonenum}}</strong>
+                            <br />
+                            <b>Address :</b>
+                            <span style="padding-left:12px!important">{{OrderData1.BillingAddress}}</span>
+                            <br />
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="float:right">
+                            <h4><strong>Payment Details </strong></h4>
+                            <b class="col-md-3">Bill Amount :</b>
+                            <strong class="col-md-9" style="font-size: 12px;"> {{OrderData1.GrossAmount | number:0}}&nbsp;<i class="fa fa-inr"></i></strong>
+                            <br />
+                            <b class="col-md-3">Bill Date :</b>
+                            <span class="col-md-9" style="font-size: 12px;">{{OrderData1.OrderedDate}}</span>
+                        </div>
+                    </div>
+                </div><br /><hr /><br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" style="font-size:10px!important;">
+                                    <thead class="">
+                                        <tr>
+                                            <th class="">S. no.</th>
+                                            <th class="">Item Name.</th>
+                                            <th class="">MRP.</th>
+                                            <th class="">Unit Price.</th>
+                                            <th class="">MOQ</th>
+                                            <th class="">Peti/Outer/Qty.</th>
+                                            <th class="">Total Qty(pcs)</th>
+                                            <th class="">Tax %</th>
+                                            <th class="">Total Amt. inc Tax</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="">
+                                        <tr data-ng-repeat="orderDetail in OrderData1.orderDetails">
+                                            <td>{{$index +1}}</td>
+                                            <td>{{orderDetail.itemname}}</td>
+                                            <td>{{orderDetail.price}}</td>
+                                            <td>{{orderDetail.UnitPrice}}</td>
+                                            <td>{{orderDetail.MinOrderQty}}</td>
+                                            <td>{{orderDetail.qty/orderDetail.MinOrderQty}}</td>
+                                            <td>{{orderDetail.Noqty}}</td>
+                                            <td>{{orderDetail.TaxPercentage}}
+                                            <td>{{orderDetail.TotalAmt}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="ttl-amts">
+
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive col-md-6 col-lg-6 col-sm-6 col-xs-6 taxtable" style="float:left!important">
+                            <div class="table-responsive">
+                                <!--<table class="table table-bordered" style="font-size:10px!important;">
+                                    <thead>
+                                        <tr>
+                                            <th>S. no.</th>
+                                            <th>Tax %</th>
+                                            <th>Sale</th>
+                                            <th>Tax Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in data1">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{item.TaxPercentage}}</td>
+                                            <td>{{item.itmQty1}}</td>
+                                            <td>{{item.TaxAmt1 | number:2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>-->
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" style="float:left!important ;font-size:12px;">
+                            <strong>Total Amount Incl. Tax : {{(OrderData1.TotalAmount - OrderData1.deliveryCharge)| number:2}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Discount : {{OrderData1.DiscountAmount | number:2}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Total Tax Amount : {{OrderData1.TaxAmount | number:2}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Delivery Charge : {{OrderData1.deliveryCharge | number:0}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Wallet Amount used  : {{OrderData1.WalletAmount | number:0}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Net Amount (Rounded Off) : {{OrderData1.GrossAmount | number:0}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                        </div>
+                    </div>
+                </div>
+                <hr /><hr />
+                <br />
+                <div class="row client-info col-md-12 col-lg-12 col-xs-12" style="width:100% !important">
+                    <div class="col-md-12 col-lg-12 col-xs-12" style="width:100% !important">
+                        <div class="col-md-8 col-lg-8 col-xs-8" style="float:left;font-size: 11px;">
+                            <h5><strong>Others Coments</strong></h5>
+                            <div style="font-size: 12px;">1.Payment to be made by cash on delivery or Cheque.(Same day only).</div>
+                            <div style="font-size: 12px;">2.Cheques Payable to ShopKirana E Trading Pvt. Ltd.</div>
+                            <div style="font-size: 12px;">3.Only same day cheques are accepted.</div>
+                            <div style="font-size: 12px;">4.Cheques retrun charges Rs.200 to Rs.400 </div>
+                            <div style="font-size: 12px;">5.Cheques are accepted above 5,000.00 only.</div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="float:right;">
+                            <img src="./images/logo.PNG" style="width:200px;" />
+                        </div>
+                    </div>
+
+                </div><br />
+            </div>
+            <footer style="page-break-before: always;"></footer>
+        </div>
+    </form>
+</div>
+
+<!--merge modal-->
+<script type="text/ng-template" id="myOrderdetail.html">
+    <form name="myModaldeleteOrder">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Order Details </h4>
+        </div>
+        <div class="modal-body">
+            <div class="page page-table">
+                <section class="panel panel-default table-dynamic" ng-show="(OrderData.Status == 'Pending'|| OrderData.Status == 'Order Canceled')">
+                    <div class="panel-heading text-center" style="background-color:#ff6a00;color:aliceblue;">
+                        <strong>
+                            <span class="glyphicon glyphicon-th"></span>Damage Order Details
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                            <h4 class="title">Initial Orders... </h4>
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Invoice ID  </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.invoice_no" disabled />
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Customer Name</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.CustomerName" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Customer Phone Number</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.Customerphonenum" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Billing Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.BillingAddress" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Shipping Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.ShippingAddress" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Bill Amount</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData.GrossAmount" disabled />
+                            </div>
+                            <!--<div class="form-group col-md-3" ng-show="count">
+
+                                <b>Select Delivery Boy:</b><br />
+                                <select id="dpd" class="form-control dropdown-header" ng-model="Dboy" ng-change="selcteddboy(Dboy)" style="margin-top: 1%;">
+                                    <option ng-repeat="boy in User | filter:{ Department:'Delivery Boy'}" ng-selected="{{ boy.DisplayName == DBname }}" value="{{boy}}">{{boy.PeopleFirstName}}&nbsp;{{boy.PeopleLastName}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <b>Delivery By:</b><br /><h3>{{DBname}}</h3>
+                            </div>-->
+
+                            <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                Item ID
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('ItemId')"
+                                                      data-ng-class="{active: row == 'ItemId'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-ItemId')"
+                                                      data-ng-class="{active: row == '-ItemId'}"></span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="th">
+                                                Item Name
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemname')"
+                                                      data-ng-class="{active: row == 'itemname'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemname')"
+                                                      data-ng-class="{active: row == '-itemname'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Code
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemcode')"
+                                                      data-ng-class="{active: row == 'itemcode'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemcode')"
+                                                      data-ng-class="{active: row == '-itemcode'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Unit Price
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('UnitPrice')"
+                                                      data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-UnitPrice')"
+                                                      data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Default Unit Price
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('UnitPrice')"
+                                                      data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-UnitPrice')"
+                                                      data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                MRP Price
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('price')"
+                                                      data-ng-class="{active: row == 'price'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-price')"
+                                                      data-ng-class="{active: row == '-price'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                MOQ
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('MinOrderQty')"
+                                                      data-ng-class="{active: row == 'MinOrderQty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-MinOrderQty')"
+                                                      data-ng-class="{active: row == '-MinOrderQty'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Quantity
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('qty')"
+                                                      data-ng-class="{active: row == 'qty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-qty')"
+                                                      data-ng-class="{active: row == '-qty'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Amt Without Tax & Disc.
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('AmtWithoutTaxDisc')"
+                                                      data-ng-class="{active: row == 'AmtWithoutTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-AmtWithoutTaxDisc')"
+                                                      data-ng-class="{active: row == '-AmtWithoutTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Amount w/o tax after discount (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('AmtWithoutAfterTaxDisc')"
+                                                      data-ng-class="{active: row == 'AmtWithoutAfterTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-AmtWithoutAfterTaxDisc')"
+                                                      data-ng-class="{active: row == '-AmtWithoutAfterTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                vat Tax
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TaxPercentage')"
+                                                      data-ng-class="{active: row == 'TaxPercentage'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TaxPercentage')"
+                                                      data-ng-class="{active: row == '-TaxPercentage'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Tax amount (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TaxAmmount')"
+                                                      data-ng-class="{active: row == 'TaxAmmount'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TaxAmmount')"
+                                                      data-ng-class="{active: row == '-TaxAmmount'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Total Amount After Tax Disc (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TotalAmountAfterTaxDisc')"
+                                                      data-ng-class="{active: row == 'TotalAmountAfterTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TotalAmountAfterTaxDisc')"
+                                                      data-ng-class="{active: row == '-TotalAmountAfterTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Total Amount Incl. Tax
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TotalAmt')"
+                                                      data-ng-class="{active: row == 'TotalAmt'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TotalAmt')"
+                                                      data-ng-class="{active: row == '-TotalAmt'}"></span>
+                                            </div>
+                                        </th>
+                                        <!--<th>
+                                            <div class="th">
+                                                Item Image
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('Itempic')"
+                                                      data-ng-class="{active: row == 'Itempic'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-Itempic')"
+                                                      data-ng-class="{active: row == '-Itempic'}"></span>
+                                            </div>
+                                        </th>-->
+                                        <!--<th>
+                                            <div class="th">
+                                                Delete
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('CurrentStock')"
+                                                      data-ng-class="{active: row == 'Delete'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-CurrentStock')"
+                                                      data-ng-class="{active: row == '-Delete'}"></span>
+                                            </div>
+                                        </th>-->
+                                        <!--<th>
+                                            <div class="th">
+                                                CurrentStock
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('CurrentStock')"
+                                                      data-ng-class="{active: row == 'CurrentStock'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-CurrentStock')"
+                                                      data-ng-class="{active: row == '-CurrentStock'}"></span>
+                                            </div>
+                                        </th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="orderDetail in orderDetails" ng-style="set_color(orderDetail)">
+                                        <td>{{orderDetail.ItemId}}</td>
+                                        <td>{{orderDetail.itemname}}</td>
+                                        <td>{{orderDetail.itemcode}}</td>
+                                        <td>{{orderDetail.UnitPrice}}</td>
+                                        <td>{{orderDetail.DefaultUnitPrice}}</td>
+                                        <td>{{orderDetail.price}}</td>
+                                        <td>{{orderDetail.MinOrderQty}}</td>
+                                        <td>{{orderDetail.qty}}</td>
+                                        <td>{{orderDetail.AmtWithoutTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.AmtWithoutAfterTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.TaxPercentage | number: 2}}</td>
+                                        <td>{{orderDetail.TaxAmmount | number: 2}}</td>
+                                        <td>{{orderDetail.TotalAmountAfterTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.TotalAmt | number: 2}}</td>
+                                        <!--<td>
+                                            <div class="form-group">
+                                                <img alt="" src="{{orderDetail.Itempic}}" class="img-square img64_64">
+                                            </div>
+                                        </td>-->
+                                        <!--<td><input id="{{orderDetail.ItemId}}" type="checkbox" value="" class="" ng-model="orderDetail.isDeleted" /></td>-->
+                                        <!--<td>{{orderDetail.CurrentStock | number: 2}}</td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <!--<div class="col-md-2">
+                                    <button ng-show="OrderData.Status == 'Pending'" class="btn-sm btn-primary" ng-click="freeitem1(OrderData)">Add Free Item</button>
+                                </div>-->
+                                <!--<div class="col-md-3" ng-if="isShoW">
+                                    <table class="table table-bordered table-responsive" style="color:black">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="th">
+                                                        S_No.
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Item Name
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Quantity
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Total Amount
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-ng-repeat="f in freeitem">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{f.itemname}}</td>
+                                                <td>{{f.TotalQuantity}}</td>
+                                                <td>{{f.Amount}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--<div class="col-md-2">
+                                    <button id="btnSave" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-show="OrderData.Status == 'Pending'" ng-click="save(orderDetail)">Save Dispatched Order</button>
+                                </div>-->
+                                <div class="col-md-2">
+                                    <button class="btn-sm btn-primary" ng-click="showInvoice(orderDetails)"> Invoice</button>
+                                </div>
+                                <!--<div class="col-md-1">
+                                    Discount
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-control" id="site-name" ng-model="selectedpramotion">
+                                        <option value="">---SELECT---</option>
+                                        <option value="{{pramotion.PramotionalDiscount}}" ng-repeat="pramotion in pramotions"> {{pramotion.title}}</option> 
+                                    </select>
+                                </div>-->
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <!--ng-if="dispatchtable"-->
+                <section class="panel panel-default table-dynamic" ng-show="(OrderData.Status == 'Issued' ||OrderData.Status == 'Ready to Dispatch'|| OrderData.Status == 'Delivery Canceled' ||OrderData.Status == 'Shipped'|| OrderData.Status == 'Delivery Redispatch' || OrderData.Status == 'Delivered' ||OrderData.Status == 'Account settled')">
+                    <div class="panel-heading text-center" style="background-color:#0094ff;color:aliceblue;">
+                        <strong>
+                            <span class="glyphicon glyphicon-th"></span> Order Dispatched
+                        </strong>
+                    </div>
+                    <div class="panel-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                            <h4 class="title">Orders... {{OrderData1.Status}}</h4>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Invoice ID  </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.invoice_no" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Customer Name</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.CustomerName" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Customer Phone Number</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.Customerphonenum" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Billing Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.BillingAddress" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Shipping Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.ShippingAddress" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Bill Amount</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.GrossAmount" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <b>Select Delivery Boy For ReDispatch:</b><br />
+                                <select class="form-control dropdown-header" ng-model="Dboy" style="margin-top: 1%;">
+                                    <option ng-repeat="boy in User | filter:{ Type:'Delivery Boy'}" ng-selected="{{ boy.DisplayName == DBname }}" value="{{boy}}">{{boy.PeopleFirstName}}&nbsp;{{boy.PeopleLastName}}</option>
+                                </select>
+                                <br />
+                                <button class="btn-sm btn-primary" ng-disabled="!(OrderData.Status == 'Ready to Dispatch')" ng-hide="ReDispatchButton" ng-click="ReDispatch(Dboy)"> Re-Dispatch</button> <br />
+                                <button class="btn-sm btn-primary" ng-click="viewsign()"> View sign</button> <br />
+
+                                Re-Dispatch count : {{OrderData1.ReDispatchCount}}
+                            </div>
+                            <div class="form-group col-md-3">
+                                <b>Delivery By:</b><br /><h3>{{DBname}}</h3>
+                            </div>
+
+                            <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                Item ID
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('ItemId')"
+                                                      data-ng-class="{active: row == 'ItemId'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-ItemId')"
+                                                      data-ng-class="{active: row == '-ItemId'}"></span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="th">
+                                                Item Name
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemname')"
+                                                      data-ng-class="{active: row == 'itemname'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemname')"
+                                                      data-ng-class="{active: row == '-itemname'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Code
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemcode')"
+                                                      data-ng-class="{active: row == 'itemcode'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemcode')"
+                                                      data-ng-class="{active: row == '-itemcode'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Unit Price
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('UnitPrice')"
+                                                      data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-UnitPrice')"
+                                                      data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                MRP Price
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('price')"
+                                                      data-ng-class="{active: row == 'price'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-price')"
+                                                      data-ng-class="{active: row == '-price'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                MOQ
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('MinOrderQty')"
+                                                      data-ng-class="{active: row == 'MinOrderQty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-MinOrderQty')"
+                                                      data-ng-class="{active: row == '-MinOrderQty'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Quantity
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('qty')"
+                                                      data-ng-class="{active: row == 'qty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-qty')"
+                                                      data-ng-class="{active: row == '-qty'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Amt Without Tax & Disc.
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('AmtWithoutTaxDisc')"
+                                                      data-ng-class="{active: row == 'AmtWithoutTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-AmtWithoutTaxDisc')"
+                                                      data-ng-class="{active: row == '-AmtWithoutTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Amount w/o tax after discount (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('AmtWithoutAfterTaxDisc')"
+                                                      data-ng-class="{active: row == 'AmtWithoutAfterTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-AmtWithoutAfterTaxDisc')"
+                                                      data-ng-class="{active: row == '-AmtWithoutAfterTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                vat Tax
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TaxPercentage')"
+                                                      data-ng-class="{active: row == 'TaxPercentage'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TaxPercentage')"
+                                                      data-ng-class="{active: row == '-TaxPercentage'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Tax amount (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TaxAmmount')"
+                                                      data-ng-class="{active: row == 'TaxAmmount'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TaxAmmount')"
+                                                      data-ng-class="{active: row == '-TaxAmmount'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Total Amount After Tax Disc (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TotalAmountAfterTaxDisc')"
+                                                      data-ng-class="{active: row == 'TotalAmountAfterTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TotalAmountAfterTaxDisc')"
+                                                      data-ng-class="{active: row == '-TotalAmountAfterTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Total Amount Incl. Tax
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TotalAmt')"
+                                                      data-ng-class="{active: row == 'TotalAmt'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TotalAmt')"
+                                                      data-ng-class="{active: row == '-TotalAmt'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Image
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('Itempic')"
+                                                      data-ng-class="{active: row == 'Itempic'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-Itempic')"
+                                                      data-ng-class="{active: row == '-Itempic'}"></span>
+                                            </div>
+                                        </th>
+                                        <!--<th>
+                                            <div class="th">
+                                                Delete
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('CurrentStock')"
+                                                      data-ng-class="{active: row == 'Delete'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-CurrentStock')"
+                                                      data-ng-class="{active: row == '-Delete'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                CurrentStock
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('CurrentStock')"
+                                                      data-ng-class="{active: row == 'CurrentStock'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-CurrentStock')"
+                                                      data-ng-class="{active: row == '-CurrentStock'}"></span>
+                                            </div>
+                                        </th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="orderDetail in orderDetailsDisp" ng-style="set_color(orderDetail)">
+                                        <td>{{orderDetail.ItemId}}</td>
+                                        <td>{{orderDetail.itemname}}</td>
+                                        <td>{{orderDetail.itemcode}}</td>
+                                        <td>{{orderDetail.UnitPrice}}</td>
+                                        <!--<td><input type="number" value="{{orderDetail.price}}" ng-model="orderDetail.price" style="width:60px;" /></td>-->
+                                        <td>{{orderDetail.price}}</td>
+                                        <td>{{orderDetail.MinOrderQty}}</td>
+                                        <!--<td><input type="number" value="{{orderDetail.qty}}" ng-model="orderDetail.qty" style="width:60px;" /></td>-->
+                                        <td>{{orderDetail.qty}}</td>
+                                        <td>{{orderDetail.AmtWithoutTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.AmtWithoutAfterTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.TaxPercentage | number: 2}}</td>
+                                        <td>{{orderDetail.TaxAmmount | number: 2}}</td>
+                                        <td>{{orderDetail.TotalAmountAfterTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.TotalAmt | number: 2}}</td>
+                                        <td>
+                                            <div class="form-group">
+                                                <img alt="" src="{{orderDetail.Itempic}}" class="img-square img64_64">
+                                            </div>
+                                        </td>
+                                        <!--<td><input id="{{orderDetail.ItemId}}" type="checkbox" value="" class="" ng-model="orderDetail.isDeleted" /></td>
+                                        <td>{{orderDetail.CurrentStock | number: 2}}</td>-->
+
+                                    </tr>
+                                    <tr ng-if="myVar"><td colspan="16" style="text-align:center;color:#ff0000"><b>Return list</b></td></tr>
+                                    <tr data-ng-repeat="orderDetail in orderDetailsR" ng-style="set_color(orderDetail)" ng-if="myVar">
+                                        <td>{{orderDetail.ItemId}}</td>
+                                        <td>{{orderDetail.itemname}}</td>
+                                        <td>{{orderDetail.itemcode}}</td>
+                                        <td>{{orderDetail.UnitPrice}}</td>
+                                        <td>{{orderDetail.price}}</td>
+                                        <td>{{orderDetail.MinOrderQty}}</td>
+                                        <td>{{orderDetail.qty}}</td>
+                                        <!--<td>{{orderDetail.TaxPercentage}}</td>
+                                        <td>{{orderDetail.TaxAmmount}}</td>
+                                        <td>{{orderDetail.DiscountPercentage}}</td>
+                                        <td>{{orderDetail.NetAmmount}}</td>
+                                        <td>{{orderDetail.TotalAmt}}</td>-->
+                                        <!--<input type="number" value="{{PurchaseorderDetail.PriceRecived}}" ng-model="PurchaseorderDetail.PriceRecived" style="width:60px;" />-->
+                                        <!--<td>
+                                            <div class="form-group">
+                                                <img alt="" src="{{orderDetail.Itempic}}" class="img-square img64_64">
+                                            </div>
+                                        </td>-->
+                                        <!--<td><input id="{{orderDetail.ItemId}}" type="checkbox" value="" class="" ng-model="orderDetail.isDeleted" /></td>
+                                        <td>{{orderDetail.CurrentStock}}</td>-->
+                                        <!--<td>{{orderDetail.CreatedDate | date:'medium'}}</td>
+                                        <td>{{orderDetail.UpdatedDate | date:'medium'}}</td>-->
+                                    </tr>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <button ng-if="OrderData.Status == 'Ready to Dispatch'" class="btn-sm btn-primary" ng-click="freeitem1(OrderData)">Add Free Item</button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn-sm btn-primary" ng-click="showInvoiceDispatch(orderDetailsDisp,OrderData1)">Invoice Dispatch</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" ng-show="(OrderData1.Status =='Delivered')">
+                                    <input type="checkbox" ng-hide="Finalbutton" ng-model="finalpayment" ng-init="finalpayment = false" /><strong> <span ng-hide="Finalbutton">Sattled Payment?</span></strong>
+                                </div>
+                                <div class="col-md-2" ng-if="isShoW">
+                                    <table class="table table-bordered table-responsive" style="color:black">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="th">
+                                                        S_No.
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Item Name
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Quantity
+                                                    </div>
+                                                </th>
+                                                <
+                                                <th>
+                                                    <div class="th">
+                                                        Total Amount
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr data-ng-repeat="f in freeitem">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{f.itemname}}</td>
+                                                <td>{{f.TotalQuantity}}</td>
+                                                <td>{{f.Amount}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="container" style="background-color:khaki" ng-if="finalpayment">
+                        <div class="panel-heading text-center">Payment Detail</div>
+                        <div class="panel-body">
+
+
+
+                            <div class="form-group col-md-6">
+                                <label for="site-name"> CheckNo </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="Payments.CheckNo" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="site-name"> CheckAmount </label><br />
+                                <input id="site-name" type="number" class="form-control" ng-model="Payments.CheckAmount" />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="site-name"> Electronic PaymentNo (credit/debit no) </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="Payments.ElectronicPaymentNo" />
+                            </div>
+                            <div class="form-group col-md-6">
+
+                                <label for="site-name"> Electronic Amount</label><br />
+                                <input id="site-name" type="number" class="form-control" ng-model="Payments.ElectronicAmount" />
+                            </div>
+                            <div class="form-group col-md-6">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="site-name">Cash Amount</label><br />
+                                <input id="site-name" type="number" class="form-control" ng-model="Payments.CashAmount" />
+                                <label for="site-name">&nbsp;</label><br />
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="site-name">Due Amount </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.GrossAmount" disabled />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="site-name">Paid Amount </label><br />
+                                <label for="site-name">{{ settleAmount()}} </label>
+                            </div>
+                        </div>
+
+                        <div ng-show="duensettleequal()" style="background-color:khaki" class="panel-footer text-center"><button class="btn-sm btn-primary" ng-click="SaveFinalSattled(Payments)">Final Sattled</button></div>
+                    </div>
+                    <!--TO SHOW PAYMENT-->
+                    <!--<div class="container" style="background-color:khaki" ng-if="SHOWPAYMENT">
+                        <div class="panel-heading text-center">Payment Detail</div>
+                        <div class="panel-body">
+
+                            <div class="form-group center-block col-md-3">
+                                <label for="site-name">Payment Amount </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="SHOWPAYMENTTABLE.PaymentAmount" disabled />
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> CheckNo </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="SHOWPAYMENTTABLE.CheckNo" disabled />
+                                <label for="site-name"> CheckAmount </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="SHOWPAYMENTTABLE.CheckAmount" disabled />
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Electronic PaymentNo (credit/debit no) </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="SHOWPAYMENTTABLE.ElectronicPaymentNo" disabled />
+                                <label for="site-name"> Electronic Amount</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="SHOWPAYMENTTABLE.ElectronicAmount" disabled />
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Cash Amount</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="SHOWPAYMENTTABLE.CashAmount" disabled />
+                                <label for="site-name">&nbsp;</label><br />
+                                <button class="btn-sm btn-primary" ng-click="SaveFinalSattled(Payments)">Final Sattled</button>
+                            </div>
+
+                        </div>
+                    </div>-->
+                </section>
+
+                <section class="panel panel-default table-dynamic" ng-if="finaltable" ng-show="(OrderData1.Status =='sattled'||OrderData.Status == 'Delivered')">
+                    <div class="panel-heading text-center" style="background-color:#f85c9f;color:aliceblue;">
+                        <strong>
+                            <span class="glyphicon glyphicon-th"></span> Final Order Dispatched
+                        </strong>
+                    </div>
+
+
+                    <div class="panel-body">
+                        <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+
+                            <h4 class="title">Orders... </h4>
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Invoice ID  </label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.invoice_no" disabled />
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Customer Name</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.CustomerName" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Customer Phone Number</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.Customerphonenum" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name"> Billing Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.BillingAddress" disabled />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="site-name">Shipping Address</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="OrderData1.ShippingAddress" disabled />
+                            </div>
+                            <!--<div class="form-group col-md-3" ng-hide="finalLast">
+                                <label for="site-name">Total Amount</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="SHOWPAYMENTTABLE.GrossAmount" disabled />
+                            </div>-->
+                            <div class="form-group col-md-3" ng-hide="showpaybleButton">
+                                <label for="site-name">Bill Amount</label><br />
+                                <input id="site-name" type="text" class="form-control" value="{{SHOWPAYMENTTABLE.GrossAmount | number:0}}" disabled />
+                            </div>
+                            <div class="form-group col-md-3" ng-hide="myMasterbutton">
+                                <label for="site-name"><span ng-hide="myMasterbutton">Bill Amount</span> </label><br />
+                                <input id="site-name" type="text" class="form-control" value="{{myMaster.GrossAmount | number:0}}" disabled />
+                            </div>
+                            <div class="form-group col-md-3" ng-hide="finalLastReturn">
+                                <label for="site-name">Total AmountLAST</label><br />
+                                <input id="site-name" type="text" class="form-control" ng-model="finalAmountLAST" disabled />
+                            </div>
+                            <!--<div class="form-group col-md-3" ng-show="count">
+                                <b>Select Delivery Boy:</b><br />
+                                <select id="dpd" class="form-control dropdown-header" ng-model="Dboy">
+                                    <option ng-repeat="boy in User | filter:{ Type:'Delivery Boy'}" ng-selected="{{ boy.DisplayName == DBname }}" value="{{boy}}">{{boy.PeopleFirstName}}&nbsp;{{boy.PeopleLastName}}</option>
+                                </select>
+                            </div>-->
+                            <!--<div class="form-group col-md-3">
+                                <b>Delivery By:</b><br /><h3>{{DBname}}</h3>
+                            </div>-->
+
+                            <table id="tbl" class="table table-bordered table-responsive" style="color:black">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+                                                Item ID
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('ItemId')"
+                                                      data-ng-class="{active: row == 'ItemId'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-ItemId')"
+                                                      data-ng-class="{active: row == '-ItemId'}"></span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="th">
+                                                Item Name
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemname')"
+                                                      data-ng-class="{active: row == 'itemname'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemname')"
+                                                      data-ng-class="{active: row == '-itemname'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Code
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('itemcode')"
+                                                      data-ng-class="{active: row == 'itemcode'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-itemcode')"
+                                                      data-ng-class="{active: row == '-itemcode'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Unit Price
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('UnitPrice')"
+                                                      data-ng-class="{active: row == 'UnitPrice'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-UnitPrice')"
+                                                      data-ng-class="{active: row == '-UnitPrice'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                MRP Price
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('price')"
+                                                      data-ng-class="{active: row == 'price'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-price')"
+                                                      data-ng-class="{active: row == '-price'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                MOQ
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('MinOrderQty')"
+                                                      data-ng-class="{active: row == 'MinOrderQty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-MinOrderQty')"
+                                                      data-ng-class="{active: row == '-MinOrderQty'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Quantity
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('qty')"
+                                                      data-ng-class="{active: row == 'qty'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-qty')"
+                                                      data-ng-class="{active: row == '-qty'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Amt Without Tax & Disc.
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('AmtWithoutTaxDisc')"
+                                                      data-ng-class="{active: row == 'AmtWithoutTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-AmtWithoutTaxDisc')"
+                                                      data-ng-class="{active: row == '-AmtWithoutTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Amount w/o tax after discount (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('AmtWithoutAfterTaxDisc')"
+                                                      data-ng-class="{active: row == 'AmtWithoutAfterTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-AmtWithoutAfterTaxDisc')"
+                                                      data-ng-class="{active: row == '-AmtWithoutAfterTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                vat Tax
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TaxPercentage')"
+                                                      data-ng-class="{active: row == 'TaxPercentage'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TaxPercentage')"
+                                                      data-ng-class="{active: row == '-TaxPercentage'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Tax amount (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TaxAmmount')"
+                                                      data-ng-class="{active: row == 'TaxAmmount'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TaxAmmount')"
+                                                      data-ng-class="{active: row == '-TaxAmmount'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Total Amount After Tax Disc (hidden)
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TotalAmountAfterTaxDisc')"
+                                                      data-ng-class="{active: row == 'TotalAmountAfterTaxDisc'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TotalAmountAfterTaxDisc')"
+                                                      data-ng-class="{active: row == '-TotalAmountAfterTaxDisc'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Total Amount Incl. Tax
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('TotalAmt')"
+                                                      data-ng-class="{active: row == 'TotalAmt'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-TotalAmt')"
+                                                      data-ng-class="{active: row == '-TotalAmt'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Item Image
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('Itempic')"
+                                                      data-ng-class="{active: row == 'Itempic'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-Itempic')"
+                                                      data-ng-class="{active: row == '-Itempic'}"></span>
+                                            </div>
+                                        </th>
+                                        <!--<th>
+                                            <div class="th">
+                                                Delete
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('CurrentStock')"
+                                                      data-ng-class="{active: row == 'Delete'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-CurrentStock')"
+                                                      data-ng-class="{active: row == '-Delete'}"></span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                CurrentStock
+                                                <span class="glyphicon glyphicon-chevron-up"
+                                                      data-ng-click="order('CurrentStock')"
+                                                      data-ng-class="{active: row == 'CurrentStock'}"></span>
+                                                <span class="glyphicon glyphicon-chevron-down"
+                                                      data-ng-click="order('-CurrentStock')"
+                                                      data-ng-class="{active: row == '-CurrentStock'}"></span>
+                                            </div>
+                                        </th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="orderDetail in orderDetailsFinal" ng-style="set_color(orderDetail)">
+                                        <td>{{orderDetail.ItemId}}</td>
+                                        <td>{{orderDetail.itemname}}</td>
+                                        <td>{{orderDetail.itemcode}}</td>
+                                        <td>{{orderDetail.UnitPrice}}</td>
+                                        <td>{{orderDetail.price}}</td>
+                                        <td>{{orderDetail.MinOrderQty}}</td>
+                                        <td>{{orderDetail.qty}}</td>
+                                        <td>{{orderDetail.AmtWithoutTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.AmtWithoutAfterTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.TaxPercentage | number: 2}}</td>
+                                        <td>{{orderDetail.TaxAmmount | number: 2}}</td>
+                                        <td>{{orderDetail.TotalAmountAfterTaxDisc | number: 2}}</td>
+                                        <td>{{orderDetail.TotalAmt | number: 2}}</td>
+
+
+                                        <td>
+                                            <div class="form-group">
+                                                <img alt="" src="{{orderDetail.Itempic}}" class="img-square img64_64">
+                                            </div>
+                                        </td>
+
+                                        <!--<td><input id="{{orderDetail.ItemId}}" type="checkbox" value="" class="" ng-model="orderDetail.isDeleted" /></td>
+                                        <td>{{orderDetail.CurrentStock | number: 2}}</td>-->
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div>
+                                    <button class="btn-sm btn-primary" ng-click="showInvoiceDispatch(orderDetailsFinal,SHOWPAYMENTTABLE)">Final Invoice</button>
+                                    <button class="btn-sm btn-primary" ng-hide="FinalinvoiceButtonWithoutMasterLast" ng-click="showInvoiceWithoutMasterFinal()">Final Invoice withoutmaster</button>
+                                    <div class="col-md-6" ng-show="(OrderData1.Status =='Delivered')">
+                                        <input type="checkbox" ng-show="" ng-hide="FinalbuttonLAST" style="margin-left: 4%;" ng-model="finalpaymentLAST" ng-init="finalpaymentLAST = false" /><strong><span ng-hide="FinalbuttonLAST">Sattled Payment?</span> </strong>
+                                    </div>
+                                    <div class="col-md-2" ng-if="isShoW">
+                                        <table class="table table-bordered table-responsive" style="color:black">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="th">
+                                                            S_No.
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="th">
+                                                            Item Name
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="th">
+                                                            Quantity
+                                                        </div>
+                                                    </th>
+                                                    <th>
+                                                        <div class="th">
+                                                            Total Amount
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr data-ng-repeat="f in freeitem">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{f.itemname}}</td>
+                                                    <td>{{f.TotalQuantity}}</td>
+                                                    <td>{{f.Amount}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="container" style="background-color:khaki" ng-if="finalpaymentLAST">
+                            <div class="panel-heading text-center">Payment Detail</div>
+
+                            <div class="panel-body">
+                                <div class="col-sm-6">
+
+                                    <label for="site-name"> CheckNo </label>
+                                    <input id="site-name" type="text" class="form-control" ng-model="PaymentsLAST.CheckNo" />
+
+                                    <br />
+
+                                    <label for="site-name"> Electronic PaymentNo (credit/debit no) </label>
+                                    <input id="site-name" type="text" class="form-control" ng-model="PaymentsLAST.ElectronicPaymentNo" />
+                                    <br />
+
+                                    <label for="site-name">Due Amount </label>
+                                    <input id="site-name" type="text" class="form-control" value="{{myMaster.GrossAmount | number:0}}" disabled />
+                                    <br />
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <label for="site-name"> CheckAmount </label>
+                                    <input id="site-name" type="number" class="form-control" ng-if="PaymentsLAST.CheckNo" ng-model="PaymentsLAST.CheckAmount" />&nbsp;
+                                    <br />
+
+                                    <label for="site-name"> Electronic Amount</label>
+                                    <input id="site-name" type="number" class="form-control" ng-if="PaymentsLAST.ElectronicPaymentNo" ng-model="PaymentsLAST.ElectronicAmount" />&nbsp;
+                                    <br />
+
+                                    <label for="site-name">Cash Amount</label>
+                                    <input id="site-name" type="number" class="form-control" ng-model="PaymentsLAST.CashAmount" />
+                                    <label for="site-name">&nbsp;</label><br />
+                                    <br />
+
+                                    <label for="site-name">Paid Amount </label>
+                                    <label for="site-name">{{ settleAmountLast()}} </label>
+                                    <br />
+                                </div>
+
+                                <hr /><hr /><hr />
+
+                            </div>
+                            <div ng-show="duensettleequalLAST()" style="background-color:khaki" class="panel-footer text-center"><button class="btn-sm btn-primary" ng-click="SaveFinalSattledLAST(PaymentsLAST)">Final Sattled</button></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Close</button>
+        </div>
+    </form>
+</script>
+
+<script>
+    function printDiv(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrint");
+        onRouteChangeOff();
+        window.location.reload();
+    }
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+</script>
+
+<script type="text/ng-template" id="myModaldeleteOrderInvoice1.html">
+    <style type="text/css">
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .border {
+                border: 1px solid #000 !important;
+            }
+            th, td {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+                border-spacing: 0;
+                padding: 0;
+                text-align: center;
+            }
+        }
+    </style>
+    <form name="myModaldeleteOrderInvoice1">
+        <div id="divtoPrint" class="client-document-container">
+            <div class="containers">
+                <div class="row pad-top-botm" style="width:100%!important">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="float:left; width:50%!important">
+                            <!--<strong>   ShopKirana E Trading Pvt. Ltd. </strong><br />-->
+                            <!--<span>TIN Number : </span><u>23489146465</u><br />
+    <span>Address :</span> 08 Scheme no 71, Sector-D, <br />
+    Near Vedant Hospital, Indore, MP<br />
+    <span>Call : </span>  0731-2386122-->
+                            <strong>{{warehou.CompanyName}}</strong><br />
+                            <span>Gstin Number : </span><u>{{warehou.GSTin}}</u><br />
+                            <span>Address :</span> {{warehou.Address}},<br />
+                            {{warehou.StateName}} ,India<br />
+                            <span>Call : </span>  {{warehou.Phone}}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="float:right!important;width:50%!important">
+                            <b class="col-md-3">Invoice Id : </b><strong class="col-md-9">{{OrderData1.invoice_no}}</strong>
+                            <br />
+                            <!--<b class="col-md-3">D Boy name : </b><strong class="col-md-9">{{OrderData1.DboyName}}</strong>
+                            <br />-->
+                            <b class="col-md-3">Cluster Name : </b><strong class="col-md-9">{{OrderData1.ClusterName}}</strong>
+                            <br />
+                            <!--<b class="col-md-3">Excecutive : </b><strong class="col-md-9">{{OrderData1.SalesPerson}}  {{OrderData1.SalesMobile}}</strong>
+                            <br />-->
+                            <b class="col-md-3" ng-if="OrderData1.Tin_No!=null">Ref/TIN No. : </b>
+                            <strong class="col-md-9" ng-if="OrderData1.Tin_No!=null"> {{OrderData1.Tin_No}}</strong>
+                            <br />
+                        </div><br />
+                    </div>
+                </div><br />
+                <!--<div class="row pad-top-botm">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="float:left">
+                            <h4><strong>Client Information</strong></h4>
+                            <b class="col-md-3">Shop Name :</b>
+                            <strong class="col-md-9" style="font-size: 16px;"> {{OrderData1.ShopName}}</strong>
+                            <br />
+                            <b class="col-md-3">SK Code :</b>
+                            <strong class="col-md-9" style="font-size: 16px;"> {{OrderData1.Skcode}}</strong>
+                            <br />
+                            <b class="col-md-3">Customer Name :</b>
+                            <strong class="col-md-9" style="font-size: 16px;"> {{OrderData1.CustomerName}}</strong>
+                            <br />
+                            <b class="col-md-3">Call :</b><strong class="col-md-9">{{OrderData1.Customerphonenum}}</strong>
+                            <br />
+                            <b class="col-md-3">Address :</b><span class="col-md-9">{{OrderData1.BillingAddress}}</span>
+                            <br />
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="float:right!important;">
+                            <h4>  <strong> Payment</strong></h4>
+                            <b class="col-md-3">Bill Date :</b>
+                            <strong class="col-md-9" style="font-size: 16px;"> {{OrderData1.UpdatedDate|date :"dd:MM:yyyy hh:mm"}}</strong>
+                            <br />
+                            <b class="col-md-3">Bill Amount :</b>
+                            <strong class="col-md-9" style="font-size: 16px;"> {{OrderData1.GrossAmount  | number:0}}</strong>
+                            <br />
+                        </div><br />
+                    </div>
+                </div>-->
+                <div class="row pad-top-botm client-info" style="width:100%!important">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6" style="float:left; font-size: 13px;width:50%!important">
+                            <h3>  <strong>Client Information</strong></h3>
+                            <b>Shop Name :</b>
+                            <strong style="padding-left:10px!important">{{OrderData1.ShopName}}</strong>
+                            <br />
+                            <b>SK Code :</b>
+                            <strong style="padding-left:10px!important"> {{OrderData1.Skcode}}</strong>
+                            <br />
+                            <b>Customer Name :</b>
+                            <strong style="padding-left:10px!important"> {{OrderData1.CustomerName}}</strong>
+                            <br />
+                            <b>Mobile :</b>
+                            <strong style="padding-left:10px!important">{{OrderData1.Customerphonenum}}</strong>
+                            <br />
+                            <b>Address :</b>
+                            <strong style="padding-left:12px!important; font-size: 13px;">{{OrderData1.BillingAddress}}</strong>
+                            <br />
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6" style="float:right; font-size: 13px;width:50%!important">
+                            <h3><strong>Payment Details </strong></h3>
+                            <b class="col-md-3">Bill Amount :</b>
+                            <strong class="col-md-9"> {{OrderData1.GrossAmount | number:0}}&nbsp;<i class="fa fa-inr"></i></strong>
+                            <br />
+                            <b class="col-md-3">Bill Date :</b>
+                            <span class="col-md-9">{{OrderData1.OrderedDate}}</span>
+                        </div>
+                    </div>
+                </div><br /><br />
+                <style type="text/css">
+                    @media print {
+                        table{
+                            top:10px!important;
+                        }
+                        table, table tr, table td {
+                            border-top: #000 solid 1px !important;
+                            border-bottom: #000 solid 1px !important;
+                            border-left: #000 solid 1px !important;
+                            border-right: #000 solid 1px !important;
+                            border-spacing: 0;
+                            padding: 0;
+                            text-align: center;
+                        }
+                    }
+                </style>
+                <div class="row" style="width:100%!important">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" style="font-size:12px!important;" width="100%">
+                                    <thead class="border">
+                                        <tr>
+                                            <th class="border">S. no.</th>
+                                            <th class="border">Item Name.</th>
+                                            <th class="border">MRP.</th>
+                                            <th class="border">Unit Price.</th>
+                                            <th class="border">MOQ</th>
+                                            <th class="border">Peti/Outer/Qty.</th>
+                                            <th class="border">Total Qty(pcs)</th>
+                                            <th class="border">AmtWithoutTaxDisc</th>
+                                            <th class="border">Tax %</th>
+                                            <th class="border">Total Amt. inc Tax</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="border">
+                                        <tr data-ng-repeat="orderDetail in OrderData">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{orderDetail.itemname}}</td>
+                                            <td>{{orderDetail.price}}</td>
+                                            <td>{{orderDetail.UnitPrice}}</td>
+                                            <td>{{orderDetail.MinOrderQty}}</td>
+                                            <td>{{orderDetail.qty/orderDetail.MinOrderQty | number:2}}</td>
+                                            <td>{{orderDetail.Noqty}}</td>
+                                            <td>{{orderDetail.AmtWithoutTaxDisc | number:2}}</td>
+                                            <td>{{orderDetail.TaxPercentage}}</td>
+                                            <td>{{orderDetail.TotalAmt | number:2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--<hr />
+                        <div class="ttl-amts">
+
+                        </div>
+                        <hr />-->
+                    </div><br />
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="width:100%!important;">
+                        <div class="table-responsive col-lg-4 col-md-4 col-sm-4 taxtable" style="float:left!important;width:33%!important"
+                              ng-hide="OrderData1.Status=='Pending'||OrderData1.Status=='Delivery Canceled'||OrderData1.Status=='Order Canceled'">
+                            <div class="table-responsive">
+                                <!--<table ng-if="isShoW" class="table table-bordered" style="font-size:12px!important;">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="th">
+                                                    S_No.
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Item Name
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Quantity
+                                                </div>
+                                            </th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="f in freeitem">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{f.itemname}}</td>
+                                            <td>{{f.TotalQuantity}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table><br />-->
+                                <table class="table table-bordered" style="font-size:12px!important;">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <div class="th">
+                                                    S_No.
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Tax %.
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Sale
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <div class="th">
+                                                    Tax Amount
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in data1">
+                                            <td>{{$index + 1}}</td>
+                                            <td>{{item.TaxPercentage}}</td>
+                                            <td>{{item.itmQty1}}</td>
+                                            <td>{{item.TaxAmt1 | number:2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="float:right!important;font-size: 12px;width:33%!important">
+                            <strong>Total Amount Incl. Tax : {{totalfilterprice | number:2}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Discount : {{OrderData1.DiscountAmount | number:2}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Total Tax Amount : {{OrderData1.TaxAmount | number:2}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <!--<strong>Delivery Charge : {{OrderData1.deliveryCharge | number:0}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                            <strong>Wallet Amount used  : {{OrderData1.WalletAmount | number:0}}&nbsp;<i class="fa fa-inr"></i></strong><br />-->
+                            <strong>Net Amount (Rounded Off) : {{OrderData1.GrossAmount | number:0}}&nbsp;<i class="fa fa-inr"></i></strong><br />
+                        </div>
+                    </div><br />
+                </div><br />
+                <div class="row client-info" style="width:100% !important">
+                    <div class="" style="width:60% !important">
+                        <div class="" style="float:left">
+                            <h5><strong>Others Coments</strong></h5>
+                            <div style="font-size: 12px;">1.Payment to be made by cash on delivery or Cheque.(Same day only).</div>
+                            <div style="font-size: 12px;">2.Cheques Payable to ShopKirana E Trading Pvt. Ltd.</div>
+                            <div style="font-size: 12px;">3.Only same day cheques are accepted.</div>
+                            <div style="font-size: 12px;">4.Cheques retrun charges Rs.200 to Rs.400 </div>
+                            <div style="font-size: 12px;">5.Cheques are accepted above 5,000.00 only. </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="float:right;">
+                            <!--<img src="./images/logo.PNG" style="width:300px;"/>-->
+                        </div>
+                    </div>
+
+                </div><br />
+                <div class="row">
+                    <style>
+                        @media print {
+                            #btnPrint {
+                                display: none !important;
+                            }
+
+                            .printer {
+                                display: none !important;
+                            }
+                        }
+                    </style>
+                    <div class="col-lg-4 col-md-4 col-sm-4 printer">
+                        <div class="row pad-top-botm">
+                            <div class="col-lg-12 col-md-12 col-sm-12 printer">
+                                <button id="btnPrint" class="btn-sm btn-primary printer no-print" style="float:right; margin-right: 15px;" onclick="javascript: printDiv('divtoPrint')"> <span class="glyphicon glyphicon-print no-print"> </span> Print Invoice</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="addFreeItem.html">
+    <style>
+        .form-control {
+            height: 50px;
+        }
+    </style>
+    <form name="myModaldeleteOrder">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Order Details </h4>
+        </div>
+        <div class="modal-body">
+            <div class="page page-table">
+                <div class="form-group col-md-6">
+                    <label for="site-name">Shop Name:</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="Customer.ShopName" readonly />
+                </div>
+                <div class="form-group required col-md-6">
+                    <label class='control-label' for="site-name">Sk Code:</label><br />
+                    <input id="site-name" type="text" class="form-control" ng-model="Customer.Skcode" readonly />
+                </div>
+                <div class="row col-md-12">
+                    <div class="form-group col-md-12">
+                        <label for="site-name">Select Item:</label>
+                        <select class="form-control" id="site-name" ng-model="OrderData.ItemId" required>
+                            <option value="">---SELECT---</option>
+                            <option value="{{item.ItemId}}" ng-repeat="item in itemMaster"> {{item.itemname}}</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group required col-md-12">
+                        <label class='control-label' for="site-name">Quantity:</label>
+                        <input class="form-control" type="number" placeholder="Enter Quantity" ng-model="OrderData.Quantity" required />
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <button class="btn-sm btn-primary" ng-click="add(OrderData)">Add Item</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="orderAutomation.html">
+    <style>
+         .modal-dialog {
+        width: 35% !important;
+    }
+    </style>
+    <form name="myFormTaskTypeModal1" style="background:aliceblue">
+        <div class="modal-header">
+            <h4 class="modal-title" style="text-align:center"><b>Order Automation</b></h4>
+        </div>
+        <div class="modal-body" style="top:30px!important;">
+            <div class="form-group col-md-12">                
+                <div class="form-group col-md-12" style="text-align:center">
+                    <label for="site-name">Time for Automation (in Hour):</label><br />
+                    <input id="site-name" type="number" class="form-control" ng-model="time" placeholder="time to take order before"/>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-sm btn-primary" ng-click="Proceed(time)">Proceed</button>
+            <button type="button" class="btn-sm btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">OK</button>
+        </div>
+    </form>
+</script>

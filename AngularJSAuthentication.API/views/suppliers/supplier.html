@@ -1,0 +1,1344 @@
+﻿<head>
+    <style>
+
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .td {
+            display: block;
+            overflow-y: auto;
+            max-height: 200px;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            FPu vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+
+<div class="page page-table" button-permission-binder parentName="Supplier" pageName="Supplier">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Supplier
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()">
+                <span class="glyphicon glyphicon-plus"> </span> New Supplier
+            </button>
+            <!--<button class="btn btn-primary skupload" ng-click="toggle()" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.email=='gaurav@shopkirana.com')"> <span class="glyphicon glyphicon-plus"> </span>Upload Suppliers</button>-->
+            <!--<a class="btn btn-primary" ng-mousedown="csv.generate()" ng-href="data:text/csv;charset=UTF-8," download="CustomerSample.csv" href="data:text/csv;charset=UTF-8,">Export to CSV</a>-->
+            <button class="btn-sm btn-primary skexportfullsupplierlist" ng-click="exportData1()" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.email=='gaurav@shopkirana.com'||UserRole.rolenames.indexOf('Zonal purchase lead')>-1)"> <span class="glyphicon glyphicon-plus"> </span> Export full Supplier List</button>
+            <button class="btn-sm btn-primary skexportsupplierlist" ng-click="exportData()" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.email=='gaurav@shopkirana.com'||UserRole.rolenames.indexOf('Zonal purchase lead')>-1)"> <span class="glyphicon glyphicon-plus"> </span> Export Supplier List</button>
+            <button class="btn-sm btn-primary skexportsuppliermissingdetailslist   " ng-click="exportDataMissing()" ng-show="(UserRole.rolenames.startsWith('HQ')"> <span class="glyphicon glyphicon-plus"> </span>Export Supplier Missing details List</button>
+
+            <br /><br />
+
+        </div>
+        <br />
+
+        <div class="form-group col-md-3">
+            <label for="site-name">Select City</label><br />
+            <select class="form-control" id="site-name" ng-model="supp.Cityid" ng-change="selectionCount(mapData.Cityid)">
+                <option value="">---SELECT---</option>
+                <option value="{{c.Cityid}}" ng-repeat="c in cities"> {{c.CityName}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="site-name">Select Brand</label><br />
+            <select class="form-control" id="site-name" ng-model="supp.SubCategoryId" ng-change="selectionCount(mapData.SubCategoryId)">
+                <option value="">---SELECT---</option>
+                <option value="{{c.SubCategoryId}}" ng-repeat="c in SubCategorysV1"> {{c.SubcategoryName}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-3">
+
+            <button class="btn-sm btn-primary skexportsuppliermissingdetailslist" ng-click="GetSupplierCityWise(supp.Cityid,supp.SubCategoryId)">Search</button>
+        </div>
+
+        <div class="form-group col-md-3">
+            <label for="site-name">Local Search</label><br />
+            <input class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()" placeholder="search">
+        </div>
+
+
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Supplier
+                            Code
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Supplier Name
+
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Mobile
+
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Supplier Brands
+                            [Category name
+                            - Brand Name]
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            GST Image
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            FSSAI Image
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Pancard Image
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            CancelCheque Image
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Add Depo
+                        </div>
+                    </th>  <!---- tejas 20-05-2019-->
+                    <th>
+                        <div class="th">
+                            View
+                            /
+                            Edit
+                            Depo
+                        </div>
+
+                    <th>
+                        <div class="th">
+                            Active
+                            /
+                            Deactive
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Payment
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            View Payment History
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created
+                            Date
+
+                        </div>
+                    </th>
+                    <!---- tejas 20-05-2019-->
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.SUPPLIERCODES}}</td>
+                    <td>{{trade.Name}}</td>
+                    <td>{{trade.MobileNo}}</td>
+
+                    <!--<td>{{trade.EmailId}}</td>-->
+                    <!--<td>{{trade.City}}</td>-->
+                    <td class="td">{{trade.SubcategoryName}}</td>
+                    <td>
+                        <img src={{trade.GstImage}} class="img-square img80_80" />
+
+                    </td>
+                    <td>
+                        <img src={{trade.FSSAIImage}} class="img-square img80_80" />
+                    </td>
+                    <td>
+                        <img src={{trade.PanCardImage}} class="img-square img80_80" />
+                    </td>
+                    <td>
+                        <img src={{trade.CancelCheque}} class="img-square img80_80" />
+
+
+                    </td>
+                    <td>
+                        <button class="btn-sm btn-primary skadddepo" ng-click="AddDepo(trade)"><span class="glyphicon glyphicon-plus "> </span> Add Depo</button>
+                    </td>  <!---- tejas 20-05-2019-->
+                    <td>
+                        <a href="#/ViewDepo"><button class="btn-sm btn-primary skviewdepo" ng-click="OpenDepo(trade)"><span class="glyphicon glyphicon-edit"> </span> View Depo</button></a>
+                    </td>  <!---- tejas 20-05-2019-->
+
+                    <td ng-if="trade.Active == false"><button class="btn-sm btn-primary skactive " ng-click="Activesupplier(trade)">Activate</button> </td>
+                    <td ng-if="trade.Active == true"><button class="btn-sm btn-danger skdeactivate" ng-click="Activesupplier(trade)">Deactivate</button> </td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <!--<td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)" ng-show="(UserRole.role== 'HQ Master login' || UserRole.email=='gaurav@shopkirana.com')">Remove</button> </td>-->
+
+
+                    <td>
+                        <button class="btn-sm btn-primary skhistory" data-toggle="modal" ng-init="Id=trade.SupplierId;entity='Supplier'" ng-click="showMe=true">History</button>
+                        <div ng-if="showMe" show-history></div>
+                    </td>
+
+                    <td>
+                        <button class="btn-sm btn-primary" ng-click="SupplierPayment(trade)">Payment</button>
+                    </td>
+                    <td>
+                        <a href="#/ViewPayment/{{trade.SupplierId}}" target="_blank"><button class="btn btn-primary skviewpayment"><span>View Payment</span></button></a>
+                    </td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"
+                                data-ng-init="POListChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="mySupplierModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" id=Addsup name=ADDnewsupplier ng-click="ok()">×</button>
+            <h4 class="modal-title">Add supplier</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Name:<font color="red">*</font><br /></label>   (A-Z)<br />
+                <input id="Supname" name="ADD_Suname" type="text" class="form-control" replace="[^a-zA-Z\s]" with="" ng-model="SupplierData.Name" placeholder="Enter Supplier name" ng-required />
+                <!--<p id="demo5" style="color: red;"></p>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Password:</label><br />
+                <input id="pwdname" name="ADD_Pwdname" type="password" class="form-control" ng-model="SupplierData.Password" placeholder="Enter Password" ng-required />
+            </div>
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Supplier Category:</label><br />
+
+                <select class="form-control" id="supcate" name="ADD_sucategory" ng-model="SupplierData.SupplierCaegoryId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="SupplierData.SupplierCaegoryId" value="{{supplierCategory.SupplierCaegoryId}}" ng-repeat="supplierCategory in supplierCategorys" ng-click="showDetails   = ! showDetails"> {{supplierCategory.CategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Buyer:</label><br />
+                <select class="form-control" id="supcate" name="ADD_Buyer" ng-model="SupplierData.PeopleID">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="buyerdetail.DisplayName" value="{{buyerdetail.PeopleID}}" ng-repeat="buyerdetail in Buyer"> {{buyerdetail.DisplayName}}</option>
+                </select>
+            </div>-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Category:</label><br />
+
+                <select class="form-control" id="supcate" name="ADD_sucategory" ng-model="SupplierData.SupplierCaegoryId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{supplierCategory.SupplierCaegoryId}}" ng-repeat="supplierCategory in supplierCategorys"> {{supplierCategory.CategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citysAdd" ng-selected="(SupplierData.Cityid == city.Cityid)"> {{city.CityName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">City Pincode:<font color="red">*</font><br /></label><br />
+                <input id="cpin" name="ADDsupcitypincode" type="text" class="form-control" ng-model="SupplierData.CityPincode" placeholder="Enter City Pincode" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Buyer:</label><br />
+                <select class="form-control" id="supcate" name="ADD_Buyer" ng-model="SupplierData.PeopleId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="buyerdetail.DisplayName" value="{{buyerdetail.PeopleId}}" ng-repeat="buyerdetail in Buyer"> {{buyerdetail.DisplayName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.Stateid" ng-change="GetCityAdd(SupplierData.Stateid)">
+                    <!--ng-change="GetCity1(SupplierData.Stateid)"-->
+                    <option value="">---SELECT---</option>
+                    <option value="{{state.Stateid}}" ng-repeat="state in states"> {{state.StateName}}</option>
+                </select>
+            </div>
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.Cityid,SupplierData.CityName">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}},{{city.Cityid}}" ng-repeat="city in citys">{{city.CityName}}</option>
+                </select>
+            </div>-->
+
+
+            <div class="form-group col-md-6">
+                <div class="form-group">
+                    <input type="hidden" name="ItemIsInclude" style="margin:0" value="true" />
+                    <label for="none">Select Supplier Brands</label>
+                    <div style="cursor: pointer" ng-dropdown-multiselect="" style="width:300px" id="SubCategoryId" options="dataselect" selected-model="MultiBrandModel" extra-settings="MultiBrandModelsettings"></div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">WebUrl:<font color="red">*</font><br /></label><br />
+                <input id="supWU" name="ADDweburl" type="text" class="form-control" ng-model="SupplierData.WebUrl" placeholder="Enter Web Url" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Rating:</label><br />
+                <input id="suprat" name="ADD_RATING" typeof="number" min="1" max="10" type="text" class="form-control" ng-model="SupplierData.rating" placeholder="Enter rating" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Code:</label><br />
+                <input id="supcode" name="ADD_SupplierID" type="text" class="form-control" ng-model="SupplierData.SUPPLIERCODES" placeholder="Enter Supplier Code" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">ContactPerson:</label><br />
+                <input id="supcontpesn" name="ADD_Supperson" type="text" class="form-control" ng-model="SupplierData.ContactPerson" placeholder="Enter ContactPerson" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Billing Address:</label><br />
+                <textarea id="supbiladd" name="ADD_BillingAddress" class="form-control" rows="3" required="" ng-model="SupplierData.BillingAddress" placeholder="Enter BillingAddress "></textarea>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">FSSAl:<font color="red">mandatory If Supplier has Editable.....</font><br /></label><br />
+                <textarea id="fname" name="ADD_Fname" class="form-control" rows="3" required="" ng-model="SupplierData.FSSAI" placeholder="Enter FSSSAl "></textarea>
+            </div>
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Shipping Address:</label><br />
+                <textarea id="supshipadd" name="ADD_SHIPPINGADres" class="form-control" rows="3" required="" ng-model="SupplierData.ShippingAddress" placeholder="Enter ShippingAddress"></textarea>
+            </div>-->
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Shop Name:</label><br />
+                <input id="SNpname" name="ADD_Snname" type="text" class="form-control" ng-model="SupplierData.ShopName" placeholder="Enter Shop Name" ng-required />
+            </div>-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Establishment Year :</label><br />
+                <input id="Eyname" name="ADD_eyname" type="number" class="form-control" ng-model="SupplierData.EstablishmentYear" placeholder="Enter Enter Year eg: yyyy" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bussiness Type:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.bussinessType" ng-required>
+                    <option value="">---SELECT---</option>
+                    <option value="Distributor">Distributor </option>
+                    <option value="Wholesaler">Wholesaler  </option>
+                    <option value="Repacking">Repacking  </option>
+                    <option value="Trader">Trader  </option>
+                </select>
+                <!--<input id="Bname" name="ADD_bname" type="text" class="form-control" ng-model="SupplierData.bussinessType" placeholder="Enter Bussiness Type" ng-required />-->
+            </div>
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Opening Hours:<font color="red">*</font><br /></label><br />
+                <input id="hour" name="ADDsuphour" type="text" class="form-control" ng-model="SupplierData.OpeningHours" placeholder="Enter in either 12 hour or 24 Hour" ng-required />
+            </div>-->
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Description:</label><br />
+                <textarea id="Dname" name="ADD_dname" class="form-control" rows="3" required="" ng-model="SupplierData.Description" placeholder="Enter Description "></textarea>
+            </div>-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Gst Number:<font color="red">*</font><br /></label><br />
+                <input id="supTIN" name="ADDsuptinnumber" type="text" class="form-control" ng-model="SupplierData.TINNo" placeholder="Enter TIN NUMBER" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Pan Card Number:<font color="red">*</font><br /></label><br />
+                <input id="pan" name="ADDsuppannumber" type="text" class="form-control" ng-model="SupplierData.Pancard" placeholder="Enter Pan NUMBER" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> CIBIL Score:</label><br />
+                <input id="supCibilScore" name="ADD_CibilScore" min="1" max="10" type="text" class="form-control" ng-model="SupplierData.CibilScore" placeholder="Enter Cibil Score" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Started Business With Shopkirana:</label><br />
+                <input id="Sname" name="ADD_sname" type="date" class="form-control" ng-model="SupplierData.StartedBusiness" placeholder="Enter started business date" ng-required />
+            </div>
+            <!--STARTED BUISNESS-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">MobileNo:<font color="red">*</font><br /></label>   (0-9)<br />
+                <input id="supmobile" name="Addmobile" number type="text" replace="[^0-9]" with="" class="form-control" ng-model="SupplierData.MobileNo" placeholder="Enter MobileNo" ng-required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">E-mail Account:</label><br />
+                <input id="supmail" name="ADD_EMAIL" type="Email" class="form-control" ng-model="SupplierData.EmailId" placeholder="Enter EmailId" ng-required />
+            </div>
+
+
+            <!--<div class="row">-->
+            <!--<div class="col-md-6">-->
+            <div class="form-group col-md-6">
+                <label for="site-name">Manage Address:<font color="red">Bank Account Address Details</font><br /></label><br />
+                <input id="mname" name="ADD_Mname" type="text" class="form-control" ng-model="SupplierData.ManageAddress " placeholder="Enter Bank Account Address" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Name:</label><br />
+                <input id="Bankname" name="ADD_bankname" type="text" class="form-control" ng-model="SupplierData.Bank_Name" placeholder="Enter Bank name" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Account :</label><br />
+                <input id="banka/c" name="Addbanka/c" number type="text" class="form-control" ng-model="SupplierData.Bank_AC_No" placeholder="Enter Bank Account Number" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">IFSC code:</label><br />
+                <input id="ifscname" name="ADD_IFSCname" type="text" class="form-control" ng-model="SupplierData.Bank_Ifsc " placeholder="Enter IFSC code" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Pin Code :</label><br />
+                <input id="bankpin" name="Addbankpin" number type="number" class="form-control" ng-model="SupplierData.BankPINno" placeholder="Enter Bank Pin Coder" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">PaymentTerm(In Days):</label><br />
+                <input id="PaymentTerms" name="ADD_PaymentTerms" type="number" class="form-control" ng-model="SupplierData.PaymentTerms" placeholder="Enter PaymentTerms" ng-required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload GST Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-model="uploader.queue[0].FileUrl" ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload FSSAI Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader1" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader1.queue[0].upload()" ng-model="uploader1.queue[0].FileUrl" ng-disabled="uploader1.queue[0].isReady || uploader1.queue[0].isUploading || uploader1.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload PanCard Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader2" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader2.queue[0].upload()" ng-model="uploader2.queue[0].FileUrl" ng-disabled="uploader2.queue[0].isReady || uploader2.queue[0].isUploading || uploader2.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload CancelCheque Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader3" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader3.queue[0].upload()" ng-model="uploader3.queue[0].FileUrl" ng-disabled="uploader3.queue[0].isReady || uploader3.queue[0].isUploading || uploader3.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Do you want to stop advance PR?</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SupplierData.IsStopAdvancePr" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Is IRN Invoice Required</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SupplierData.IsIRNInvoiceRequired" />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" id="ANSCancel" name="ANSclose" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" id="ANSSave" name="ANSconfirm" ng-click="AddSupplier(SupplierData)" ng-disabled="DisableSupplierbutton"><span class="glyphicon glyphicon-plus"></span> Save</button>
+            </div>
+    </form>
+</script>
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="mySupplierModalPut.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Supplier</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Name:<font color="red">*</font><br /></label><br />
+                <input id="Supname" name="ADD_Suname" type="text" class="form-control" ng-model="SupplierData.Name" placeholder="Enter Supplier name" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Password:</label><br />
+                <input id="pwdname" name="ADD_Pwdname" type="password" class="form-control" ng-model="SupplierData.Password" placeholder="Enter Password" ng-required />
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Caegory:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.SupplierCaegoryId">
+                    <option value="{{supplierCategory.SupplierCaegoryId}}" ng-selected="supplierCategory.SupplierCaegoryId == SupplierData.SupplierCaegoryId" ng-repeat="supplierCategory in supplierCategorys"> {{supplierCategory.CategoryName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Buyer:</label><br />
+                <select class="form-control" id="supcate" name="ADD_sucategory" ng-model="SupplierData.PeopleId">
+                    <option ng-model="buyerdetail.DisplayName" value="{{buyerdetail.PeopleId}}" data-ng-selected="buyerdetail.PeopleId == SupplierData.PeopleID" ng-repeat="buyerdetail in Buyer"> {{buyerdetail.DisplayName}}</option>
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.Stateid" ng-change="GetCityEdit(SupplierData.Stateid)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{state.Stateid}}" ng-repeat="state in states" ng-selected="(SupplierData.Stateid == state.Stateid)"> {{state.StateName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citys" ng-selected="(SupplierData.Cityid == city.Cityid)"> {{city.CityName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">City Pincode:<font color="red">*</font><br /></label><br />
+                <input id="cpin" name="ADDsupcitypincode" type="text" class="form-control" ng-model="SupplierData.CityPincode" placeholder="Enter City Pincode" ng-required />
+            </div>
+
+            <div class="form-group  col-md-6">
+                <div class="form-group">
+                    <label for="site-name"> Select Supplier Brands</label><br />
+                    <div style="cursor: pointer" ng-dropdown-multiselect="" options="vm.dataselect" selected-model="vm.examplemodel" extra-settings="examplesettings1" style="margin:10px;width:100%"></div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">WebUrl:</label><br />
+                <input id="supWU" name="ADDweburl" type="text" class="form-control" ng-model="SupplierData.WebUrl" placeholder="Enter Web Url " ng-required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name"> Rating:</label><br />
+                <input id="suprat" name="ADD_RATING" typeof="number" min="1" max="10" type="text" class="form-control" ng-model="SupplierData.rating" placeholder="Enter rating" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Code:</label><br />
+                <input id="supcode" name="ADD_SupplierID" type="text" class="form-control" ng-model="SupplierData.SUPPLIERCODES" placeholder="Enter SalesManager name" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">ContactPerson:</label><br />
+                <input id="supcontpesn" name="ADD_Supperson" type="text" class="form-control" ng-model="SupplierData.ContactPerson" placeholder="Enter ContactPerson" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Billing Address:</label><br />
+                <textarea id="supbiladd" name="ADD_BillingAddress" class="form-control" rows="3" required="" ng-model="SupplierData.BillingAddress" placeholder="Enter BillingAddress "></textarea>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">FSSAl:<font color="red">>mandatory If Supplier has Editable.....</font><br /></label><br />
+                <textarea id="fname" name="ADD_Fname" class="form-control" rows="3" required="" ng-model="SupplierData.FSSAI" placeholder="Enter FSSSAl "></textarea>
+            </div>
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Shipping Address:</label><br />
+                <textarea id="supshipadd" name="ADD_SHIPPINGADres" class="form-control" rows="3" required="" ng-model="SupplierData.ShippingAddress" placeholder="Enter ShippingAddress"></textarea>
+            </div>-->
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Shop Name:</label><br />
+                <input id="SNpname" name="ADD_Snname" type="text" class="form-control" ng-model="SupplierData.ShopName" placeholder="Enter Shop Name" ng-required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Establishment Year :</label><br />
+                <input id="Eyname" name="ADD_eyname" type="number" class="form-control" ng-model="SupplierData.EstablishmentYear" placeholder="Enter Enter Year eg: yyyy" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bussiness Type:</label><br />
+                <input id="Bname" name="ADD_bname" type="text" class="form-control" ng-model="SupplierData.bussinessType" placeholder="Enter Bussiness Type" ng-required />
+            </div>
+
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Opening Hours:<font color="red">*</font><br /></label><br />
+                <input id="hour" name="ADDsuphour" type="text" class="form-control" ng-model="SupplierData.OpeningHours" placeholder="Enter in either 12 hour or 24 Hour" ng-required />
+            </div>-->
+            <!--<div class="form-group col-md-6">
+                <label for="site-name">Description:</label><br />
+                <textarea id="Dname" name="ADD_dname" class="form-control" rows="3" required="" ng-model="SupplierData.Description" placeholder="Enter Description "></textarea>
+            </div>-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Gst Number:<font color="red">*</font><br /></label><br />
+                <input id="supTIN" name="ADDsuptinnumber" type="text" class="form-control" ng-model="SupplierData.TINNo" placeholder="Enter TIN NUMBER" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Pan Card Number:<font color="red">*</font><br /></label><br />
+                <input id="pan" name="ADDsuppannumber" type="text" class="form-control" ng-model="SupplierData.Pancard" placeholder="Enter Pan NUMBER" ng-required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name"> CIBIL Score:</label><br />
+                <input id="upsupCibilScore" name="up_CibilScore" min="1" max="10" ng-ty="text" class="form-control" ng-model="SupplierData.CibilScore" placeholder="Enter Cibil Score" />
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Started Business With Shopkirana:</label><br />
+                <input id="Sname" name="ADD_sname" type="date" class="form-control" ng-model="SupplierData.StartedBusiness" placeholder="Enter started business date" ng-required />
+            </div>
+            <!--STARTED BUISNESS-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">MobileNo:<font color="red">*</font><br /></label><br />
+                <input id="supmobile" name="Addmobile" number type="text" class="form-control" ng-model="SupplierData.MobileNo" placeholder="Enter MobileNo" ng-required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">E-mail Account:</label><br />
+                <input id="supmail" name="ADD_EMAIL" type="Email" class="form-control" ng-model="SupplierData.EmailId" placeholder="Enter EmailId" ng-required />
+            </div>
+            <!--<div class="row">-->
+            <!--<div class="col-md-6">-->
+            <div class="form-group col-md-6">
+                <label for="site-name">Manage Address:<font color="red">Bank Account Address Details</font><br /></label><br />
+                <input id="mname" name="ADD_Mname" type="text" class="form-control" ng-model="SupplierData.ManageAddress" placeholder="Enter Bank Account Address" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Name:</label><br />
+                <input id="Bankname" name="ADD_bankname" type="text" class="form-control" ng-model="SupplierData.Bank_Name" placeholder="Enter Bank name" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Account :</label><br />
+                <input id="banka/c" name="Addbanka/c" number type="text" class="form-control" ng-model="SupplierData.Bank_AC_No" placeholder="Enter Bank Account Number" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">IFSC code:</label><br />
+                <input id="ifscname" name="ADD_IFSCname" type="text" class="form-control" ng-model="SupplierData.Bank_Ifsc" placeholder="Enter IFSC code" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Pin Code :</label><br />
+                <input id="bankpin" name="Addbankpin" number type="number" class="form-control" ng-model="SupplierData.BankPINno" placeholder="Enter Bank Pin Coder" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">PaymentTerm:</label><br />
+                <input id="PaymentTerms" name="ADD_PaymentTerms" type="text" class="form-control" ng-model="SupplierData.PaymentTerms" placeholder="Enter PaymentTerms" ng-required />
+            </div>
+            <!--<div class="form-group col-md-12">
+                <label for="site-name">Comments:</label><br />
+                <textarea id="supcomnt" name="ADD_Comment" class="form-control" rows="3" required="" ng-model="SupplierData.Comments" placeholder="Enter Comments"></textarea>
+            </div>-->
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Do you want to stop advance PR?</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SupplierData.IsStopAdvancePr" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Is IRN Invoice Required</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SupplierData.IsIRNInvoiceRequired" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutSupplier(SupplierData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<!-- /new site modal -->
+<script type="text/ng-template" id="myModaldeleteSupplier.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Item Category</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletesuppliers(SupplierData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+
+
+
+<script type="text/ng-template" id="mySupplierPaymentModel.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Supplier Payment</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Supplier Code:</label><br />
+                <input id="supcode" name="ADD_SupplierID" type="text" class="form-control" value="{{SupplierData.SUPPLIERCODES}}" ng-required disabled />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Supplier Name:</label><br />
+                <input id="name" name="SupplierName" type="text" class="form-control" value="{{SupplierData.Name}}" placeholder="Enter Password" ng-required disabled />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Mobile No:</label><br />
+                <input id="moblie" name="mobileNo" type="" class="form-control" value="{{SupplierData.MobileNo}}" ng-required disabled />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">CityName:</label><br />
+                <input id="cpin" name="ADDsupcitypincode" type="text" class="form-control" value="{{SupplierData.City}}" ng-required disabled />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Amount:</label><br />
+                <input id="amount" name="supplierAmount" type="number" class="form-control" ng-model="SupplierData.Amount" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select PO Id:</label><br />
+                <select class="form-control" id="site-name" ng-model="SupplierData.PoId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{id}}" ng-repeat="id in poids"> {{id}}</option>
+                </select>
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="addSupplierPayment(SupplierData)">Send</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+
+        </div>
+    </form>
+</script>
+
+
+<style>
+
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+
+    .modal-dialog1 {
+        width: 100% !important;
+        /*margin-left: 485px;*/
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<div class="modal fade " id="suppliermodel" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Supplier Master History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr class="w1-red">
+
+                        <th>
+                            <div class="th">
+                                SupplierId
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                SUPPLIERCODES
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                CategoryName
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                PhoneNumber
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Avaiabletime
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Rating
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                BillingAddress
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                ShippingAddress
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Comments
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                TINNo
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                OfficePhone
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                MobileNo
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                EmailId
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                WebUrl
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                SalesManager
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                ContactPerson
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                WarehouseId
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Edit By
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Date
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                PaymentTerms
+                            </div>
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in datasuppliermasterHistrory">
+                        <td>{{trade.SupplierId}}</td>
+                        <td>{{trade.Name}}</td>
+                        <td>{{trade.SUPPLIERCODES}}</td>
+                        <td>{{trade.CategoryName}}</td>
+                        <td>{{trade.PhoneNumber}}</td>
+                        <td>{{trade.Avaiabletime}}</td>
+                        <td>{{trade.rating}}</td>
+                        <td>{{trade.BillingAddress}}</td>
+                        <td>{{trade.ShippingAddress}}</td>
+                        <td>{{trade.Comments}}</td>
+                        <td>{{trade.TINNo}}</td>
+                        <td>{{trade.OfficePhone}}</td>
+                        <td>{{trade.MobileNo}}</td>
+                        <td>{{trade.WebUrl}}</td>
+                        <td>{{trade.SalesManager}}</td>
+                        <td>{{trade.ContactPerson}}</td>
+                        <td>{{trade.ContactImage}}</td>
+                        <td>{{trade.WarehouseId}}</td>
+                        <td>{{trade.username}}</td>
+                        <td>{{trade.UpdatedDate | date:'medium'}}</td>
+                        <td>{{trade.PaymentTerms}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template" id="activesuppliermodal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Activated and Deactivated Supplier</h4>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="site-name">Activate/DeActivated:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="SupplierData.Active" />
+            </div>
+            <input type="checkbox" ng-model="check1"><label for="site-name">Gst Number:</label><br />
+            <input type="checkbox" ng-model="check2"><label for="site-name">MobileNo:</label><br />
+            <input type="checkbox" ng-model="check3"><label for="site-name">FSSSAl:</label><br />
+            <input type="checkbox" ng-model="check4"><label for="site-name">Manage Address:</label><br />
+            <div class="form-group" ng-show="check1&&check2&&check3&&check4">
+                <input type="checkbox" ng-model="check5" id="verified"><label for="site-name">Verified:</label><br />
+            </div>
+            <!--<input type="checkbox" ng-model="check5" id="verified"><label for="site-name">Verified:</label><br />-->
+            <div class="form-group" ng-show="!check1 || !check2 || !check3 || !check4 || !check5">
+                <p>Supplier is not Verified</p>
+            </div>
+            <div class="form-group" ng-show="check1&&check2&&check3&&check4&&check5">
+                <p class="text-success">Supplier is Verified</p>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="ActSupplier(SupplierData)">Set</button>
+        </div>
+    </form>
+</script>
+
+
+
+
+<!-- new site modal -->  <!----add depo popup tejas 20-05-2019-->
+<script type="text/ng-template" id="myAddDepoModal.html">
+
+    <form name="myFormSiteModal3">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" id=Addsup name=ADDnewsupplier ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Depo</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="site-name" ng-model="DepoData.Stateid" ng-change="GetCity(DepoData.Stateid)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{state.Stateid}}" ng-repeat="state in states"> {{state.StateName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" ng-model="DepoData.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citys|filter:{Stateid:DepoData.Stateid}"> {{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Depo Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Depo Name " ng-model="DepoData.DepoName" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">GSTin No.</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter GSTin No " ng-model="DepoData.GSTin" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">DepoCode</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter DepoCode " ng-model="DepoData.DepoCodes" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Address</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Address " ng-model="DepoData.Address" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Email-ID</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Email-ID " ng-model="DepoData.Email" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Phone No.</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Phone No " ng-model="DepoData.Phone" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">ContactPerson:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="DepoData.ContactPerson" placeholder="Enter ContactPerson" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">FSSAI:</label><br />
+                <input id="FSSAIname" name="ADDFSSAIname" type="text" class="form-control" ng-model="DepoData.FSSAI" placeholder="Enter FSSAI Number" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">City Pincode:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter City Pincode " ng-model="DepoData.CityPincode" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Name:</label><br />
+                <input id="Bankname" name="ADDbankname" type="text" class="form-control" ng-model="DepoData.Bank_Name" placeholder="Enter Bank name" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Account No:</label><br />
+                <input type="text" class="form-control" ng-model="DepoData.Bank_AC_No" placeholder="Enter Bank Account Number" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Address</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Bank Address " ng-model="DepoData.BankAddress" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">IFSC code:</label><br />
+                <input id="ifscname" name="ADD_IFSCname" type="text" class="form-control" ng-model="DepoData.Bank_Ifsc" placeholder="Enter IFSC code" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Bank Pin Code :</label><br />
+                <input type="number" class="form-control" ng-model="DepoData.BankPinCode" placeholder="Enter Bank Pin Coder" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">PAN Card No:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter PAN Card No " ng-model="DepoData.PANCardNo" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Opening Hours:</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Opening Hours " ng-model="DepoData.OpeningHours" ng-required />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">PRPOStop After Value </label><br />
+                <input id="site-name" type="number" class="form-control" placeholder="Enter PRPOStop After Value  " ng-model="DepoData.PRPOStopAfterValue" value="{{DepoData.PRPOStopAfterValue == 3}}" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Depo Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="DepoData.IsActive" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload GST Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-model="uploader.queue[0].FileUrl" ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload FSSAI Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader1" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader1.queue[0].upload()" ng-model="uploader1.queue[0].FileUrl" ng-disabled="uploader1.queue[0].isReady || uploader1.queue[0].isUploading || uploader1.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload PanCard Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader2" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader2.queue[0].upload()" ng-model="uploader2.queue[0].FileUrl" ng-disabled="uploader2.queue[0].isReady || uploader2.queue[0].isUploading || uploader2.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="uploadAdvertisements">Upload CancelCheque Document:</label>
+                <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader3" />
+                <button type="button" class="btn btn-success btn-xs" ng-click="uploader3.queue[0].upload()" ng-model="uploader3.queue[0].FileUrl" ng-disabled="uploader3.queue[0].isReady || uploader3.queue[0].isUploading || uploader3.queue[0].isSuccess">
+                    <span class="glyphicon glyphicon-upload"></span> Upload
+                </button>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" id="AdddepoID" class="btn btn-ar btn-primary" ng-click="AddDepo(DepoData)" ng-disabled="DisableDepoButton">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+
+
+<!--this code use by view depo-->
+<!----view and Edit depo popup tejas 20-05-2019
+<script type="text/ng-template" id="ViewDepoForSupplier.html">
+    <div class="modal-content" ng-transclude="" style="
+    margin-right: -95px;" />
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Deop  </h4>
+        </div>
+
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr class="w1-red">
+                    <th>Supplier Name</th>
+                    <th>Supplier Code</th>
+                    <th>Depo Name</th>
+                    <th>GST No.</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>CreatedDate</th>
+                    <th>UpdatedDate</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="trade in DepoDetaildata">
+                    <td>
+                        <span>{{trade.SupplierName}}</span>
+                    </td>
+                    <td>
+                        <span>{{trade.SupplierCode}}</span>
+                    </td>
+
+                    <td>
+                        <input type="text" class="form-control" ng-model="trade.DepoName" ng-if="trade.editing" />
+                        <span ng-if="!trade.editing">{{trade.DepoName}}</span>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="trade.GSTin" ng-if="trade.editing" />
+                        <span ng-if="!trade.editing">{{trade.GSTin}}</span>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="trade.Address" ng-if="trade.editing" />
+                        <span ng-if="!trade.editing">{{trade.Address}}</span>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="trade.Email" ng-if="trade.editing" />
+                        <span ng-if="!trade.editing">{{trade.Email}}</span>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="trade.Phone" ng-if="trade.editing" />
+                        <span ng-if="!trade.editing">{{trade.Phone}}</span>
+                    </td>
+
+                    <td>
+                        <span>{{trade.CreatedDate| date:'medium'}}</span>
+                    </td>
+                    <td>
+                        <span>{{trade.UpdatedDate| date:'medium'}}</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-primary" ng-click="editData(trade)" ng-if="!trade.editing">Edit</button>
+                        <span ng-if="trade.editing">
+                            <button type="submit" class="btn btn-xs btn-success" ng-click="DepoEditt(trade)">Save</button>
+                            <button type="button" class="btn btn-xs btn-default" ng-click="cancel()">Cancel</button>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</script>-->

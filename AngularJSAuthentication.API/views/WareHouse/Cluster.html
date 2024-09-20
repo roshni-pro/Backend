@@ -1,0 +1,785 @@
+﻿<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        html, body, #map_canvas {
+            height: 500px;
+            width: 500px;
+            margin: 0px;
+            padding: 0px
+        }
+
+        .googlesearchinput {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            margin-top:10px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
+            height:40px;
+        }
+
+        .googlesearchinput2 {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            margin-top:10px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 150px;
+            height:40px;
+        }
+
+            .googlesearchinput:focus {
+                border-color: #4d90fe;
+            }
+             .googlesearchinput2:focus {
+                border-color: #4d90fe;
+            }
+    </style>
+    <!--<script src="../../gmap.js"></script>AIzaSyBAQvOTM4QjvCUIfXiucZvMktmGPwiYLC0  sensor=true&-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbogFMyrNTlMdtsrYzgffJ3guhCdzRS2Y&libraries=drawing,places" async defer></script>
+         
+
+    <style>
+        .tab {
+            width: 100%;
+            border-radius: 100px;
+            margin-bottom: 41px;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+
+<div class="page page-table" button-permission-binder parentName="Warehouse" pageName="Add Cluster">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>  Cluster
+            </strong>
+        </div>
+        <br />
+        <div>
+            <a href="#/AddCluster" target="_blank">
+                <button class="btn btn-primary skadd">
+                    <span class="glyphicon glyphicon-plus">
+                    </span> Add new Cluster
+                </button>
+            </a>
+            <button type="button" class="btn btn-ar btn-primary skexport" ngEnter="ReturnCheque()" ng-click="exportData()">Export Cluster</button>
+        </div>
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-3">
+                <label for="site-name">Select City</label><br />
+                <select class="form-control" id="site-name" ng-model="mapData.Cityid" ng-change="selectionCount(mapData.Cityid)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{c.Cityid}}" ng-repeat="c in cities"> {{c.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <div style="margin-left: -20px;margin-top: 19px;">
+                    <a href="#/clustercitymap/{{mapData.Cityid}}" class="skadd"><button type="button" class="btn btn-danger skviewmap">View Map</button></a>
+</div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="site-name"> Total Active Customers </label>
+                    </div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" ng-model="datacnt" ng-disabled="true" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label for="site-name"> Total Agent Count </label>
+                    </div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" ng-model="agentcnt" ng-disabled="true" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group col-md-3">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <label for="site-name"> Total Sign-up </label>
+                    </div>
+                    <div class="col-xs-6">
+                        <input class="form-control" type="text" ng-model="custcnt" ng-disabled="true" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Cluster Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ClusterName')"
+                                  data-ng-class="{active: row == 'ClusterName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ClusterName')"
+                                  data-ng-class="{active: row == '-ClusterName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Working City Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WorkingCityName')"
+                                  data-ng-class="{active: row == 'WorkingCityName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WorkingCityName')"
+                                  data-ng-class="{active: row == '-WorkingCityName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Agent Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">Customer Count</div>
+                    </th>
+                    <th>
+                        <div class="th">Active Customer Count</div>
+                    </th>
+                    <!--<th ng-show="dataPeopleHistrory.update == true" >
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>-->
+                    <th ng-show="showdata == true">
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            View Map
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Add Agent
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Add Vehicle
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Add Working City
+                        </div>
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.ClusterName}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.WorkingCityName}}</td>
+                    <td>{{trade.DisplayName}}</td>
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                    <td>{{trade.customercount}}</td>
+                    <td>{{trade.activecustomercount}}</td>
+                    <!--<td ng-show="dataPeopleHistrory.update == true"><button  class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>-->
+                    <td ng-show="showdata == true"><button class="btn-sm btn-danger" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                    <td><button class="btn-sm btn-danger skview" ng-click="ViewMap(trade)">View</button> </td>
+                    <td><button class="btn-sm skaddagent" ng-class="{'btn-primary': trade.IsAgentadded , 'btn-danger': !trade.IsAgentadded}" ng-click="AddAgent(trade)">Add Agent</button> </td>
+                    <td><button class="btn-sm skaddvehicle" ng-class="{'btn-primary': trade.IsVehicleadded , 'btn-danger': !trade.IsVehicleadded}" ng-click="AddVehicle(trade)">Add Vehicle</button> </td>
+                    <td><button class="btn-sm  skaddCity" ng-class="{'btn-primary': trade.IsCityadded , 'btn-danger': !trade.IsCityadded}" ng-click="AddCity(trade)">Add City</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+
+<script type="text/ng-template" id="myClusterModal.html">
+
+    <form name="myFormSiteModal">
+
+        <!--<div class="row">
+            <div class="col-md-4 "><button class="btn btn-default  tab" ng-click="DetailsForm()">Step 1</button></div>
+            <div class="col-md-4"><button class="btn btn-primary  tab" ng-click="SalaryForm()">Step 2</button></div>
+            <div class="col-md-4"><button class="btn btn-default  tab" ng-click="DocumentForm()">Step 3</button></div>
+        </div>-->
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Cluster </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">City</label><br />
+                <select class="form-control" id="site-name" ng-model="ClusterData.CityId" ng-change="selectedtypeChanged(ClusterData)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{c.Cityid}},{{c.CityName}}" ng-repeat="c in citys"> {{c.CityName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">CLuster Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Cluster Name " ng-model="ClusterData.ClusterName" readonly="readonly" />
+            </div>
+            <!--<div class="form-group">
+                <label for="site-name">Address</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Address " ng-model="ClusterData.Address" />
+            </div>-->
+            <!--<div class="form-group">
+                <label for="site-name">Phone No.</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Phone No " ng-model="ClusterData.Phone" />
+            </div>-->
+            <div class="form-group">
+                <label for="site-name">Select Warehouse:</label><br />
+                <select class="form-control" id="site-name" ng-model="ClusterData.WarehouseId" ng-change="getWarehousebyId(ClusterData.WarehouseId)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse"> {{w.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Agents</label><br />
+                <select class="form-control" id="site-name" ng-model="ClusterData.PeopleID">
+                    <option value="">---SELECT---</option>
+                    <option value="{{p.PeopleID}}" ng-repeat="p in peoples"> {{p.DisplayName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name1">Latitude</label><br />
+                <input id="txtlat" type="text" class="form-control" placeholder="Enter Latitude " ng-model="ClusterData.Latitude" />
+            </div>
+            <div class="form-group">
+                <label for="site-name2">Longitude</label><br />
+                <input id="txtlg" type="text" class="form-control" placeholder="Enter Longitude " ng-model="ClusterData.Longitude" onchange="initialize();" />
+            </div>
+
+            <div class="form-group">
+                <label for="site-name"> Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="ClusterData.Active" />
+            </div>
+
+        </div>
+
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddCluster(ClusterData)">Save</button>
+            <!--<button type="button" class="btn btn-ar btn-primary" ng-click="AddGeoFence(ClusterData)">Save</button>-->
+            <!--<input type="button" value="sbmit" ng-click="initMap()" />-->
+            <div>
+                <div id="map_canvas" style=" border: 2px solid #3872ac;"></div>
+                <div class="form-group ">
+                    <div id="info"></div>
+                </div>
+            </div>
+
+
+            <script type="text/javascript">
+
+                var geocoder;
+                var map;
+                var polygonArray = [];
+                var Lat_long_Array = [];
+                var incremt = [];
+                var p = 0;
+
+                function initialize() {
+
+                    var abc = document.getElementById('txtlg').value;
+                    var cde = document.getElementById('txtlat').value;
+                    map = new google.maps.Map(
+                        document.getElementById("map_canvas"), {
+                            center: new google.maps.LatLng(cde, abc),
+                            zoom: 8,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP
+                        });
+                    var drawingManager = new google.maps.drawing.DrawingManager({
+                        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                        drawingControl: true,
+                        drawingControlOptions: {
+                            position: google.maps.ControlPosition.TOP_CENTER,
+                            drawingModes: [
+                                google.maps.drawing.OverlayType.MARKER,
+                                google.maps.drawing.OverlayType.CIRCLE,
+                                google.maps.drawing.OverlayType.POLYGON,
+                                google.maps.drawing.OverlayType.POLYLINE,
+                                google.maps.drawing.OverlayType.RECTANGLE]
+                        },
+                        markerOptions: {
+                            icon: 'images/car-icon.png'
+                        },
+                        circleOptions: {
+                            fillColor: '#ffff00',
+                            fillOpacity: 1,
+                            strokeWeight: 5,
+                            clickable: false,
+                            editable: true,
+                            zIndex: 1
+                        },
+                        polygonOptions: {
+                            fillColor: '#BCDCF9',
+                            fillOpacity: 0.5,
+                            strokeWeight: 2,
+                            strokeColor: '#57ACF9',
+                            clickable: false,
+                            editable: false,
+                            zIndex: 1
+                        }
+                    });
+                    console.log(drawingManager)
+                    drawingManager.setMap(map)
+
+                    google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+
+
+                        if (p == 0) {
+                            p = 1;
+                        }
+                        else {
+                            p = p + 1;
+                        }
+                        var ak = p;
+                        document.getElementById('info').innerHTML += "polygon points:" + "<br>";
+                        for (var i = 0; i < polygon.getPath().getLength(); i++) {
+
+                            document.getElementById('info').innerHTML += polygon.getPath().getAt(i).toUrlValue(6) + "<br>";
+                            var lat_long = polygon.getPath().getAt(i).toUrlValue(6) + ",p" + p;
+
+                            Lat_long_Array.push(lat_long);
+                        }
+
+                        polygonArray.push(polygon);
+
+                    });
+                    var pid = polygonArray;
+                }
+                                    //initialize();
+                                    //google.maps.event.addDomListener(window, "load", initialize);
+
+            </script>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+    </form>
+</script>
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myClusterPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Cluster</h4>
+            <div class="form-group">
+                <label for="site-name">CLuster Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Cluster Name " ng-model="ClusterData.ClusterName" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Address</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Address " ng-model="ClusterData.Address" />
+            </div>
+            <!--<div class="form-group">
+                <label for="site-name">Phone No.</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Phone No " ng-model="ClusterData.Phone" />
+            </div>-->
+            <div class="form-group">
+                <label for="site-name">Select Warehouse:</label><br />
+                <select class="form-control" id="site-name" ng-model="ClusterData.WarehouseId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse"> {{w.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="ClusterData.Active" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="putCluster(ClusterData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="myMapView.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div id="map_canvas" style=" border: 2px solid #3872ac;width:100%"></div>
+                    <div class="form-group ">
+                        <div id="info"></div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        Cluster Name
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Cluster Warehouse Name
+
+                                    </div>
+                                </th>
+
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{GetInfo.ClusterName}}</td>
+                                <td>{{GetInfo.WarehouseName}}</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    <button type="button" class="btn btn-ar btn-primary" ng-click="savepolygon()">Save</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+    </form>
+</script>
+
+
+
+
+<script type="text/ng-template" id="myMapViewCityWise.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header" ng-init="initMap()">
+            <div class="row">
+                <div class="col-lg-12">
+                    <input id="pac-input" class="controls googlesearchinput" type="text" placeholder="Location Search">
+                    <input id="pacskcode-input" class="controls googlesearchinput2" type="text" placeholder="SKCode Search">
+                    <div id="map_canvas" style=" border: 2px solid #3872ac;width:100%"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-right">
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="savepolygon()">Save</button>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeletecluster.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Cluster</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to End?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteCluster(ClusterData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myAddAgent.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Agent</h4>
+            <div class="form-group" style="width:100%">
+                <label for="site-name">Agents</label><br />
+                <!--<select class="form-control agentmultiselect" id="site-name" ng-model="examplemodel" multiple="multiple">
+                    <option value="">---SELECT---</option>
+                    <option value="{{p.PeopleID}}" ng-repeat="p in dataselect"> {{p.DisplayName}}</option>
+                </select>-->
+                <div ng-dropdown-multiselect="" options="vm.dataselect" selected-model="vm.examplemodel" extra-settings="examplesettings" style="margin:10px;width:100%"></div>
+            </div>
+            <div class="modal-footer">                
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="AddAgentData(examplemodel)">Save</button>
+            </div>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="myAddVehicle.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span></span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Vehicle</h4>
+            <div class="form-group" style="width:100%">
+                <label for="site-name">Vehicles</label><br />
+                <!--<select class="form-control" id="site-name" ng-model="ClusterData.PeopleID">
+                    <option value="">---SELECT---</option>
+                    <option value="{{p.PeopleID}}" ng-repeat="p in peoples"> {{p.DisplayName}}</option>
+                </select>-->
+                <div ng-dropdown-multiselect="" options="dataselectV" selected-model="examplemodelV" extra-settings="examplesettingsV" style="margin:10px;width:100%"></div>
+            </div>
+            <div class="modal-footer">
+                
+
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="AddVehicleData(examplemodelV)">Save</button>
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="myAddCity.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add City</h4>
+            <div class="form-group col-md-6">
+                <label for="site-name">City:</label><br />
+                <select class="form-control" id="site-name" ng-model="city.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}} " ng-repeat="city in citydata"> {{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" ng-click="AddCityData(city.Cityid)">Save</button>
+            </div>
+        </div>
+    </form>
+</script>

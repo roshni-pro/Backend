@@ -1,0 +1,1845 @@
+﻿<head>
+    <style>
+        .fc-event-dot-green {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #3a87ad;
+        }
+
+        .fc-event-dot-red {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background-color: red;
+        }
+
+
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .modal-footer {
+            padding: 18px !important;
+            padding-right: 35px !important;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+
+        .autocomplete-options-container {
+            position: relative;
+        }
+
+        .autocomplete-options-dropdown {
+            position: absolute;
+            top: -1px;
+            left: 0px;
+            border: 1px solid #ccc;
+            border-top-color: #d9d9d9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: default;
+            z-index: 1001;
+            background: green;
+        }
+
+        .autocomplete-options-list {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .autocomplete-option {
+            padding: 4px 10px;
+            line-height: 22px;
+            overflow: hidden;
+            font: normal normal normal 13.3333330154419px/normal Arial;
+        }
+
+            .autocomplete-option.selected {
+                background-color: #eee;
+            }
+    </style>
+</head>
+
+<div class="page page-table" button-permission-binder parentName="Item Master" pageName="Items Master">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>  Item Master
+            </strong>
+        </div>
+        <br />
+        <div>
+            <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
+                    <button class="btn-sm btn-primary skadd" ng-click="open()" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">
+                        <span class="glyphicon glyphicon-plus">
+                        </span> Add new Item
+                    </button>
+                    <!--<button class="btn-sm btn-primary" ng-click="toggle()"  > <span class="glyphicon glyphicon-plus"> </span>Upload Items</button>-->
+                    <button class="btn-sm btn-primary skexport" ng-click="exportCentralItemData()" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)"> <span class="glyphicon glyphicon-plus"> </span> Export Central Item List</button>
+                    <!--<button type="button" class="btn btn-ar btn-primary skmissinghsncodeitemmaster" ng-click="missingHSNCode()">MissingHSNCodeItemMaster</button>
+                    <button type="button" class="btn btn-ar btn-primary skmissinghsncodecentral" ng-click="missingHSNCodeCentral()">MissingHSNCodeCentral</button>
+                    <button type="button" class="btn btn-ar btn-primary skitemmissingdetail" ng-click="missingDetail()">ItemMissingDetail</button>-->
+                </div>
+                <!--<div class="form-group col-md-2" ng-show="UserRole.role == 'HQ Master login'">
+                    <p>Filter Warehouse</p>
+                </div>-->
+                <div class="form-group col-md-2 ">
+                    <label for="site-name"></label><br />
+                    <select class="form-control" id="site-name" ng-model="Warehouseid" data-ng-change="getWareHouseStores()">
+
+                        <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="Warehouseid == warehouses.Warehouseid"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+                    </select>
+                </div>
+                <label for="site-name">Warehouse</label><br />
+                <button class="btn-sm btn-primary skexportfullwarehouseitemlist" ng-if="WarehouseButton==true" ng-click="exportData1()">Export Full Warehouse Item List</button>
+                <button class="btn-sm btn-primary skexportdeactivatedlist" ng-click="deactivated(Warehouseid)"> Export Deactivated List</button>
+                <button class="btn-sm btn-primary skexportdeactivatedlist" ng-click="deactivatednew(Warehouseid)"> Export Deactivated List 10</button>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group col-md-3">
+                    <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" />
+                </div>
+                <div class="form-group col-md-3">
+                    <button type="button" class="btn-sm btn-primary" ng-if="centralButton==true" data-ng-click="search()">Search Central Item</button>
+                    <button type="button" class="btn-sm btn-primary" ng-if="WarehouseButton==true" data-ng-click="WareHouseBysearch()">Search Wahrehouse Item</button>
+                </div>
+                <div class="form-group col-md-3">
+                    <select class="form-control" ng-model="status" ng-change="activDInactive(Warehouseid)">
+                        <option value="">---Default---</option>
+                        <option value="true">Active</option>
+                        <option value="false">Deactive</option>
+                        <option ng-if="WarehouseButton==true" value="ZeroQty">ZeroQty</option>
+                        <option ng-if="WarehouseButton==true" value="MaxToLow">MaxToLow</option>
+                        <option ng-if="WarehouseButton==true" value="Item Limit">Item Limit</option>
+                      
+
+                    </select>
+
+                    <!--<input type="radio"  ng-click="activDInactive(Warehouseid)" ng-model="status" /> Default
+                    <input type="radio"  ng-value="true" ng-click="activDInactive(Warehouseid)" ng-model="status" /> Active
+                    <input type="radio"  ng-value="false" ng-click="activDInactive(Warehouseid)" ng-model="status" /> Deactive
+
+                    <input   type="radio"  ng-value="'ZeroQty'" ng-click="activDInactive(Warehouseid)" ng-model="status" /> Zero Qty Item
+                    <input   type="radio" ng-value="'MaxToLow'" ng-click="activDInactive(Warehouseid)" ng-model="status" />Max Qty Item-->
+
+                </div>
+                <!--<div class="form-group col-md-4">
+                    <button type="button" class="btn-sm btn-primary" data-ng-click="refresh()">Refresh Item</button>
+                </div>-->
+                <button class="btn-sm btn-danger skexportwarehousecurrentitemlist" ng-if="WarehouseButton==true" ng-click="exportDataStatus()"> <span class="glyphicon glyphicon-plus"> </span> Export Warehouse Current Item List</button>
+
+            </div>
+            <br />
+            <br />
+        </div>
+        <div id="typography" ng-hide="uploadshow">
+            <div class="well">
+                <div id="dragandrophandler">Drag &amp; Drop Files Here</div>
+                <br><br>
+                <div id="status1"></div>
+            </div>
+        </div>
+        <!--Start Admin Central Item Master Table-->
+        <table class="table table-bordered table-striped table-responsive" ng-show="UserRole.rolenames.includes('HQ')">
+            <thead>
+                <tr>
+
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            Stock
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            itemBaseName
+                        </div>
+                    </th>
+
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            WH
+
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            MRP Price
+
+                        </div>
+                    </th>
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            Selling Price
+
+                        </div>
+                    </th>
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            Purchase Price
+
+                        </div>
+                    </th>
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            Net Purchase Price
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Unit Type
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Selling Unit Name
+
+                        </div>
+                    </th>
+                    <!--<th>
+        <div class="th">
+            TaxGroup Name
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('TGrpName')"
+                  data-ng-class="{active: row == 'TGrpName'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-TGrpName')"
+                  data-ng-class="{active: row == '-TGrpName'}"></span>
+        </div>
+    </th>-->
+
+                    <th>
+                        <div class="th">
+                            Total Tax %
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Min Item Order
+
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            IsActive
+
+                        </div>
+                    </th>
+                    <th ng-if="centralButton==true">
+                        <div class="th">
+                            MRP
+                        </div>
+                    </th>
+
+
+                    <!--<th>
+
+        <div class="th">
+            Active/Deactive
+        </div>
+    </th>-->
+
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <!--<th>
+        <div class="th">
+            Delete
+        </div>
+    </th>-->
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Free Items
+                        </div>
+                    </th>-->
+
+
+                    <th>
+                        <div class="th">
+                            Item image
+
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Category
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub category
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+
+                            Subsub cat
+                        </div>
+                    </th>
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            Add Item Limit
+                        </div>
+                    </th>
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            Item Limit History
+                        </div>
+                    </th>
+                    <th ng-if="WarehouseButton==true">
+                        <div class="th">
+                            Buyer Name
+                        </div>
+                    </th>
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <!--|filter:{warehouse_id:wh.Warehouseid}-->
+                <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td ng-if="trade.CurrentStock == 0 && WarehouseButton==true"><span class="label label-danger ng-binding">{{trade.CurrentStock}}</span></td>
+                    <td ng-if="trade.CurrentStock != 0 && WarehouseButton==true"><span class="label label-info ng-binding">{{trade.CurrentStock}}</span></td>
+                    <td> {{trade.itemname}}</td>
+                    <td>{{trade.itemBaseName}}</td>
+                    <td ng-if="WarehouseButton==true">{{trade.WarehouseName}}</td>
+
+                    <td>{{trade.price | number : 3}}</td>
+                    <td ng-if="WarehouseButton==true">{{trade.UnitPrice | number : 3}}</td>
+                    <td ng-if="WarehouseButton==true">{{trade.PurchasePrice | number : 3}}</td>
+                    <td ng-if="WarehouseButton==true">{{trade.NetPurchasePrice | number : 3}}</td>
+                    <td>{{trade.PurchaseUnitName}}</td>
+                    <td>{{trade.SellingUnitName}}</td>
+                    <!--<td>{{trade.TGrpName}}</td>-->
+                    <td>{{trade.TotalTaxPercentage}}</td>
+                    <td>{{trade.MinOrderQty}} </td>
+
+                    <td ng-style="set_color(trade)">{{trade.active}}</td>
+
+
+                    <!--<td ng-if="trade.active == false && centralButton==true"><button class="btn-sm btn-primary" ng-click="SetActive(trade)">Activate</button> </td>
+    <td ng-if="trade.active == true && centralButton==true"><button class="btn-sm btn-danger" ng-click="SetActive(trade)">Deactivate</button> </td>-->
+                    <!--//MultiMrp Harry 30/03/2019-->
+                    <td ng-if="centralButton==true"><button class="btn-sm btn-danger" ng-click="openMultiMRP(trade)">Add MRP</button></td>
+
+
+                    <!--<td ng-if="trade.active == false && WarehouseButton==true"><button class="btn-sm btn-primary" ng-click="WhSetActive(trade)">Activate</button> </td>
+    <td ng-if="trade.active == true && WarehouseButton==true"><button class="btn-sm btn-danger" ng-click="WhSetActive(trade)">Deactivate</button> </td>-->
+
+
+
+                    <td ng-if="centralButton==true"><button class="btn-sm btn-primary" ng-click="edit(trade)" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">Edit</button> </td>
+                    <td ng-if="WarehouseButton==true"><button class="btn-sm btn-primary" ng-click="Whedit(trade)">Edit</button> </td>
+
+                    <!--<td ng-if="WarehouseButton==true"><button class="btn-sm btn-danger" ng-click="Whopendelete(trade,$index)" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">Remove</button> </td>
+    <td ng-if="centralButton==true"><button class="btn-sm btn-danger" ng-click="opendelete(trade,$index)" ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1)">Remove</button> </td>-->
+                    <td ng-if="WarehouseButton==true">
+                        <button class="btn-sm btn-primary skview" ng-init="Id=trade.ItemId;entity='ItemMaster'" ng-click="showMe=true">View</button>
+                        <div ng-if="showMe" show-history></div>
+                    </td>
+
+                    <td ng-if="WarehouseButton==false">
+                        <button class="btn-sm btn-primary skview" ng-init="Id=trade.Id;entity='ItemMasterCentral'" ng-click="showMe=true">View</button>
+                        <div ng-if="showMe" show-history></div>
+                    </td>
+
+                    <!--<td ng-if="WarehouseButton==true">
+        {{trade.SellingPrice| number : 3}}
+        <button class="btn-sm btn-primary" ng-init="Id=trade.Id;entity='ItemMaster'" ng-click="showMe=true">View</button>
+        <div ng-if="showMe" show-history></div>
+    </td>-->
+                    <!--<td ng-if="centralButton==true">{{trade.SellingPrice| number : 3}}<button class="btn-sm btn-primary" data-toggle="modal" data-target="#pricemodel" ng-click="oldprice(trade)">History</button></td>
+    <td ng-if="WarehouseButton==true">{{trade.SellingPrice| number : 3}}<button class="btn-sm btn-primary" data-toggle="modal" data-target="#pricemodel" ng-click="Wholdprice(trade)">History</button></td>-->
+
+                    <!--<td ng-if="trade.free == false"><button class="btn-sm btn-primary" ng-click="SetFree(trade)">AddFree</button> </td>
+                    <td ng-if="trade.free == true"><button class="btn-sm btn-danger" ng-click="SetFree(trade)">RemoveFree</button> </td>-->
+                    <td>
+                        <div class="form-group">
+                            <img src={{trade.LogoUrl}} class="img-square img80_80" />
+                            <figcaption>{{trade.Number}}</figcaption>
+                            <button class="btn-sm btn-dark skupload" ng-show="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.indexOf('HQ Sourcing Executive')>-1" ng-click="openAddImage(trade)">upload</button>
+                        </div>
+                    </td>
+
+                    <td>{{trade.CategoryName}}</td>
+
+                    <td>{{trade.SubcategoryName}}</td>
+                    <td>{{trade.SubsubcategoryName}}</td>
+                    <td ng-if="WarehouseButton==true">
+                        <button class="btn-sm btn-info skadd" ng-show="UserRole.rolenames.indexOf('HQ Master login')>-1 || UserRole.rolenames.includes('HQ')" ng-click="WhAddItemLimit(trade)">Add Item Limit</button>
+                        <br/><span ng-if="trade.ItemlimitQty!=0">{{trade.ItemlimitQty}} </span>
+                    </td>
+                    <td ng-if="WarehouseButton==true">
+                        <button class="btn-sm btn-primary skhistory" ng-init="LimitId=trade.ItemLimitId;entityName='ItemLimitMaster'" ng-click="showMe1=true">History</button>
+                        <div ng-if="showMe1" show-limit-history></div>
+                    </td>
+                    <td>{{trade.BuyerName}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--End Admin Central Item Master Table-->
+        <!--Start WH Master login Item Master Table-->
+        <table id="exportable" class="table table-bordered table-striped table-responsive" ng-show="UserRole.rolenames.includes('WH')">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Stocks
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item Name
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            item Base Name
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Ware House Name
+
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            MRP Price
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Selling Price
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Price
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Purchase Unit Type
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Selling Unit Name
+
+                        </div>
+                    </th>
+                    <!--<th>
+        <div class="th">
+            TaxGroup Name
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('TGrpName')"
+                  data-ng-class="{active: row == 'TGrpName'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-TGrpName')"
+                  data-ng-class="{active: row == '-TGrpName'}"></span>
+        </div>
+    </th>-->
+
+                    <th>
+                        <div class="th">
+                            Total Tax %
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Min Item Order
+
+                        </div>
+                    </th>
+
+                    <!--<th>
+        <div class="th">
+            IsActive
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('IsActive')"
+                  data-ng-class="{active: row == 'IsActive'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-IsActive')"
+                  data-ng-class="{active: row == '-IsActive'}"></span>
+        </div>
+    </th>-->
+                    <!--<th>
+        <div class="th">
+            Active/Deactive
+        </div>
+    </th>-->
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Free Items
+                        </div>
+                    </th>-->
+
+                    <th>
+                        <div class="th">
+                            Category Name
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sub category Name
+
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Subsub cat Name
+
+                        </div>
+
+                    </th>
+                    <th>
+                        <div class="th">
+                            Item image
+
+                        </div>
+                    </th>
+                   
+                </tr>
+
+            </thead>
+            <tbody>
+                <!--|filter:{warehouse_id:wh.Warehouseid}-->
+                <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                <tr data-ng-repeat="trade in WhcurrentPageStores">
+                    <td ng-if="trade.CurrentStock == 0"><span class="label label-danger ng-binding">{{trade.CurrentStock}}</span></td>
+                    <td ng-if="trade.CurrentStock != 0"><span class="label label-info ng-binding">{{trade.CurrentStock}}</span></td>
+                    <td>{{trade.itemname}}</td>
+                    <td>{{trade.itemBaseName}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+
+                    <td>{{trade.price | number : 3}}</td>
+                    <td>{{trade.UnitPrice | number : 3}}</td>
+                    <td>{{trade.PurchasePrice | number : 3}}</td>
+                    <td>{{trade.PurchaseUnitName}}</td>
+                    <td>{{trade.SellingUnitName}}</td>
+
+                    <!--<td>{{trade.TGrpName}}</td>-->
+                    <td>{{trade.TotalTaxPercentage}}</td>
+                    <td>{{trade.MinOrderQty}}</td>
+
+
+                    <!--<td>{{trade.active}}</td>-->
+                    <!--<td ng-if="trade.active == false"><button class="btn-sm btn-primary" ng-click="WhSetActive(trade)">Activate</button> </td>
+    <td ng-if="trade.active == true"><button class="btn-sm btn-danger" ng-click="WhSetActive(trade)">Deactivate</button> </td>-->
+                    <td><button class="btn-sm btn-primary" ng-click="Whedit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="Whopendelete(trade,$index)">Remove</button> </td>
+                    <td>{{trade.SellingPrice| number : 3}}<button class="btn-sm btn-primary" data-toggle="modal" data-target="#pricemodel" ng-click="Wholdprice(trade)">History</button></td>
+                    <!--<td ng-if="trade.free == false"><button class="btn-sm btn-primary skadd" ng-click="SetFree(trade)">AddFree</button> </td>
+                    <td ng-if="trade.free == true"><button class="btn-sm btn-danger skremove" ng-click="SetFree(trade)">RemoveFree</button> </td>-->
+
+                    <td>{{trade.CategoryName}}</td>
+                    <td>{{trade.SubcategoryName}}</td>
+                    <td>{{trade.SubsubcategoryName}}</td>
+
+                    <td>
+                        <div class="form-group">
+                            <img src={{trade.LogoUrl}} class="img-square img80_80" />
+
+                        </div>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <!--End WH Master login Item Master Table-->
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="selectedPagedItem"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page //this give no. of items selected to show on page
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 page-num-info">
+                    <dir-pagination-controls max-size="8"
+                                             direction-links="true"
+                                             boundary-links="true"
+                                             on-page-change="getData1(newPageNumber)">
+                        //get method call every time when page changes
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<!--price model-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: #f44336 !important;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<div class="modal fade " id="pricemodel" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Item History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Item Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Ware House Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Subsub cat Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Sub category Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Category Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Purchase Price
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Selling Price
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                MRP Price
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Purchase Unit Type
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Total Tax %
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Min Item Order
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Edit By
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Created\Updated Date
+                            </div>
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in dataoldprice">
+                        <td>{{trade.itemname}}</td>
+                        <td>{{trade.WarehouseName}}</td>
+                        <td>{{trade.SubsubcategoryName}}</td>
+                        <td>{{trade.SubcategoryName}}</td>
+                        <td>{{trade.CategoryName}}</td>
+                        <td>{{trade.PurchasePrice | number : 3}}</td>
+                        <td>{{trade.SellingPrice | number : 3}}</td>
+                        <td>{{trade.price| number : 3}}</td>
+                        <td>{{trade.PurchaseUnitName}}</td>
+                        <td>{{trade.TotalTaxPercentage}}</td>
+                        <td>{{trade.MinOrderQty}}</td>
+                        <td>{{trade.UserName}}</td>
+                        <td>{{trade.CreatedDate| date:'medium'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /site tiles -->
+<!-------Start Central Item Master Oparetion------->
+<!-- new site modal -->
+
+<script type="text/ng-template" id="myitemMasterModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add New Item </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="alert-link">
+                <h4><u>Fields marked <span style="color:red;">*</span> are Mandatory</u></h4>
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Item Base Name<span style="color:red;">*</span> </label><br />
+                <autocomplete options="datas"
+                              place-holder="Search itemname..."
+                              on-select="onSelect"
+                              display-property="itemBaseName"
+                              input-class="form-control"
+                              ng-model="itemMasterData.itemBaseName"
+                              ng-readonly="xy=='0'" id="Itmnem" name="iname">
+                </autocomplete>
+            </div>
+            <!--<div class="form-group col-md-6">
+        <label for="site-name">Select City<span style="color:red;">*</span></label><br />
+        <select class="form-control" ng-model="itemMasterData.Cityid" ng-readonly="xy=='0'" id="NICity" name="NIccity">
+            <option value="">---SELECT---</option>
+            <option value="{{citys.Cityid}}" ng-selected="(itemMasterData.Cityid == citys.Cityid)" id="NI_city" name="NI-cname" ng-repeat="citys in city"> {{citys.CityName}}</option>
+        </select>
+    </div>-->
+            <!--<div class="form-group col-md-6">
+        <label for="site-name" >Warehouse ID</label><br />
+        <select class="form-control" ng-model="itemMasterData.WarehouseId" ng-change="getWsubsubcat(itemMasterData)" ng-readonly="xy=='0'" id = "NIWhouse"  name = "NIwarhouse">
+            <option value="">---SELECT---</option>
+            <option value="{{warehouses.WarehouseId}}" ng-selected="(itemMasterData.WarehouseId == warehouses.WarehouseId)" id = "NIw1"  name = "NIwarw1" ng-repeat="warehouses in warehouse| filter:{Cityid:itemMasterData.Cityid}"> {{warehouses.WarehouseName}}</option>
+        </select>
+    </div>-->
+            <!--//for Child item create-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Unit Of Quantity</label>
+                <input type="text" class="form-control" ng-model="itemMasterData.UnitofQuantity" placeholder="Enter Unit of Quantity" ng-change="itemname(itemMasterData)" ng-readonly="xy=='0'" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">MRP Price</label><br />
+                <input id="NIMRP" name="NIprimr" type="number" class="form-control" placeholder="Enter Item Price " ng-model="itemMasterData.price" ng-change="itemname(itemMasterData)" ng-readonly="xy=='0'" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="UOM">Unit Of Measurement:<span style="color:red;"></span></label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.UOM" ng-selected="(itemMasterData.UOM == UOM.UOM)" ng-change="itemname(itemMasterData)" ng-readonly="xy=='0'">
+                    <option value="Gm">Gm</option>
+                    <option value="Ml">Ml</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Ltr">Ltr</option>
+                    <option value="Pc">Pc</option>
+                    <option value="Size">Size</option>
+                    <option value="Combo">Combo</option>
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">
+                    Is Sensitive(Unit Of Measurement)
+                </label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.IsSensitive" ng-change="itemname(itemMasterData)">
+                    <option value="" ng-selected>--Select--</option>
+                    <option value="true" ng-selected="(itemMasterData.IsSensitive == true)">Yes</option>
+                    <option value="false">No</option>
+
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Display Name</label><br />
+                <input type="text" class="form-control" readonly value="{{itemMasterData.itemname}}" ng-model="itemMasterData.itemname" />
+            </div>
+
+            <div class="form-group col-md-6" ng-if="itemMasterData.IsSensitive=='true'">
+                <label for="site-name">Is Sensitive MRP</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.IsSensitiveMRP" ng-change="itemname(itemMasterData)">
+                    <option value="" ng-selected>--Select--</option>
+                    <option value="true" ng-selected="(itemMasterData.IsSensitiveMRP == true)">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+
+            <!--<div class="form-group col-md-6">
+        <label for="site-name">Create Child Item (*only for Choosen item)</label>
+        <input type="checkbox" class="form-control" ng-disabled="TempIschild ==false" ng-model="itemMasterData.IsChild" ng-change="ChildItem(itemMasterData)">
+    </div>-->
+            <div class="form-group col-md-6">
+                <label for="site-name">Category<span style="color:red;">*</span></label><br />
+                <select class="form-control" id="NIcat" name="NICategory" ng-model="itemMasterData.Categoryid" ng-change="GetSubCategory(itemMasterData)" ng-readonly="xy=='0'">
+                    <option value="">---SELECT---</option>
+                    <option value="{{ccategorys.Categoryid}}" ng-selected="(itemMasterData.Categoryid == ccategorys.Categoryid)" ng-repeat="ccategorys in category"> {{ccategorys.CategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Sub Category<span style="color:red;">*</span></label><br />
+                <select class="form-control" id="NIsuca" name="NIsubcategory" data-ng-disabled="!itemMasterData.Categoryid" ng-model="itemMasterData.SubCategoryId" ng-change="GetSubSubCategory(itemMasterData)" ng-readonly="xy=='0'">
+                    <option value="">---SELECT---</option>
+                    <option value="{{subcategorys.SubCategoryId}}" ng-selected="(itemMasterData.SubCategoryId == subcategorys.SubCategoryId)" ng-repeat="subcategorys in subcategorydata"> {{subcategorys.SubcategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select SubSub Category<span style="color:red;">*</span></label><br />
+                <select class="form-control" id="NIsusucat" name="NIsubsubcategory" data-ng-disabled="!itemMasterData.Categoryid" ng-model="itemMasterData.SubsubCategoryid" ng-change="getItemCode(itemMasterData)" ng-readonly="xy=='0'">
+                    <option value="">---SELECT---</option>
+                    <option value="{{subsubcategorys.SubsubCategoryid}}" ng-selected="(itemMasterData.SubsubCategoryid == subsubcategorys.SubsubCategoryid)" ng-repeat="subsubcategorys in subsubcategorydata"> {{subsubcategorys.SubsubcategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Item Code <span style="color:red;">*</span></label><br />
+
+                <input id="NIcod" name="NIcode" type="text" class="form-control" placeholder="Enter Item Code " ng-change="validateUpload()" ng-model="itemMasterData.itemcode" ng-readonly="xy=='0'" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Item Number <span style="color:red;">*</span></label><br />
+                <input id="NInum" name="NInumber" type="text" class="form-control" placeholder="Enter Item Number " ng-model="itemMasterData.Number" ng-readonly="xy=='0'" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Selling SKU <span style="color:red;">*</span></label><br />
+                <!--<input id="itemcode" type="text" class="form-control" placeholder="Enter  selling sku " ng-change="validateUploadd()" ng-model="itemMasterData.SellingSku" />-->
+                <select class="form-control" id="NISKU" name="NIsellingsk" data-ng-disabled="!itemMasterData.SubsubCategoryid" ng-model="itemMasterData.SellingSku">
+                    <!--<option value="">---SELECT---</option>-->
+                    <option value="{{itemMasterData.Number}}A" ng-hide="itemMasterData.Number + 'A'== SKUMutiHide[0]||itemMasterData.Number + 'A'==SKUMutiHide[1]||itemMasterData.Number + 'A'==SKUMutiHide[2]||itemMasterData.Number + 'A'==SKUMutiHide[3]">{{itemMasterData.Number}}A</option>
+                    <option value="{{itemMasterData.Number}}B" ng-hide="itemMasterData.Number + 'B'== SKUMutiHide[0]||itemMasterData.Number + 'B'==SKUMutiHide[1]||itemMasterData.Number + 'B'==SKUMutiHide[2]||itemMasterData.Number + 'B'==SKUMutiHide[3]">{{itemMasterData.Number}}B</option>
+                    <option value="{{itemMasterData.Number}}C" ng-hide="itemMasterData.Number + 'C'== SKUMutiHide[0]||itemMasterData.Number + 'C'==SKUMutiHide[1]||itemMasterData.Number + 'C'==SKUMutiHide[2]||itemMasterData.Number + 'C'==SKUMutiHide[3]">{{itemMasterData.Number}}C</option>
+                    <option value="{{itemMasterData.Number}}D" ng-hide="itemMasterData.Number + 'D'== SKUMutiHide[0]||itemMasterData.Number + 'D'==SKUMutiHide[1]||itemMasterData.Number + 'D'==SKUMutiHide[2]||itemMasterData.Number + 'D'==SKUMutiHide[3]">{{itemMasterData.Number}}D</option>
+                    <option value="{{itemMasterData.Number}}E" ng-hide="itemMasterData.Number + 'E'== SKUMutiHide[0]||itemMasterData.Number + 'E'==SKUMutiHide[1]||itemMasterData.Number + 'E'==SKUMutiHide[2]||itemMasterData.Number + 'E'==SKUMutiHide[3]">{{itemMasterData.Number}}E</option>
+                    <option value="{{itemMasterData.Number}}F" ng-hide="itemMasterData.Number + 'F'== SKUMutiHide[0]||itemMasterData.Number + 'F'==SKUMutiHide[1]||itemMasterData.Number + 'F'==SKUMutiHide[2]||itemMasterData.Number + 'F'==SKUMutiHide[3]">{{itemMasterData.Number}}F</option>
+
+                </select>
+
+            </div>
+            <div class="form-group col-md-6" style="background-color:honeydew!important">
+                <label for="site-name">Item Bar Codes <span style="color:red;">*</span></label><br />
+
+                <input id="itemcode" type="text" class="form-control" placeholder="Enter Item barcode " ng-model="itemMasterData.Barcode" />
+            </div>
+            <div class="form-group col-md-6" style="background-color:lightcyan!important">
+                <label for="site-name">SK Bar Codes <span style="color:red;">*</span></label><br />
+                <input id="itemcode" type="text" class="form-control" placeholder="Enter Item barcode " ng-model="itemMasterData.Number" ng-disabled="true"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Purchase SKU <span style="color:red;">*</span></label><br />
+
+                <input id="itemcode" type="text" class="form-control" placeholder="Enter Purchase sku " ng-model="itemMasterData.PurchaseSku" ng-readonly="xy=='0'" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Minimum Selling Order qty</label><br />
+                <input id="NIMSOQ" name="NIminsellingqty" type="number" class="form-control" placeholder="Enter Minimum Selling Order qty" min="1" maxlength="1000" ng-model="itemMasterData.MinOrderQty" ng-blur="SellingUnitname(itemMasterData)" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Minimum Purchase Order qty<span style="color:red;">*</span></label><br />
+                <input id="NIMPP" name="NIMPurchaseoty" type="number" class="form-control" placeholder="Enter Minimum Order quantity" min="1" maxlength="1000" ng-model="itemMasterData.PurchaseMinOrderQty" ng-blur="purchaseUnitname(itemMasterData)" />
+            </div>
+            <!--<div class="form-group col-md-6">
+        <label for="site-name">Purchase Price<span style="color:red;">*</span></label><br />
+        <input id="NIPP"  name="NIenterpurchase" type="text" class="form-control" placeholder="Enter Purchase Price " ng-model="itemMasterData.PurchasePrice" />
+    </div>-->
+            <div class="form-group col-md-6">
+                <label for="site-name">General Customer Price</label><br />
+                <input id="NIGCP" name="NIGcustmerprice" type="text" class="form-control" placeholder="Enter General Customer Price " ng-model="itemMasterData.GeneralPrice" />
+            </div>
+            <!--<div class="form-group col-md-6">
+        <label for="site-name">Unit Price<span style="color:red;">*</span></label><br />
+        <input id="NIUP"  name="NIunitprice" type="text" class="form-control" placeholder="Enter Unit Price " ng-model="itemMasterData.UnitPrice" />
+    </div>-->
+            <div class="form-group col-md-6">
+                <label for="site-name">Discount %</label><br />
+                <input id="NIDis" name="NIdiscount" type="text" class="form-control" placeholder="Enter Item Discount " ng-model="itemMasterData.Discount" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Tax Group Name<span style="color:red;">*</span></label><br />
+                <select class="form-control" id="NITGN" name="NItaxgroupname" ng-model="itemMasterData.GruopID">
+                    <option value="">---SELECT---</option>
+                    <option value="{{tax.GruopID}}" ng-repeat="tax in taxgroups"> {{tax.TGrpName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Cess Group Name<span style="color:red;">*</span></label><br />
+                <select class="form-control" id="NITGN" name="NItaxgroupname" ng-model="itemMasterData.CessGrpID">
+                    <option value="">---SELECT---</option>
+                    <option value="{{tax.GruopID}}" ng-repeat="tax in taxgroups"> {{tax.TGrpName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">HSN Code <span style="color:red;">*</span></label><br />
+
+                <input id="NIHSNC" name="NIhsn_code" type="text" class="form-control" placeholder="Enter HSNCODE " ng-model="itemMasterData.HSNCode" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Purchase Unit Name<span style="color:red;">*</span></label><br />
+
+                <input id="NIPUN" name="NIpurchunitname" type="text" class="form-control" placeholder="Enter Purchase Unit Name " ng-model="itemMasterData.PurchaseUnitName" readonly />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Selling Unit Name<span style="color:red;">*</span></label><br />
+
+                <input id="NI_SUN" name="NI_sellingun" type="text" class="form-control" ng-model="itemMasterData.SellingUnitName" readonly />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Hindi Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Hindi Name" ng-model="itemMasterData.HindiName" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Margin<span style="color:red;">*</span></label><br />
+                <input id="NImar" name="NI_MArgins" type="text" class="form-control" placeholder="Enter Margin " ng-model="itemMasterData.Margin" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Promo Point</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Promo Point" ng-model="itemMasterData.promoPoint" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="IsDailyEssential">Is Daily Essential</label><br />
+                <select class="form-control" id=NIIDE name=NI_isdailyessential ng-model="itemMasterData.IsDailyEssential">
+                    <option value="">---SELECT---</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">DefaultBaseMargin <span style="color:red;"></span></label><br />
+                <input id="DefaultBaseMargin" type="text" class="form-control" placeholder="Enter DefaultBaseMargin " ng-model="itemMasterData.DefaultBaseMargin" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="ShowTypes">Show Types:<span style="color:red;"></span></label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.ShowTypes" ng-selected="(itemMasterData.ShowTypes == ShowTypes.ShowTypes)">
+                    <option value="">---SELECT---</option>
+                    <option value="Fast">Fast</option>
+                    <option value="Slow">Slow</option>
+                    <option value="Non Moving">Non Moving</option>
+                </select>
+            </div>
+
+            <!--<div class="form-group col-md-6">
+        <label for="Reason for Deactive item">Reason for Deactive item:<span style="color:red;"></span></label><br />
+        <select class="form-control" id="site-name" ng-model="itemMasterData.Reason" ng-selected="(itemMasterData.Reason == Reason.Reason)" data-ng-disabled="!itemMasterData.active==false">
+            <option value="">---SELECT---</option>
+            <option value="MRP Issue">MRP Issue</option>
+            <option value="Stock Unavailable">Stock Unavailable</option>
+            <option value="Price Issue">Price Issue</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>-->
+            <!--<div class="form-group col-md-8">
+        <div class="form-group col-md-2">
+            <label for="ShowMrp"> ShowMrp</label><br />
+            <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.ShowMrp" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="ShowUnit"> ShowUnit</label><br />
+            <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.ShowUnit" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="ShowUOM"> ShowUOM</label><br />
+            <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.ShowUOM" />
+        </div>
+        <div class="form-group col-md-2">
+            <label for="ShowType"> ShowType</label><br />
+            <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.ShowType" />
+        </div>
+    </div>-->
+            <!--<div class="form-group col-md-6">
+        <label> Is Active</label><br />
+        <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.active" />
+    </div>-->
+
+            <img src={{itemMasterData.LogoUrl}} class="img-square img80_80" />
+
+
+            <!--<div class="form-group col-md-12">
+        <label for="uploadAdvertisements">Upload Image:</label>
+        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+        <div ng-repeat="item in uploader.queue">
+            <button type="button" class="btn btn-success btn-xs skupload" ng-click="item.upload()" ng-show="upld" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+        </div>
+    </div>-->
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" id="NICancel" name="NIclose" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AdditemMaster(itemMasterData)" id="NISave" name="NIconfirm">Save</button>
+        </div>
+
+    </form>
+</script>
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myitemMasterPut.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Item</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Base Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Item Name " ng-model="itemMasterData.itemBaseName" ng-disabled="true" ng-blur="itemname(itemMasterData)" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Item Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Item Name " ng-model="itemMasterData.itemname" ng-disabled="xy" />
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="site-name">
+                    Is Sensitive (Unit Of Measurement)
+                </label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.IsSensitive" ng-change="itemname(itemMasterData)">
+                    <option value="true" ng-selected="(itemMasterData.IsSensitive == true)">Yes</option>
+                    <option value="false" ng-selected="(itemMasterData.IsSensitive == false)">No</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Is Sensitive MRP</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.IsSensitiveMRP" ng-change="itemname(itemMasterData)">
+                    <option value="true" ng-selected="(itemMasterData.IsSensitiveMRP == true)">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Unit Of Quantity</label>
+                <input type="text" class="form-control" ng-model="itemMasterData.UnitofQuantity" placeholder="Enter Unit of Quantity" ng-disabled="xy">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">MRP</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.ItemMultiMRPId" ng-disabled="xy">
+                    <option value="{{ItemPriceDatas.ItemMultiMRPId}}" ng-repeat="ItemPriceDatas in ItemPriceData" ng-selected="ItemPriceDatas.ItemMultiMRPId == itemMasterData.ItemMultiMRPId">{{ItemPriceDatas.MRP}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="UOM">Unit Of Magerment:<span style="color:red;"></span></label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.UOM" ng-selected="(itemMasterData.UOM == UOM.UOM)" ng-disabled="xy">
+                    <option value="Gm">Gm</option>
+                    <option value="Ml">Ml</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Ltr">Ltr</option>
+                    <option value="Pc">Pc</option>
+                    <option value="Size">Size</option>
+                    <option value="Combo">Combo</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Item Number</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Item Code " ng-change="validateUpload()" ng-model="itemMasterData.Number" ng-disabled="xy" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Selling SKU <span style="color:red;">*</span></label><br />
+                <input id="itemcode" type="text" class="form-control" placeholder="Enter  selling sku " ng-change="validateUploadd()" ng-model="itemMasterData.SellingSku" ng-disabled="xy" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Hindi Name</label><br />
+                <input id="itemcode" type="text" class="form-control" placeholder="Enter Hindi Name " ng-model="itemMasterData.HindiName" />
+            </div>
+            <div class="form-group col-md-6" style="background-color:honeydew!important">
+                <label for="site-name">Item Bar Code</label><br />
+                <input id="itemcode" type="text" class="form-control" placeholder="Enter Item barcode " ng-model="itemMasterData.Barcode" ng-disabled="true" />
+            </div>
+            <div class="form-group col-md-6" style="background-color:lightcyan!important">
+                <label for="site-name">SK Bar Code</label><br />
+                <input id="itemcode" type="text" class="form-control" placeholder="Enter Item barcode " ng-model="itemMasterData.Number" ng-disabled="true" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Categorys</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.Categoryid" ng-change="GetSubCategory(itemMasterData.Categoryid)">
+                    <option value="">{{itemMasterData.CategoryName}}</option>
+                    <option value="{{categorys.Categoryid}}" ng-repeat="categorys in category" ng-selected="itemMasterData.Categoryid==categorys.Categoryid"> {{categorys.CategoryName}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Sub Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.SubCategoryid" ng-change="GetSubSubCategory(itemMasterData)">
+                    <option value="">{{itemMasterData.SubcategoryName}}</option>
+                    <option value="{{subcategorys.SubCategoryId}}" ng-repeat="subcategorys in subcategory|filter:{Categoryid:itemMasterData.Categoryid}" ng-selected="itemMasterData.SubCategoryId==subcategorys.SubCategoryId"> {{subcategorys.SubcategoryName}} <= {{subcategorys.CategoryName}}</option>
+                </select>
+
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Sub Sub Category:</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.SubsubCategoryid">
+                    <!--<option value="">{{itemMasterData.SubsubcategoryName}}</option>-->
+                    <option value="{{subsubcategorysedit.SubsubCategoryid}}" ng-repeat="subsubcategorysedit in subsubcategoryedit |filter:{SubCategoryId:itemMasterData.SubCategoryId}" ng-selected="itemMasterData.SubsubCategoryid==subsubcategorysedit.SubsubCategoryid"> {{subsubcategorysedit.SubsubcategoryName}} <= {{subsubcategorysedit.SubcategoryName}} <= {{subsubcategorysedit.CategoryName}}</option>
+                </select>
+            </div>
+            <!--<div class="form-group col-md-6">
+        <label for="site-name">Select Supplier:</label><br />
+        <select class="form-control" ng-model="itemMasterData.SupplierId" ng-options="suppliers.SupplierId as suppliers.Name for suppliers in supplier"></select>
+    </div>-->
+            <div class="form-group col-md-6">
+                <label for="site-name">Minimum purchase Order qty</label><br />
+                <input id="site-name" type="number" class="form-control" placeholder="Enter Minimum Order quantity" min="1" maxlength="1000" ng-model="itemMasterData.PurchaseMinOrderQty" ng-blur="purchaseUnitname(itemMasterData)" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Minimum Selling Order qty</label><br />
+                <input id="site-name" type="number" class="form-control" placeholder="Enter Minimum Order quantity" min="1" maxlength="1000" ng-model="itemMasterData.MinOrderQty" ng-blur="SellingUnitname(itemMasterData)" />
+            </div>
+            <!--<div class="form-group col-md-6">
+        <label for="site-name">Purchase Price</label><br />
+        <input id="site-name" type="text" class="form-control" placeholder="Enter Item Price " ng-model="itemMasterData.PurchasePrice" />
+    </div>-->
+            <div class="form-group col-md-6">
+                <label for="site-name">General customer Price</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter General Customer Price " ng-model="itemMasterData.GeneralPrice" />
+            </div>
+            <!--<div class="form-group col-md-6">
+        <label for="site-name">Unit Price</label><br />
+        <input id="site-name" type="text" class="form-control" placeholder="Enter Unit Price " ng-model="itemMasterData.UnitPrice" />
+    </div>-->
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Discount %</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Item Discount " ng-model="itemMasterData.Discount" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Purchase Unit Name</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Purchase Unite" ng-model="itemMasterData.PurchaseUnitName" readonly />
+                <!--<select class="form-control" ng-init="unitmasters.UnitId=itemMasterData.Id" ng-model="itemMasterData.Id" ng-options="unitmasters.UnitId as unitmasters.UnitName for unitmasters in unitmaster"></select>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Selling Unit Name </label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Selling Unit" ng-model="itemMasterData.SellingUnitName" readonly />
+                <!--<select class="form-control" ng-model="itemMasterData.UnitId" ng-options="unitmasters.UnitId as unitmasters.UnitName for unitmasters in unitmaster"></select>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Tax Group Name</label><br />
+                <select class="form-control" ng-model="itemMasterData.GruopID" ng-options="tax.GruopID as tax.TGrpName for tax in taxgroups"></select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Cess Group Name</label><br />
+                <select class="form-control" ng-model="itemMasterData.CessGrpID" ng-options="tax.GruopID as tax.TGrpName for tax in taxgroups"></select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> HSNCode</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter HSNCode" ng-model="itemMasterData.HSNCode" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Margin<span style="color:red;">*</span></label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Margin" ng-model="itemMasterData.Margin" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name"> Promo Point</label><br />
+                <input id="site-name" type="text" class="form-control" placeholder="Enter Promo Point" ng-model="itemMasterData.promoPoint" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="IsDailyEssential"> Is Daily Essential</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.IsDailyEssential">
+                    <option value="true" ng-selected="(itemMasterData.IsDailyEssential == 1)">Yes</option>
+                    <option value="false" ng-selected="(itemMasterData.IsDailyEssential == 0)">No</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">DefaultBaseMargin <span style="color:red;"></span></label><br />
+
+                <input id="DefaultBaseMargin" type="text" class="form-control" placeholder="Enter DefaultBaseMargin " ng-model="itemMasterData.DefaultBaseMargin" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="ShowTypes">Show Types:<span style="color:red;"></span></label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.ShowTypes" ng-selected="(itemMasterData.ShowTypes == ShowTypes.ShowTypes)">
+                    <option value="">---SELECT---</option>
+                    <option value="Fast">Fast</option>
+                    <option value="Slow">Slow</option>
+                    <option value="Non Moving">Non Moving</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="Reason for Deactive item">Reason for Deactive item:<span style="color:red;"></span></label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.Reason" ng-selected="(itemMasterData.Reason == Reason.Reason)">
+                    <option value="">---SELECT---</option>
+                    <option value="MRP Issue">MRP Issue</option>
+                    <option value="Stock Unavailable">Stock Unavailable</option>
+                    <option value="Price Issue">Price Issue</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+
+            <!--<div class="form-group col-md-6">
+        <label for="IsDailyEssential"> Is Active</label><br />
+        <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.active" />
+    </div>-->
+            <img src={{itemMasterData.LogoUrl}} class="img-square img80_80" />
+
+            <!--<div class="form-group col-md-12">
+        <label for="uploadAdvertisements">Upload Image:</label>
+        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+        <div ng-repeat="item in uploader.queue">
+            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-show="upld" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                <span class="glyphicon glyphicon-upload"></span> Upload
+            </button>
+        </div>
+    </div>-->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="PutitemMaster(itemMasterData)">Save</button>
+        </div>
+    </form>
+</script>
+
+<!-- /new site modal -->
+<script type="text/ng-template" id="myModaldeleteitemMaster.html">
+    <form name="myFormTaskTypeModal1">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Item</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to End?</label><br />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteitemMaster(itemMasterData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myactivemodal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit OnlineItems </h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.active" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutitemMaster(itemMasterData)">Set</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myfreemodal.html">
+    <form name="myfreemodalForm">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Or Remove From Free List</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Is Free:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.free" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutitemMaster(itemMasterData)">Set</button>
+        </div>
+    </form>
+</script>
+
+<!-------End Central Item Master Oparetion------->
+<!--///-->
+<!--///-->
+<!-------Start Central Item Master Oparetion------->
+<!--Update Warehouse Assets Item Master-->
+<script type="text/ng-template" id="myWhitemMasterPut.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Item</h4>
+        </div>
+        <div class="modal-body">
+
+            <label for="site-name"> Selling Unit Name<span style="color:red;">* {{itemMasterData.SellingUnitName}}</span>  - Number(SellingSKu) : <span style="color:green;">{{itemMasterData.Number}} </span>({{itemMasterData.SellingSku}})</label><br>
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Supplier:</label><br />
+                <select class="form-control" ng-model="itemMasterData.SupplierId" ng-options="suppliers.SupplierId as suppliers.Name for suppliers in supplier" ng-change="GetDepodetails(itemMasterData.SupplierId)"></select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Select Depo:</label><br />
+                <select class="form-control" id="site-name" ng-model="itemMasterData.DepoId">
+                    <option value="0">--Select--</option>
+                    <option value="{{ppl.DepoId}}" ng-repeat="ppl in Depo" data-ng-selected="itemMasterData.DepoId == ppl.DepoId"> {{ppl.DepoName}} </option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">                
+                    <label for="site-name">Select Buyer</label><br>
+                    <select class="form-control" id="ddlreturnchequeagent" ng-model="itemMasterData.BuyerId">
+                        <option value="">-Select-</option>
+                        <option value="{{db.PeopleID}}" ng-repeat="db in getBuyer" data-ng-selected="itemMasterData.BuyerId == db.PeopleID"> {{db.DisplayName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="site-name">Purchase Price</label><br />
+                    <input id="site-name" type="text" class="form-control" placeholder="Enter Item Price " ng-model="itemMasterData.PurchasePrice" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="site-name">Unit Price</label><br />
+                    <input id="site-name" type="text" class="form-control" placeholder="Enter Unit Price " ng-model="itemMasterData.UnitPrice" />
+                </div>
+
+
+                <div class="form-group col-md-6">
+                    <label for="site-name">MRP</label><br />
+                    <select class="form-control" id="site-name" ng-model="itemMasterData.ItemMultiMRPId" ng-change="itemname(itemMasterData)">
+                        <option value="{{ItemPriceDatas.ItemMultiMRPId}}" ng-repeat="ItemPriceDatas in ItemPriceData" ng-selected="ItemPriceDatas.ItemMultiMRPId == itemMasterData.ItemMultiMRPId">{{ItemPriceDatas.MRP}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="site-name">Unit Of Quantity</label>
+                    <input id="site-name" type="text" class="form-control" placeholder="Enter UnitofQuantity" ng-model="itemMasterData.UnitofQuantity" readonly />
+
+                    <!--<select class="form-control" id="site-name" ng-model="itemMasterData.UnitofQuantity" ng-change="itemname(itemMasterData)" >
+                <option value="{{ItemPriceDatasu.UnitofQuantity}}" ng-repeat="ItemPriceDatasu in ItemPriceDatatemp" ng-selected="ItemPriceDatasu.ItemMultiMRPId == itemMasterData.ItemMultiMRPId">{{ItemPriceDatasu.UnitofQuantity}}</option>
+            </select>-->
+
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="UOM">Unit Of Magerment:<span style="color:red;"></span></label><br />
+                    <input id="site-name" type="text" class="form-control" placeholder="Enter UOM " ng-model="itemMasterData.UOM" readonly />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="site-name">Minimum Purchase Order qty<span style="color:red;">*</span></label><br />
+                    <input type="number" class="form-control" placeholder="Enter Minimum Order quantity" min="1" maxlength="1000" ng-model="itemMasterData.PurchaseMinOrderQty" ng-blur="purchaseUnitname(itemMasterData)" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="site-name">item Name</label><br />
+                    <input type="text" class="form-control" readonly value="{{itemMasterData.itemname}}" ng-model="itemMasterData.itemname" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="site-name">Purchase Unit Name</label><br />
+                    <input type="text" class="form-control" readonly value="{{itemMasterData.PurchaseUnitName}}" ng-model="itemMasterData.PurchaseUnitName" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="IsDailyEssential"> Is Active</label><br />
+                    <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.active" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary sksave" ng-click="PutitemMaster(itemMasterData)">Save</button>
+            </div>
+</form>
+</script>
+
+<script type="text/ng-template" id="myWhactivemodal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Online warehouse Items</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="itemMasterData.active" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutitemMaster(itemMasterData)">Set</button>
+        </div>
+    </form>
+</script>
+
+<script type="text/ng-template" id="myModalWhdeleteitemMaster.html">
+    <form name="myFormTaskTypeModal1">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Warehouse Item</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to End?</label><br />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deleteitemMaster(itemMasterData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+
+
+<!--//add multi mrp-->
+<script type="text/ng-template" id="addMultiplePriceModal.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Item Price </h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="alert-link">
+                <h4>
+                    <autocomplete options="datas"
+                                  place-holder="Search itemname..."
+                                  on-select="onSelect"
+                                  display-property="itemname"
+                                  input-class="form-control"
+                                  ng-model="itemMasterData.itemname"
+                                  ng-readonly="true" id="Itmnem" name="iname">
+                    </autocomplete>
+                </h4>
+
+            </div>
+
+            <br>
+
+            <div class="form-group col-md-12">
+                <table cellpadding="0" cellspacing="0">
+                    <tr></tr>
+                    <tbody>
+                        <tr>
+                            <td class="form-group col-md-4">
+                                <label for="site-name">MRP</label>
+                                <input type="number" min="0" ng-model="ItemPriceData.Price" placeholder="Enter Mrp" class="form-control" />
+                            </td>
+
+                            <td class="form-group col-md-4">
+                                <label for="site-name">Unit Of Quantity</label>
+                                <input type="text" class="form-control" ng-model="ItemPriceData.UnitofQuantity" placeholder="Enter Unit of Quantity" ng-disabled="xy">
+                            </td>
+                            <td class="form-group col-md-3">
+                                <label for="UOM">Unit Of Magerment:<span style="color:red;"></span></label><br />
+                                <select class="form-control" id="site-name" ng-model="ItemPriceData.UOM" ng-selected="(ItemPriceData.UOM == UOM.UOM)" ng-disabled="xy">
+                                    <option value="Gm">Gm</option>
+                                    <option value="Ml">Ml</option>
+                                    <option value="Kg">Kg</option>
+                                    <option value="Ltr">Ltr</option>
+                                    <option value="Pc">Pc</option>
+                                    <option value="Size">Size</option>
+                                    <option value="Combo">Combo</option>
+                                </select>
+                            </td>
+                            <td class="form-group col-md-1"><input type="button" class="btn btn-ar btn-primary" ng-click="Add(ItemPriceData)" value="Add" /></td>
+                        </tr>
+                    </tbody>
+                    <tfoot ng-repeat="m in ItemFinalData">
+                        <tr>
+                            <td>{{m.MRP}}</td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" id="NICancel" name="NIclose" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AdditemMRP(itemMasterData)" id="NISave" name="NIconfirm">Save</button>
+        </div>
+
+    </form>
+    <!--<table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr class="w1-red">
+                <th>
+                    <div class="th">
+                        SellingSKu
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Item MRP
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        UnitofQuantity
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        UOM
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Created Date
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="trade in GetItemMRPData">
+                <td>{{trade.ItemNumber}}</td>
+                <td>{{trade.MRP}}</td>
+                <td>{{trade.UnitofQuantity}}</td>
+                <td>{{trade.UOM}}</td>
+                <td>{{trade.CreatedDate| date:'medium'}}</td>
+            </tr>
+        </tbody>
+    </table>-->
+
+
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr class="w1-red">
+                <th>ItemNumber</th>
+                <th>MRP</th>
+                <th>UnitofQuantity</th>
+                <th>UOM</th>
+                <th>CreatedDate</th>
+                <th>UpdatedDate</th>
+                <!--<th>Edit</th>-->
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="trade in GetItemMRPData">
+                <td>
+                    <span>{{trade.ItemNumber}}</span>
+                </td>
+                <td>
+                    <input type="text" class="form-control" ng-model="trade.MRP" ng-if="trade.editing" />
+                    <span ng-if="!trade.editing">{{trade.MRP}}</span>
+                </td>
+                <td>
+                    <input type="text" class="form-control" ng-model="trade.UnitofQuantity" ng-if="trade.editing" />
+                    <span ng-if="!trade.editing">{{trade.UnitofQuantity}}</span>
+                </td>
+                <td>
+                    <span ng-if="!trade.editing">{{trade.UOM}}</span>
+                    <span ng-if="trade.editing">
+                        <select class="form-control" id="site-name" ng-model="trade.UOM" ng-disabled="xy">
+                            <option value="Gm">Gm</option>
+                            <option value="Ml">Ml</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Ltr">Ltr</option>
+                            <option value="Pc">Pc</option>
+                            <option value="Size">Size</option>
+                            <option value="Combo">Combo</option>
+                        </select>
+                    </span>
+                </td>
+                <td>
+                    <span>{{trade.CreatedDate| date:'medium'}}</span>
+                </td>
+                <td>
+                    <span>{{trade.UpdatedDate| date:'medium'}}</span>
+                </td>
+                <!--<td>-->
+                <!--<td ng-show="MrpUserRole.rolenames.indexOf('HQ Master login')>-1">
+                    <button class="btn btn-xs btn-primary" ng-click="editData(trade)" ng-if="!trade.editing">Edit</button>
+                    <span ng-if="trade.editing">
+                        <button type="submit" class="btn btn-xs btn-success sksave" ng-click="mrpedit(trade)">Save</button>
+                        <button type="button" class="btn btn-xs btn-default" ng-click="cancel()">Cancel</button>
+                    </span>
+                </td>-->
+            </tr>
+        </tbody>
+    </table>
+
+</script>
+
+<!--//Add Limit-->
+<script type="text/ng-template" id="myWhAddLimitmodal.html">
+    <form name="myfreemodalForm">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Limit</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group">
+                <label for="site-name">Item limitQty</label><br />
+                <input id="site-name" type="number" class="form-control" min="0" placeholder="Enter Limit" ng-model="ItemAddLimitData.ItemlimitQty" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">IsItemLimit:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="ItemAddLimitData.IsItemLimit" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="putLimit(ItemAddLimitData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+
+<!--//add image-->
+<script type="text/ng-template" id="addItemImageModal.html">
+    <form name="myFormSiteModal" id="uploadModal">
+        <div class="modal-header w1-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Item Image </h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="form-group col-md-6">
+                    <img src={{itemMasterData.LogoUrl}} class="img-square img80_80" />
+                </div>
+                <div class="form-group col-md-10">
+                    <label for="uploadAdvertisements">Upload Image:</label>
+                    <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                    <div ng-repeat="item in uploader.queue">
+                        <button type="button" class="btn btn-success btn-xs skupload" ng-click="item.upload()" ng-show="upld" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" id="NICancel" name="NIclose" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary sksave" ng-click="AddupdateImage()" id="NISave" name="NIconfirm">Save</button>
+        </div>
+    </form>
+</script>

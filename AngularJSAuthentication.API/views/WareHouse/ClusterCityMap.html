@@ -1,0 +1,55 @@
+﻿<head>    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbogFMyrNTlMdtsrYzgffJ3guhCdzRS2Y&libraries=drawing,places" async defer></script>
+    <style>
+        .googlesearchinput {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            margin-top:10px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
+            height:40px;
+        }
+
+        .googlesearchinput2 {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            margin-top:10px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 150px;
+            height:40px;
+        }
+
+            .googlesearchinput:focus {
+                border-color: #4d90fe;
+            }
+             .googlesearchinput2:focus {
+                border-color: #4d90fe;
+            }
+    </style>
+</head>
+<div class="page page-table">
+
+    <div class="row">
+        <div class="col-md-12">
+            <input id="pac-input" class="controls googlesearchinput" type="text" placeholder="Location Search">
+            <input id="pacskcode-input" class="controls googlesearchinput2" type="text" placeholder="SKCode Search">
+            <div id="map_canvas" style=" border: 2px solid #3872ac;width:100%;height:800px"></div>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="back()">Back</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="savepolygon()">Save</button>
+
+        </div>
+    </div>
+</div>

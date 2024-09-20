@@ -1,0 +1,591 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+<div id="divtoPrint" class="client-document-container">
+    <style type="text/css">
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .border {
+                border: 1px solid #000 !important;
+            }
+
+            th, td {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+                border-spacing: 0;
+                padding: 0;
+                text-align: center;
+            }
+        }
+    </style>
+
+
+    <div class="containers">
+        <div class="container-fluid">
+            <br />
+            <div class="row">
+                <table class="table table-bordered" style="font-size:14px!important;  border: 1px solid #000;" width="100%">
+                    <tbody class="border">
+                        <tr>
+                            <td colspan="3" style="text-align:center;font-size:large;"> <strong style="text-align:center;">Purchase Order Detail</strong></td>
+                        </tr>
+                        <tr>
+                            <td height="50" width="20%"> <img width="150px" height="150px" src="../../Content/SK.png" /> <br /></td>
+                            <td ng-if="!IsOldOfficeAddress" height="50" width="40%">
+                                <p style="font-size:large;">
+                                    <strong> ShopKirana E Trading Pvt. Ltd.</strong> <br />
+                                    <span> Address:&nbsp; 201, 2nd Floor, A22/3 SP 365,</span> <br />
+                                    <span> Janjeerwala Square, Indore-4552001,</span><br />
+                                    <span> Madhya Pradesh.</span>
+                                </p>
+                            </td>
+                            <td ng-if="IsOldOfficeAddress" height="50" width="40%">
+                                <p style="font-size:large;">
+                                    <strong> ShopKirana E Trading Pvt. Ltd.</strong> <br />
+                                    <span> Address:&nbsp; 1501,15th Floor, SKYE Corporate Park,</span> <br />
+                                    <span>Plot No 25, Scheme No 78, Part II,</span> <br />
+                                    <span>Sector B Indore 452010,</span><br />
+                                    <span> Madhya Pradesh.</span>
+                                </p>
+                            </td>
+                            <td height="50" width="40%">
+                                <p style="padding:3px;">
+                                    <span style="float:left"> <strong> Delivery at: {{WarehouseData.WarehouseName}}</strong></span><br />
+                                    <span style="float:left">C/O:  {{WarehouseData.Address}}</span><br />
+                                    <span style="float:left">City: {{WarehouseData.CityName}}</span><br />
+                                    <span style="float:left">Tel.No: {{WarehouseData.Phone}}</span><br />
+                                    <span style="float:left">GSTIN: {{WarehouseData.GSTin}}</span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="33%" style="color:orangered; text-align:center;"><b>PO Information</b></td>
+                            <td width="33%" style="color:orangered ;text-align:center;"><b>Supplier Information</b></td>
+                            <td width="33%" style="color:orangered; text-align:center;"><b>Depo Information</b></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>
+                                    <span style="float:left">Invoice: {{PurchaseOrderData.PoInvoiceNo}} </span> <br />
+                                    <span style="float:left">PO.No: {{PurchaseOrderData.PurchaseOrderId}} </span> <br />
+                                    <span style="float:left">Date: {{PurchaseOrderData.CreationDate | date}} </span> <br />
+                                    <span style="float:left">PO made by: {{PurchaseOrderData.CreatedBy}} </span> <br />
+                                    <span style="float:left">Buyer: {{PurchaseOrderData.BuyerName}}</span><br/>
+                                    <span style="float:left">Picker Type: {{PurchaseOrderData.PickerType}}</span>
+                                </p>
+                            </td>
+                            <td>
+                                <p style="padding:3px;">
+                                    <span style="float:left">{{SupplierData.Name}}</span><br />
+                                    <span ng-if="PurchaseOrderData.IsCashPurchase" style="float:left; color:red">(CashPurchase: {{PurchaseOrderData.CashPurchaseName}})</span><br />
+                                    <span style="float:left">C/O:  {{SupplierData.BillingAddress}}</span><br />
+                                    <span style="float:left">Tel.No: {{SupplierData.MobileNo}}</span><br />
+                                    <span style="float:left">GSTIN: {{SupplierData.GstInNumber}}</span>
+                                </p>
+                            </td>
+                            <td>
+                                <p style="padding:3px;">
+                                    <span style="float:left"> {{DepoData.DepoName}}</span><br />
+                                    <span style="float:left">C/O:  {{DepoData.Address}}</span><br />
+                                    <span style="float:left">Tel.No: {{DepoData.ContactPerson}}</span><br />
+                                    <span style="float:left">GSTIN: {{DepoData.GSTin}}</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover" style=" border: 1px solid #000;" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>PODetailId</th>
+
+                                    <th>PurchaseSku</th>
+                                    <th>Company Stock Code</th>
+                                    <th>Item Name.</th>
+                                    <th class="no-print">ABC Classification</th>
+                                    <th>HSN</th>
+                                    <th>Price</th>
+                                    <th>MOQ</th>
+                                    <th>Qty </th>
+                                    <th>No.of Pieces</th>
+                                    <th>Per Qty Weight</th>
+                                    <th>Total Weight</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="PurchaseorderDetail in PurchaseorderDetails">
+                                    <td>
+
+                                        <span ng-if="PurchaseorderDetail.IsFreeItem == true" ng-style="{ 'color' : (PurchaseorderDetail.IsFreeItem == true) ? 'red' : ''  }">
+                                            (Free)
+                                        </span> {{PurchaseorderDetail.PurchaseOrderDetailId}}
+                                    </td>
+                                    <td>{{PurchaseorderDetail.PurchaseSku}}</td>
+                                    <td>{{PurchaseorderDetail.CompanyStockCode}}</td>
+                                    <td width="300px"><span style=" float:left;">{{PurchaseorderDetail.PurchaseName}}</span></td>
+                                    <td class="no-print">{{PurchaseorderDetail.Category}}</td>
+                                    <td>{{PurchaseorderDetail.HSNCode}}</td>
+                                    <td>{{PurchaseorderDetail.Price |number:2}}</td>
+                                    <td>{{PurchaseorderDetail.MOQ}}</td>
+                                    <td>{{((PurchaseorderDetail.TotalQuantity)/(PurchaseorderDetail.MOQ))}}</td>
+                                    <td>{{(PurchaseorderDetail.MOQ * (PurchaseorderDetail.TotalQuantity)/(PurchaseorderDetail.MOQ)) }} </td>
+                                    <td>{{PurchaseorderDetail.Weight |number:2}}{{PurchaseorderDetail.WeightType}}</td>
+                                    <td>{{PurchaseorderDetail.TotalItemWeight |number:2}}&nbsp;Kg</td>
+                                    <td><span style=" float:right;color: black;font-weight:bold; font-size:large;">{{(PurchaseorderDetail.Price)*(PurchaseorderDetail.TotalQuantity) |number:2}}&nbsp;<i class="fa fa-inr"></i></span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12"> <span style="float:left"><strong>Grand Total:</strong></span></td>
+
+                                    <td>
+                                        <span style=" float:right;color: black;font-weight:bold; font-size:large;">{{totalfilterprice | number:2}}&nbsp;<i class="fa fa-inr"></i></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="12"> <span style="float:left"><strong>Total Weight:</strong></span></td>
+
+                                    <td>
+                                        <span style=" float:right;color: black;font-weight:bold; font-size:large;">{{PurchaseOrderData.Totalweight}}&nbsp;Kg </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <p4 ng-show="PurchaseOrderData.IsPR==true">
+                    <span ng-style="{ 'color' : (PurchaseOrderData.IsPR == true) ? 'red' : '' }" style="float:left">Advance PR Amount: {{PurchaseOrderData.Advance_Amt | number:2}}&nbsp;<i class="fa fa-inr"></i> </span>
+                </p4>
+            </div>
+            <div class="row">
+                <br />
+                <div class="" style="float:left">
+                    <strong><strong>TERMS AND CONDITIONS:</strong></strong>
+                    <br />
+                    <div style="font-size: 12px;">
+                        <p>
+                            1. All invoices should be accompanied with a hard copy of the PO or the number of the PO should be mentioned on the invoice.<br />
+                            2. The invoice qty not exceed the PO qty.<br />
+                            3. The invoice value should not exceed the PO value.<br />
+                            4. If any product has not been supplied then it should be informed to the purchase team before the invoice is raised.<br />
+                            5. Stocks will be accepted in the ShopKirana warehouse only between 10:00 AM to 8 PM from Monday to Saturday.<br />
+                            6. Hard copy of the invoice has to be sent along with the product to the delivery address mentioned above. And the soft copy of the same to be mailed to invoice@shopkirana.com on the day of dispatch of material to process payment in hassle free manner.<br />
+                            7. Deliveries against this PO shall be accepted only within 36 hour or earlier date mentioned on PO, and any balance quantity shall stand cancelled.<br />
+                            8. If Vendor fails to send an invoice to ShopKirana on time and as per ShopKirana demand, then ShopKirana will have right to hold future payment until old pending invoices gets clear.<br />
+                            9. If the goods receival is not provided at the time of delivery due to the stock being damaged or the stock being of low shelf life, it is the duty of the supplier to collect the stock from the hub within 48 hours from the intimation of the same. 
+                            The company cannot be held liable in any manner whatsoever for the stock supplied after the expiration of 48 hours from the intimation date.
+                            <br /><br />
+<p style="float:left">ShopKirana Signature:</p> <p style="float:right">Supplier Signature:</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="row pad-top-botm">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <hr />
+                            <button id="printDiv" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" onclick="javascript: printDiv('divtoPrint')"> <span class="glyphicon glyphicon-print"> </span> Print Invoice</button>
+                            <!--<div class="col-md-2 col-sm-2 col-xs-2">
+                        <button type="button" class="btn btn-sm btn-success center-block" style="background:#008A17" ng-click="kot()">KOT</button>
+                    </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr style="border-top: dotted 4px;" />
+</div>
+
+<script>
+
+    function printDiv(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrint");
+        onRouteChangeOff();
+        window.location.reload();
+    }
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+
+    //function printDiv(divID) {
+    //    //Get the HTML of div
+    //    var divElements = document.getElementById(divID).innerHTML;
+    //    //Get the HTML of whole page
+    //    var oldPage = document.body.innerHTML;
+
+    //    //Reset the page's HTML with div's HTML only
+    //    document.body.innerHTML =
+    //      "<html><head><title></title></head><body>" +
+    //      divElements + "</body>";
+
+    //    //Print Page
+    //    window.print();
+
+    //    //Restore orignal HTML
+    //    document.body.innerHTML = oldPage;
+
+
+    //}
+</script>
+<script type="text/ng-template" id="kot.html">
+    <style>
+        .close {
+            opacity: 1;
+        }
+
+        .header {
+            max-width: 370px;
+        }
+
+        p {
+            text-align: left;
+            font-size: 15px;
+            margin: 0 0 0px;
+            font-weight: bolder;
+        }
+
+        th, td {
+            font-size: 12px;
+        }
+
+        .table {
+            margin-bottom: 0px;
+        }
+
+            /*hr {
+            margin-top: 1px;
+            margin-bottom: 1px;
+        }*/
+
+            .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+                padding: 0;
+            }
+
+        #content {
+            overflow-x: hidden !important;
+            overflow-y: hidden !important;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        hr {
+            border: 0 none;
+            border-top: 2px dashed #322f32;
+            background: none;
+            height: 0;
+        }
+
+        .modal-content {
+            height: 500px;
+        }
+
+        /*@media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #print-content * {
+                visibility: visible;
+            }
+
+            .modal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0;
+                padding: 0;
+                min-height: 550px;
+            }
+        }*/
+        @media screen {
+            #printSection {
+                display: none;
+            }
+        }
+
+        @media print {
+            /*body * {
+                visibility: hidden;
+            }
+
+            #printSection, #printSection * {
+                visibility: visible;
+            }
+
+            #printSection {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }*/
+
+            body * {
+                visibility: hidden;
+            }
+
+            #print-content * {
+                visibility: visible;
+            }
+
+            .modal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0;
+                padding: 0;
+                min-height: 550px;
+            }
+        }
+    </style>
+
+    <form class="header">
+
+        <div class="modal-header">
+            <!--<button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>-->
+
+            <div id="printThis" class="modal-body" style="padding-left:30px!important;">
+                <!--<img src="./images/logo.PNG" style="height:30px;width:30px;" />-->
+                <p style="font-weight:900;">ShopKirana!</p>
+                <p>Type : Purchase-Supplier</p>
+                <!--<p>Kot Number : 8</p>-->
+                <p>Order No: {{PurchaseOrderData.PurchaseOrderId}}</p>
+                <p>Date : {{PurchaseOrderData.CreationDate}}</p>
+                <hr />
+                <!--<p>Steward : SATISH</p>-->
+                <p>Supplier Detail:</p>
+                <hr />
+                <p>Name: {{PurchaseOrderData.SupplierName}}</p>
+                <div><p>Add: {{supaddress}}</p></div>
+                <div><p>Mobile: {{supMobileNo}}</p></div>
+                <hr />
+                <table class="table">
+                    <thead style="font-size: small;">
+                        <tr>
+                            <th style="text-align: center">Item</th>
+                            <th style="text-align: center">Qty</th>
+                            <!--<th style="text-align: center">Amt</th>-->
+                        </tr>
+                    </thead>
+
+                    <tbody ng-repeat="PurchaseorderDetail in PurchaseorderDetails track by $index" style="font-size: small;">
+                        <tr>
+                            <td style="text-align: center">{{PurchaseorderDetail.PurchaseName}}</td>
+                            <!--<td style="text-align: center">{{PurchaseorderDetail.PurchaseQty}}</td>-->
+                            -a
+                            -a
+                            <td style="text-align: center">{{((PurchaseorderDetail.TotalQuantity)/(PurchaseorderDetail.MOQ))}}</td>
+                            <!--<td style="text-align: center">{{items.Price}}</td>-->
+
+                        </tr>
+
+                        >
+
+
+                    </tbody>
+
+                </table>
+                />
+                <hr />
+                <!--<p>Total: {{order.TotalPrice}}</p>-->
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--<span class="sr-only">Close</span>
+            </button>-->
+            <!--<button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>-->
+
+        </div>
+        <div class="modal-footer" style="padding:94px!important;">
+            <to
+            <button type="button" id="Print" class="btn btn-primary">Print</button>
+        </div>
+    </form>
+
+
+
+    <script type="text/javascript">
+        document.getElementById("Print").onclick = function () {
+            printElement(document.getElementById("printThis"));
+        };
+
+        function printElement(elem) {
+            var domClone = elem.cloneNode(true);
+
+            var $printSection = document.getElementById("printSection");
+
+            if (!$printSection) {
+                var $printSection = document.createElement("div");
+                $printSection.id = "printSection";
+                document.body.appendChild($printSection);
+            }
+
+            $printSection.innerHTML = "";
+            $printSection.appendChild(domClone);
+            window.print();
+            // window.close();
+            setTimeout(function () {
+                location.reload();
+                window.location = "#/SearchPurchaseOrder";
+            }, 100);
+
+        }
+    </script>
+</script>
+

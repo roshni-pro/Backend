@@ -1,0 +1,191 @@
+﻿<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 17px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .btn-success {
+        color: white;
+        background-color: #12bd8f;
+        border-color: #0fc191;
+    }
+</style>
+
+<div class="page page-table">
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Assignment Reports
+            </strong>
+        </div>
+        <br />
+        <div class="form-group col-md-12 ">
+            <div class="form-group col-md-2 ">
+                <label for="site-name">Select WareHouse</label><br />
+                <!--  <select class="form-control" id="site-name" ng-model="Warehouseid"
+                        data-ng-change="AgetOPReport(Warehouseid)">
+            <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"
+                        data-ng-selected="Warehouseid == warehouses.Warehouseid">
+                        {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+        </select>-->
+                <!--Changed by ANOOP 3/2/2021-->
+                <div ng-dropdown-multiselect="" id="Warehouseid" options="warehouse"
+                     selected-model="MultiWarehouseModel"
+                     extra-settings="MultiWarehouseModelsettings"
+                     style="width:200px"></div>
+            </div>
+            <!--Added by Anoop 22/2/2021-->
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Date Range</label><br>
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="form-group col-md-2">
+        <label for="site-name">Select Date Range</label><br />
+        <div class="form-group">
+            <div class='input-group date'>
+                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                <span class="input-group-addon ">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>-->
+            <div class="form-group col-md-3">
+                <label for="site-name">Search</label><br />
+                <button type="button" class="btn btn-ar btn-primary" id="Search" name="Sall" ng-click="searchdata(Warehouseid)">Search</button>
+            </div>
+            <div class="form-group col-md-2" style="float:right;">
+                <label for="site-name"></label><br />
+                <button class="btn btn-dark" ng-click="ExportAll(searchdta.AllExport)"><span class="glyphicon glyphicon-export"> </span>Export All</button>
+            </div>
+            <div class="form-group col-md-2" style="float:right;">
+                <label for="site-name"></label><br />
+                <button class="btn btn-dark" ng-click="ExportAssignmentReport()"><span class="glyphicon glyphicon-export"> </span>Export Assignment Report</button>
+            </div>
+            <!--<div class="form-group col-md-12">
+        <div class="form-group col-md-2">
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <label for="site-name">Filter:</label><br />
+                    <select class="form-control" id="site-name" ng-model="type" style="width:14pc">
+                        <option value="">--select--</option>
+                        <option value="{{a.value}}" ng-repeat="a in selectType">{{a.text}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="site-name">Export</label><br />
+            <button type="button" class="btn btn-ar btn-dark" id="Search" ng-click="Export(Warehouseid,type)"><span class="glyphicon glyphicon-export"></span>Export</button>
+        </div>
+    </div>-->
+
+        </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <table>
+                            <tr>
+                                <th class="col-md-5"></th>
+                                <th>Number of Assignments</th>
+                                <th>Amount</th>
+                                <th>Export</th>
+
+                            </tr>
+                            <tr>
+                                <!--<td>SavedAsDraft <button class="btn btn-dark"  style="border-radius: 15px"  ng-click="Export(Warehouseid,type='SavedAsDraft')"><span class="glyphicon glyphicon-export"> </span>  Export</button> </td>-->
+                                <!--<td ng-click="Export(Warehouseid,type='SavedAsDraft')">SavedAsDraft</td>-->
+                                <td>SavedAsDraft</td>
+
+                                <td>{{searchdta.SavedAsDraft}}</td>
+                                <td>{{searchdta.SavedAsDraftAmount|number:2}}</td>
+                                <td><button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.SavedAsDraftExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                            <tr>
+                                <td>Assigned </td>
+                                <!--<td ng-click="Export(Warehouseid,type='Assigned')">Assigned</td>-->
+                                <td>{{searchdta.Assigned}}</td>
+                                <td>{{searchdta.AssignedAmount|number:2}}</td>
+                                <td><button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.AssignedExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                            <tr>
+                                <td>Accepted  </td>
+                                <!--<td ng-click="Export(Warehouseid,type='Accepted')">Accepted</td>-->
+                                <td>{{searchdta.Accepted}}</td>
+                                <td>{{searchdta.AcceptedAmount|number:2}}</td>
+                                <td><button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.AcceptedExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                            <tr>
+                                <td>Rejected</td>
+                                <!--<td ng-click="Export(Warehouseid,type='Rejected')">Rejected</td>-->
+                                <td>{{searchdta.Rejected}}</td>
+                                <td>{{searchdta.RejectedAmount|number:2}}</td>
+                                <td><button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.RejectedExcel)"><span class="glyphicon glyphicon-export"> </span>Export</></button> </td>
+                            </tr>
+                            <tr>
+                                <td>Pending</td>
+                                <!--<td ng-click="Export(Warehouseid,type='Pending')">Rejected</td>-->
+                                <td>{{searchdta.Pending}}</td>
+                                <td>{{searchdta.PendingAmount|number:2}}</td>
+                                <td> <button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.PendingExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                            <tr>
+                                <td>Submitted </td>
+                                <!--<td ng-click="Export(Warehouseid,type='Submitted')">Rejected</td>-->
+                                <td>{{searchdta.Submitted}}</td>
+                                <td>{{searchdta.SubmittedAmount|number:2}}</td>
+                                <td><button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.SubmittedExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                            <tr>
+                                <td>Payment Accepted</td>
+                                <!--<td ng-click="Export(Warehouseid,type='Payment Accepted')">Payment Accepted</td>-->
+                                <td>{{searchdta.PaymentAccepted}}</td>
+                                <td>{{searchdta.PaymentAcceptedAmount|number:2}}</td>
+                                <td> <button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.PaymentAcceptedExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                            <tr>
+                                <td>Payment Submitted Amount </td>
+                                <!--<td ng-click="Export(Warehouseid,type='Payment Submitted')">Payment Submitted Amount</td>-->
+                                <td>{{searchdta.PaymentSubmitted}}</td>
+                                <td>{{searchdta.PaymentSubmittedAmount|number:2}}</td>
+                                <td><button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.PaymentSubmittedExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                            <tr>
+                                <td>Freezed </td>
+                                <!--<td ng-click="Export(Warehouseid,type='Freezed')">Freezed</td>-->
+                                <td>{{searchdta.Freezed}}</td>
+                                <td>{{searchdta.FreezedAmount|number:2}}</td>
+                                <td><button class="btn btn-dark" style="border-radius: 15px" ng-click="Export(searchdta.FreezedExcel)"><span class="glyphicon glyphicon-export"> </span>Export</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <br />
+                <br />
+            </div>
+</section>
+</div>

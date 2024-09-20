@@ -1,0 +1,726 @@
+﻿<style>
+    .bs-glyphicons li:hover {
+        color: white !important;
+        background-color: #266294;
+    }
+
+    .btn-link, .btn-link.active, .btn-link:active, .btn-link[disabled], fieldset[disabled] .btn-link {
+        background-color: transparent;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .btn-link {
+        font-weight: 400;
+        color: #337ab7;
+        border-radius: 0;
+    }
+
+    .bs-glyphicons-list {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    @media (min-width: 769px) {
+
+        .bs-glyphicons {
+            margin: 0 auto;
+            width: 260px;
+        }
+
+        .bs-glyphicons {
+            margin: 0 auto;
+            width: 100%;
+            overflow: hidden;
+            display: block;
+        }
+
+            .bs-glyphicons li {
+                float: left;
+                width: 33.33%;
+                height: 100px;
+                padding: 10px;
+                font-size: 15px;
+                line-height: 1.4;
+                text-align: center;
+                background-color: #E8E8E8;
+                border: 1px solid #fff;
+            }
+
+            .bs-glyphicons li {
+                float: right;
+                width: 33.33%;
+                height: 100px;
+                padding: 10px;
+                font-size: 15px;
+                line-height: 1.4;
+                text-align: center;
+                background-color: #E8E8E8;
+                border: 1px solid #fff;
+            }
+    }
+
+    @media only screen and (min-device-width : 1024px) and (max-device-width : 1570px) and (orientation : landscape) {
+        .items {
+            width: 87%;
+        }
+    }
+
+    @media only screen and (min-device-width : 600px) and (max-device-width : 1600px) and (orientation : landscape) {
+        .ssss {
+            width: 35%;
+        }
+    }
+
+
+    @media print {
+        .foognoobrand {
+            display: none !important;
+        }
+
+        .logo {
+            display: none !important;
+        }
+
+        .row {
+            display: none !important;
+        }
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+    .textwrapper {
+        border: 1px solid #999999;
+        margin: 5px 0;
+        padding: 3px;
+    }
+
+    #explorerCat {
+        width: 100%;
+        height: 145px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .explorerCatContainer, .explorerItemsContainer, .explorerSCatContainer {
+        width: 96%;
+        height: 100%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .s-class-cat {
+        float: left;
+        width: 16.66%;
+        height: 70px;
+    }
+
+    #explorerCat a {
+        float: left;
+        overflow: hidden;
+    }
+
+    .btn-primary_p {
+        border: solid 1px #cacaca;
+        width: 100%;
+        min-height: 70px;
+        font-size: 13px;
+        margin: 0 0 2px;
+        background: -moz-linear-gradient(top,#2e9ce8 0,#026fba 100%);
+        background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#2e9ce8),color-stop(100%,#2e9ce8));
+        background: -webkit-linear-gradient(top,#2e9ce8 0,#026fba 100%);
+        background: -o-linear-gradient(top,#2e9ce8 0,#026fba 100%);
+        background: -ms-linear-gradient(top,#2e9ce8 0,#026fba 100%);
+        background: linear-gradient(top,#2e9ce8 0,#026fba 100%);
+        color: #fff;
+        margin-bottom: 4px;
+        white-space: normal;
+    }
+
+    .slick-next, .slick-next:focus, .slick-next:hover {
+        top: 43% !important;
+        content: '';
+        right: -18px;
+        width: 40px;
+        height: 110px;
+        background: url(../../../assets/images/arrow-right.png) no-repeat left top transparent;
+    }
+
+    .slick-next, .slick-prev {
+        font-size: 0;
+        line-height: 0;
+        position: absolute;
+        top: 50%;
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin-top: -10px;
+        padding: 0;
+        cursor: pointer;
+        color: transparent;
+        border: none;
+        outline: 0;
+        background: 0 0;
+    }
+
+        .slick-prev, .slick-prev:focus, .slick-prev:hover {
+            top: 43% !important;
+            left: -5px;
+            width: 40px;
+            height: 110px;
+            background: url(../../../assets/images/arrow-left.png) no-repeat left top transparent;
+        }
+
+    .cartHeight {
+        min-height: 295px;
+    }
+
+    ul, menu, dir {
+        display: block;
+        list-style-type: disc;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 40px;
+    }
+
+    .widgetBox2 ul {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+        .widgetBox2 ul > li {
+            display: inline-block;
+            width: 48%;
+            margin: 0;
+            font-size: 14px;
+        }
+
+    .widgetBox {
+        padding: 7px;
+        border-top: solid 4px #c1c1c1;
+        border-left: solid 1px #cfdbe2;
+        border-right: solid 1px #cfdbe2;
+        border-bottom: solid 1px #cfdbe2;
+        width: 49%;
+        min-height: 280px;
+    }
+
+    .widgetBox2 {
+        margin: 0 0 5px;
+        padding: 0;
+        border-top: solid 4px #c1c1c1;
+        border-left: solid 1px #cfdbe2;
+        border-right: solid 1px #cfdbe2;
+        border-bottom: solid 1px #cfdbe2;
+    }
+
+    #explorerItems a {
+        float: left;
+        overflow: hidden;
+    }
+
+    .explorerCatContainer, .explorerItemsContainer, .explorerSCatContainer {
+        width: 96%;
+        height: 100%;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .btn-default_p {
+        border: solid 1px #a72456;
+        width: 16.66%;
+        height: 65px;
+        font-size: 12px;
+        margin: 0 0 5px;
+        background: -moz-linear-gradient(top,#efefef 0,#fff 100%);
+        background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#efefef),color-stop(100%,#efefef));
+        background: -webkit-linear-gradient(top,#efefef 0,#fff 100%);
+        background: -o-linear-gradient(top,#efefef 0,#fff 100%);
+        background: -ms-linear-gradient(top,#efefef 0,#fff 100%);
+        background: linear-gradient(top,#efefef 0,#fff 100%);
+        margin-bottom: 4px;
+        white-space: normal;
+        color: #000;
+        word-wrap: break-word;
+    }
+
+    752c0a09.vendor.css:5 .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+
+    a {
+        color: #337ab7;
+        text-decoration: none;
+    }
+
+    .hd {
+        display: none;
+    }
+</style>
+<div class="modal-content" modal-transclude="" style="margin-top:2%;">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Currency Settle
+            </strong>
+        </div>
+        <br />
+        <div>
+            <div class="form-group col-md-9 clear-both">
+                <div class="form-group col-md-3">
+                    <label for="site-name">All Delivery boys</label><br>
+                    <select class="form-control" id="site-name" ng-model="Mobile" ng-change="getdborders(Mobile)">
+                        <option value="">-Select-</option>
+                        <option value="{{db}}" ng-repeat="db in DBoys"> {{db.DisplayName}}</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group col-md-3 left ">
+
+                    <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" ng-click="dueamount()">Full partial settle</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-3 left ">
+
+            <button type="button" class="btn btn-ar btn-primary" data-toggle="modal" ng-click="Checkdetails()">Check details</button>
+        </div>
+
+
+        <section class="panel panel-default table-dynamic" id="">
+            <div class="row">
+                <div class="form-group col-md-12">
+                </div>
+            </div>
+            <table id="allitems" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="th">
+                                <!--<input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" />-->
+                                <!--<div class="th">Select Order</div>-->
+                                <!--<input type="checkbox" ng-model="selectedAll" ng-change="stateChanged(selectedAll)" />-->
+                                Select Order
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">DeliveryIssuanceId</div>
+                        </th>
+
+                        <th>
+                            <div class="th">Total</div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                1 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                5 rs Notecount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                10 rs Notecount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                20 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                50 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                100 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                200 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                500 rs count
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                2000 rs count
+                            </div>
+                        </th>
+                        <!--<th>
+                            <div class="th">
+                                Check Number
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Check Amount
+                            </div>
+                        </th>-->
+                        <!--<th class="reason">
+                            <div class="th">
+                                Due amount
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Status
+                            </div>
+                        </th>-->
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr data-ng-repeat="pod in DBoyCurrency">
+                        <td><input type="checkbox" id="checkorder" value="{{pod.check}}" ng-checked="checkall" ng-model="pod.check" ng-change="CheckChanged(pod)" /></td>
+                        <td>{{pod.DeliveryIssuanceId}}</td>
+                        <td>{{pod.TotalAmount}}</td>
+                        <td>{{pod.onerscount}}</td>
+                        <td>{{pod.tworscount}}</td>
+                        <td>{{pod.fiverscount}}</td>
+                        <td>{{pod.FiveNoteCount}}</td>
+                        <td>{{pod.tenrscount}}</td>
+                        <td>{{pod.TenNoteCount}}</td>
+                        <td>{{pod.Twentyrscount}}</td>
+                        <td>{{pod.fiftyrscount}}</td>
+                        <td>{{pod.hunrscount}}</td>
+                        <td>{{pod.twohunrscount}}</td>
+                        <td>{{pod.fivehrscount}}</td>
+                        <td>{{pod.twoTHrscount}}</td>
+                        <!--<td>{{pod.checknumber}}</td>
+                        <td>{{pod.checkamount}}</td>-->
+                        <!--<td>
+                            <input type="number" ng-model="pod.DueAmount" ng-change="selectedItemChanged(pod.check)" style="width:60px;" />
+                        </td>
+                        <td>
+                            <select class="form-control input-sm reason hd" ng-model="pod.DueAmountstatus" ng-change="selcteddQTR(pod.DueAmountstatus)" id="{{pod.check}}">
+                                <option value="">--select--</option>
+                                <option value="Partial Settle">Partial Settle</option>
+
+
+                            </select>
+                        </td>-->
+                    </tr>
+                </tbody>
+            </table>
+
+            <!--<div class="form-group col-md-3 pull-left">
+                <button type="button"  class="btn btn-ar btn-success" ng-click="Dbcurrency(pod)" data-dismiss="modal">Get Total amount</button>
+            </div>-->
+
+
+        </section>
+
+        <div class="modal fade " id="CheckDetails" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header w3-red">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title" style="text-align: center;">Check Details </h3>
+                    </div>
+                    <div class="tab-content">
+                        <div class="row ng-scope">
+                            <div class="col-xs-6">
+                                <div class="form-group col-md-3">
+                                    <table class="table table-bordered table-striped table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="th">DeliveryIssuanceId</div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        People Name
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Check Number
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Check Amount
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        OrderId
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        CustomerName
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Date
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="th">
+                                                        Receive
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr data-ng-repeat="p in checkdt">
+                                                <!--<td>
+                                                   <input type="checkbox" id="checkorder" value="{{p.check}}" ng-checked="checkall11" ng-model="p.check" ng-change="Checkdetailchange(p)" /></td>-->
+                                                <td>{{p.DeliveryIssuanceId}}</td>
+                                                <td>{{p.DboyName}}</td>
+                                                <td>{{p.CheckNo}}</td>
+                                                <td>{{p.CheckAmount}}</td>
+                                                <td>{{p.OrderId}}</td>
+                                                <td>{{p.CustomerName}}</td>
+                                                <td>{{p.UpdatedDate}}</td>
+                                                <td><button class="btn-sm btn-primary" ng-click="openrecive(p)">Recived</button> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!--</section>-->
+        <!--Update-->
+
+        <br />
+        <br />
+        <br />
+        <div class="modal-header ng-scope"><h3 class="modal-title ng-binding">Settle Bill - Total Bill Amount: <i class="fa fa-inr"></i> {{totalbillAmount}}</h3></div><div class="modal-body ng-scope">
+
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="well well-sm">
+                        <h4 class="ng-binding"><i class="fa fa-inr"></i>{{totalbillAmounts}}</h4>
+
+                        <span class="label label-success">Total Bill</span>
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div class="well well-sm">
+                        <h4 class="ng-binding">
+                            <i class="fa fa-inr">
+                            </i>
+                           <!-- {{2000 * denominations[2000] + 500 * denominations[500] +200 * denominations[200] +100 * denominations[100] + 50 * denominations[50] +  20 * denominations[20] +  10 * denominationss[10.] + 10 * denominations[10] +  5 * denominationss[5.]+  5 * denominations[5] + 2 * denominations[2] +1 * denominations[1] }}-->
+                        {{totalbillAmounts}}
+                        </h4>
+                        <span class="label label-warning">Currency Amount</span>
+                    </div>
+                </div><!--<div class="col-xs-3"><div class="well well-sm"><h4 class="ng-binding"><i class="fa fa-inr"></i>{{order.Remaining}}</h4><span class="label label-danger">Remaining</span></div>-->
+            </div><!--<div class="col-xs-3"><div class="well well-sm"><h4 class="ng-binding"><i class="fa fa-inr"></i>{{order.ReturnToCustomer}}</h4><span class="label label-default">Return To Customer</span></div></div>-->
+        </div><div justified="true" class="ng-isolate-scope">
+            <!--order.Tendered-->
+
+            <ul class="nav nav-tabs nav-justified" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
+                <li ng-class="{active: active, disabled: disabled}" select="bill.refreshAmount()" class="active">
+                    <a href="" ng-click="select()" class="ng-binding"><tab-heading class="ng-scope">Cash</tab-heading></a>
+                </li>
+
+                <!--<li ng-class="{active: active, disabled: disabled}" select="bill.refreshAmount()" class="">
+                    <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding"><tab-heading class="ng-scope">Others</tab-heading></a>
+                </li>-->
+
+            </ul>
+            <div class="tab-content">
+                <div class="row ng-scope">
+                    <div class="col-xs-6">
+                        <div style="margin-top:20px"></div><a class="btn btn-link" ng-click="clearCash()"><i class="fa fa-times"></i> Clear Cash</a>
+                        <div class="bs-glyphicons">
+                            <ul class="bs-glyphicons-list">
+                                <li><h3>1</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>2</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>5</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>10</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>20</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>50</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>100</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>500</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                                <li><h3>2000</h3><span class="glyphicon-class"><i class="fa fa-inr"></i></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div style="margin-top:20px"></div><div class="table-responsive" style="font-size: 14px; float: left">
+                            <table class="table table-striped">
+                                <thead><tr><th>Denomination</th><th>Count</th></tr></thead>
+                                <tbody>
+
+                                    <!--UpdateCode-->
+                                    <tr><td height="10px;" style="height: 10px"><strong>2000x</strong></td><td><input numeric-only="" style="width:40px" ng-model="denominations[2000]" ng-change="addManualCash(2000,denominations[2000])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+                                    <tr><td><strong>500x</strong></td><!--<td>{{getDenominationCount()['500'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[500]" ng-change="addManualCash(500,denominations[500])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+                                    <tr><td><strong>200x</strong></td><!--<td>{{getDenominationCount()['200'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[200]" ng-change="addManualCash(200,denominations[200])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+                                    <tr><td><strong>100x</strong></td><!--<td>{{getDenominationCount()['100'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[100]" ng-change="addManualCash(100,denominations[100])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+
+                                    <tr><td><strong>50x</strong></td><!--<td>{{getDenominationCount()['50'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[50]" ng-change="addManualCash(50,denominations[50])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="float:left;font-size: 14px;margin-left: 44px;"><table class="table table-striped"><thead><tr><th>Denomination</th><th>Count</th></tr></thead><tbody><tr><td><strong>20x</strong></td><!--<td>{{getDenominationCount()['20'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[20]" ng-change="addManualCash(20,denominations[20])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>10x</strong></td><!--<td>{{getDenominationCount()['10'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[10]" ng-change="addManualCash(10,denominations[10])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>5x</strong></td><!--<td>{{getDenominationCount()['5'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[5]" ng-change="addManualCash(5,denominations[5])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>2x</strong></td><!--<td>{{getDenominationCount()['2'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[2]" ng-change="addManualCash(2,denominations[2])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>1x</strong></td><!--<td>{{getDenominationCount()['1'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominations[1]" ng-change="addManualCash(1,denominations[1])" class="ng-pristine ng-untouched ng-valid"></td></tr></tbody></table></div>
+                        <div style="float:left;font-size: 14px;margin-left: 44px;"><table class="table table-striped"><thead><tr><th>Denomination</th><th>Count</th></tr></thead><tbody><tr><td><strong>5.Note</strong></td><!--<td>{{getDenominationCount()['20'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationss[5.]" ng-change="addManualCash(5,denominationss[5.])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>10.Notes</strong></td><!--<td>{{getDenominationCount()['10'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationss[10.]" ng-change="addManualCash(10,denominationss[10.])" class="ng-pristine ng-untouched ng-valid"></td></tr></tbody></table></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="modal-footer ng-scope">
+    <!--<button class="btn btn-success btn-lg" ng-if="totalbillAmounts==TotalAmount" ng-show="oldpords" ng-disabled="isSettlementDisabled()" ng-class="{disabledButton:(isSettlePressed) }" ng-click="applyOnBill({_isSettled:true}) ">Settle Bill</button> <button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+    <button class="btn btn-success btn-lg" ng-click="applyOnBill({_isSettled:true},pod) ">Settle Bill</button> <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <!--<button class="btn btn-success btn-lg" ng-disabled="totalbillAmounts!= 2000 * denominations[2000] + 500 * denominations[500] +100 * denominations[100] + 50 * denominations[50] +  20 * denominations[20] +  10 * denominations[10] +  5 * denominations[5] + 2 * denominations[2] + 1 * denominations[1]" ng-click="applyOnBill({_isSettled:true}) ">Settle Bill</button> <button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+</div>
+
+<div class="modal fade " id="oldstock" role="dialog">
+    <div class="modal-dialog modal-lg" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">Partial Currency </h3>
+            </div>
+            <div class="tab-content">
+                <div class="row ng-scope">
+                    <div class="col-xs-12">
+
+                        <div class="form-group col-md-3">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="th">
+
+                                                Select Order
+                                            </div>
+                                        <th>
+                                            <div class="th">DeliveryIssuanceId</div>
+                                        </th>
+
+                                        <th>
+                                            <div class="th">
+                                                Due amount
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                Status
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr data-ng-repeat="pod1 in dueamountget">
+                                        <td><input type="checkbox" id="checkorder1" value="{{pod1.check}}" ng-checked="checkall1" ng-model="pod1.check" ng-change="CheckChangeddue(pod1)" /></td>
+                                        <td>{{pod1.DeliveryIssuanceId}}</td>
+                                        <td>{{pod1.Dueamount}}</td>
+                                        <td>{{pod1.Dueamountstatus}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+                        <div class="col-md-offset-4">
+
+                            <div style="margin-top:35px"></div><a class="btn btn-link" ng-click="clearCash()"><i class="fa fa-times"></i> Clear Cash</a>
+
+                            <div style="margin-top:10px"></div>
+                            <div class="table-responsive" style="font-size: 14px; float: left">
+                                <table class="table table-striped">
+                                    <thead><tr><th>Denomination</th><th>Count</th></tr></thead>
+                                    <tbody>
+
+                                        <!--UpdateCode-->
+                                        <tr><td height="10px;" style="height: 10px"><strong>2000x</strong></td><td><input numeric-only="" style="width:40px" ng-model="denominationsd[2000]" ng-change1="addManualCash1(2000,denominationsd[2000])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+                                        <tr><td><strong>500x</strong></td><!--<td>{{getDenominationCount()['500'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[500]" ng-change1="addManualCash1(500,denominationsd[500])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+                                        <tr><td><strong>200x</strong></td><!--<td>{{getDenominationCount()['200'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[200]" ng-change1="addManualCash1(200,denominationsd[200])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+                                        <tr><td><strong>100x</strong></td><!--<td>{{getDenominationCount()['100'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[100]" ng-change1="addManualCash1(100,denominationsd[100])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+                                        <tr><td><strong>50x</strong></td><!--<td>{{getDenominationCount()['50'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[50]" ng-change1="addManualCash1(50,denominationsd[50])" class="ng-pristine ng-untouched ng-valid"></td></tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div style="float:left;font-size: 14px;"><table class="table table-striped"><thead><tr><th>Denomination</th><th>Count</th></tr></thead><tbody><tr><td><strong>20x</strong></td><!--<td>{{getDenominationCount()['20'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[20]" ng-change1="addManualCash1(20,denominationsd[20])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>10x</strong></td><!--<td>{{getDenominationCount()['10'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[10]" ng-change1="addManualCash1(10,denominationsd[10])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>5x</strong></td><!--<td>{{getDenominationCount()['5'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[5]" ng-change1="addManualCash1(5,denominationsd[5])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>2x</strong></td><!--<td>{{getDenominationCount()['2'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[2]" ng-change1="addManualCash1(2,denominationsd[2])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>1x</strong></td><!--<td>{{getDenominationCount()['1'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsd[1]" ng-change1="addManualCash1(1,denominationsd[1])" class="ng-pristine ng-untouched ng-valid"></td></tr></tbody></table></div>
+
+                            <div style="float:left;font-size: 14px;"><table class="table table-striped"><thead><tr><th>Denomination Note</th><th>Count</th></tr></thead><tbody><tr><td><strong>10.Note</strong></td><!--<td>{{getDenominationCount()['10'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsdd[10.]" ng-change1="addManualCash1(10,denominationsdd[10.])" class="ng-pristine ng-untouched ng-valid"></td></tr><tr><td><strong>5.Note</strong></td><!--<td>{{getDenominationCount()['5'].length}}</td>--><td><input numeric-only="" style="width:40px" ng-model="denominationsdd[5.]" ng-change1="addManualCash1(5,denominationsdd[5.])" class="ng-pristine ng-untouched ng-valid"></td></tr></tbody></table></div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="close('No')" class="btn btn-default" data-dismiss="modal">No</button>
+                <button class="btn btn-success btn-lg" ng-click="Submit(pod1) ">Submit</button>
+                <!--<button class="btn btn-success btn-lg" ng-disabled ="!(pod1.Dueamount==(2000 * parseInt(denominationsd[2000]) + 500 * parseInt(denominationsd[500]) +100 * parseInt(denominationsd[100]) + 50 * parseInt(denominationsd[50]) +  20 *parseInt( denominationsd[20]) +  10 * parseInt(denominationsd[10])+  5 * parseInt(denominationsd[5]) + 2 * parseInt(denominationsd[2]) + 1 * parseInt(denominationsd[1])))"  ng-click="Submit() ">Submit</button>-->
+            </div>
+        </div>
+
+
+    </div>
+</div>
+

@@ -1,0 +1,191 @@
+﻿<head>
+
+</head>
+<div class="page page-table"  button-permission-binder parentName="Account" pageName="Bounce Cheque">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Sales Settlement Bounce cheque
+            </strong>
+        </div>
+        <br />
+        <div>
+
+        </div>
+        <br />
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" type='text' title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="site-name">Enter OrderId</label><br />
+
+                <input type="text" placeholder="search" class="form-control" ng-model="srch.orderId">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button type="button" class="btn btn-ar btn-primary" ng-click="searchdata(srch)">Search</button>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Order Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('SellingSku')"
+                                  data-ng-class="{active: row == 'SellingSku'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-SKUCode')"
+                                  data-ng-class="{active: row == '-SellingSku'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            OrderId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderId')"
+                                  data-ng-class="{active: row == 'OrderId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderId')"
+                                  data-ng-class="{active: row == '-OrderId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Skcode
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Skcode')"
+                                  data-ng-class="{active: row == 'Skcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Skcode')"
+                                  data-ng-class="{active: row == '-Skcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cheque Amount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Bounce charged
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Total Cheque Amount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Barcode')"
+                                  data-ng-class="{active: row == 'Barcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Barcode')"
+                                  data-ng-class="{active: row == '-Barcode'}"></span>
+                        </div>
+                    </th>
+
+
+                    <th>
+                        <div class="th">
+                            ReSettle with New cheque
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>
+                    
+
+                   
+                    <!--<th>
+                        <div class="th">
+                            Status
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>-->
+                   
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr dir-paginate="trade in currentPageStores|itemsPerPage:itemsPerPage" total-items="total_count">
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+                    <td>{{trade.OrderId}}</td>
+                    <td>{{trade.Skcode}}</td>
+                    <td>
+                        {{trade.CheckAmount}}
+                        &nbsp;
+
+                    </td>
+                    <td>
+                        {{trade.BounceCheqAmount}}
+                        &nbsp;
+                    </td>
+                    <td>
+                        {{ trade.CheckAmount + trade.BounceCheqAmount }}
+                        &nbsp;
+                    </td>
+                    <td><button class="btn-sm btn-primary sksave" ng-show="(trade.CheckAmount != '0'&& trade.status ='Partial receiving -Bounce')" ng-click="cheque(trade)">Ok</button></td>
+
+                    <!--<td>{{trade.Status}}</td>-->
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <dir-pagination-controls max-size="5"
+                                         direction-links="true"
+                                         boundary-links="true"
+                                         on-page-change="getgetBouncedata(newPageNumber)">
+                    //get method call every time when page changes
+                </dir-pagination-controls>
+                <div class="col-md-6 text-right pagination-container">
+                    <div class="col-md-6 page-num-info">
+                        <span>
+                            Show
+                            <select data-ng-model="selected"//this give no. of items selected to show on page
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()"></select>//option for no. Items per page
+                            entries per page
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>

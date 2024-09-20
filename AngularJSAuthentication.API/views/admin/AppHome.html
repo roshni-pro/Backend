@@ -1,0 +1,178 @@
+﻿<style>
+    #htc_one_emulator {
+        background-image: url('../../images/HTC_One_portrait.png');
+        width: 599px;
+        height: 800px;
+    }
+
+    #samsung_galaxy_y_emulator, #iphone_5_emulator, #htc_one_emulator, #nokia_lumia_920_emulator, #google_nexus_7_emulator, #ipad_mini_emulator, #samsung_galaxy_y_emulator_landscape, #iphone_5_emulator_landscape, #htc_one_emulator_landscape, #nokia_lumia_920_emulator_landscape, #google_nexus_7_emulator_landscape, #ipad_mini_emulator_landscape {
+        background-repeat: no-repeat;
+        background-position: top left;
+        margin: 0 auto 0 auto;
+        text-align: center;
+    }
+
+
+    @media screen and (min-width: 768px) {
+        .modal-dialog {
+            width: 700px; /* New width for default modal */
+        }
+
+        .modal-sm {
+            width: 350px; /* New width for small modal */
+        }
+    }
+
+    @media screen and (min-width: 992px) {
+        .modal-lg {
+            width: 950px; /* New width for large modal */
+        }
+    }
+</style>
+<div class="page page-table" button-permission-binder parentName="AppAdmin" pageName="AppHome">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>App Home Screen
+            </strong>
+        </div>
+        <br />
+        <div>
+            <a href="#/apphomemobile" class="btn btn-primary skadd">
+                    <span class="glyphicon glyphicon-plus">Add</span> 
+                </a>
+                
+        </div>
+        <br />
+        <div class="form-group col-md-3">
+            <label for="site-name">Select Warehouse</label><br />
+            <select class="form-control" id="site-name" ng-model="WarehouseId" data-ng-change="getData(WarehouseId)">
+                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="WarehouseId == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+            </select>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Sr. No.
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Warehouse
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Section Name
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Section Type
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Sequence No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Tile No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Active/Deactive
+                        </div>
+                    </th>
+                    <!--<th>
+                        <div class="th">
+                            Section Detail
+                        </div>
+                    </th>-->
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in Sectiondata">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.titles}}</td>
+                    <td>{{trade.SectionType}}</td>
+                    <td>{{trade.sequenceno}}</td>
+                    <td>{{trade.tiles}}</td>
+                    <td>
+                        <a class="btn-sm btn-primary skedit " href="#/apphomemobileedit/{{trade.id}}">Edit</a>
+                    </td>
+                    <td ng-if="trade.active == false"><button class="btn-sm btn-primary skactive" ng-click="SetActive(trade)">Activate</button> </td>
+                    <td ng-if="trade.active == true"><button class="btn-sm btn-danger skdeactivate" ng-click="SetActive(trade)">Deactivate</button> </td>
+                    <!--<td><button class="btn-sm btn-primary" ng-click="edit(trade)">Section Detail</button> </td>-->
+                    <td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+
+<!-- /new site modal -->
+<!-- /new site modal -->
+<script type="text/ng-template" id="myModaldeleteSection.html">
+    <form name="myFormTaskTypeModal1">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete State</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletesaction()">Yes</button>
+        </div>
+    </form>
+</script>

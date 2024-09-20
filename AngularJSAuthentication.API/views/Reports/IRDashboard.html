@@ -1,0 +1,162 @@
+﻿
+
+<style>
+    .contentsstotalsell {
+        position: relative;
+    }
+
+    .overlaysstotalsell {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlaysstotalsell-contentsstotalsell {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+    .overlayss {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(255,255,255,0.8);
+    }
+
+    .overlayss-contentss {
+        position: absolute;
+        transform: translateY(-50%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        top: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #555;
+    }
+
+
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 20px;
+        font-family: fantasy;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<div class="page page-table">
+    <div class="modal-header">
+        <section class="panel panel-default table-dynamic">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"> </span> IR DashBoard Report
+                </strong>
+            </div>
+            <form name="myFormSiteModal" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Warehouse</label><br>
+                        <select class="form-control" id="site-name" ng-model="data.WarehouseId" ng-change="GetSupplier(data.WarehouseId)">
+                            <option value="">---SELECT---</option>
+                            <option value="{{Warehouse.WarehouseId}}" ng-repeat="Warehouse in warehouse"> {{Warehouse.WarehouseName}} ({{Warehouse.CityName}})</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Supplier</label><br>
+                        <select class="form-control" id="site-name" ng-model="data.SuppplierId">
+                            <option value="">---SELECT---</option>
+                            <option value="{{Supplier.SupplierId}}" ng-repeat="Supplier in suppliers"> {{Supplier.Name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">Select Date Range</label><br />
+                        <div class="form-group">
+                            <div class='input-group date'>
+                                <input name="daterange" id="dat" type='text' title="Select Date" class="form-control date-picker" />
+                                <span class="input-group-addon ">
+                                    <span class="fa fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">&nbsp;</label><br>
+                        <button type="button" class="btn btn-ar btn-primary" ng-click="Get(data)">Filter</button>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="site-name">&nbsp;</label><br>
+                        <button type="button" class="btn-sm btn-dark glyphicon-export" ng-click="Export()">Export</button>
+                    </div>
+                    
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table>
+                            <tr>
+                                <th class="col-md-3">Parameter</th>
+                                <th class="col-md-5">No of Invoice</th>
+                                <th class="col-md-5">Amount</th>
+                            </tr>
+                            
+                            <tr>
+                                <td>IR Posted</td>
+                                <td>{{Dashboarddata.IRPosted}}</td>
+                                <td>{{Dashboarddata.IRPostedAmount | number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td>IR Uploded</td>
+                                <td>{{Dashboarddata.IRUploded}}</td>
+                                <td>{{Dashboarddata.IRUplodedAmount | number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Pending From Buyer Side</td>
+                                <td>{{Dashboarddata.IRPending}}</td>
+                                <td>{{Dashboarddata.IRPendingAmount | number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Approved From buyer Sode</td>
+                                <td>{{Dashboarddata.IRApproved}}</td>
+                                <td>{{Dashboarddata.IRApprovedAmount | number:2}}</td>
+                            </tr>
+                            <tr>
+                                <td>IR Rejected</td>
+                                <td>{{Dashboarddata.IRRejected}}</td>
+                                <td>{{Dashboarddata.IRRejectedAmount | number:2}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <footer class="table-footer"></footer>
+            </form>
+        </section>
+    </div>
+
+</div>

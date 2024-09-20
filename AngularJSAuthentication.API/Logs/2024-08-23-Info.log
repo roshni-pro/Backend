@@ -1,0 +1,19 @@
+2024-08-23 12:24:09.4443|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-23 12:24:09.5373|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 4
+2024-08-23 12:24:10.1672|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-23 12:25:36.6047|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-23 12:25:44.9207|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 1 , Company Id : 4
+2024-08-23 12:27:27.9095|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-23 12:28:33.0591|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|Get Item multiprice  
+2024-08-23 12:38:51.6747|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2024-08-23 12:39:16.1123|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2024-08-23 12:39:44.3302|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2024-08-23 12:57:32.4629|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start ItemMaster: 
+2024-08-23 12:57:32.5549|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|User ID : 0 , Company Id : 0
+2024-08-23 13:02:36.3353|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|End ItemMaster: 
+2024-08-23 13:03:56.5392|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2024-08-23 13:04:16.7948|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2024-08-23 13:05:37.7833|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2024-08-23 13:05:59.5371|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|start Item Master: 
+2024-08-23 13:50:33.0035|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|Get Item multiprice  
+2024-08-23 17:11:11.0367|INFO|AngularJSAuthentication.API.Controllers.ItemMasterController|Get Item multiprice  

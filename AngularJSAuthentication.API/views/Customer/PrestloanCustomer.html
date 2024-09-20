@@ -1,0 +1,121 @@
+﻿<style>
+    table, th, td {
+        text-align: center;
+    }
+</style>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Loan Section
+            </strong>
+        </div><br />
+        <input type="text" ng-model="searchTodos">
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                           CustomerId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                          Loan Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status 
+                        </div>
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in LoanData | filter:{status:'Eligiable'}">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.CustomerId}}</td>
+                    <td>{{trade.LoanAmount}}</td>
+                    <td>{{trade.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Loan Section
+            </strong>
+        </div><br />
+    
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CustomerId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Loan Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in LoanData | filter:{status:'Not Eligiable'}">
+                    <td>{{$index+1}}</td>
+                    <td>{{trade.CustomerId}}</td>
+                    <td>{{trade.LoanAmount}}</td>
+                    <td>{{trade.status}}</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+
+
+
+

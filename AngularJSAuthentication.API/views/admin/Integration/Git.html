@@ -1,0 +1,109 @@
+﻿<div class="k-widget k-window maximizable-window loader-overlay-container" style="padding-top: 80px; min-width: 90px; min-height: 50px; max-height: 500px; width: 600px; z-index: 10003; left: 340px; top: 50px; bottom: 50px;">
+    <div class="k-window-titlebar k-header" style="margin-top: -80px;">&nbsp;<span class="k-window-title" style="right: 40px;">Connection Details</span><div class="k-window-actions"><a role="button" href="#" class="k-window-action k-link"><span role="presentation" class="k-icon k-i-close">Close</span></a></div></div><div data-role="window" class="k-window-content k-content window-form" tabindex="0" style="max-height: 100%;">
+        <div class="window-form-content">
+            <div class="error-container"></div><div class="create-project-container item-details-content">
+                <form action="javascript:void(0);" method="post" autocorrect="false">
+                    <section class="project-template-details">
+                        <div class="section-content">
+                            <div class="property single-line no-indent" data-bind="visible: canEdit">
+                                <span class="label">Where is your Git repository hosted?</span>
+                                <div>
+                                    <label>
+                                        <input type="radio" value="local" name="type" data-bind="checked: gitType, events:{ change: typeChanged }">local
+                                    </label>
+                                    <label>
+                                        <input type="radio" value="github" name="type" data-bind="checked: gitType, events:{ change: typeChanged }">GitHub
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="property single-line no-indent">
+                                <div class="label">Path</div>
+                                <div class="value title" data-tpcontrol-name="connectionPath" data-tpcontrol-settings="{type:InputEditor, settings: {skipConfirm: true, fields: [path], fieldLabelKey: path, enabledField: canEdit, cssClasses: [stretch]}, validation:[required]} }">
+                                    <input type="text" class="tp-name-textbox stretch" data-bind="value: path, events: { keyup: onKeyUp, input: onKeyUp, paste: onKeyUp, cut: onKeyUp }">
+                                </div>
+                                <div class="hint" data-bind="visible: canEdit">
+                                    <span data-bind="visible: canAuthenticate" style="display: none;">e.g. <b>https://github.com/owner/repo.git</b></span>
+                                    <div>
+                                        <span data-bind="invisible: canAuthenticate">e.g. <b>c:\Git\Repository</b> or <b>\\Share\Git\Repository</b></span>
+                                        <br>
+                                        <span data-bind="invisible: canAuthenticate">To integrate with a local Git repository you need to provide read access to the repository files for the user that runs the TeamPulse Integration Service </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="project-template-details" data-bind="visible: canAuthenticate" style="display: none;">
+                        <header class="legend">Authentication</header>
+                        <div class="section-content">
+                            <div class="property single-line no-indent">
+                                <div class="label">Authentication type</div>
+                                <div class="value">
+                                    <p>
+                                        <label>
+                                            <input type="radio" value="token" name="authenticate" data-bind="checked: authenticationType, events:{ change: authenticationChanged }">Access Token
+                                            <span data-bind="invisible: useCredentials" style="display: none;">
+                                                <span class="link inline-actions" title="Edit" data-bind="visible: editButtonVisible, events: {click: editLogin}" style="display: none;">
+                                                    <i class="icon-edit"></i>
+                                                </span>
+                                                <span class="link inline-actions" title="Cancel edit" data-bind="visible: cancelButtonVisible, events: {click: cancelEditLogin}" style="display: none;">
+                                                    <i class="icon-remove"></i>
+                                                </span>
+                                            </span>
+                                        </label>
+                                    </p>
+                                    <p>
+                                        <label>
+                                            <input type="radio" value="credentials" name="authenticate" data-bind="checked: authenticationType, events:{ change: authenticationChanged }">Credentials
+                                            <span data-bind="visible: useCredentials">
+                                                <span class="link inline-actions" title="Edit" data-bind="visible: editButtonVisible, events: {click: editLogin}" style="display: none;">
+                                                    <i class="icon-edit"></i>
+                                                </span>
+                                                <span class="link inline-actions" title="Cancel edit" data-bind="visible: cancelButtonVisible, events: {click: cancelEditLogin}" style="display: none;">
+                                                    <i class="icon-remove"></i>
+                                                </span>
+                                            </span>
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div data-bind="visible: useCredentials">
+                                <div data-bind="invisible: isEditing" style="display: none;">
+                                    <div class="property single-line no-indent">
+                                        <label class="label">Username</label>
+                                        <div class="value" data-bind="text: username"></div>
+                                    </div>
+                                    <div class="property single-line no-indent">
+                                        <label class="label">Password</label>
+                                        <div class="value">******</div>
+                                    </div>
+                                </div>
+                                <div data-bind="visible: isEditing">
+                                    <div class="property single-line no-indent">
+                                        <label for="username" class="label">Username</label>
+                                        <div class="value">
+                                            <input id="username" class="larger" type="text" data-bind="value: username, enabled: useCredentials">
+                                        </div>
+                                    </div>
+                                    <div class="property single-line no-indent">
+                                        <label for="password" class="label">Password</label>
+                                        <div class="value">
+                                            <input id="password" class="larger" type="password" data-bind="value: password, enabled: useCredentials">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="property single-line no-indent" data-bind="invisible: useCredentials" style="display: none;">
+                                <div class="label">Access Token</div>
+                                <div class="value">
+                                    <input id="token" class="larger" type="password" data-bind="visible: isEditing, value: token, disabled: useCredentials" disabled="disabled">
+                                    <span data-bind="invisible: isEditing" style="display: none;">******************</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="actions"><button type="button" class="k-button primary tp-button-saveandclose" data-bind="enabled:saveCmd.enabled, click: saveCmd.action, invisible: saveCmd.invisible, attr: { title: saveCmd.tooltip }" title="Save &amp; Close (Ctrl + Enter)"><span data-bind="text: saveCmd.text">Save &amp; Close</span><span class="hint" data-bind="text: saveCmd.shortCut">Ctrl + Enter</span></button><button type="button" class="k-button default tp-button-cancel" data-bind="enabled:cancelCmd.enabled, click: cancelCmd.action, invisible: cancelCmd.invisible, attr: { title: cancelCmd.tooltip }" title="Cancel (Esc)"><span data-bind="text: cancelCmd.text">Cancel</span><span class="hint" data-bind="text: cancelCmd.shortCut">Esc</span></button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

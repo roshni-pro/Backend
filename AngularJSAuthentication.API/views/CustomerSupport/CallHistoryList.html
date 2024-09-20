@@ -1,0 +1,139 @@
+﻿
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>     Call History Lists
+            </strong>
+        </div>
+        
+
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Call ID
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            My phone Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            call Type
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('aliasName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Other phone Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('StateName')"
+                                  data-ng-class="{active: row == 'AssetCategoryName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-AssetCategoryName')"
+                                  data-ng-class="{active: row == '-AssetCategoryName'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            call Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedDate')"
+                                  data-ng-class="{active: row == '- CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            call DayTime
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedDate')"
+                                  data-ng-class="{active: row == '- CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            call Duration
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order(' CreatedDate')"
+                                  data-ng-class="{active: row == ' CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('- CreatedDate')"
+                                  data-ng-class="{active: row == '- CreatedDate'}"></span>
+                        </div>
+                    </th>
+
+
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in AllHistory">
+                    <td>{{trade.id}}</td>
+                    <td>{{trade.phNumber}}</td>
+                    <td>{{trade.callType}}</td>    
+                    <td>{{trade.OtherphNumber}}</td>  
+                    <td>{{trade.callDate | date:'medium'}}</td>
+                    <td>{{trade.callDayTime}}</td>
+                    <td>{{trade.callDuration}}</td>
+
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+

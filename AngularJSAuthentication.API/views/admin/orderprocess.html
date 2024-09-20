@@ -1,0 +1,243 @@
+﻿<style>
+    .modal-dialog {
+        width: 70% !important;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<style>
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #printThisElement {
+            display: block !important;
+        }
+
+        #page-break {
+            display: block;
+            page-break-before: always;
+        }
+    }
+
+    #printThisElement {
+        display: none;
+    }
+
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+  
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    .box-size {
+        font-size: 16px !important;
+        height: 30px;
+        width: 50%;
+    }
+</style>
+<style>
+    @media print {
+        btn-sm.btn-primary.no-print {
+            display: none !important;
+        }
+
+        glyphicon.glyphicon-print.no-print {
+            display: none !important;
+        }
+    }
+
+    .modal-dialog {
+        width: 90% !important;
+    }
+
+    .hd {
+        display: none;
+    }
+</style>
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-th"></span> Order Process</strong>
+        </div>
+        <div class="panel-body">
+            <form name="form_constraints" class="form-validation ng-pristine ng-invalid ng-invalid-required ng-invalid-equal">
+                <div class="form-group col-md-12 clear-both">
+                    <div class="form-group col-md-6">
+                        <div class="form-group col-md-3">
+                            <label for="site-name">Enter OrderId</label><br />
+                            <input type="text" placeholder="search" class="form-control" ng-model="lead.orderId">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="site-name"></label><br />
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="searchdata(lead)">Search</button>
+                        </div>
+                    </div>
+
+                </div>
+                <table class="table table-bordered table-responsive ">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="th">
+                                    Order No.
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('OrderId')"
+                                          data-ng-class="{active: row == 'OrderId'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-OrderId')"
+                                          data-ng-class="{active: row == '-OrderId'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    SK Code
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('Skcode')"
+                                          data-ng-class="{active: row == 'Skcode'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-Skcode')"
+                                          data-ng-class="{active: row == '-Skcode'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Warehouse Name
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order('WarehouseName')"
+                                          data-ng-class="{active: row == 'WarehouseName'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('-WarehouseName')"
+                                          data-ng-class="{active: row == '-WarehouseName'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Order Date
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' CreatedDate')"
+                                          data-ng-class="{active: row == ' CreatedDate'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- CreatedDate')"
+                                          data-ng-class="{active: row == '- CreatedDate'}"></span>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Status
+                                    <span class="glyphicon glyphicon-chevron-up"
+                                          data-ng-click="order(' Status')"
+                                          data-ng-class="{active: row == ' Status'}"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"
+                                          data-ng-click="order('- Status')"
+                                          data-ng-class="{active: row == '- Status'}"></span>
+                                </div>
+                            </th>
+
+                            <th>
+                                <label for="site-name">Select Status</label><br />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{customers.OrderId}}</td>
+                            <td>{{customers.Skcode}}</td>
+                            <td>{{customers.WarehouseName}}</td>
+                            <td>{{customers.CreatedDate | date:'medium'}}</td>
+                            <td>{{customers.Status}}</td>
+                            <!--<td id="st{{customers.OrderId}}" ng-class="{canceled:(customers.Status=='Delivery Canceled'||customers.Status=='Pending'), delivered : (customers.Status=='Delivered'), redispatch :(customers.Status=='Delivery Redispatch') }">{{customers[0].Status}}</td>-->
+
+                            <td>
+                                <!--<input type="text" placeholder="search" class="form-control" ng-model="lead1.st">
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="UpDataStatus(lead1)">Search</button>-->
+                                <div class="col-md-10">
+                                    <div class="col-md-10">
+                                        <select class="form-control" ng-model="value">
+                                            <option value="Delivered">Delivered</option>
+                                            <option value="Delivery Canceled">Delivery Canceled</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2"><button type="button" class="btn btn-ar btn-primary" ng-click="UpDataStatus(value)">Update</button></div>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+
+

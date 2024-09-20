@@ -1,0 +1,1788 @@
+﻿<script src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+<style>
+    #dragandrophandler {
+        border: 2px dashed #92AAB0;
+        width: 650px;
+        height: 200px;
+        color: #92AAB0;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 0px 10px 10px;
+        font-size: 200%;
+        display: table-cell;
+    }
+
+    .reqError {
+        color: #ff0000; /*Red Color*/
+        font-weight: bold;
+        font-size: 18px;
+    }
+    /*.error {
+      color: red;
+    }*/
+
+</style>
+<script type="text/javascript">
+    function checkSpcialChar(event) {
+        if (!((event.keyCode >= 65) && (event.keyCode <= 90) || (event.keyCode >= 97) && (event.keyCode <= 122) || (event.keyCode = 64) && (event.keyCode <= 57))) {
+            event.returnValue = false;
+            return;
+        }
+        event.returnValue = true;
+    }
+</script>
+<div class="page page-table" button-permission-binder parentName="Admin" pageName="People">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> People table</strong> </div>
+        <br />
+        <div>
+            <!--<button type="button" class="btn btn-ar btn-primary" ng-click="new()">New</button>-->
+            <!--<button class="btn btn-primary" ng-click="open()"> <span class="glyphicon glyphicon-plus"> </span> Add People</button>-->
+            <a href="#/AddPeople" class="skadd"><button class="btn btn-primary"> <span class="glyphicon glyphicon-plus"> </span> Add People</button></a>
+            <button class="btn btn-primary skimport" ng-click="toggle()"> <span class="glyphicon glyphicon-plus"> </span> Import People</button>
+            <button class="btn btn-primary skexport"> <span class="glyphicon glyphicon-plus"> </span> Export People</button>
+            <button class="btn btn-primary skexporttemplate"> <span class="glyphicon glyphicon-plus"> </span> Export People Template</button>
+            <!--<div class="text-right">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#Peoplemodel1" style="background-color: black;" ng-click="Peopleremoveddata(trade)"><span class="glyphicon glyphicon-plus"> </span> Deleted People List</button>
+            </div>-->
+        </div>
+        <br />
+        <div id="typography" ng-hide="uploadshow">
+
+            <div class="well">
+                <div id="dragandrophandler">Drag &amp; Drop Files Here</div>
+                <br><br>
+                <!--<div id="status1"></div>-->
+            </div>
+        </div>
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+
+                    <th>
+                        <div class="th">
+                            Full Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            User Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            New User Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DisplayName')"
+                                  data-ng-class="{active: row == 'DisplayName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DisplayName')"
+                                  data-ng-class="{active: row == '-DisplayName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Department
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Department')"
+                                  data-ng-class="{active: row == 'Department'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Department')"
+                                  data-ng-class="{active: row == '-Department'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Permission
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Department')"
+                                  data-ng-class="{active: row == 'Department'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Department')"
+                                  data-ng-class="{active: row == '-Department'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Email
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Email')"
+                                  data-ng-class="{active: row == 'Email'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Email')"
+                                  data-ng-class="{active: row == '-Email'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Mobile Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Mobile')"
+                                  data-ng-class="{active: row == 'Mobile'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Mobile')"
+                                  data-ng-class="{active: row == '-Mobile'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Active
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Active')"
+                                  data-ng-class="{active: row == 'Active'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Active')"
+                                  data-ng-class="{active: row == '-Active'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Desgination
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Desgination')"
+                                  data-ng-class="{active: row == 'Desgination'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Desgination')"
+                                  data-ng-class="{active: row == '-Desgination'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Status')"
+                                  data-ng-class="{active: row == 'Status'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Status')"
+                                  data-ng-class="{active: row == '-Status'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Location
+                            <!-- Change Unit Name To Location Only For Ui -->
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Unit')"
+                                  data-ng-class="{active: row == 'Unit'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Unit')"
+                                  data-ng-class="{active: row == '-Unit'}"></span>
+                        </div>
+                    </th>
+                    <!--<th>
+        <div class="th">
+            Salary
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('Salary')"
+                  data-ng-class="{active: row == 'Salary'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-Salary')"
+                  data-ng-class="{active: row == '-Salary'}"></span>
+        </div>
+    </th>-->
+                    <!--<th>
+        <div class="th">
+            Reporting
+            <span class="glyphicon glyphicon-chevron-up"
+                  data-ng-click="order('Reporting')"
+                  data-ng-class="{active: row == 'Reporting'}"></span>
+            <span class="glyphicon glyphicon-chevron-down"
+                  data-ng-click="order('-Reporting')"
+                  data-ng-class="{active: row == '-Reporting'}"></span>
+        </div>
+    </th>-->
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            DOB
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DOB')"
+                                  data-ng-class="{active: row == 'DOB'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DOB')"
+                                  data-ng-class="{active: row == '-DOB'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            DataOfJoin
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('DataOfJoin')"
+                                  data-ng-class="{active: row == 'DataOfJoin'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-DataOfJoin')"
+                                  data-ng-class="{active: row == '-DataOfJoin'}"></span>
+                        </div>
+                    </th>
+                    
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1)">
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Images
+                        </div>
+                    </th>
+                   
+                </tr>
+
+
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>
+                        {{trade.PeopleFirstName}}
+                        {{trade.PeopleLastName}}
+                    </td>
+                    <td>{{trade.PeopleFirstName}}
+                    <td>{{trade.UserName}}
+                    <td>{{trade.Department}}</td>
+                    <td>{{trade.Permissions}}</td>
+                    <td>{{trade.Email}}</td>
+                    <td>{{trade.Mobile}}</td>
+
+                    <td ng-if="(trade.Active == true)">
+                        <span class="label label-info ng-binding">{{trade.Active}}</span>
+                    </td>
+                    <td ng-if="(trade.Active == false)">
+                        <span class="label label-danger ng-binding">{{trade.Active}}</span>
+                    </td>
+                    <!--<td>{{trade.Active}}</td>-->
+                    <td>{{trade.Desgination}}</td>
+                    <td>{{trade.Status}}</td>
+                    <td>{{trade.Unit}}</td>
+                    <!--<td>{{trade.Salary}}</td>-->
+                    <!--<td>{{trade.Reporting}}</td>-->
+                    <td>{{trade.CreatedDate | date}}</td>
+                    <td>{{trade.DOB | date}}</td>
+                    <td>{{trade.DataOfJoin | date }}</td>
+                    <!--<td>
+        <div class="form-group">
+            <a href="{{trade.Id_Proof}}" download="{{trade.Id_Proof}}">
+                <img src="{{trade.Id_Proof}}" class="img-square img80_80" />
+            </a>
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            <a href="{{trade.Address_Proof}}" download="{{trade.Address_Proof}}">
+                <img src="{{trade.Address_Proof}}" class="img-square img80_80" />
+            </a>
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            <a href="{{trade.MarkSheet}}" download="{{trade.MarkSheet}}">
+                <img src="{{trade.MarkSheet}}" class="img-square img80_80" />
+            </a>
+        </div>
+    </td>
+    <td>
+        <div class="form-group">
+            <a href="{{trade.Pre_SalarySlip}}" download="{{trade.Pre_SalarySlip}}">
+                <img src="{{trade.Pre_SalarySlip}}" class="img-square img80_80" />
+            </a>
+        </div>
+    </td>-->
+                    <!--<td>{{trade.DataOfMarriage | date}}</td>
+    <td>{        {trade.EndDate | date}}</td>-->
+                    <!--<td><button class="btn-sm btn-primary">Details</button> </td>-->
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1  || UserRole.rolenames.indexOf('WH Master login')>-1)"><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button></td>
+
+                    <td ng-show="(UserRole.rolenames.indexOf('HQ Master login')>-1)"><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+
+                    <td>
+                        <button class="btn-sm btn-primary skhistory" data-toggle="modal" ng-init="Id=trade.PeopleID;entity='People'" ng-click="showMe=true">History</button>
+                        <div ng-if="showMe" show-history></div>
+                    </td>
+                    <td> <button class="btn-sm btn-primary skImage" data-toggle="modal" data-target="#Images" ng-click="PeopleImages(trade)">Images</button></td>
+                    <!--<td ng-show="(UserRole.role == 'HQ HR executive')"class="ng-hide"> <button class="btn-sm btn-primary skImage" data-toggle="modal"  ng-click="Change(trade)">Change Password</button></td>-->
+
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myPeopleModal.html">
+
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add People</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">First Name:</label><br />
+                                <input id="FP_name" type="text" class="form-control" name="FPName" ng-model="PeopleData.PeopleFirstName" placeholder="Enter First Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Last Name:</label><br />
+                                <input id="LP_name" type="text" class="form-control" name="LPName" ng-model="PeopleData.PeopleLastName" placeholder="Enter Last Name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Email:</label><br />
+                        <!--<input id="EmailP" type="email" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter Email" ng-blur="CheckEmail(PeopleData.Email)" />-->
+                        <div class="col-md-6">
+                            <input id="EmailP" type="text" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.Email+'@shopkirana.com')" />
+
+                            <!--<input id="EmailP" type="email" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.Email)" />-->
+
+                        </div>
+                        <div class="col-md-6">
+                            <input id="EmailP1" type="email" class="form-control" ng-model="PeopleData.Email1" disabled name="PEmail" placeholder="@shopkirana.com" value="@shopkirana.com" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Password:</label>
+                        <input id="P_pass" class="form-control" type="password" required="" name="Ppassword" placeholder="Enter Password..min 6 Digits" ng-model="PeopleData.Password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Mobile:</label><br />
+                        <input id="Pmobile" type="number" class="form-control" name="Pcontact" ng-model="PeopleData.Mobile" placeholder="Enter Mobile" ng-blur="CheckMobile(PeopleData.Mobile)" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Desgination:</label><br />
+                        <select class="form-control" id="PDesgination" name="PDesgination" ng-model="PeopleData.Desgination" required>
+                            <option value="">---SELECT---</option>
+                            <option value="CEO">CEO</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Status:</label><br />
+                        <select class="form-control" id="PStatus" name="PStatus" ng-model="PeopleData.Status" required>
+                            <option value="">---SELECT---</option>
+                            <option value="OnRoll">OnRoll</option>
+                            <option value="OffRoll">OffRoll</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Location:</label><br />
+                        <select class="form-control" id="PUnit" name="PUnit" ng-model="PeopleData.Unit" required>
+                            <option value="">---SELECT---</option>
+                            <option value="Central">Central</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Reporting:</label><br />
+                        <select class="form-control" id="PReporting" name="PReporting" ng-model="PeopleData.Reporting" required>
+                            <option value="">---SELECT---</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Department:</label><br />
+                        <select id="PDeprt" name="Pddmnt" class="form-control" ng-model="PeopleData.Department">
+                            <option value="">---SELECT---</option>
+                            <option value="Sales Executive">Sales Executive</option>
+                            <!--<option ng-if="(UserRole.role== 'Administrator')" value="Warehouse Admin">Warehouse Admin</option>-->
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Date of Birth :</label><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DOB" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Date of Join :</label><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DataOfJoin" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">End Date :</label><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.EndDate" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Date of Marriage:</label><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DataOfMarriage" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Account Number:</label><br />
+                                <input id="LP_name" type="text" class="form-control" name="LPName" ng-model="PeopleData.Account_Number" placeholder="Enter Last Name" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">IFSC Code:</label><br />
+                                <input id="LP_name" type="text" class="form-control" name="LPName" ng-model="PeopleData.IfscCode" placeholder="Enter Last Name" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Select State:</label><br />
+                        <select class="form-control" id="PState" name="Psstate" ng-model="PeopleData.Stateid" ng-change="onStateChange()" required>
+                            <option value="">---SELECT---</option>
+                            <option value="{{state.Stateid}}" ng-repeat="state in states" ng-click="showDetails = ! showDetails"> {{state.StateName}}</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Select City:</label><br />
+                        <select class="form-control" id="PCity" name="Pccity" data-ng-disabled="!PeopleData.Stateid" ng-model="PeopleData.Cityid">
+                            <option value="">---SELECT---</option>
+                            <option value="{{city.Cityid}}" ng-repeat="city in citys| filter:{Stateid:PeopleData.Stateid}"> {{city.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Select warehouse:</label><br />
+                        <select class="form-control" id="PWhouse" name="Pwarhouse" data-ng-disabled="!PeopleData.Cityid" ng-model="PeopleData.WarehouseId">
+                            <option value="">---SELECT---</option>
+                            <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse| filter:{Cityid:PeopleData.Cityid}"> {{w.WarehouseName}} {{w.CityName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="People-name">Permissions:</label><br />
+                        <select id="PPermision" name="Ppmison" class="form-control" ng-model="PeopleData.Permissions">
+                            <option value="">---SELECT---</option>
+                            <option value="Supplier">Supplier</option>
+                            <!--<option ng-if="(UserRole.role== 'Administrator')" value="Warehouse Admin">Warehouse Admin</option>-->
+                            <option value="Sales Executive">Sales Executive</option>
+                        </select>
+                    </div>
+                    <div class="form-group" ng-show="PeopleData.Permissions=='Supplier'">
+                        <label for="site-name">Supplier Code:</label><br />
+                        <input id="site-name" type="text" class="form-control" ng-model="PeopleData.Skcode" />
+                    </div>
+                    <div class="form-group">
+                        <label for="People-name">Type:</label><br />
+                        <select id="site-name" class="form-control" ng-model="PeopleData.Salesexecutivetype" ng-show="PeopleData.Permissions=='Sales Executive' ">
+                            <option value="">---SELECT---</option>
+                            <option value="SalesMan">SalesMan</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="People-name">is Active</label><br />
+                <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="AddPeople(PeopleData)">Save</button>
+            </div>
+        </div>
+
+    </form>
+</script>
+
+<script type="text/ng-template" id="Second.html">
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add People</h4>
+            <button class="btn btn-primary" ng-click="showform=true">Basic</button>
+            <button class="btn btn-primary" ng-click="showform=false">Salary</button>
+
+
+        </div>
+        <div class="modal-body">
+            <div ng-show="showform">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">First Name:</label><br />
+                                    <input id="FP_name" type="text" class="form-control" name="FPName" ng-model="PeopleData.PeopleFirstName" placeholder="Enter First Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">Last Name:</label><br />
+                                    <input id="LP_name" type="text" class="form-control" name="LPName" ng-model="PeopleData.PeopleLastName" placeholder="Enter Last Name" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Email:</label><br />
+                            <!--<input id="EmailP" type="email" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter Email" ng-blur="CheckEmail(PeopleData.Email)" />-->
+                            <div class="col-md-6">
+                                <input id="EmailP" type="text" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.Email+'@shopkirana.com')" />
+
+                                <!--<input id="EmailP" type="email" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.Email)" />-->
+
+                            </div>
+                            <div class="col-md-6">
+                                <input id="EmailP1" type="email" class="form-control" ng-model="PeopleData.Email1" disabled name="PEmail" placeholder="@shopkirana.com" value="@shopkirana.com" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Password:</label>
+                            <input id="P_pass" class="form-control" type="password" required="" name="Ppassword" placeholder="Enter Password..min 6 Digits" ng-model="PeopleData.Password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Mobile:</label><br />
+                            <input id="Pmobile" type="number" class="form-control" name="Pcontact" ng-model="PeopleData.Mobile" placeholder="Enter Mobile" ng-blur="CheckMobile(PeopleData.Mobile)" />
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Desgination:</label><br />
+                            <select class="form-control" id="PDesgination" name="PDesgination" ng-model="PeopleData.Desgination" required>
+                                <option value="">---SELECT---</option>
+                                <option value="CEO">CEO</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Status:</label><br />
+                            <select class="form-control" id="PStatus" name="PStatus" ng-model="PeopleData.Status" required>
+                                <option value="">---SELECT---</option>
+                                <option value="OnRoll">OnRoll</option>
+                                <option value="OffRoll">OffRoll</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Location:</label><br />
+                            <select class="form-control" id="PUnit" name="PUnit" ng-model="PeopleData.Unit" required>
+                                <option value="">---SELECT---</option>
+                                <option value="Central">Central</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Reporting:</label><br />
+                            <select class="form-control" id="PReporting" name="PReporting" ng-model="PeopleData.Reporting" required>
+                                <option value="">---SELECT---</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Salary:</label><br />
+                            <input id="LP_name" type="text" class="form-control" name="LPName" ng-model="PeopleData.Salary" placeholder="Enter Last Name" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">Date of Birth :</label><br />
+                                    <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DOB" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">Date of Join :</label><br />
+                                    <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DataOfJoin" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">End Date :</label><br />
+                                    <input id="site-name" type="date" class="form-control" ng-model="PeopleData.EndDate" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">Date of Marriage:</label><br />
+                                    <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DataOfMarriage" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select State:</label><br />
+                            <select class="form-control" id="PState" name="Psstate" ng-model="PeopleData.Stateid" required>
+                                <option value="">---SELECT---</option>
+                                <option value="{{state.Stateid}}" ng-repeat="state in states" ng-click="showDetails = ! showDetails"> {{state.StateName}}</option>
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select City:</label><br />
+                            <select class="form-control" id="PCity" name="Pccity" data-ng-disabled="!PeopleData.Stateid" ng-model="PeopleData.Cityid">
+                                <option value="">---SELECT---</option>
+                                <option value="{{city.Cityid}}" ng-repeat="city in citys| filter:{Stateid:PeopleData.Stateid}"> {{city.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select warehouse:</label><br />
+                            <select class="form-control" id="PWhouse" name="Pwarhouse" data-ng-disabled="!PeopleData.Cityid" ng-model="PeopleData.WarehouseId">
+                                <option value="">---SELECT---</option>
+                                <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse| filter:{Cityid:PeopleData.Cityid}"> {{w.WarehouseName}} {{w.CityName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Department:</label><br />
+                            <select id="PDeprt" name="Pddmnt" class="form-control" ng-model="PeopleData.Department">
+                                <option value="">---SELECT---</option>
+                                <option value="Sales Executive">Sales Executive</option>
+                                <!--<option ng-if="(UserRole.role== 'Administrator')" value="Warehouse Admin">Warehouse Admin</option>-->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="People-name">Permissions:</label><br />
+                            <select id="PPermision" name="Ppmison" class="form-control" ng-model="PeopleData.Permissions">
+                                <option value="">---SELECT---</option>
+                                <option value="Supplier">Supplier</option>
+                                <!--<option ng-if="(UserRole.role== 'Administrator')" value="Warehouse Admin">Warehouse Admin</option>-->
+                                <option value="Sales Executive">Sales Executive</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-show="PeopleData.Permissions=='Supplier'">
+                            <label for="site-name">Supplier Code:</label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="PeopleData.Skcode" />
+                        </div>
+                        <div class="form-group">
+                            <label for="People-name">Type:</label><br />
+                            <select id="site-name" class="form-control" ng-model="PeopleData.Salesexecutivetype" ng-show="PeopleData.Permissions=='Sales Executive' ">
+                                <option value="">---SELECT---</option>
+                                <option value="SalesMan">SalesMan</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="People-name">is Active</label><br />
+                    <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+                </div>
+            </div>
+            <div ng-show="!showform">
+                <div class="form-group">
+                    <label for="site-name">Salary:</label><br />
+                    <input id="Salary" type="text" class="form-control" name="Salary" ng-model="PeopleData.Salary" ng-blur="Salary_Calculation(PeopleData.Salary)" />
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="site-name">Basic Salary:</label><br />
+                        <input id="B_Salary" type="text" class="form-control" name="B_Salary" ng-model="PeopleData.B_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">HRA:</label><br />
+                        <input id="Hra_Salary" type="text" class="form-control" name="Hra_Salary" ng-model="PeopleData.Hra_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Conveyance Allowance:</label><br />
+                        <input id="CA_Salary" type="text" class="form-control" name="CA_Salary" ng-model="PeopleData.CA_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Dearness Allowance:</label><br />
+                        <input id="DA_Salary" type="text" class="form-control" name="DA_Salary" ng-model="PeopleData.DA_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">LTA :</label><br />
+                        <input id="Lta_Salary" type="text" class="form-control" name="Lta_Salary" ng-model="PeopleData.Lta_Salary" placeholder="0" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="site-name">PF :</label><br />
+                        <input id="PF_Salary" type="text" class="form-control" name="PF_Salary" ng-model="PeopleData.PF_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">ESI :</label><br />
+                        <input id="ESI_Salary" type="text" class="form-control" name="ESI_Salary" ng-model="PeopleData.ESI_Salary" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">Monthly Incentive :</label><br />
+                        <input id="M_Incentive" type="text" class="form-control" name="M_Incentive" ng-model="PeopleData.M_Incentive" placeholder="0" />
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name"> Yearly Incentive :</label><br />
+                        <input id="Y_Incentive" type="text" class="form-control" name="Y_Incentive" ng-model="PeopleData.Y_Incentive" placeholder="0" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="People-name">is Active</label><br />
+                    <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="AddPeople(PeopleData)">Save</button>
+            </div>
+
+
+        </div>
+
+    </form>
+    <!--<form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Salary</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Salary:</label><br />
+                <input id="Salary" type="text" class="form-control" name="Salary" ng-model="PeopleData.Salary" ng-blur="Salary_Calculation(PeopleData.Salary)"/>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="site-name">Basic Salary:</label><br />
+                    <input id="B_Salary" type="text" class="form-control" name="B_Salary" ng-model="PeopleData.B_Salary" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">HRA:</label><br />
+                    <input id="Hra_Salary" type="text" class="form-control" name="Hra_Salary" ng-model="PeopleData.Hra_Salary" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Conveyance Allowance:</label><br />
+                    <input id="CA_Salary" type="text" class="form-control" name="CA_Salary" ng-model="PeopleData.CA_Salary" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Dearness Allowance:</label><br />
+                    <input id="DA_Salary" type="text" class="form-control" name="DA_Salary" ng-model="PeopleData.DA_Salary" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">LTA :</label><br />
+                    <input id="Lta_Salary" type="text" class="form-control" name="Lta_Salary" ng-model="PeopleData.Lta_Salary" placeholder="0" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="site-name">PF :</label><br />
+                    <input id="PF_Salary" type="text" class="form-control" name="PF_Salary" ng-model="PeopleData.PF_Salary" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">ESI :</label><br />
+                    <input id="ESI_Salary" type="text" class="form-control" name="ESI_Salary" ng-model="PeopleData.ESI_Salary" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name">Monthly Incentive :</label><br />
+                    <input id="M_Incentive" type="text" class="form-control" name="M_Incentive" ng-model="PeopleData.M_Incentive" placeholder="0" />
+                </div>
+                <div class="form-group">
+                    <label for="site-name"> Yearly Incentive :</label><br />
+                    <input id="Y_Incentive" type="text" class="form-control" name="Y_Incentive" ng-model="PeopleData.Y_Incentive" placeholder="0" />
+                </div>
+                </div>
+                <div class="form-group">
+                    <label for="People-name">is Active</label><br />
+                    <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="AddPeople(PeopleData)">Save</button>
+                </div>
+            </div>
+
+    </form>-->
+
+</script>
+<!--Update People-->
+<script type="text/ng-template" id="myPeopleModalPut.html">
+    <style>
+        .tab {
+            width: 100%;
+            border-radius: 100px;
+            margin-bottom: 41px;
+            margin-top: 10px;
+        }
+    </style>
+    <form name="myFormSiteModal">
+        <div ng-show="showform">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                <h4 class="modal-title">Edit People</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 "><button class="btn btn-primary  tab" ng-click="DetailsForm()">Step 1</button></div>
+                    <div class="col-md-4"><button class="btn btn-default  tab" ng-click="SalaryForm()">Step 2</button></div>
+                    <div class="col-md-4"><button class="btn btn-default  tab" ng-click="DocumentForm()">Step 3</button></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">First Name:</label>
+                                    <span class="reqError">*</span><br />
+                                    <input id="FP_name" type="text" class="form-control" name="FPName" ng-model="PeopleData.PeopleFirstName" placeholder="Enter First Name" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">Last Name:</label>
+                                    <span class="reqError">*</span><br />
+                                    <input id="LP_name" type="text" class="form-control" name="LPName" ng-model="PeopleData.PeopleLastName" placeholder="Enter Last Name" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Email:</label>
+                            <span class="reqError">*</span><br />
+                            <!--<input id="EmailP" type="email" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter Email" ng-blur="CheckEmail(PeopleData.Email)" />-->
+                            <div class="col-md-6">
+                                <input id="EmailP" type="text" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.people.Email+'@shopkirana.com')" />
+
+                                <!--<input id="EmailP" type="email" onkeypress="checkSpcialChar(event);" class="form-control" ng-model="PeopleData.Email" name="PEmail" placeholder="Enter User Name" ng-blur="CheckEmail(PeopleData.Email)" />-->
+
+                            </div>
+                            <div class="col-md-6">
+                                <input id="EmailP1" type="email" class="form-control" ng-model="PeopleData.Email" disabled name="PEmail" placeholder="@shopkirana.com" value="@shopkirana.com" />
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="site-name">Password:</label>
+                            <input id="P_pass" class="form-control" type="password" required="" name="Ppassword" placeholder="Enter Password..min 6 Digits" ng-model="PeopleData.Password" />
+                        </div>-->
+                        <div class="form-group">
+                            <label for="site-name">Mobile:</label>
+                            <span class="reqError">*</span><br />
+                            <input id="Pmobile" type="number" class="form-control" name="Pcontact" ng-pattern="/^[0-9]{10}$/" ng-model="PeopleData.Mobile" placeholder="Enter Mobile" ng-blur="CheckMobile(PeopleData.Mobile)" ng-required="" />
+
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Designation:</label><br />
+                            <select class="form-control" id="PDeprt1" ng-model="PeopleData.Desgination" list="PDeprt1">
+                                <!--<input type="text" ng-model="PeopleData.Desgination" class="form-control" list="PDeprt1">-->
+                                <!--<datalist id="PDeprt1" class="form-control" ng-model="PeopleData.Desgination" style="display:none">-->
+                                <option value="{{Designations.DesignationName}}" ng-repeat="Designations in Designation| filter:search" ng-selected="PeopleData.Desgination==Designations.DesignationName">{{Designations.DesignationName}}</option>
+                                <!--</datalist>-->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Status:</label><br />
+                            <select class="form-control" id="PStatus" name="PStatus" ng-model="PeopleData.Status" required>
+                                <option value="">---SELECT---</option>
+                                <option value="OnRoll">OnRoll</option>
+                                <option value="OffRoll">OffRoll</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Location:</label>
+                            <span class="reqError">*</span><br />
+                            <select class="form-control" id="PUnit" name="PUnit" ng-model="PeopleData.Unit" ng-selected="PeopleData.Unit==value" required>
+                                <option value="">---SELECT---</option>
+                                <option value="Central">Central</option>
+
+                            </select>
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="site-name">Reporting:</label><br />
+                            <select class="form-control" id="PReporting" name="PReporting" ng-model="PeopleData.Reporting" required>
+                                <option value="">---SELECT---</option>
+                            </select>
+                        </div>-->
+                        <!--anu-->
+                        <div class="form-group">
+                            <label for="People-name">Permission:</label><br />
+                            <select class="form-control" id="PWhouse" name="Pwarhouse" ng-model="PeopleData.Permissions">
+                                <option value="{{w.Name}}" ng-repeat="w in roles" ng-selected="PeopleData.Permissions==w.Name"> {{w.Name}} </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" ng-if="(PeopleData.Permissions == 'Agent')">
+                            <label for="site-name">Cluster</label><br />
+                            <div ng-dropdown-multiselect="" options="Cluster" selected-model="clusterModel" extra-settings="clusterSetting"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="site-name">DepositAmount:</label><br />
+                            <input id="Pmobile" type="number" class="form-control" name="Pcontact" ng-model="PeopleData.DepositAmount" placeholder="Enter DepositAmount" data-ng-disabled="!Cluster" />
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">Date of Join :</label>
+                                    <span class="reqError">*</span><br />
+                                    <input id="site-name" type="date" value="PeopleData.DataOfJoin" class="form-control" ng-model="PeopleData.DataOfJoin" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">End Date :</label><br />
+                                    <input id="site-name" type="date" class="form-control" ng-model="PeopleData.EndDate" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <!--<div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="site-name">Date of Marriage:</label><br />
+                                    <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DataOfMarriage" />
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select State:</label>
+                            <span class="reqError">*</span><br />
+                            <!--<select id="sName" name="sName" ng-options="banks.Stateid as state.StateName for state in states track by $index"
+                                    ng-model="PeopleData.Stateid" ng-change="onStateChange()" required>
+
+                            </select>-->
+                            <select class="form-control" id="PState" name="Psstate" ng-model="PeopleData.Stateid" ng-change="onStateChange()" required>
+                                <option value="">{{PeopleData.state}}</option>
+                                <option value="{{state.Stateid}}" ng-repeat="state in states" ng-selected="PeopleData.Stateid==state.Stateid"> {{state.StateName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Select City:</label>
+                            <span class="reqError">*</span><br />
+                            <select class="form-control" id="PCity" name="Pccity" ng-model="PeopleData.Cityid">
+                                <option value="">{{PeopleData.city}}</option>
+                                <option value="{{city.Cityid}}" ng-repeat="city in citys" ng-selected="PeopleData.Cityid==city.Cityid"> {{city.CityName}}</option>
+                            </select>
+                        </div>
+
+                        <!--<div class="form-group">
+        <label for="site-name">Select warehouse:</label><br />
+        <select class="form-control" id="PWhouse" name="Pwarhouse" ng-model="PeopleData.WarehouseId">
+            <option value="">{{PeopleData.WarehouseName}}</option>
+            <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse" ng-selected="PeopleData.WarehouseId==w.WarehouseId"> {{w.WarehouseName}} {{w.CityName}}</option>
+        </select>
+    </div>-->
+
+                    <div class="form-group" style="width:100%">
+                        <label for="site-name"> Select warehouses: </label><br />
+                        <div ng-dropdown-multiselect="" options="vm.dataselect" selected-model="vm.examplemodel" extra-settings="examplesettings1" style="margin:10px;width:100%"></div>
+                    </div>
+
+                        <div class="form-group">
+
+                            <label for="site-name">Department:</label><br />
+                            <select class="form-control" ng-model="PeopleData.Department" list="PDeprt" id="PDeprt">
+                                <!--<input type="text" ng-model="PeopleData.Department" class="form-control" list="PDeprt">-->
+                                <!--<datalist id="PDeprt" class="form-control" ng-model="PeopleData.Department" style="display:none">-->
+                                <option value="{{Department.DepName}}" ng-repeat="Department in Departments| filter:search" ng-selected="PeopleData.Department==Department.DepName">{{Department.DepName}}</option>
+                                <!--</datalist>-->
+                            </select>
+                        </div>
+
+                        <!--<div class="form-group">
+
+                            <label for="site-name">Permission:</label><br />
+                            <input type="text" ng-model="PeopleData.Permissions" class="form-control" list="PWhouse">
+                            <datalist id="PWhouse" class="form-control"  ng-model="PeopleData.Permissions" style="display:none">
+                                <option value="{{roles1.Name}}" ng-repeat="roles1 in roles | filter:search">{{roles1.Name}}</option>
+                            </datalist>
+                        </div>-->
+                        <!--<div class="col-md-6 form-group">
+                            <label for="site-name">Permission:</label><br />
+                            <select id="PDeprt" name="Pddmnt" class="form-control" ng-model="PeopleData.Permissions">
+                                <option value="{{w.Name}}" ng-repeat="w in roles" ng-selected="RoleName.w.Name"> {{w.Name}}</option>
+                            </select>
+                        </div>-->
+                        <!--<div class="form-group" ng-show="PeopleData.Permissions=='Supplier'">
+                            <label for="site-name">Supplier Code:</label><br />
+                            <input id="site-name" type="text" class="form-control" ng-model="PeopleData.Skcode" />
+                        </div>-->
+                        <!--<div class="form-group">
+                            <label for="People-name">Type:</label><br />
+                            <select id="site-name" class="form-control" ng-model="PeopleData.Salesexecutivetype" ng-show="PeopleData.Permissions=='Sales Executive' ">
+                                <option value="">---SELECT---</option>
+                                <option value="SalesMan">SalesMan</option>
+                            </select>
+                        </div>-->
+                        <span style="font-size:14px;">Note:</span><br />
+                        <span style="font-size:15px;" class="reqError">(i) All  '*'  Fields are Mandatory.</span><br />
+                        </br>
+                        </br>
+
+
+
+                        <div class="form-group">
+                            <label for="People-name">is Active</label><br />
+                            <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="SalaryForm()">Next</button>
+                </div>
+            </div>
+        </div>
+        <div ng-show="showform1">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                <h4 class="modal-title">Edit People</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 "><button class="btn btn-default  tab" ng-click="DetailsForm()">Step 1</button></div>
+                    <div class="col-md-4"><button class="btn btn-primary  tab" ng-click="SalaryForm()">Step 2</button></div>
+                    <div class="col-md-4"><button class="btn btn-default  tab" ng-click="DocumentForm()">Step 3</button></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="site-name">Salary:</label><br />
+                            <input id="Salary" type="text" class="form-control" name="Salary" ng-model="PeopleData.Salary" ng-blur="Salary_Calculation(PeopleData.Salary)" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="site-name">Basic Salary:</label><br />
+                            <input id="B_Salary" type="text" class="form-control" name="B_Salary" ng-model="PeopleData.B_Salary" placeholder="0" />
+                        </div>
+                        </br>
+                        <div class="form-group">
+                            <label for="site-name">HRA:</label><br />
+                            <input id="Hra_Salary" type="text" class="form-control" name="Hra_Salary" ng-model="PeopleData.Hra_Salary" placeholder="0" />
+                        </div>
+                        </br>
+                        <div class="form-group">
+                            <label for="site-name">Conveyance Allowance:</label><br />
+                            <input id="CA_Salary" type="text" class="form-control" name="CA_Salary" ng-model="PeopleData.CA_Salary" placeholder="0" />
+                        </div>
+                        </br>
+                        <div class="form-group">
+                            <label for="site-name">Dearness Allowance:</label><br />
+                            <input id="DA_Salary" type="text" class="form-control" name="DA_Salary" ng-model="PeopleData.DA_Salary" placeholder="0" />
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Date of Birth :</label>
+                                <span class="reqError">*</span><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DOB" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="site-name">Date of Marriage:</label><br />
+                                <input id="site-name" type="date" class="form-control" ng-model="PeopleData.DataOfMarriage" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="site-name">LTA :</label><br />
+                            <input id="Lta_Salary" type="text" class="form-control" name="Lta_Salary" ng-model="PeopleData.Lta_Salary" placeholder="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">PF :</label><br />
+                            <input id="PF_Salary" type="text" class="form-control" name="PF_Salary" ng-model="PeopleData.PF_Salary" placeholder="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">ESI :</label><br />
+                            <input id="ESI_Salary" type="text" class="form-control" name="ESI_Salary" ng-model="PeopleData.ESI_Salary" placeholder="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name">Monthly Incentive :</label><br />
+                            <input id="M_Incentive" type="text" class="form-control" name="M_Incentive" ng-model="PeopleData.M_Incentive" placeholder="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="site-name"> Yearly Incentive :</label><br />
+                            <input id="Y_Incentive" type="text" class="form-control" name="Y_Incentive" ng-model="PeopleData.Y_Incentive" placeholder="0" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="DetailsForm()">Previous</button>
+                    <button type="button" class="btn btn-ar btn-primary" ng-click="DocumentForm()">Next</button>
+                </div>
+            </div>
+        </div>
+        <div ng-show="showform2">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                <h4 class="modal-title">Edit people</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 "><button class="btn btn-default  tab" ng-click="DetailsForm()">Step 1</button></div>
+                    <div class="col-md-4"><button class="btn btn-default  tab" ng-click="SalaryForm()">Step 2</button></div>
+                    <div class="col-md-4"><button class="btn btn-primary  tab" ng-click="DocumentForm()">Step 3</button></div>
+                </div>
+                <!-- Upload Img -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="uploadAdvertisements">Upload Id_Proof:</label>
+                        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader1" />
+
+                        <button type="button" class="btn btn-success btn-xs" ng-click="uploader1.queue[0].upload()" ng-model="uploader1.queue[0].FileUrl" ng-disabled="uploader1.queue[0].isReady || uploader1.queue[0].isUploading || uploader1.queue[0].isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                        <div class="form-group">
+                            <img alt="" src="{{baseurl}}{{PeopleData.Id_Proof}}" class="img-square img80_80">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadAdvertisements">Address_Proof:</label>
+                        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader2" />
+
+                        <button type="button" class="btn btn-success btn-xs" ng-click="uploader2.queue[0].upload()" ng-model="uploader2.queue[0].FileUrl" ng-disabled="uploader2.queue[0].isReady || uploader2.queue[0].isUploading || uploader2.queue[0].isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                        <div class="form-group">
+                            <img alt="" src="{{baseurl}}{{PeopleData.Address_Proof}}" class="img-square img80_80">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="uploadAdvertisements">MarkSheet:</label>
+                    <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader3" />
+
+                    <button type="button" class="btn btn-success btn-xs" ng-click="uploader3.queue[0].upload()" ng-model="uploader3.queue[0].FileUrl" ng-disabled="uploader3.queue[0].isReady || uploader3.queue[0].isUploading || uploader3.queue[0].isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                    <div class="form-group">
+                        <img alt="" src="{{baseurl}}{{PeopleData.MarkSheet}}" class="img-square img80_80">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="uploadAdvertisements">Pre_Salary:</label>
+                        <input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader4" />
+                        <button type="button" class="btn btn-success btn-xs" ng-click="uploader4.queue[0].upload()" ng-model="uploader4.queue[0].FileUrl" ng-disabled="uploader4.queue[0].isReady || uploader4.queue[0].isUploading || uploader4.queue[0].isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                        <div class="form-group">
+                            <img alt="" src="{{baseurl}}{{PeopleData.Pre_SalarySlip}}" class="img-square img80_80">
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="form-group">
+                    <label for="People-name">is Active</label><br />
+                    <input id="PChek" name="pcbox" type="checkbox" class="form-control" ng-model="PeopleData.Active" />
+                </div>-->
+
+                <div class="form-group">
+                    <label for="People-name">
+                        Sales App InActive/Active
+                    </label><br />
+                    <input type="checkbox" class="form-control" ng-model="PeopleData.tempdel" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ar btn-warning" id="PCancel" name="Pclose" ng-click="SalaryForm()">Previous</button>
+                    <button type="button" class="btn btn-ar btn-primary" id="PSave" name="Pconfirm" ng-click="PutPeople(PeopleData)">Save</button>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+
+
+
+</script>
+
+<!--By Danish-->
+<div class="modal fade " id="Peoplemodel1" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;"> Deleted People History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                PeopleId
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                People Name
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                CreatedBy
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                UpdateBy
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                UpdatedDate
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Details
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Active
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in dataPeopleremoveddata">
+                        <td>{{trade.Id}}</td>
+                        <td>{{trade.PeopleID}}</td>
+                        <td>
+                            {{trade.PeopleFirstName}}
+                            {{trade.PeopleLastName}}
+                        </td>
+                        <td>{{trade.CreatedBy}}</td>
+                        <td>{{trade.UpdateBy}}</td>
+                        <td>{{trade.UpdatedDate | date:'medium'}}</td>
+                        <td><button class="btn-sm btn-primary" data-toggle="modal" data-target="#Peoplemodel2" ng-click="PeopleHistroydata(trade)">Comments Recieved</button></td>
+                        <td><button class="btn-sm btn-primary" data-toggle="modal" data-target="#Peoplemodel2" ng-click="active(trade)">Active</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/ng-template" id="myModaldeletepeople.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete People</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+                <br />
+                <th>
+                    <div class="th">
+                        <button class="btn btn-primary"> Comment Section : </button>
+                    </div>
+                </th>
+                <br />
+                <div class="col-md-6">
+                    <div class="form-group">
+
+<textarea type="text" class="form-control" name="CName" ng-model="PeopleData.DeleteComment" placeholder="Type the Comment" />
+
+                    </div>
+                </div><br />
+            </div>
+        </div>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+        <button type="submit" class="btn btn-ar btn-primary" ng-click="deletepeoples(PeopleData,$index,DeleteComment)">Yes</button>
+    </div>
+
+</script>
+<!-- /new site modal -->
+<!--<script type="text/ng-template" id="myModaldeletepeople.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete People</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletepeoples(PeopleData,$index)">Yes</button>
+        </div>
+    </form>
+</script>-->
+<!--People history module start-->
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 50% !important;
+        margin-left: 485px;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: red;
+    }
+</style>
+<!--<div class="modal fade " id="Peoplemodel" role="dialog">
+    <div class="modal-dialog1">
+
+
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">People History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                PeopleId
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                PeopleFirstName
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                CreatedBy
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                UpdateBy
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                UpdatedDate
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                History
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+                    <tr data-ng-repeat="trade in dataPeopleHistrory">
+                        <td>{{trade.Id}}</td>
+                        <td>{{trade.PeopleID}}</td>
+                        <td>{{trade.PeopleFirstName}}</td>
+                        <td>{{trade.CreatedBy}}</td>
+                        <td>{{trade.UpdateBy}}</td>
+                        <td>{{trade.UpdatedDate | date:'medium'}}</td>
+                        <td><button class="btn-sm btn-primary" data-toggle="modal" data-target="#PeopleByIdmodel" ng-click="HistroyDetails(trade)">HistoryDetails</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>-->
+<!--By Danish-->
+<div class="modal fade " id="Peoplemodel2" role="dialog">
+    <div class="modal-dialog1">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;"> Deleted People Comments</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+                        <th>
+                            <div class="th">
+                                Id
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Name
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Edited By
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="th">
+                                Comments
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <!--data-ng-repeat="trade in dataordermasterHistrory-->
+                    <tr data-ng-repeat="trade in dataPeopleHistrorydata">
+                        <td>{{trade.Id}}</td>
+                        <td>
+                            {{trade.PeopleFirstName}}
+                            {{trade.PeopleLastName}}
+                        </td>
+                        <td>{{trade.UpdateBy}}</td>
+                        <td>{{trade.DeleteComment}}</td>
+
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<style>
+    .w3-red {
+        color: #fff !important;
+        background-color: saddlebrown;
+    }
+
+    .w1-red {
+        color: #fff !important;
+        background-color: #4c4948 !important;
+    }
+</style>
+<style>
+    .modal-dialog1 {
+        width: 100% !important;
+    }
+
+    .redispatch {
+        color: blue;
+    }
+
+    .delivered {
+        color: forestgreen;
+    }
+
+    .canceled {
+        color: darkseagreen;
+    }
+</style>
+<!--<div class="modal fade " id="PeopleByIdmodel" role="dialog">
+    <div class="modal-dialog1">
+
+         Modal content
+        <div class="modal-content">
+            <div class="modal-header w3-red">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="text-align: center;">People History</h3>
+            </div>
+            <table class="table table-bordered table-striped table-responsive">
+
+                <tbody>
+
+                    <tr><th>PeopleId </th> <td>{{dataHistrory.PeopleID}} </td> <td> </td><th>PeopleFirstName</th> <td>{{dataHistrory.PeopleFirstName}} </td> <td> </td> <th>PeopleLastName</th> <td>{{dataHistrory.PeopleLastName}} </td>  </tr>
+                    <tr><th>Email </th> <td>{{dataHistrory.Email}} </td> <td> </td><th>DisplayName</th> <td>{{dataHistrory.DisplayName}} </td> <td> </td> <th>state</th> <td>{{dataHistrory.state}} </td>  </tr>
+                    <tr><th>city </th> <td>{{dataHistrory.city}} </td> <td> </td><th>Mobile</th> <td>{{dataHistrory.Mobile}} </td> <td> </td> <th>WarehouseName</th> <td>{{dataHistrory.WarehouseName}} </td>  </tr>
+                    <tr><th>Department </th> <td>{{dataHistrory.Department}} </td> <td> </td><th>Permissions</th> <td>{{dataHistrory.Permissions}} </td> <td> </td> <th>Type</th> <td>{{dataHistrory.Type}} </td>  </tr>
+                    <tr><th>Active </th> <td>{{dataHistrory.Active}} </td> <td> </td><th>VehicleId</th> <td>{{dataHistrory.VehicleId}} </td> <td> </td> <th>VehicleName</th> <td>{{dataHistrory.VehicleName}} </td>  </tr>
+                    <tr><th>VehicleNumber </th> <td>{{dataHistrory.VehicleNumber}} </td> <td> </td><th>VehicleCapacity</th> <td>{{dataHistrory.VehicleCapacity}} </td> <td> </td> <th>Salesexecutivetype</th> <td>{{dataHistrory.Salesexecutivetype}} </td>  </tr>
+                    <tr><th>DataOfJoin </th> <td>{{dataHistrory.DataOfJoin}} </td> <td> </td><th>DataOfMarriage</th> <td>{{dataHistrory.DataOfMarriage}} </td> <td> </td> <th>EndDate</th> <td>{{dataHistrory.EndDate}} </td>  </tr>
+                    <tr><th>Status </th> <td>{{dataHistrory.Status}} </td> <td> </td><th>Unit</th> <td>{{dataHistrory.Unit}} </td> <td> </td> <th>DOB</th> <td>{{dataHistrory.DOB}} </td>  </tr>
+                    <tr><th>AgentCode </th> <td>{{dataHistrory.AgentCode}} </td> <td> </td><th>AgentName</th> <td>{{dataHistrory.AgentName}} </td> <td> </td> <th>Disposit Amount</th> <td>{{dataHistrory.DepositAmount}} </td>  </tr>
+                    <tr><th>Desgination </th> <td>{{dataHistrory.Desgination}} </td> <td> </td><th>Empcode</th> <td>{{dataHistrory.Empcode}} </td> <td> </td>   </tr>
+
+                </tbody>
+            </table>
+            <div class="modal-footer w3-red">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>-->
+
+<script type="text/ng-template" id="ImageView.html">
+
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header w3-red">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">X</button>
+            <h3 class="modal-title" style="text-align: center;">People Images</h3>
+        </div>
+        <div class="model-body ng-scope" style="overflow-x: scroll; overflow-y: scroll;">
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+
+                    <tr class="w1-red">
+
+                        <th>
+                            <div class="th">
+                                PeopleID
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Id_Proof
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Address_Proof
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                MarkSheet
+                            </div>
+                        </th>
+                        <th>
+                            <div class="th">
+                                Pre_SalarySlip
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="trade in dataPeopleImage">
+                        <td>{{trade.PeopleId}}</td>
+                        <td>
+                            <div class="form-group">
+                                <a href="{{baseurl}}{{trade.Id_Proof}}" download="{{trade.Id_Proof}}">
+                                    <!--<img src="{{trade.Id_Proof}}" class="img-square img80_80" />-->
+                                    <img src='{{baseurl}}{{trade.Id_Proof}}' width=150 px; class="img-square img150_150 no-print" onError="this.onerror = null; this.src = 'http://137.59.52.130/UploadedImages/noimage.png';" />
+
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <a href="{{baseurl}}{{trade.Address_Proof}}" download="{{trade.Address_Proof}}">
+                                    <img src='{{baseurl}}{{trade.Address_Proof}}' width=150 px; class="img-square img150_150 no-print" onError="this.onerror = null; this.src = 'http://137.59.52.130/UploadedImages/noimage.png';" />
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <a href="{{baseurl}}{{trade.MarkSheet}}" download="{{trade.MarkSheet}}">
+                                    <img src='{{baseurl}}{{trade.MarkSheet}}' width=150 px; class="img-square img150_150 no-print" onError="this.onerror = null; this.src = 'http://137.59.52.130/UploadedImages/noimage.png';" />
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <a href="{{baseurl}}{{trade.Pre_SalarySlip}}" download="{{trade.Pre_SalarySlip}}">
+                                    <img src='{{baseurl}}{{trade.Pre_SalarySlip}}' width=150 px; class="img-square img150_150 no-print" onError="this.onerror = null; this.src = 'http://137.59.52.130/UploadedImages/noimage.png';" />
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer w3-red">
+            <h4>Click On Image To Download</h4>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+
+</script>
+<script type="text/ng-template" id="Changepassword.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Change Password</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> Old Password:</label><br />
+                <input type="text" class="form-control" ng-model="data.Password" readonly/>
+            </div>
+            <div class="form-group">
+                <label for="site-name"> New Password:</label><br />
+                <input type="password" class="form-control" ng-model="NewPassword" value="{{NewPassword}}">
+            </div>
+            <div class="form-group">
+                <label for="site-name">Confirm Password:</label><br />
+                <input type="password" class="form-control" id="label-focus" ng-model="ConfirmPassword" value="{{ConfirmPassword}}">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="Update(NewPassword,ConfirmPassword)" ng-disabled="NewPassword==null || NewPassword==''">Submit</button>
+        </div>
+    </form>
+</script>

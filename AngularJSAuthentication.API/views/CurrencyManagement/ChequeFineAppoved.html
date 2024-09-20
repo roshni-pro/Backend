@@ -1,0 +1,173 @@
+﻿<style>
+    .btn-success {
+    color: white;
+    background-color: #00540d;
+    border-color: #00540d;
+}
+    .btn-success.disabled, .btn-success.disabled:hover, .btn-success.disabled:focus, .btn-success.disabled:active, .btn-success.disabled.active, .btn-success[disabled], .btn-success[disabled]:hover, .btn-success[disabled]:focus, .btn-success[disabled]:active, .btn-success[disabled].active, fieldset[disabled] .btn-success, fieldset[disabled] .btn-success:hover, fieldset[disabled] .btn-success:focus, fieldset[disabled] .btn-success:active, fieldset[disabled] .btn-success.active {
+    background-color: #1f9978;
+    border-color: #1f9978;
+}
+</style>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>Return Cheque Charge
+            </strong>
+        </div>
+        <br />
+        <div class="row" ng-if="Warehouseid != '0'" ngEnter="FilterData()">
+            <!--<div class="col-lg-12">
+        <div class="form-group col-lg-3">
+            <label for="site-name">Select Warehouse:</label><br />
+            <select class="form-control" id="Warehouseid" ng-model="Warehouseid" ng-change="getChequeAppoved(Warehouseid)">
+                <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse" data-ng-selected="Warehouseid == warehouses.WarehouseId"> {{warehouses.WarehouseName}} {{warehouses.CityName}} </option>
+            </select>
+        </div>
+    </div>-->
+            <div class="col-lg-12">
+                <div class="form-group col-lg-3">
+                    <button type="button" class="btn btn-warning" style="margin-top: 40px;" ngEnter="Back()" ng-click="Back()">Back</button>
+                </div>
+            </div>
+            <div class="col-lg-12 ">
+                <div class="col-lg-12">
+                    <table class="table table-bordered table-striped table-responsive  table-scroll">
+                        <thead>
+                            <tr style="background-color: #ffffff;">
+                                <th>
+                                    <div class="th">
+                                        Order Id
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Cheque Number
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Change Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Fine Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Cheque Amount
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Status
+
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Date
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        AppovedBy
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        RejectBy
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="data in ChequeAppoved">
+                                <td>
+                                    <b>{{data.OrderId}}</b>
+                                </td>
+                                <td>
+                                    <b>{{data.ChequeNumber}}</b>
+                                </td>
+                                <td>{{data.ChangeAmount}}</b></td>
+                                <td>{{data.FineAmount}}</b></td>
+                                <td>{{data.ChequeAmt}}</b></td>
+
+                                <td>
+                                    <span ng-if="data.Status==0">Pending</span>
+                                    <span ng-if="data.Status==1">Appoved</span>
+                                    <span ng-if="data.Status==2">Reject</span>
+                                </td>                           
+                                <td><b>{{data.CreatedDate| date:'medium'}}</b></td>
+                                <td><button type="button" class="btn btn-ar btn-success" ng-click="Appoved(data)" ng-disabled="data.Status==1">Appoved</button></td>
+                                <td><button type="button" class="btn btn-ar btn-danger" ng-click="RejectModel(data)" ng-disabled="data.Status==1||data.Status==2">Reject</button></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select name="page" ng-model="vm.rowsPerPage" ng-change="onNumPerPageChange()">
+                                        <option value="3">3</option>
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="vm.currentPage"
+                                            total-items="vm.count"
+                                            max-size="4"
+                                            on-select-page="changePage(page)"
+                                            items-per-page="vm.rowsPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        </section>
+    </div>
+
+    <script type="text/ng-template" id="myRejectModal.html">
+        <form name="myFormSiteModal">
+            <div class="modal-header w1-red">
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                    <span class="icon icon-x" aria-hidden="true">
+                    </span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+                <h4 class="modal-title">ChequeFine Reject</h4>
+            </div>
+            <div class="modal-body">
+                <div class="colasdasdasd">
+                    <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                    <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+                </div>
+                <div class="col-md-6">
+                    <label for="site-for">Why ChequeFine Reject ? Please Enter Comment<span style="color:red;"></span></label><br />
+                    <textarea type="text" class="form-control ng-pristine ng-valid" maxlength="500" ng-model="data.Note" placeholder="Please Enter Note"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+               
+                <button type="button" class="btn btn-ar btn-info" ng-click="Cancel()" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-ar btn-info" ng-click="Reject(data)" ng-disabled="data.Note.length==0 || data.Note==null">Save</button>
+            </div>
+        </form>
+    </script>

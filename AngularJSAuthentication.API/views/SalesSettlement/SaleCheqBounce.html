@@ -1,0 +1,99 @@
+﻿<head>
+    
+</head>
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Sales Cheque Bounce Settlement
+            </strong>
+        </div>
+        <br />
+        <br />
+        <table class="table table-bordered table-striped table-responsive" id="exportable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            CustomerId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CustomerId')"
+                                  data-ng-class="{active: row == 'CustomerId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CustomerId')"
+                                  data-ng-class="{active: row == '-CustomerId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            OrderId
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OrderId')"
+                                  data-ng-class="{active: row == 'OrderId'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OrderId')"
+                                  data-ng-class="{active: row == '-OrderId'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            CheckNo
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CheckNo')"
+                                  data-ng-class="{active: row == 'CheckNo'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CheckNo')"
+                                  data-ng-class="{active: row == '-CheckNo'}"></span>
+                        </div>
+                    </th>                   
+                    <th>
+                        <div class="th">
+                            CheckAmount
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Barcode')"
+                                  data-ng-class="{active: row == 'Barcode'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Barcode')"
+                                  data-ng-class="{active: row == '-Barcode'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Bounce charge
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th>  
+                    <th>
+                        <div class="th">
+                            Submit
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreationDate')"
+                                  data-ng-class="{active: row == 'CreationDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreationDate')"
+                                  data-ng-class="{active: row == '-CreationDate'}"></span>
+                        </div>
+                    </th> 
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{d.CustomerId}}</td>
+                    <td>{{d.OrderId}}</td>
+                    <td>{{d.CheckNo}} </td>
+                    <td>{{d.CheckAmount}}</td>
+                    <td>Rs 200 </td>
+                    <td><button class="btn-sm btn-danger"  ng-click="CheqBounceupdate(d)">Bounce</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">            
+        </footer>
+    </section>
+</div>

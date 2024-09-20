@@ -1,0 +1,339 @@
+﻿
+<div class="page page-table"  button-permission-binder parentName="Delivery" pageName="Vehicles">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span> Vehicle
+            </strong>
+        </div>
+        <br />
+        <div>
+            <button class="btn btn-primary skadd" ng-click="open()">
+                <span class="glyphicon glyphicon-plus">
+                </span> Vehicle
+            </button>
+            <br />
+            <br />
+
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Vehicle Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('VehicleName')"
+                                  data-ng-class="{active: row == 'VehicleName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-VehicleName')"
+                                  data-ng-class="{active: row == '-VehicleName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Vehicle Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('VehicleName')"
+                                  data-ng-class="{active: row == 'VehicleName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-VehicleName')"
+                                  data-ng-class="{active: row == '-VehicleName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            City
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('City')"
+                                  data-ng-class="{active: row == 'City'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-City')"
+                                  data-ng-class="{active: row == '-City'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Owner Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('OwnerName')"
+                                  data-ng-class="{active: row == 'OwnerName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-OwnerName')"
+                                  data-ng-class="{active: row == '-OwnerName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Is Active
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            History
+                        </div>
+                    </th>                   
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.VehicleName}}</td>
+                    <td>{{trade.VehicleNumber}}</td>
+                    <td>{{trade.City}}</td>
+                    <td>{{trade.OwnerName}}</td>
+                    <td>{{trade.CreatedDate| date:'medium'}}</td>
+
+                    <td><input class="form-control" type="checkbox" value="trade.isActive" ng-checked="trade.isActive" disabled /></td>
+                    <td><button class="btn-sm btn-primary skedit" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger skremove" ng-click="opendelete(trade,$index)">Remove</button> </td>
+                    <td>
+                        <button class="btn-sm btn-primary skview" ng-init="Id=trade.VehicleId;entity='Vehicle'" ng-click="showMe=true">View</button>
+                        <div ng-if="showMe" show-history></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myVehicleModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Create Vehicle </h4>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Name:</label><br />
+                <input id="Vehicle_name" name="VName" type="text" class="form-control" ng-model="VehicleData.VehicleName" placeholder="Enter Vehicle name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Number:</label><br />
+                <input id="Vehicle_number" name="VDNumbr" type="text" class="form-control" ng-model="VehicleData.VehicleNumber" placeholder="Enter Number" ng-blur="CheckVehicleNumber(VehicleData.VehicleNumber)" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Capacity:</label><br />
+                <input id="VCapcity" name="vehicap" type="text" class="form-control" ng-model="VehicleData.Capacity" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="VState" name="Vsstate" ng-model="VehicleData.Stateid" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{state.Stateid}}" ng-repeat="state in states" ng-click="showDetails = ! showDetails"> {{state.StateName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="VCity" name="Vccity" data-ng-disabled="!VehicleData.Stateid" ng-model="VehicleData.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citys| filter:{Stateid:VehicleData.Stateid}"> {{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select warehouse:</label><br />
+                <select class="form-control" id="VWhouse" name="Vwarhouse" data-ng-disabled="!VehicleData.Cityid" ng-model="VehicleData.WarehouseId" ng-change="peopledata(VehicleData.WarehouseId)">
+                    <option value="">---SELECT---</option>
+                    <option value="{{w.WarehouseId}}" ng-repeat="w in warehouse| filter:{Cityid:VehicleData.Cityid}"> {{w.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Vehicle Owner Name :</label><br />
+                <select class="form-control" id="VPeopleID" name="VPeopleID" ng-model="VehicleData.PeopleID">
+                    <option value="">---SELECT---</option>
+                    <option value="{{peopledata.PeopleID}}" ng-repeat="peopledata in getdatapeople">{{peopledata.DisplayName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Owner Address:</label><br />
+                <input id="VOadress" name="voADR" type="text" class="form-control" ng-model="VehicleData.OwnerAddress" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="VErChek" name="Vercbox" type="checkbox" class="form-control" ng-model="VehicleData.isActive" placeholder="Enter VehicleData" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" id="VerCancel" name="Verclose" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" id="VerSave" name="Vconfirm" ng-click="AddVehicle(VehicleData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update AssetsCategory-->
+<script type="text/ng-template" id="myVehicleModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Vehicle</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="VehicleData.VehicleName" placeholder="Enter Vehicle name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Number:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="VehicleData.VehicleNumber" placeholder="Enter Number" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Capacity:</label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="VehicleData.Capacity" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select Vehicle Owner Name :</label><br />
+                <select class="form-control" id="VPeopleID" name="VPeopleID" ng-model="VehicleData.PeopleID">
+                    <option value="">{{VehicleData.OwnerName}}</option>
+                    <option value="{{peopledata.PeopleID}}" ng-selected="VehicleData.PeopleID==peopledata.PeopleID" ng-repeat="peopledata in getdatapeople">{{peopledata.DisplayName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Vehicle Owner Address:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="VehicleData.OwnerAddress" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select State:</label><br />
+                <select class="form-control" id="site-name" ng-model="VehicleData.Stateid" required>
+                    <option value="">---SELECT---</option>
+                    <option value="{{state.Stateid}}" ng-selected="VehicleData.Stateid==state.Stateid" ng-repeat="state in states" ng-click="showDetails = ! showDetails"> {{state.StateName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select City:</label><br />
+                <select class="form-control" id="site-name" data-ng-disabled="!VehicleData.Stateid" ng-model="VehicleData.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-selected="VehicleData.Cityid==city.Cityid" ng-repeat="city in citys| filter:{Stateid:VehicleData.Stateid}"> {{city.CityName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Select warehouse:</label><br />
+                <select class="form-control" id="site-name" data-ng-disabled="!VehicleData.Cityid" ng-model="VehicleData.WarehouseId">
+                    <option value="">---SELECT---</option>
+                    <option value="{{w.WarehouseId}}" ng-selected="VehicleData.WarehouseId==w.WarehouseId" ng-repeat="w in warehouse| filter:{Cityid:VehicleData.Cityid}"> {{w.WarehouseName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">IsActive:</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="VehicleData.isActive" placeholder="Enter VehicleData" />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutVehicle(VehicleData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteVehicle.html">
+
+    <form name="myFormdeleteModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete </h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletevehicle(VehicleData,$index)">Yes</button>
+        </div>
+    </form>
+</script>
+

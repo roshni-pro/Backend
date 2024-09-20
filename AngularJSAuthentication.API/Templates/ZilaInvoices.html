@@ -1,0 +1,270 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .border {
+                border: 1px solid #000 !important;
+            }
+
+            th, td, table {
+                border: solid #000 !important;
+                border-width: 0 1px 1px 0 !important;
+                border-spacing: 0;
+                column-gap: initial;
+                padding: 0;
+                text-align: center;
+            }
+
+            box {
+                box-sizing: border-box;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            td, th {
+                padding: 5px 15px;
+                text-align: left;
+            }
+
+            table, th, td {
+                border: 1px solid #000;
+            }
+
+            .invoice {
+                margin-right: 1em !important
+            }
+
+            .font-face {
+                font-family: 'Ek Mukta', sans-serif;
+            }
+
+            .border {
+                border-bottom: 1px dotted black !important "
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="divtoPrint" class="client-document-container" style="font-size: 12px;position: relative;margin-top:10%">
+
+        <div class="containers invoice" style="margin-top:5%">
+
+            
+
+            <table style="width:100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align: center; padding-left: 10px; vertical-align: top; width: 30%;">
+                            <div class="row" style="display: inline-flex; text-align: center;">
+                                <div class="col-md-6">
+                                    [imagepath]
+                                    <!--<img src="../Content/ZilaLogo.svg" width="220px" height="100px" />-->
+                                </div>
+                                <div class="col-md-6" style="margin-top:10px">
+                                    [barcodepath]
+                                    <!--<img src="data:image/png;base64,[OrderData1.InvoiceBarcodeImage]" width="220px" height="80px" />-->
+                                </div>
+
+                            </div>
+                            <p style="font-size: smaller !important; font-family: Calibri !important">
+                                <strong>  Place of Supply:</strong> [FromWarehouseDetail.Address]
+                                <br />
+                                <strong> Contact : </strong>[FromWarehouseDetail.Phone]  |<strong> Visit us :</strong>www.zilastore.com
+                            </p>
+                            <p style="font-size: smaller !important; font-family: Calibri !important; line-height: 0px; text-align: center !important"><strong> GSTIN : </strong> [FromWarehouseDetail.GSTin]</p>
+                            <h4 style="text-align: center; font-weight: 600;">TAX INVOICE</h4>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+            <table style="width:100%; border-collapse: collapse;">
+
+                <div class="heading1" style="font-family: Calibri !important; margin-top: -15px;font-size:smaller !important">
+                    <strong> Invoice No. :</strong> &nbsp; [OrderData1.invoice_no]<br />
+                    <strong> Invoice Date:</strong> &nbsp; [OrderData1.CreatedDate] <br />
+                    <strong> Order No.: </strong> &nbsp;[OrderData1.OrderId]<br />
+                    <strong> Customer Id :</strong> &nbsp;[OrderData1.Skcode]<br />
+                    <strong> Mobile No. :</strong> &nbsp;[OrderData1.Customerphonenum]<br />
+                </div>
+
+                <thead>
+                    <tr>
+                        <td style="width: 20% !important; font-size: smaller !important; font-family: Calibri !important; white-space: nowrap; text-align: left;">
+                            <strong>Item No.</strong>
+                        </td>
+                        <td style="width: 20% !important; font-family: Calibri !important; text-align: center; font-size: smaller !important;">
+                            <strong>Qty</strong>
+                        </td>
+                        <td style="width: 20% !important; font-family: Calibri !important; font-size: smaller !important; white-space: nowrap; text-align: center;">
+                            <strong>Rate</strong>
+                        </td>
+                        <td class="border" style="width: 20% !important; font-family: Calibri !important; font-size: smaller !important; white-space: nowrap; text-align: center;">
+                            <strong>Net Amt</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: smaller !important; width: 26% !important; font-family: Calibri !important; border-bottom: 1px dotted; white-space: nowrap; text-align: left;">
+                            <strong>Item Name</strong>
+                        </td>
+                        <td style="border-bottom: 1px dotted; width: 26% !important; font-family: Calibri !important; text-align: center; font-size: smaller !important;"></td>
+                        <td style="border-bottom: 1px dotted; width: 42% !important; font-family: Calibri !important; font-size: smaller !important; white-space: nowrap; text-align: center;">
+                            <strong>HSN Code</strong>
+                        </td>
+                        <td style="border-bottom: 1px dotted; width: 35% !important; font-family: Calibri !important; font-size: smaller !important; white-space: nowrap; text-align: center;">
+                            <strong>Taxable Amt</strong>
+                        </td>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    ##OrderDetailRow##
+
+                </tbody>
+            </table>
+            <hr/>
+            <table style="width: 100%; border-collapse: collapse;">
+
+                <tr>
+                    <th style="text-align: left !important; font-size: small !important; font-family: Calibri !important;">
+                        Net Amt:
+                    </th>
+                    <td style="width: 49%; font-family: Calibri !important; font-size: small !important;">
+                        Qty: [TotalQty]
+                    </td>
+                    <td></td>
+                    <td style="width: 6%; text-align: center !important; font-size: small !important; font-family: Calibri !important;">
+                        <strong>[AmtInclueTaxes]</strong>
+                    </td>
+                </tr>
+
+                <tr ng-if="[OrderData1.BillDiscountAmount] > 0">
+                    <th style="text-align: left !important; font-size: small !important; font-family: Calibri !important;">
+                        Discount:
+                    </th>
+                    <td></td>
+                    <td style="width: 7%;"></td>
+                    <td style="width: 6%; text-align: center !important; font-size: small !important; font-family: Calibri !important;">
+                        <strong>[OrderData1.BillDiscountAmount]</strong>
+                    </td>
+                </tr>
+
+                <tr ng-if="[OrderData1.WalletAmount] > 0">
+                    <th style="text-align: left !important; font-size: small !important; font-family: Calibri !important;">
+                        Wallet Amt:
+                    </th>
+                    <td></td>
+                    <td style="width: 7%;"></td>
+                    <td style="width: 6%; text-align: center !important; font-size: small !important; font-family: Calibri !important;">
+                        <strong>[OrderData1.WalletAmount]</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left !important; font-size: small !important; font-family: Calibri !important; border-bottom: 1px dotted black !important;">
+                        Payable Amt:
+                    </th>
+                    <td style="border-bottom: 1px dotted black !important;"></td>
+                    <td style="border-bottom: 1px dotted black !important;"></td>
+                    <td style="width: 6%; text-align: center !important; font-size: small !important; font-family: Calibri !important; border-bottom: 1px dotted black !important;">
+                        <strong>[OrderData1.GrossAmount]</strong>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <table>
+                    <tr>
+                        <td style="font-size: small !important; font-family: Calibri !important"><b>Payment Ref No: &nbsp;</b> [PaymentrefNO]</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: small !important; font-family: Calibri !important"><b>Payment Mode: &nbsp; </b> [PaymentData]</td>
+                    </tr>
+                </table>
+                <table style="font-size:12px!important;" width="100%">
+                    <thead style="border-bottom: none !important;padding:0 5px;">
+                        <tr style="text-align: center; border-top: 1px dotted black !important;">
+                            <td style="border-top: 1px dotted black !important;"></td>
+                            <td style="border-top: 1px dotted black !important;"></td>
+                            <td style="border-top: 1px dotted black !important; text-align: center !important; font-weight: 600;"> <h4 style=" margin-top: 0px !important; margin-bottom: 3px !important;">Tax Details</h4> </td>
+                            <td style="border-top: 1px dotted black !important;"></td>
+                            <td style="border-top: 1px dotted black !important;"></td>
+                        </tr>
+                        <tr style="text-align: center !important;">
+                            <td style="font-family:Calibri !important; border-bottom: 1px dotted black !important; font-size: smaller !important;">
+                                <strong>
+                                    GST IND
+                                </strong>
+                            </td>
+                            <td style="font-family: Calibri !important; border-bottom: 1px dotted black !important; font-size: smaller !important; "><strong>Taxable Value</strong></td>
+                            <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border;" ng-if="[OrderData1.IsIgstInvoice== false]"><strong>CGST</strong></td>
+                            <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border" ng-if="[OrderData1.IsIgstInvoice== false]"><strong>SGST</strong></td>
+                            <!--<td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border" ng-if="[OrderData1.IsIgstInvoice== true]"><strong>IGST</strong></td>-->
+                            <!--//cess-->
+                            <!--<td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important " class="border" ng-if="[HideCessColumn == true && OrderData1.IsIgstInvoice== false]"><strong>Cess</strong></td>-->
+                            <td style="font-family: Calibri !important; font-size: smaller !important; border-bottom: 1px dotted black !important "><strong>Total Amt</strong></td>
+                        </tr>
+                    </thead>
+                    <tbody class="border">
+                        ##SumDataHSNDetailRows##
+                        <tr style="text-align: center !important;">
+
+                            <td></td>
+                            <td></td>
+                            <td ng-if="[OrderData1.IsIgstInvoice== false]"></td>
+                            <td ng-if="[OrderData1.IsIgstInvoice== false]"></td>
+                            <!--<td ng-if="[OrderData1.IsIgstInvoice== true]"></td>
+                            <td ng-if="[HideCessColumn == true && OrderData1.IsIgstInvoice== false]"></td>-->
+                            <td></td>
+                            <!--<td>{{indexToLetter($index)}})</td>
+                            <td>{{SumDataHSNDetail.TaxableAmount | number:2}}</td>
+                            <td ng-if="(OrderData1.IsIgstInvoice== false)">{{SumDataHSNDetail.CgstPercent| number:2}}</td>
+                            <td ng-if="(OrderData1.IsIgstInvoice== false)">{{SumDataHSNDetail.CgstPercent| number:2}}</td>
+                            <td ng-if="(OrderData1.IsIgstInvoice== true)">{{SumDataHSNDetail.IgstPercent | number:2}} </td>
+                            <td>{{SumDataHSNDetail.TaxableAmount | number:2}} </td>-->
+                        </tr>
+                        <tr>
+                            <td style='text-align:center!important'><strong> Total:</strong></td>
+                            <td style='text-align:center!important'><b>[totalTaxableValue]</b></td>
+                            <!--<td ng-if="([OrderData1.IsIgstInvoice]== true)"><b>[totalIGST]</b></td>-->
+                            <td style='text-align:center!important' ng-if="([OrderData1.IsIgstInvoice]== false)"><b>[totalCGST]</b></td>
+                            <td style='text-align:center!important' ng-if="([OrderData1.IsIgstInvoice]== false)"><b>[totalSGST]</b></td>
+
+                            <!--<td><b>[totalCess]</b></td>-->
+                            <td style='text-align:center!important'>
+                                <b>[TotalIOverall]</b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="text-align: center; font-family: Calibri !important;margin-top:3%;font-size:smaller !important;border-bottom:1px dotted black !important">
+
+                    <h5 style="text-align: center !important; font-family: Verdana !important; line-height: 0px; margin-bottom: -2px;">Shopkirana E-Trading Pvt Ltd</h5><br />
+                    <div style="font-size: smaller !important; font-family: Calibri !important; text-align:center !important">
+                        <strong>
+                            Address:
+                        </strong> 1501, 15th Floor, Skye Corporate Park, Plot No. 25 Scheme No. 78, Part II, Sector-B, Indore 452010
+                    </div>
+                    <p style="font-size: smaller !important; font-family: Calibri !important; text-align:center !important"><strong> CIN : </strong> U51109MP2014PTC033534</p>
+                </div>
+                <div style="text-align: center; font-family: Calibri !important;font-size:smaller !important">
+                    *All offers are subject to Terms and Conditions as mentioned on Website.<br />
+                    *Exchange of items only acceptable if returned in original/packed condition within 15 days of purchase.<br />
+                    *Return of any of the items will not be accepted.<br />
+                    *This is a computer generated invoice and hence does not require any signature.<br />
+                    <h4 style="font-family: Calibri !important"><strong> Thank You for Shopping with us</strong> </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

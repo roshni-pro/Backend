@@ -1,0 +1,632 @@
+<head>
+    <title>
+
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    body {
+        background-color: #EEEEEE;
+    }
+
+    .d-flex {
+        display: flex !important;
+    }
+
+    .flex-column {
+        flex-direction: column;
+    }
+
+    .justify-content-between {
+        justify-content: space-between;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .left {
+        width: 25%;
+        margin: 10px;
+        padding: 20px;
+    }
+
+    .right {
+        width: 70%;
+        margin: 10px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f8f8f8;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+    .section {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .vertical-line {
+        width: 2px;
+        height: auto;
+        background-color: rgb(161, 161, 161);
+    }
+
+    .top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .title {
+        margin: 10px;
+        font-size: 20px;
+    }
+
+    form.form-inline {
+        height: 100%;
+        margin: 10px;
+    }
+
+    .section ul.nav.nav-pills {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .section ul.nav.nav-pills li a {
+            color: #424242;
+            width: 100%;
+            height: 100px;
+            border: 1px solid #424242;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .section ul.nav.nav-pills li.active a {
+            background-color: tomato;
+            border-color: tomato;
+            color: white;
+        }
+
+    .tab-content div {
+        background: white;
+        border: 10px;
+        /* box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16); */
+        padding: 10px;
+    }
+
+    .bands {
+        width: 30%;
+        padding: 10px;
+        padding-left: 0;
+        height: 600px;
+    }
+
+    .addimg {
+        width: 70%;
+        padding: 10px;
+        padding-right: 0;
+        padding-left: 0;
+        height: 600px;
+    }
+
+        .addimg .tab-pane {
+            height: 90%;
+        }
+
+    .h-100 {
+        height: 100%;
+    }
+
+    .bands .bg-white {
+        height: 100%;
+    }
+
+        .bands .bg-white ul {
+            height: 500px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .bands .bg-white div {
+            padding: 10px;
+        }
+
+    .bg-white {
+        background-color: white;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    .text-align-right {
+        text-align: right;
+    }
+
+    .top select {
+        width: 18vw !important;
+        border-radius: 0;
+        border: none;
+        margin: 10px;
+    }
+
+    .horizontal-line {
+        height: 2px;
+        width: 100%;
+        background-color: rgb(161, 161, 161);
+    }
+
+    .text-tomato {
+        color: tomato;
+    }
+
+    .btn-rounded {
+        border-radius: 50px;
+        border: none;
+        padding: 7px 20px 7px 20px;
+        margin-left: 10px;
+    }
+
+    .bg-green {
+        background-color: #00B594 !important;
+    }
+
+    .bg-orange {
+        background-color: tomato;
+    }
+
+    .bg-red {
+        background-color: #E53935 !important;
+    }
+
+    .text-white {
+        color: white !important;
+    }
+
+    button:focus {
+        outline: none !important;
+    }
+
+    select:focus, input:focus {
+        box-shadow: none !important;
+        border-color: #ccc !important;
+        outline: none;
+    }
+
+    input {
+        border-radius: 0 !important;
+    }
+
+        input#percentage {
+            width: 300px;
+        }
+
+    .tab-content .tab-pane {
+        padding: 10px 10px;
+    }
+
+    .collapsible {
+        background-color: transparent;
+        color: #00B594;
+        cursor: pointer;
+        padding: 12px 18px;
+        border-radius: 5px;
+        width: 100%;
+        border: 1px solid #00B594;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+    }
+
+        .collapsible::after {
+            content: '\25BC';
+            color: white;
+            float: right;
+        }
+
+        .collapsible.active-collapse::after {
+            content: '\25B2';
+            color: white;
+            float: right;
+        }
+
+    .mb-1 {
+        margin-bottom: 5px;
+    }
+
+    .content {
+        padding: 0 18px;
+        border: 1px solid #00B594;
+        transform: translateY(-5px);
+        display: none;
+        overflow: hidden;
+    }
+
+    .bands .nav.nav-pills li {
+        width: 100%;
+    }
+
+    .bands .nav.nav-pills .active a {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+    }
+
+    .bands .nav.nav-pills li a:hover {
+        background-color: white;
+    }
+
+    .bands .nav.nav-pills .active a .collapsible {
+        background-color: #00B594;
+        color: white;
+    }
+
+    .bands ul.nav.nav-pills li a {
+        border: 0 !important;
+        background-color: transparent !important;
+        height: auto;
+        margin: 0;
+    }
+
+    .bands ul {
+        width: 100%;
+    }
+
+    .btn.add-bands {
+        width: 90%;
+        margin: 10px;
+    }
+
+    .shadow {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+
+    .button:hover {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+
+
+    .bb {
+        display: block !important;
+    }
+
+    .img-size {
+        max-width: 80%;
+        width: auto;
+        height: auto;
+        max-height: 100%;
+        margin: 10px;
+    }
+
+    /* Custom Checkbox  Start*/
+    .label-container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 18px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /* Hide the browser's default checkbox */
+        .label-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        background-color: #eee;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .label-container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .label-container input:checked ~ .checkmark {
+        background-color: #00B594;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .label-container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .label-container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    /* The container */
+    .label-radio-container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 18px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /* Hide the browser's default radio button */
+        .label-radio-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Create a custom radio button */
+        .label-radio-container .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .label-radio-container:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .label-radio-container input:checked ~ .checkmark {
+            background-color: #00B594;
+        }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .label-radio-container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .label-radio-container .checkmark:after {
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+    }
+</style>
+
+
+<body>
+    <div class="">
+        <div class="top">
+            <div class="title">Level Dashboard</div>
+            <div class="title">
+                <button class="btn btn-rounded bg-green text-white" click-and-disable="Customerlevelcreated()">Customer Levels Created </button>
+            </div>
+            <form class="form-inline">
+                <div class="form-group" ng-show="false">
+                    <select class="form-control" id="site-name" ng-model="Cityid" ng-change="getwarehouse(Cityid)">
+                        <option value="">Choose City...</option>
+                        <option value="{{a.Cityid}}" ng-repeat="a in city">{{a.CityName}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group m2-2">
+                    <select class="form-control" id="site-name" ng-model="WarehouseId" ng-change="getLevel(WarehouseId)">
+                        <option value="">Choose Hub...</option>
+                        <option value="{{a.WarehouseId}}" ng-repeat="a in warehouse" ng-selected="WarehouseId == a.WarehouseId">{{a.WarehouseName}} {{a.CityName}}</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div class="horizontal-line"></div>
+
+        <div class="section" ng-show="WarehouseId > 0">
+            <div class="left p-2" id="divLevel">
+                <ul class="nav nav-pills">
+                    <li ng-repeat="a in level" ng-class="{'active': a.IsSelected , '': !a.IsSelected}" id="Level{{a.Id}}">
+                        <a data-toggle="tab" ng-click="SelectLevel(a,WarehouseId,a.Id)">
+                            <h4><strong>{{a.LevelName}}</strong></h4>
+                            <div class="text-align-right">By {{a.Type}} : {{a.Value}}</div>
+                            <!--<div class="text-align-right">Dream Points : 500</div>-->
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <div class="vertical-line"></div> -->
+
+            <div class="right">
+                <div class="tab-content shadow">
+                    <div id="home" class="tab-pane fade in active">
+                        <div class=" d-flex justify-content-between align-items-center">
+                            <h3 class="text-tomato"><strong>{{leveldata.LevelName}}</strong></h3>
+                            <div>
+                                <button class="btn btn-rounded bg-green text-white" click-and-disable="ExportData(WarehouseId)">Export Sheet</button>
+                                <!--<button class="btn btn-rounded bg-red text-white">Edit</button>-->
+                            </div>
+                        </div>
+                        <form class="form-inline d-flex justify-content-between align-items-center">
+                            <div class="form-group">
+                                <label class="label-radio-container">
+                                    By Value
+                                    <input type="radio" ng-model="leveldata.Type" value="Value">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-group" ng-show="zero == true">
+                                <label class="label-radio-container">
+                                    By Percentage
+                                    <input type="radio" ng-model="leveldata.Type" value="Percent">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="number" class="form-control" id="percentage" placeholder="Enter {{leveldata.Type}} " ng-model="leveldata.Value" aria-describedby="basic-addon1" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="d-flex">
+                    <div class="bands">
+                        <div class="bg-white d-flex flex-column justify-content-between align-items-center shadow">
+                            <ul class=" nav nav-pills">
+                                <li class="active" ng-repeat="i in Bands">
+                                    <a data-toggle="tab">
+                                        <button ng-click="openBox(i)" ng-class="{'collapsible': true, 'active-collapse':i.isApplyOpen }">{{i.BandName}}</button>
+                                        <div ng-class="{'content': true, 'bb': i.isApplyContentClass}">
+                                            <label style="color:black"> Lower Limit</label>
+                                            <input type="number" class="form-control mb-1" ng-model="i.lowerlimit" min="0" placeholder="Lower Limit" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                            <label style="color:black"> Upper Limit</label>
+                                            <input type="number" class="form-control mb-1" ng-model="i.upperlimit" min="0" placeholder="Upper Limit" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <input type="number" placeholder="Enter Bands" ng-model="Count" ng-show="input == false">
+                            <button class="btn bg-green text-white mb-1 add-bands" ng-click="GetBandsCount(Count)" ng-show="input == false">Add Bands</button>
+                        </div>
+                    </div>
+                    <div class="addimg">
+                        <div class="bg-white tab-content shadow h-100">
+                            <div id="home" class="tab-pane fade active in" ng-show="Bands.length > 0">
+                                <form class="form-inline d-flex flex-column justify-content-between">
+                                    <div class="d-flex">
+                                        <div>
+                                            <div class="form-inline">
+                                                <div class="form-group">
+                                                    <label class="label-radio-container">
+                                                        Gifts
+                                                        <input type="radio" ng-model="banddetails.BandType" value="Gift">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label-radio-container">
+                                                        Dream Points
+                                                        <input type="radio" ng-model="banddetails.BandType" value="Point">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div ng-show="banddetails.BandType == 'Point'">
+                                                <input type="number" class="form-control" id="percentage" placeholder="Enter value" ng-model="banddetails.Value" aria-describedby="basic-addon1" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57">
+                                            </div>
+
+                                            <div class="form-group" ng-show="banddetails.BandType == 'Gift'">
+                                                <!--<label for="uploadAdvertisements">Upload Image:</label>-->
+                                                <!--<input class="btn btn-primary" id="file" type="file" nv-file-select="" uploader="uploader" />
+                                    <div class="uploaderbuttondiv" ng-repeat="item in uploader.queue">
+                                        <button type="button" class="btn btn-success btn-sm" ng-click="item.upload()" ng-model="item.FileUrl" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                            <span class="glyphicon glyphicon-upload"></span> Upload
+                                        </button>
+                                    </div>-->
+
+                                                <select class="form-control" id="site-name" ng-model="a" ng-change="SetGiftImage(a)" style="width:300px;">
+                                                    <option value="">Choose Gift...</option>
+                                                    <option value="{{a}}" ng-repeat="a in Reward" ng-selected="rItemId == a.rItemId">{{a.rName}} </option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="h-100">
+                                            <img alt="" src="{{banddetails.ImagePath}}" width="250" height="300">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <button class="btn bg-orange btn-rounded btn-lg text-white" ng-click="SaveBandData(banddetails)" ng-show="Isbandadd == true">Save Customers Band</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn bg-orange btn-rounded btn-lg text-white float-right" ng-click="SaveDashboard(a)">Save Level</button>
+                <a class="btn bg-orange btn-rounded btn-lg text-white float-right" href="#/TargetAllocatonBandsList/{{WarehouseId}}" target="_parent"> View </a>
+                <button class="btn bg-orange btn-rounded btn-lg text-white float-right" ng-disabled="!Isbandadd" ng-click="InsertMLTargets()"> Process Customers Target </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+
+            this.classList.toggle("active-collapse");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+
+        });
+    }
+</script>
+

@@ -1,0 +1,856 @@
+﻿<style>
+    .panel-default > .panel-heading {
+        color: #fff0f0;
+        background-color: #484848;
+        border-color: #7d7979;
+    }
+
+    .btn-warning {
+        color: white;
+        background-color: #ffb61c;
+        border-color: #ffae02;
+        border-radius: 15px;
+    }
+
+    .btn-primary {
+        color: white;
+        background-color: #00a4e9;
+        border-color: #00a4e9;
+        border-radius: 15px;
+    }
+</style>
+<div class="panel panel-default table-dynamic" ng-init="test()">
+    <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> <span data-i18n="Create Offer"></span></strong></div>
+    <div class="panel-body">
+        <form name="myFormSiteModal">
+            <!--<div class="form-group row">
+        <h4 class="modal-title">Create Offer </h4>
+    </div>
+    <div class="form-group row">-->
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <span style="color:red; font-size:17px">* </span><span>Select City</span>
+                    <br />
+                    <select style="font-size:20px; border: 1px solid white" class="form-control" ng-model="saveData.CityId" ng-change="getWarehouseData(saveData)">
+                        <option value="">--select--</option>
+                        <option value="{{city.Cityid}}" ng-repeat="city in Cities"> {{city.CityName}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="site-name">Select Warehouse</label><b style="color: red; margin-left: 10px">*</b><b style="color: red;
+                        margin-left: 10px"></b><br />
+                    <div ng-dropdown-multiselect="" options="warehouse" selected-model="warehousemodel" extra-settings="warehousesettings" events="onItemSelect(warehousemodel)"></div>
+                    <!--<input type="hidden" name="saveData.WarehouseIds" id="saveData.WarehouseIds" ng-model="saveDatas.WarehouseIds" value="true" />-->
+                    <!--<select class="form-control" id="site-name"  ng-change="ChangeWarehouse(saveDatas.WarehouseId)" ng-model="saveDatas.WarehouseId"> ng-change="ChangeWarehouse(saveData.WarehouseIds)"
+             <option value="">Select Warehouse</option>
+             <option value="{{warehouses.WarehouseId}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}} {{warehouses.CityName}}</option>
+            </select>-->
+                </div>
+
+                <div class="col-md-3">
+                    <label for="site-name">Is CRM Offer</label>
+                    <input id="IsCRMOffer" type="checkbox" style="margin-left: 38px; width: 25px;" class="form-control" ng-model="saveDatas.IsCRMOffer" ng-change="onClickCRMOffer()" />
+                </div>
+
+                <div class="col-md-3">
+                    <label for="site-name">Select App Type</label><b style="color: red; margin-left: 10px">*</b><br />
+                    <select class="selectSection form-control" id="site-name" ng-model="saveDatas.OfferAppType" ng-change="onChangeAppType()">
+                        <option value="">--Select App Type--</option>
+                        <option value="Both">Both</option>
+                        <option value="Retailer App">Retailer App</option>
+                        <option value="Sales App">Sales App</option>
+                        <option value="Distributor App">Distributor App</option>
+                    </select>
+                </div>
+
+
+                <div class="col-md-3">
+                    <span style="color: red;">
+                        <b>
+                            * Bill Discount and Scratch card Separate use in OfferAppType.
+                            <br />
+                            * item freebies are not Separate use in OfferAppType.
+                            <br />
+                    </span>
+                </div>
+            </div>
+            <div ng-show="IsShow==true">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label for="site-name">Offer Name</label><b style="color: red; margin-left: 10px">*</b>
+                        <input id="offername" type="text" class="form-control" ng-model="saveDatas.OfferName" placeholder="Enter Offer Name" />
+                    </div>
+                    <!--<div class="col-lg-6">
+                <label for="site-name">Offer Category:</label><b style="color: red; margin-left: 10px">*</b>
+                <select class="form-control" id="site-name" ng-model="saveDatas.OfferCategory">
+                    <option value="">Select Category</option>
+                    <option value="Offer">Offer</option>
+                </select>
+            </div>-->
+                    <div class="col-lg-6">
+                        <label for="site-name">Offer Active/Deactive:</label><b style="color: red; margin-left: 10px">*</b>
+                        <select class="form-control" id="site-name" ng-model="saveDatas.IsActive">
+                            <option value="">Select Status</option>
+                            <option value="true">Active</option>
+                            <option value="false">Deactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <div class="col-lg-8">
+                            <label for="site-name">Offer On :</label><b style="color: red; margin-left: 10px">*</b>
+                            <select class="form-control" id="site-name" ng-model="saveDatas.OfferOn" ng-change="GetItemData(saveDatas.OfferOn)">
+                                <option value="">Select Offer On</option>
+                                <option value="Item">Item</option>
+                                <option value="BillDiscount">Bill Discount</option>
+                                <option value="ScratchBillDiscount">Scratch Bill Discount</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4" ng-if="saveDatas.OfferOn=='BillDiscount'|| saveDatas.OfferOn == 'ScratchBillDiscount'">
+                            <label for="site-name">Auto Apply</label>
+                            <input style="width: 25px;" id="offername" type="checkbox" class="form-control" ng-model="saveDatas.IsAutoApply" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6" ng-if="saveDatas.OfferOn=='BillDiscount'|| saveDatas.OfferOn == 'ScratchBillDiscount'">
+                        <div class="col-lg-6">
+                            <label for="sub">Offer By</label><br />
+                            <input type="radio" name="Storechoose" style="margin:0" ng-model="saveDatas.IsStore" value="true" ng-click="StoreChange()" />
+                            <label for="sub">Store</label>
+                            <input type="radio" name="Storechoose" style="margin:0" ng-model="saveDatas.IsStore" ng-value="false" ng-click="StoreChange()" />
+                            <label for="sub">Company</label>
+                        </div>
+                        <div class="col-lg-6" ng-if="saveDatas.IsStore">
+                            <label> Select Store </label><b b style="color: red; margin-left: 10px">*</b>
+                            <select class="form-control" id="site-name" ng-model="saveDatas.StoreId" ng-change="StoreChange()">
+                                <option value="0">----choose Store---</option>
+                                <option value="{{store.StoreId}}" ng-repeat="store in stores"> {{store.Name}} </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div style="border: 1px solid lightgray;">
+                    <div style="border: 1px solid lightgray;">
+                        <div style="margin: 10px;">
+                            <!--user type-->
+                            <div class="form-group row" ng-show="saveDatas.OfferOn == 'BillDiscount' || saveDatas.OfferOn == 'ScratchBillDiscount'">
+                                <d iv class="col-lg-6" ng-if="saveDatas.BillDiscountOfferOn != 'DynamicAmount'">
+                                    <label for="site-name">User Type:</label><b style="color: red; margin-left: 10px">*</b>
+                                    <select class="form-control" ng-model="saveDatas.UserType" ng-change="CallGCData(saveDatas)">
+                                        <option value="">----Choose User Type---</option>
+                                        <option value="AllCustomer">All Customer</option>
+                                        <option value="Customer" ng-if="!MultiWarehouse">Customer</option>
+                                        <!--<option value="Group" ng-if="!MultiWarehouse">Group</option>-->
+                                        <option value="Group">Group</option>
+                                        <option value="Level">Customer Level</option>
+                                        <option value="KPPCustomer">KPP Customer</option>
+                                        <option value="PrimeCustomer">Prime Customer</option>
+                                    </select>
+                            </div>
+                            <div class="col-lg-6" ng-if="saveDatas.BillDiscountOfferOn == 'DynamicAmount'">
+                                <input type="file" ngf-select="SelectFile($file)" />
+                                <input type="button" class="btn btn-ar btn-primary" value="Upload" ng-click="Upload()" />
+
+                            </div>
+                            <div class="col-lg-2" ng-if="saveDatas.BillDiscountOfferOn == 'DynamicAmount'">
+                                <input type="button" class="btn btn-ar btn-primary" value="Download Template" ng-click="Download()" />
+                                <!--<input type="button" id="test"  ng-click="fnExcelReport()" value="download" />-->
+                            </div>
+                            <div class="col-lg-4" ng-if="saveDatas.UserType=='Customer'">
+                                <br /><br />
+                                <input class="form-control" type="text" width="100px" id="textCustomer" placeholder="Enter SkCode" maxlength="50" />
+                            </div>
+                            <div class="col-lg-2" ng-if="saveDatas.UserType=='Customer'">
+                                <br /><br />
+                                <button type="button" id="SearchCustomer" class="btn btn-ar btn-primary" ng-click="SearchCustomer()">Search</button>
+                            </div>
+
+                            <!--List of user group type-->
+                            <div class="col-lg-12" ng-if="saveDatas.UserType == 'Group'">
+                                <label for="site-name">Customer List:</label><b style="color: red; margin-left: 10px">*</b>
+                                <select class="form-control" id="site-name" ng-model="saveDatas.GroupID">
+                                    <option value="">----Choose Item---</option>
+                                    <option value="{{Gdata.Id}}" ng-repeat="Gdata in groupData"> {{Gdata.GroupName}} </option>
+                                </select>
+                            </div>
+                            <!--List of user single-->
+                            <div class="col-lg-12" ng-if="saveDatas.UserType == 'Customer'">
+                                <label for="site-name">List:</label><b style="color: red; margin-left: 10px">*</b>
+                                <select class="form-control" id="site-name" ng-model="saveDatas.CustomerId">
+                                    <option value="">----Choose Item---</option>
+                                    <option value="{{Cust.CustomerId}}" ng-repeat="Cust in CustomerData"> {{Cust.Name}} =>({{Cust.Skcode}}) </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-12" ng-if="saveDatas.UserType == 'AllCustomer'">
+                                <input ng-model="saveDatas.CustomerId" type="hidden" value="-1" />
+                            </div>
+                            <div class="col-lg-12" ng-if="saveDatas.UserType == 'KPPCustomer'">
+                                <input ng-model="saveDatas.CustomerId" type="hidden" value="-2" />
+                            </div>
+                            <div class="col-lg-12" ng-if="saveDatas.UserType == 'Level'">
+                                <label for="site-name">Customer Level:</label><b style="color: red; margin-left: 10px">*</b>
+                                <select class="form-control" id="site-name" ng-model="saveDatas.CustomerId">
+                                    <option value="">----Choose Level---</option>
+                                    <option value="-3">Level 0</option>
+                                    <option value="-4">Level 1</option>
+                                    <option value="-5">Level 2</option>
+                                    <option value="-6">Level 3</option>
+                                    <option value="-7">Level 4</option>
+                                    <option value="-8">Level 5</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-12" ng-if="saveDatas.UserType == 'PrimeCustomer'">
+                                <input ng-model="saveDatas.CustomerId" type="hidden" value="-9" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div ng-show="saveDatas.OfferOn == 'Item'">
+
+                                <div class="col-lg-4">
+                                    <label for="site-name">Search Item:</label><b style="color: red; margin-left: 10px">*</b>
+                                    <input id="site-name" type="text" class="form-control" ng-model="key" placeholder="Enter item Name or SKU" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <button type="button" class="btn btn-ar btn-primary" style="margin: 24px;" ng-click="SearchMainItemsss(key)">
+                                        <span class="glyphicon glyphicon-search"></span> Search
+                                    </button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="site-name">Item List:</label><b style="color: red; margin-left: 10px">*</b>
+                                    <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="saveDatas.ItemId">
+                                        <option value="{{s.ItemId}}" ng-repeat="s in itemData">{{s.itemname}}=({{s.SellingSku}}) => ({{s.PurchaseMinOrderQty}}) ({{s.active ? 'Active' : 'Inactive'}})  (ABC Category -> {{s.ABCCategory}})</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6" ng-show="savedatas.offeron == 'brand'">
+                                <label for="site-name">brand list:</label><b style="color: red; margin-left: 10px">*</b>
+                                <select class="form-control" id="site-name" ng-model="savedatas.itemid">
+                                    <option value="">----choose item---</option>
+                                    <option value="{{ssubsubcats.subsubcategoryid}},{{ssubsubcats.subsubcategoryname}}" ng-repeat="ssubsubcats in subsubcats"> {{ssubsubcats.subsubcategoryname}} </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6" ng-show="savedatas.offeron == 'category'">
+                                <label for="site-name">category list:</label><b style="color: red; margin-left: 10px">*</b>
+                                <select class="form-control" id="site-name" ng-model="savedatas.itemid">
+                                    <option value="">----choose item---</option>
+                                    <option value="{{ccategorys.categoryid}},{{ccategorys.categoryname}}" ng-repeat="ccategorys in categorys"> {{ccategorys.categoryname}}</option>category
+                                </select>
+                            </div>
+                            <div class="col-lg-6" ng-show="saveDatas.OfferOn == 'Item'">
+                                <label for="site-name">On Min Order Quantity :</label><b style="color: red; margin-left: 10px">*</b>
+                                <input id="MinOrderQuantity" type="number" min="1" class="form-control" ng-model="saveDatas.MinOrderQuantity" placeholder="Enter Min Order Quantity" />
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-6" ng-if="saveDatas.OfferOn=='BillDiscount' ">
+                                    <div class="col-sm-3"> <label for="site-name">Multi Time Use</label></div>
+                                    <div class="col-sm-3">
+                                        <input style="    margin-left: -103px;  margin-top: 26px; width: 25px;" id="offername" type="checkbox" class="form-control" ng-model="saveDatas.IsMultiTimeUse" />
+                                    </div>
+                                    <div class="col-sm-6" style="margin-left: -130px; margin-top: 7px;">
+                                        <label for="site-name"></label>
+                                        <input placeholder="Offer Use Count" id="OfferUseCount" type="number" ng-if="saveDatas.OfferOn=='BillDiscount'" class="form-control" ng-model="saveDatas.OfferUseCount" />
+                                    </div>
+                                </div>
+                                <div style="margin-left: -138px;" class="col-lg-6" ng-if="saveDatas.OfferOn=='BillDiscount' || saveDatas.OfferOn=='ScratchBillDiscount' ">
+                                    <label for="site-name">Use Other Offer</label>
+                                    <input id="offername" type="checkbox" style="margin-left: 38px; width: 25px;" class="form-control" ng-model="saveDatas.IsUseOtherOffer" />
+                                </div>
+                                <div class="col-lg-6" style="margin-left: 10px;" ng-if="saveDatas.OfferOn=='BillDiscount' ">
+                                    <label for="site-name">Offer Limit</label>
+                                    <input id="FreeItemLimit" type="number" class="form-control" ng-model="saveDatas.FreeItemLimit" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="site-name">Select Date Range</label><b style="color: red; margin-left: 10px">*</b><br>
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input name="OfferDate" id="OfferDate" type='text' title="Select Date" class="form-control date-picker" autocomplete="off" />
+                                        <span class="input-group-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="site-name"> Type :</label><b style="color: red; margin-left: 10px">*</b>
+                                <select class="form-control" id="offerType" ng-model="saveDatas.FreeofferType" ng-change="ChooseFreeItem(saveDatas.FreeofferType,saveDatas.StoreId,saveDatas.IsStore)">
+                                    <option value="">----Choose Item Type---</option>
+                                    <option ng-show="saveDatas.OfferOn == 'Item' && saveDatas.OfferOn != 'BillDiscount' && saveDatas.OfferOn != 'ScratchBillDiscount'" value="ItemMaster">Item Master</option>
+                                    <option ng-show="saveDatas.OfferOn == 'Item'&& saveDatas.OfferOn != 'BillDiscount' && saveDatas.OfferOn != 'ScratchBillDiscount'" value="WalletPoint">Wallet Point</option>
+                                    <option ng-show="saveDatas.OfferOn == 'BillDiscount'&& saveDatas.OfferOn != 'ScratchBillDiscount'" value="BillDiscount">Bill Discount</option>
+                                    <option ng-show="saveDatas.OfferOn == 'ScratchBillDiscount' && saveDatas.OfferOn != 'BillDiscount'" value="ScratchBillDiscount">Scratch Bill Discount</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="form-group row" style="border:1px solid #cbd5dd; margin:10px 5px; padding:5px" ng-show="saveDatas.OfferOn == 'BillDiscount' || saveDatas.OfferOn == 'ScratchBillDiscount' ">
+
+                    <div class="col-md-6">
+                        <label> Offer On </label><b b style="color: red; margin-left: 10px">*</b>
+                        <!--<div>
+                    <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" ng-change="ClearItem()" value="category" />
+                    <label for="category">Category</label><b style="color: red; margin-left: 10px"></b>
+
+                </div>-->
+                        <div ng-if="saveDatas.IsStore">
+                            <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" ng-change="ClearItem()" value="subcategory" />
+                            <label for="sub">Sub Category</label><b style="color: red; margin-left: 10px"></b>
+                        </div>
+                        <div ng-if="saveDatas.IsStore">
+                            <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" ng-change="ClearItem()" value="brand" />
+                            <label for="subsub">Brand</label><b style="color: red; margin-left: 10px"></b>
+                        </div>
+                        <div ng-if="!saveDatas.IsStore">
+                            <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" ng-change="GetItems(saveDatas.WarehouseId,'','','')" value="items" />
+                            <label for="ite">Items</label><b style="color: red; margin-left: 10px"></b>
+                        </div>
+                        <div ng-if="!MultiWarehouse && !saveDatas.IsStore">
+                            <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" value="itemClassification" />
+                            <label for="ite">Item Classification</label><b style="color: red; margin-left: 10px"></b>
+                        </div>
+                        <div ng-if="!saveDatas.IsStore">
+                            <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" value="itemMargin" />
+                            <label for="ite">Item Margin</label><b style="color: red; margin-left: 10px"></b>
+                        </div>
+                        <div ng-if="!saveDatas.IsStore && warehousemodel.length == 1">
+                            <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" value="ClearanceStock" ng-change="ClearanceStockGetItem(saveDatas.WarehouseId)" />
+                            <label for="none">Clearance stock</label><b style="color: red; margin-left: 10px"></b>
+                        </div>
+                        <div ng-if="!saveDatas.IsStore">
+                            <input type="radio" name="choose" style="margin:0" ng-model="saveDatas.BillDiscountType" ng-change="ClearItem()" value="BillDiscount" ng-checked="true" />
+                            <label for="none">None</label><b style="color: red; margin-left: 10px"></b>
+                        </div>
+                    </div>
+
+                    <div>
+
+                        <!-- <div class="col-lg-6" ng-if="saveDatas.BillDiscountType=='category'">
+    <!--<div class="form-group">
+        <label for="site-name">category :</label><b style="color: red; margin-left: 10px">*</b>
+        <div ng-dropdown-multiselect="" options="categorys" selected-model="categorymodel" extra-settings="categorysettings"></div>
+        <input type="hidden" name="BillDiscountTypeIsInclude" id="BillDiscountTypeIsInclude" ng-model="saveDatas.isIncludeBillDiscountType" value="true" />
+    </div>-->
+                        <!--      <div class="form-group">
+            <button type="button" class="btn btn-ar btn-primary" ng-click="GetItemsByType(categorymodel,'Category')">Reload Items</button>
+        </div>
+        <input type="hidden" name="ItemIsInclude" id="ItemIsInclude" style="margin:0" ng-model="saveDatas.isInclude" value="false" />
+        <label for="site-name">Exclude Item</label><b style="color: red; margin-left: 10px">*</b>
+        <div ng-dropdown-multiselect="" options="itemAllData" selected-model="selectExcludeItemmodel" extra-settings="ExcludeItemsetting"></div>
+    </div>-->
+                        <div class="col-lg-3" ng-if="saveDatas.BillDiscountType=='subcategory'">
+                            <div class="form-group">
+                                <label for="site-name">Sub Category:</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" style="width:200px" options="subcategorys" selected-model="subcategorymodel" extra-settings="subcategorysettings"></div>
+                                <input type="hidden" name="BillDiscountTypeIsInclude" id="BillDiscountTypeIsInclude" ng-model="saveDatas.isIncludeBillDiscountType" value="true" />
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="GetItemsByType(subcategorymodel,'SubCategory')">Reload Items</button>
+                            </div>
+                            <label for="site-name">Exclude Item</label><b style="color: red; margin-left: 10px">*</b>
+                            <input type="hidden" name="ItemIsInclude" id="ItemIsInclude" style="margin:0" ng-model="saveDatas.isInclude" value="false" />
+                            <div ng-dropdown-multiselect="" options="itemAllData" selected-model="selectExcludeItemmodel" extra-settings="ExcludeItemsetting"></div>
+                        </div>
+                        <div class="col-lg-3" ng-if="saveDatas.BillDiscountType=='subcategory' && saveDatas.OfferAppType=='Sales App'">
+                            <div class="form-group">
+                                <label for="site-name">Classification</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" options="classificationList" selected-model="Classificationmodel" extra-settings="ClassificationSetting"></div>
+                                <input type="hidden" name="Classification" ng-model="saveDatas.selectedClassificationList" value="false" />
+                            </div>
+                        </div>
+                        <!--<div class="col-lg-6" ng-if="saveDatas.BillDiscountType=='subcategory'">
+    <label for="site-name">Classification</label><b style="color: red; margin-left: 10px">*</b>
+    <input type="hidden" name="Classification" id="Classification" style="margin:0" ng-model="saveDatas.IncentiveClassification" value="false" />
+    <div ng-dropdown-multiselect="" options="classificationList" selected-model="Classificationmodel" extra-settings="ClassificationSetting"></div>-->
+                        <!--<input type="hidden" name="Classification" ng-model="selectedClassificationList" value="false" />-->
+                        <!--</div>-->
+                        <div class="col-lg-3" ng-if="saveDatas.BillDiscountType=='brand'">
+                            <div class="form-group">
+                                <label for="site-name">Brand</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" style="width:200px" options="brands" selected-model="brandmodel" extra-settings="brandsettings"></div>
+                                <input type="hidden" name="BillDiscountTypeIsInclude" id="BillDiscountTypeIsInclude" ng-model="saveDatas.isIncludeBillDiscountType" value="true" />
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="GetItemsByType(brandmodel,'SubsubCategory')">Reload Items</button>
+                            </div>
+                            <label for="site-name">Exclude Item</label><b style="color: red; margin-left: 10px">*</b>
+                            <input type="hidden" name="ItemIsInclude" id="ItemIsInclude" style="margin:0" ng-model="saveDatas.isInclude" value="false" />
+                            <div ng-dropdown-multiselect="" options="itemAllData" selected-model="selectExcludeItemmodel" extra-settings="ExcludeItemsetting"></div>
+                        </div>
+                        <div class="col-lg-3" ng-if="saveDatas.BillDiscountType=='brand' && saveDatas.OfferAppType=='Sales App'">
+                            <div class="form-group">
+                                <label for="site-name">Classification</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" options="classificationList" selected-model="Classificationmodel" extra-settings="ClassificationSetting"></div>
+                                <input type="hidden" name="Classification" ng-model="saveDatas.selectedClassificationList" value="false" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6" ng-if="saveDatas.BillDiscountType=='items'">
+                            <div class="form-group">
+                                <input type="hidden" name="ItemIsInclude" id="ItemIsInclude" style="margin:0" ng-model="saveDatas.isInclude" value="true" />
+                                <label for="none">Include Item</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" style="width:200px" options="dataselect" selected-model="itemsmodel" extra-settings="itemssettings"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" ng-if="saveDatas.BillDiscountType=='ClearanceStock'">
+                            <div class="form-group">
+                                <input type="hidden" name="BillDiscountTypeIsInclude" id="BillDiscountTypeIsInclude" style="margin:0" ng-model="saveDatas.isInclude" value="true" />
+                                <label for="none">Include Item Clearance Stock</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" style="width:200px" options="clearanceStockselected" selected-model="clearanceStockitemsmodel" extra-settings="clearanceitemssettings"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" ng-if="saveDatas.BillDiscountType=='itemClassification'">
+                            <div class="form-group">
+                                <label for="site-name">Classification</label><b style="color: red; margin-left: 10px">*</b>
+                                <select id="DDLItemClassification" class="form-control">
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="GetItems(saveDatas.WarehouseId,'','','')">Reload Items</button>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="ItemIsInclude" class="form-control" id="ItemIsInclude" style="margin:0" ng-model="saveDatas.isInclude" value="true" />
+                                <label for="none">Include Item</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" style="width:200px" options="dataselect" selected-model="itemsmodel" extra-settings="itemssettings"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" ng-if="saveDatas.BillDiscountType=='itemMargin'">
+                            <div class="form-group">
+                                <label for="site-name">Margin</label><b style="color: red; margin-left: 10px">*</b>
+                                <input type="number" id="txtItemMargin" min="4" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="GetItems(saveDatas.WarehouseId,'','','')">Reload Items</button>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="ItemIsInclude" id="ItemIsInclude" style="margin:0" ng-model="saveDatas.isInclude" value="true" />
+                                <label for="none">Include Item</label><b style="color: red; margin-left: 10px">*</b>
+                                <div ng-dropdown-multiselect="" style="width:200px" options="dataselect" selected-model="itemsmodel" extra-settings="itemssettings"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2" ng-if="saveDatas.BillDiscountType=='BillDiscount'">
+                            <div class="form-group">
+                                <label for="site-name">Exclude Brand :</label><b style="color: red; margin-left: 10px">*</b>
+                                <!--<div ng-dropdown-multiselect="" options="brands" selected-model="brandmodel" extra-settings="brandsettings"></div>-->
+                                <div ng-dropdown-multiselect="" options="categorys" selected-model="categorymodel" extra-settings="categorysettings"></div>
+                                <input type="hidden" name="BillDiscountTypeIsInclude" id="BillDiscountTypeIsInclude" ng-model="saveDatas.isIncludeBillDiscountType" value="false" />
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="saveDatas.BillDiscountType=='BillDiscount' && saveDatas.OfferAppType=='Sales App'">
+                            <label for="site-name">Classification</label><b style="color: red; margin-left: 10px">*</b>
+                            <div ng-dropdown-multiselect="" options="classificationList" selected-model="Classificationmodel" extra-settings="ClassificationSetting"></div>
+                            <input type="hidden" name="Classification" ng-model="saveDatas.selectedClassificationList" value="false" />
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="form-group row" style="border:1px solid #cbd5dd; margin:10px 5px; padding:5px" ng-show="(saveDatas.OfferOn == 'BillDiscount' || saveDatas.OfferOn == 'ScratchBillDiscount') && saveDatas.BillDiscountType != 'ClearanceStock'">
+                    <div class="col-md-12">
+                        <label> Minmum Item Required </label> <br />
+                        <div class="col-md-5">
+                            <div class="col-md-4">
+                                <select class="form-control" id="objectType" ng-model="saveDatas.ObjectType" ng-change="FillCompanyBrand()">
+                                    <option value="Item" selected>Item</option>
+                                    <option value="brand">Brand</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4" ng-if="saveDatas.ObjectType=='Item'">
+                                <input type="text" id="txtMinItem" max="100" class="form-control" />
+                            </div>
+                            <div class="col-md-4" ng-if="saveDatas.ObjectType=='Item'">
+                                <button type="button" class="btn btn-ar btn-primary" ng-click="GetKeyworkSearchItem(saveDatas.WarehouseId,subcategorymodel,brandmodel)">Reload Items</button>
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <div class="col-md-12" ng-if="saveDatas.ObjectType=='Item'">
+                                <!--<select id="DDLItemkeyworkSearch" class="form-control">
+                            <option value="">----Choose Item---</option>
+                            <option value="{{item.Id}}" ng-repeat="item in KeyworkSearchItem"> {{item.Name}}</option>
+                        </select>-->
+                                <div ng-dropdown-multiselect="" options="ReqItemmodel" selected-model="ReqItemselect" extra-settings="ReqItemsettings"></div>
+
+                            </div>
+                            <div class="col-md-12" ng-if="saveDatas.ObjectType=='brand'">
+                                <!--<select id="DDLBrandSearch" class="form-control" ng-if="saveDatas.ObjectType=='brand'">
+                            <option value="">----Choose Item---</option>
+                            <option value="{{item.Id}}" ng-repeat="item in brands"> {{item.Name}}</option>
+                        </select>-->
+                                <div ng-dropdown-multiselect="" options="ReqBrandmodel" selected-model="ReqBrandselect" extra-settings="ReqItemsettings"></div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="col-md-6">
+
+                                <select id="DDLItemkeyworktype" class="form-control">
+                                    <option value="Qty">Qty</option>
+                                    <option value="Value">Value</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" id="txtObjectType" max="5" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-ar btn-primary" ng-click="AddSearchItem()">Add Items</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:10px" ng-if="saveDatas.OfferBillDiscountRequiredItems.length>0">
+                        <table width="100%" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Object Type</th>
+                                    <th>Item Name</th>
+                                    <th>Type</th>
+                                    <th>Value</th>
+                                    <th>&nbsp;&nbsp;Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in saveDatas.OfferBillDiscountRequiredItems">
+                                    <td>{{item.ObjectType}}</td>
+                                    <td>{{item.ObjectText}}</td>
+                                    <td>{{item.ValueType}}</td>
+                                    <td>{{item.ObjectValue}}</td>
+                                    <td>&nbsp;&nbsp;<button type="button" class="btn btn-primary" ng-click="RemoveItem(item,$index)">Remove</button> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div ng-show="saveDatas.OfferOn == 'Item'">
+                    <div ng-if="saveDatas.FreeofferType =='ItemMaster'">
+                        <div class="form-group row">
+                            <div class="col-lg-12" ng-if="offerType =='DreamItem'">
+                                <label for="site-name">Items :</label><b style="color: red; margin-left: 10px">*</b>
+                                <select class="form-control" id="ItemData" ng-model="saveDatas.FreeItemId">
+                                    <option value="">----Choose Item---</option>
+                                    <option value="{{Ft.rItemId}}" ng-repeat="Ft in FilterItem"> {{Ft.rItem}}</option>
+                                    <option ng-if="offerType =='ItemMaster'" value="{{Fts.ItemId}},{{Fts.itemname}}" ng-repeat="Fts in Items"> {{Fts.itemname}}</option>
+                                </select>
+
+                            </div>
+                            <div ng-if="offerType =='ItemMaster'">
+
+                                <div class="col-lg-4">
+                                    <label for="site-name">Search Item:</label><b style="color: red; margin-left: 10px">*</b>
+                                    <input id="site-name" type="text" class="form-control" ng-model="freeitemkey" placeholder="Enter item Name for search" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <button type="button" class="btn btn-ar btn-primary" style="margin: 24px;" ng-click="SearchFreeItem(freeitemkey)">
+                                        <span class="glyphicon glyphicon-search"></span> Search
+                                    </button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="site-name">Item List:</label><b style="color: red; margin-left: 10px">*</b>
+                                    <!--<select class="form-control ng-pristine ng-valid" id="site-name" ng-model="saveDatas.FreeItemId" ng-change="freeItemQuantity(saveDatas.FreeItemId)">-->
+
+                                    <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="saveDatas.FreeItemId">
+                                        <option value="{{s.ItemId}}" ng-repeat="s in freeitemData">
+                                            {{s.itemname}}=({{s.SellingSku}}) => ({{s.PurchaseMinOrderQty}}) - ({{s.active ? 'Active' : 'Inactive'}}) (ABC Category -> {{s.ABCCategory}})
+                                        </option>
+                                    </select>
+                                    <p style="color: red">Please select active items only</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="site-name">Item Limit:</label><b style="color: red; margin-left: 10px">*</b>
+                                <input id="FreeItemLimit" type="number" min="1" class="form-control" ng-model="saveDatas.FreeItemLimit" placeholder="Enter FreeItemLimit" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <!--<div class="col-lg-6">
+        <label for="NumberofFreeQunatity">Free Item Quantity:</label><b style="color: red; margin-left: 10px">*</b><br />
+        <input id="site-name" type="number" class="form-control" ng-model="freeItemQuantity"  typeof="number" disabled />
+    </div>-->
+                            <div class="col-lg-6">
+                                <label for="NumberofFreeQunatity">No. Of free Quantity:</label><b style="color: red; margin-left: 10px">*</b><br />
+                                <input id="site-name" type="number" class="form-control" ng-model="saveDatas.NoOffreeQuantity" placeholder="Enter No. Of free Item Quantity:" typeof="number" />
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="site-name">Stock Hit:</label><b style="color: red; margin-left: 10px">*</b><br />
+                                <label for="site-name">From FreeStock:</label><br />
+                                <input class="form-control" style="margin-left: 235px; margin-top: -29px; width: 25px;" type="radio" data-ng-value="true" ng-model="saveDatas.IsDispatchedFreeStock">
+                                <label style="margin-top: 25px;" for="site-name">From CurrentStock:</label><br />
+                                <input style="    margin-top: -26px;   width: 25px;   margin-left: 235px;" class="form-control" type="radio" data-ng-value="false" ng-model="saveDatas.IsDispatchedFreeStock" />
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="site-name">Freebies Type</label><b style="color: red; margin-left: 10px">*</b><br />
+                                <label  for="site-name">Item Number:</label><br />
+                                <input style="    margin-top: -26px;   width: 25px;   margin-left: 235px;" class="form-control" type="radio" data-ng-value="false" ng-model="saveDatas.freebiesType" />
+                                <label style="margin-top: 25px;" for="site-name">Selling SKU:</label><br />
+                                <input class="form-control" style="margin-left: 235px; margin-top: -29px; width: 25px;" type="radio" data-ng-value="true" ng-model="saveDatas.freebiesType">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="saveDatas.FreeofferType =='WalletPoint'">
+                        <div class="col-lg-6" style="margin-top: -45px; margin-left: -14px;">
+                            <label for="site-name">Wallet Point :</label><b style="color: red; margin-left: 10px">*</b>
+                            <input id="WallentPoint" type="Number" maxlength="60" class="form-control" ng-model="saveDatas.FreeWalletPoint" placeholder="Enter Wallet Point" />
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div ng-show="saveDatas.OfferOn == 'BillDiscount' || saveDatas.OfferOn == 'ScratchBillDiscount'">
+                    <div class="col-lg-6">
+                        <label for="site-name">Discount on:</label><b style="color: red; margin-left: 10px">*</b>
+                        <select class="form-control" id="offerType" ng-model="saveDatas.BillDiscountOfferOn" ng-change="BillDiscountOfferOn()">
+                            <option value="">----Choose Discount Type---</option>
+                            <option value="Percentage">Percentage</option>
+                            <option value="DynamicAmount" ng-if="saveDatas.OfferOn == 'ScratchBillDiscount'">Dynamic Amount</option>
+                            <option value="FreeItem" ng-if="saveDatas.OfferOn == 'BillDiscount' && !MultiWarehouse && saveDatas.BillDiscountType != 'ClearanceStock'">Free Item</option>
+                            <option value="WalletPoint" ng-if="saveDatas.BillDiscountType != 'ClearanceStock'">WalletPoint</option>
+                            <option value="DynamicWalletPoint" ng-if="saveDatas.OfferOn == 'ScratchBillDiscount'  && saveDatas.BillDiscountType != 'ClearanceStock'">Dynamic Wallet Point</option>
+                        </select>
+                    </div>
+                    <div ng-if="saveDatas.BillDiscountOfferOn =='Percentage'">
+                        <div class="col-lg-6" ng-show="saveDatas.OfferOn == 'BillDiscount'">
+                            <label for="site-name">Parcentage Type:</label><b style="color: red; margin-left: 10px">*</b>
+                            <input id="PreOffer" type="text" class="form-control" ng-model="saveDatas.ApplyOn" value="PreOffer" readonly />
+                        </div>
+                    </div>
+                    <div class="col-lg-6" ng-if="saveDatas.BillDiscountOfferOn=='WalletPoint' " ng-show="saveDatas.OfferOn == 'BillDiscount'">
+                        <label for="site-name">WalletType:</label><b style="color: red; margin-left: 10px">*</b>
+                        <select class="selectSection form-control" id="site-name" ng-model="saveDatas.WalletType">
+                            <option value="">--Select--</option>
+                            <option value="WalletPercentage">WalletPercentage</option>
+                            <option value="Amount">Amount</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6" ng-if="saveDatas.BillDiscountOfferOn=='WalletPoint'" ng-show="saveDatas.OfferOn == 'BillDiscount'">
+                        <label for="site-name">ApplyON:</label><b style="color: red; margin-left: 10px">*</b>
+                        <select class="selectSection form-control" id="site-name" ng-model="saveDatas.ApplyOn">
+                            <option value="">--Select--</option>
+                            <option value="PreOffer">Pre Offer</option>
+                            <option value="PostOffer">Post Offer</option>
+                        </select>
+                    </div>
+                    <div ng-if="saveDatas.BillDiscountOfferOn =='DynamicWalletPoint'">
+                        <div class="col-lg-12">
+                            <table width="40%">
+                                <tr>
+                                    <td>Wallet Point</td>
+                                    <td>Weight %</td>
+                                </tr>
+                                <tr ng-repeat="OfferScratchWeight in saveDatas.OfferScratchWeights">
+                                    <td><input type="number" ng-model="OfferScratchWeight.WalletPoint" min="0" /></td>
+                                    <td><input type="number" ng-model="OfferScratchWeight.Weight" min="0" /></td>
+                                </tr>
+                            </table>
+                            <input id="PreOffer" type="text" class="form-control" ng-model="saveDatas.ApplyOn" value="PreOffer" readonly />
+                        </div>
+                    </div>
+
+                    <div ng-if="saveDatas.BillDiscountOfferOn == 'FreeItem'">
+                        <div class="col-lg-6">
+                            <label for="site-name">Stock Hit:</label><b style="color: red; margin-left: 10px">*</b><br />
+                            <label for="site-name">From FreeStock:</label><b style="color: red; margin-left: 10px">*</b><br />
+                            <input style="    margin-left: 235px;  margin-top: -29px;  width: 25px;" class="form-control" type="radio" data-ng-value="true" ng-click="StockChange()" ng-model="saveDatas.IsDispatchedFreeStock">
+                            <label style="margin-top: 25px;" for="site-name">From CurrentStock:</label><b style="color: red; margin-left: 10px">*</b><br />
+                            <input style="    margin-top: -26px; width: 25px; margin-left: 235px;" class="form-control" type="radio" data-ng-value="false" ng-click="StockChange()" ng-model="saveDatas.IsDispatchedFreeStock">
+                        </div>
+                        <div class="col-lg-4" style="margin-top: 20px;">
+                            <label for="site-name">Search Item:</label><b style="color: red; margin-left: 10px">*</b>
+                            <input id="site-name" type="text" class="form-control" autocomplete="off" ng-model="key" placeholder="Enter item Name for search" />
+                        </div>
+                        <div class="col-lg-2" style="margin-top: 20px;">
+                            <button type="button" class="btn btn-ar btn-primary" style="margin: 24px;" ng-click="Search(key)">
+                                <span class="glyphicon glyphicon-search"></span> Search
+                            </button>
+                            <!--<button type="button" class="btn btn-ar btn-primary" style="margin: 24px;" ng-click="SearchByStock(key)">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                    </button>-->
+                        </div>
+                        <div class="col-lg-4" style="margin-top: 20px;">
+                            <label for="site-name">Item List:</label><b style="color: red; margin-left: 10px">*</b>
+                            <select class="form-control ng-pristine ng-valid" id="site-name" ng-model="saveDatas.FreeItemdata">
+                                <option value="{{s}}" ng-repeat="s in itemData">{{s.itemname}}=({{s.SellingSku}}) => ({{s.PurchaseMinOrderQty}})  (ABC Category -> {{s.ABCCategory}})</option>
+                            </select>
+
+                        </div>
+                        <div class="col-lg-2" style="margin-top: 20px;">
+                            <label for="site-name"></label><b style="color: red; margin-left: 10px">*</b><br />
+                            <button type="button" id="btnAddItem" class="btn btn-ar btn-primary" ng-click="ItemStock(); saveDatas.FreeItemdata = null" value="Add">Add</button>
+                        </div>
+                        <div class="col-lg-12" style="margin-bottom: 30px;">
+                            <table width="100%" border="1" ng-if="saveDatas.BillDiscountFreeItems && saveDatas.BillDiscountFreeItems.length">
+                                <tr>
+                                    <td style="width: 20%;">Free Item </td>
+                                    <td>Stock Qty</td>
+                                    <td>Free Stock Qty</td>
+                                    <td>Free Qty</td>
+                                    <td>Action</td>
+                                </tr>
+                                <tr ng-repeat="BillDiscountFreeItem in saveDatas.BillDiscountFreeItems">
+                                    <td>{{BillDiscountFreeItem.ItemName}}</td>
+                                    <td>{{BillDiscountFreeItem.StockQty}}</td>
+                                    <td><input type="number" ng-model="BillDiscountFreeItem.OfferStockQty" name="{{$index +'OfferStockQty'}}" /></td>
+                                    <td><input type="number" ng-model="BillDiscountFreeItem.Qty" name="{{$index +'Qty'}}" /></td>
+                                    <td><input type="button" class="btn btn-ar btn-danger" name="{{$index +'btnRemoveItem'}}" value="Remove" ng-click="RemoveFreeItem(BillDiscountFreeItem)" /> </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6" ng-if="saveDatas.BillDiscountOfferOn=='WalletPoint'">
+                        <label for="site-name">WalletPoint:</label><b style="color: red; margin-left: 10px">*</b>
+                        <input id="WallentPoint" type="Number" maxlength="60" class="form-control" ng-model="saveDatas.BillDiscountWallet" placeholder="Enter Bill Discount Amount " />
+                    </div>
+
+                    <div class="col-lg-6" ng-if="saveDatas.BillDiscountOfferOn=='Percentage'">
+                        <label for="site-name">Percentage :</label><b style="color: red; margin-left: 10px">*</b>
+                        <input id="WallentPoint" type="Number" maxlength="60" class="form-control" ng-model="saveDatas.DiscountPercentage" placeholder="Enter Bill Discount Percentage" />
+                    </div>
+                    <hr style="color: black" />
+
+                    <div class="col-lg-6">
+                        <label for="site-name">Bill Amount Min Limit :</label><b style="color: red; margin-left: 10px">*</b>
+                        <input id="BillAmountA" type="Number" maxlength="60" class="form-control" ng-model="saveDatas.BillAmount" placeholder="Enter Bill Amount Limit" />
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label for="site-name">Bill Amount Max Limit :</label>
+                        <input id="BillAmount" type="Number" class="form-control" ng-model="saveDatas.MaxBillAmount" placeholder="Enter Bill Amount Limit" />
+                    </div>
+                    <div class="col-lg-6" ng-if="saveDatas.BillDiscountOfferOn != 'FreeItem'">
+                        <label for="site-name">Maximum Discount :</label>
+                        <input id="MaxDiscount" type="Number" class="form-control" ng-model="saveDatas.MaxDiscount" placeholder="Enter Maximum Bill Discount" />
+                    </div>
+                    <div class="col-lg-6" ng-hide="saveDatas.BillDiscountType =='items' || saveDatas.OfferOn=='ScratchBillDiscount' ">
+                        <div class="col-lg-12" style="padding-left: 0px;"><label for="site-name">Number Of Line Items :</label> </div>
+                        <div class="col-lg-8" style="padding-left: 0px;">
+                            <input id="LineItem" type="Number" class="form-control" ng-model="saveDatas.LineItem" placeholder="Enter Number Of Line Items" />
+                        </div>
+                        <div class="col-lg-4" style="padding-left: 0px;">
+                            <button type="button" id="AddLineItemValue" class="btn btn-ar btn-primary" ng-if="saveDatas.OfferOn == 'BillDiscount'" ng-click="AddLineItemValue()">Add Line Item Value</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6" ng-if="saveDatas.OfferOn !='BillDiscount'">
+                        <label for="site-name">Offer Code</label><b style="color: red; margin-left: 10px">*</b>
+                        <input id="offername" type="text" class="form-control" ng-model="saveDatas.OfferCode" placeholder="Enter Offer Code" />
+                    </div>
+
+
+                    <div class="col-lg-6" ng-show="saveDatas.OfferOn == 'Brand'">
+                        <label for="site-name">Brand List:</label><b style="color: red; margin-left: 10px">*</b>
+                        <select class="form-control" id="site-name" ng-model="saveDatas.ItemId">
+                            <option value="">----Choose Item---</option>
+                            <option value="{{Ssubsubcats.SubsubCategoryid}},{{Ssubsubcats.SubsubcategoryName}}" ng-repeat="Ssubsubcats in subsubcats"> {{Ssubsubcats.SubsubcategoryName}} </option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label for="site-name">Description:</label>
+                        <textarea id="site-name" type="text" maxlength="500" class="form-control" ng-model="saveDatas.Description" placeholder="Enter Description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row" ng-if="saveDatas.OfferLineItemValues.length>0 && saveDatas.OfferOn == 'BillDiscount'">
+                    <div class="col-lg-6">
+                        <div class="row" style="padding-bottom:5px" ng-repeat="item in saveDatas.OfferLineItemValues">
+                            <div class="col-md-1 text-center">
+                                {{$index+1}}
+                            </div>
+                            <div class="col-md-10">
+                                <input ng-model="item.itemValue" class="form-control" type="number" name="item.itemValue[{{$index}}]" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--Image Uploader-->
+            <div class="row" ng-show="saveData.CityId!=null">
+                <!--ng-if="saveData.CityId != null"-->
+                <div class="col-lg-3">
+                    <input type="checkbox" id="myCheck" ng-model="saveDatas.IsPriorityOffer">
+                    <label class="ml-1" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Is Priority Offer</label>
+                </div>
+                <div class="col-lg-6">
+                    <div class="col-6" style="margin-left:-15px;margin-top: 5px; margin-bottom: 1px;">
+                        <div class="col-12">
+                            <input type="text" name="ImageName"  placeholder="Image Name" style="font-size:20px;  border: 1px solid white;" disabled>
+                            <span id="spnFilePathforEdit" style="font-size: 17px;"></span>
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-success btn-xs" ng-click="uploader.queue[0].upload()" ng-disabled="!uploader.queue.length|| uploader.queue[0].isReady || uploader.queue[0].isUploading">
+                                <span class="glyphicon glyphicon-upload"></span> Upload
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="uploader.queue[0].remove()" ng-disabled="!uploader.queue.length">
+                                <span class="glyphicon glyphicon-trash"></span> Remove
+                            </button>
+                        </div>
+                        <input type="image" style="width:30%;" ng-click="ImageClick()" class="uploaderimage" id="imgbutforEdit" alt="Select File" title="Select File" src="../notificationimages/AddNotification.png" />
+
+                    </div>
+                    <input type="file" id="fileforEdit" style="display: block" nv-file-select="" ng-model="fileupload" uploader="uploader" class="hidden" />
+                </div>
+            </div>
+            <!--Image Uploader-->
+            <div class="form-group row" ng-show="IsShow==true">
+                <div class="col-lg-12 text-right">
+                    <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="OfferAdd" class="btn btn-ar btn-primary" ng-click="Add(saveDatas,itemsmodel,selectExcludeItemmodel)">Save</button>
+                </div>
+            </div>
+            <!--</div>-->
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('input[name="OfferDate"]').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 5,
+            timePicker12Hour: true,
+            format: 'MM/DD/YYYY h:mm A'
+        });
+    });
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+<script type="text/javascript">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

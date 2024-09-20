@@ -1,0 +1,332 @@
+﻿
+
+<div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span> ProjectsTask table</strong> </div>
+        <br />
+        <div> <button class="btn btn-primary" ng-click="open()"> <span class="glyphicon glyphicon-plus"> </span> New ProjectsTask</button> </div>
+        <br />
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div> <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Task Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Name')"
+                                  data-ng-class="{active: row == 'Name'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Name')"
+                                  data-ng-class="{active: row == '-Name'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Task Description
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Discription')"
+                                  data-ng-class="{active: row == 'Discription'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Discription')"
+                                  data-ng-class="{active: row == '-Discription'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Project Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ProjectName')"
+                                  data-ng-class="{active: row == 'ProjectName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ProjectName')"
+                                  data-ng-class="{active: row == '-ProjectName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Customer Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CustomerName')"
+                                  data-ng-class="{active: row == 'CustomerName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CustomerName')"
+                                  data-ng-class="{active: row == '-CustomerName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Assignee
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Assignee')"
+                                  data-ng-class="{active: row == 'Assignee'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Assignee')"
+                                  data-ng-class="{active: row == '-Assignee'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                </tr>
+
+
+
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <td>{{trade.Name}}</td>
+                    <td>{{trade.Discription}}</td>
+                    <td>{{trade.ProjectName}}</td>
+                    <td>{{trade.CustomerName}}</td>
+                    <td>{{trade.Assignee}}</td>
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    <td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="opendelete(trade)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+<!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myTaskModal.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="
+                    " data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Task</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Client:</label><br />
+                <select class="form-control" id="site-name" ng-model="TaskData.CustomerId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="TaskData.CustomerId" value="{{customer.CustomerId}}" ng-repeat="customer in customers" ng-click="showDetails   = ! showDetails"> {{customer.Name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Project Name:</label><br />
+                <select class="form-control" id="site-name" ng-model="TaskData.ProjectID">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="TaskData.ProjectID" value="{{project.ProjectID}}" ng-repeat="project in projects" ng-click="showDetails   = ! showDetails"> {{project.ProjectName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Task Title:</label><br />
+                <!--<input id="site-name" type="text" class="form-control" ng-model="TaskData.Name" placeholder="Enter Task title" />-->
+                <select class="form-control" id="site-name" ng-model="TaskData.TaskTypeId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="TaskData.TaskTypeId" value="{{tasktype.Id}}" ng-repeat="tasktype in tasktypes" ng-click="showDetails   = ! showDetails"> {{tasktype.Name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Task Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaskData.Name" placeholder="Enter Task name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Task Description:</label><br />
+                <textarea id="site-name" class="form-control" rows="4" required="" ng-model="TaskData.Discription" placeholder="Enter Task description"></textarea>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Start Date:</label><br />
+                <input id="site-name" type="date" class="form-control" ng-model="TaskData.StartDate" placeholder="" />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">End Date:</label><br />
+                <input id="site-name" type="date" class="form-control" ng-model="TaskData.EndDate" placeholder="" />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Allocated Hours:</label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="TaskData.AllocatedHours" placeholder="Enter Task's Allocated Hours" />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Priority:</label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="TaskData.Priority" placeholder="Enter Task's Priority" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Assignee:</label><br />
+                <!--<input id="site-name" type="text" class="form-control" ng-model="TaskData.Assignee" placeholder="Enter Task's Assignee" />-->
+                <input type="text"
+                       ng-model="TaskData.Assignee"
+                       typeahead="state.PeopleFirstName for state in peoples | filter:$viewValue | limitTo:8"
+                       class="form-control"
+                       placeholder="Search Assignee">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddTask(TaskData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+<!--Update Project-->
+<script type="text/ng-template" id="myTaskModalPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Project</h4>
+
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Client:</label><br />
+                <select class="form-control" id="site-name" ng-model="TaskData.CustomerId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="TaskData.CustomerId" value="{{customer.CustomerId}}" ng-repeat="customer in customers" ng-click="showDetails   = ! showDetails"> {{customer.Name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Project Name:</label><br />
+                <select class="form-control" id="site-name" ng-model="TaskData.ProjectID">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="TaskData.ProjectID" value="{{project.ProjectID}}" ng-repeat="project in projects" ng-click="showDetails   = ! showDetails"> {{project.ProjectName}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Task Title:</label><br />
+                <!--<input id="site-name" type="text" class="form-control" ng-model="TaskData.Name" placeholder="Enter Task title" />-->
+                <select class="form-control" id="site-name" ng-model="TaskData.TaskTypeId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="TaskData.TaskTypeId" value="{{tasktype.Id}}" ng-repeat="tasktype in tasktypes" ng-click="showDetails   = ! showDetails"> {{tasktype.Name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="site-name">Task Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="TaskData.Name" placeholder="Enter Task name" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Task Description:</label><br />
+                <textarea id="site-name" class="form-control" rows="4" required="" ng-model="TaskData.Discription" placeholder="Enter Task description"></textarea>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Start Date:</label><br />
+                <input id="site-name" type="date" class="form-control" ng-model="TaskData.StartDate" placeholder="" />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">End Date:</label><br />
+                <input id="site-name" type="date" class="form-control" ng-model="TaskData.EndDate" placeholder="" />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Allocated Hours:</label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="TaskData.AllocatedHours" placeholder="Enter Task's Allocated Hours" />
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="site-name">Priority:</label><br />
+                <input id="site-name" type="number" class="form-control" ng-model="TaskData.Priority" placeholder="Enter Task's Priority" />
+            </div>
+            <div class="form-group">
+                <label for="site-name">Assignee:</label><br />
+                <input type="text"
+                       ng-model="TaskData.Assignee"
+                       typeahead="state.PeopleFirstName for state in peoples | filter:$viewValue | limitTo:8"
+                       class="form-control" onchange=""
+                       placeholder="Search Assignee">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutTask(TaskData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<!-- /new site modal -->
+
+<script type="text/ng-template" id="myModaldeleteTask.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Task</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletetasks(TaskData, $index)">Yes</button>
+        </div>
+    </form>
+</script>

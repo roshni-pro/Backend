@@ -1,0 +1,516 @@
+﻿
+<head>
+    <style>
+        #dragandrophandler {
+            border: 2px dashed #92AAB0;
+            width: 650px;
+            height: 200px;
+            color: #92AAB0;
+            text-align: center;
+            vertical-align: middle;
+            padding: 10px 0px 10px 10px;
+            font-size: 200%;
+            display: table-cell;
+        }
+
+        .progressBar {
+            width: 200px;
+            height: 22px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0px 10px 5px 5px;
+            vertical-align: top;
+        }
+
+            .progressBar div {
+                height: 100%;
+                color: #fff;
+                text-align: right;
+                line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+                width: 0;
+                background-color: #0ba1b5;
+                border-radius: 3px;
+            }
+
+        .statusbar {
+            border-top: 1px solid #A9CCD1;
+            min-height: 25px;
+            width: 700px;
+            padding: 10px 10px 0px 10px;
+            vertical-align: top;
+        }
+
+            .statusbar:nth-child(odd) {
+                background: #EBEFF0;
+            }
+
+        .filename {
+            display: inline-block;
+            vertical-align: top;
+            width: 250px;
+        }
+
+        .filesize {
+            display: inline-block;
+            vertical-align: top;
+            color: #30693D;
+            width: 100px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .abort {
+            background-color: #A8352F;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            display: inline-block;
+            color: #fff;
+            font-family: arial;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 4px 15px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+    </style>
+</head>
+
+    <div class="page page-table">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"> <strong> <span class="glyphicon glyphicon-th"> </span>Customers table</strong> </div> 
+        <br />
+        <div> <button class="btn btn-primary" ng-click="open()"> <span class="glyphicon glyphicon-plus"> </span> New Customer</button>
+        <button class="btn btn-primary" ng-click="toggle()"> <span class="glyphicon glyphicon-plus"> </span>Upload Items</button>
+            <!--<a class="btn btn-primary" ng-mousedown="csv.generate()" ng-href="data:text/csv;charset=UTF-8," download="CustomerSample.csv" href="data:text/csv;charset=UTF-8,">Export to CSV</a>-->
+            <button class="btn-sm btn-primary" ng-click="exportData1()"> <span class="glyphicon glyphicon-plus"> </span> Export full Customer List</button>
+            <button class="btn-sm btn-primary" ng-click="exportData()"> <span class="glyphicon glyphicon-plus"> </span> Export Customer List</button>
+        </div>
+        <br />
+        <div id="typography" ng-hide="uploadshow">
+
+            <div class="well">
+                <div id="dragandrophandler">Drag &amp; Drop Files Here</div>
+                <br><br>
+                <!--<div id="status1"></div>-->
+            </div>
+
+        </div>
+        <div class="form-group col-md-12 clear-both">
+            <div class="form-group col-md-3">
+                <label for="site-name">Select City</label><br>
+                <select class="form-control" id="site-name" ng-model="Demanddata.Cityid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{city.Cityid}}" ng-repeat="city in citys"> {{city.CityName}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="site-name">Warehouses</label><br>
+                <select class="form-control" id="site-name" data-ng-disabled="!Demanddata.Cityid" ng-model="Demanddata.Warehouseid">
+                    <option value="">---SELECT---</option>
+                    <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse | filter:{Cityid:Demanddata.Cityid}"> {{warehouses.WarehouseName}}</option> <!--| filter:{Cityid:Demanddata.Cityid}-->
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name">Select Date Range</label><br />
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input name="daterange" type='text' data-ng-disabled="!Demanddata.Warehouseid" title="Select Date" class="form-control date-picker" />
+                        <span class="input-group-addon ">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                </div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="site-name"></label><br />
+                <button type="button" data-ng-disabled="!Demanddata.Warehouseid" class="btn btn-ar btn-primary" ng-click="Search(Demanddata)">Search</button>
+            </div>
+        </div>
+         <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6"> <form> <input type="text" placeholder="search" class="form-control" data-ng-model="searchKeywords" data-ng-keyup="search()"> </form> </div> <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{stores.length}} entries
+                    </span>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Customer Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Name')"
+                                  data-ng-class="{active: row == 'Name'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Name')"
+                                  data-ng-class="{active: row == '-Name'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Email Id
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Emailid')"
+                                  data-ng-class="{active: row == 'Emailid'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Emailid')"
+                                  data-ng-class="{active: row == '-Emailid'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            City
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('City')"
+                                  data-ng-class="{active: row == 'City'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-City')"
+                                  data-ng-class="{active: row == '-City'}"></span>
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Warehouse Name
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('WarehouseName')"
+                                  data-ng-class="{active: row == 'WarehouseName'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-WarehouseName')"
+                                  data-ng-class="{active: row == '-WarehouseName'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Shipping Address
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('ShippingAddress')"
+                                  data-ng-class="{active: row == 'ShippingAddress'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-ShippingAddress')"
+                                  data-ng-class="{active: row == '-ShippingAddress'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            State
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('State')"
+                                  data-ng-class="{active: row == 'State'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-State')"
+                                  data-ng-class="{active: row == '-State'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Mobile Number
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('Mobile')"
+                                  data-ng-class="{active: row == 'Mobile'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-Mobile')"
+                                  data-ng-class="{active: row == '-Mobile'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Created Date
+                            <span class="glyphicon glyphicon-chevron-up"
+                                  data-ng-click="order('CreatedDate')"
+                                  data-ng-class="{active: row == 'CreatedDate'}"></span>
+                            <span class="glyphicon glyphicon-chevron-down"
+                                  data-ng-click="order('-CreatedDate')"
+                                  data-ng-class="{active: row == '-CreatedDate'}"></span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Edit
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Delete
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="trade in currentPageStores">
+                    <!--<td>{{trade.CustomerCategoryId}}</td>-->
+                    <td>{{trade.Name}}</td>
+                    <td>{{trade.Emailid}}</td> 
+                    <td>{{trade.City}}</td>
+                    <td>{{trade.WarehouseName}}</td>
+                    <td>{{trade.ShippingAddress}}</td>                  
+                    <td>{{trade.State}}</td>     
+                    <td>{{trade.Mobile}}</td>     
+                               
+                    <td>{{trade.CreatedDate | date:'medium'}}</td>
+                    
+                    <td><button class="btn-sm btn-primary" ng-click="edit(trade)">Edit</button> </td>
+                    <td><button class="btn-sm btn-danger" ng-click="opendelete(trade)">Remove</button> </td>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()"></select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                page="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                on-select-page="select(page)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+</div>
+
+    <!-- /site tiles -->
+<!-- new site modal -->
+<script type="text/ng-template" id="myModalContent.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Add Customers</h4>
+        </div>
+        <div class="modal-body ">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Customer Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="CustomerData.Name" placeholder="Enter Customer name" />
+            </div>            
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Customer Category Name:</label>
+                <select class="form-control" id="site-name" ng-model="CustomerData.CustomerCategoryId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="CustomerData.CustomerCategoryId" value="{{customercategory.CustomerCategoryId}}" ng-repeat="customercategory in customercategorys" ng-click="showDetails   = ! showDetails"> {{customercategory.CustomerCategoryName}}</option>
+                </select>
+
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Warehouse ID</label><br />
+                <select class="form-control" id="site-name" ng-model="CustomerData.Warehouseid">
+                    <option value="">--Select--</option>
+                    <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+                </select>
+            </div>
+          
+            <div class="form-group col-md-6">
+                <label for="site-name">City:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter City" ng-model="CustomerData.City"/>
+               
+            </div> 
+            <div class="form-group col-md-6">
+                <label for="site-name">Billing Address GPS Coordinates:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required=""  placeholder="Enter Billing Address GPS Coordinates" ng-model="CustomerData.BAGPSCoordinates"/>
+               
+            </div> 
+            <div class="form-group col-md-6">
+                <label for="site-name">Shipping Address GPS Coordinates:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter Shipping Address GPS Coordinates: GPS Coordinates" ng-model="CustomerData.SAGPSCoordinates"/>
+               
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Ref No:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter RefNo" ng-model="CustomerData.RefNo"/>
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div> 
+            <div class="form-group col-md-6">
+                <label for="site-name">Office Phone No.:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter OfficePhone" ng-model="CustomerData.Mobile"/>
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="site-name">ShippingAddress:</label><br />
+                <textarea id="Customer-Address" class="form-control" rows="4" required="" placeholder="Enter Shipping Address" ng-model="CustomerData.ShippingAddress"></textarea>
+
+            </div> 
+            <div class="form-group col-md-6">
+                <label for="site-name">Family member:</label><br />
+                <textarea id="Customer-Address" class="form-control" rows="4" required="" placeholder="Enter your Family member" ng-model="CustomerData.Familymember"></textarea>
+
+            </div>  
+            <div class="form-group col-md-6">
+                <label for="site-name">Email id:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter your Email id" ng-model="CustomerData.Emailid"/>
+             
+            </div> 
+            <div class="form-group col-md-6">
+                <label for="site-name">Customer is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="CustomerData.Active" />
+            </div>
+            
+            
+                    
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="AddCustomer(CustomerData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+
+ <!--Update Customer-->
+<script type="text/ng-template" id="myModalContentPut.html">
+
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal"><span class="icon icon-x" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Edit Customers</h4>
+        </div>
+        <div class="modal-body">
+            <div class="colasdasdasd">
+                <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+                <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+            </div>
+           
+
+            <div class="form-group col-md-6">
+                <label for="site-name">Customer Name:</label><br />
+                <input id="site-name" type="text" class="form-control" ng-model="CustomerData.Name" placeholder="Enter Customer name" />
+            </div>      
+            
+            <div class="form-group col-md-6">
+                <label for="site-name">Customer Category Name:</label>
+                <select class="form-control" id="site-name" ng-model="CustomerData.CustomerCategoryId">
+                    <option value="">---SELECT---</option>
+                    <option ng-model="CustomerData.CustomerCategoryId" value="{{customercategory.CustomerCategoryId}}" ng-repeat="customercategory in customercategorys" ng-click="showDetails   = ! showDetails"> {{customercategory.CustomerCategoryName}}</option>
+                </select>
+
+            </div>
+               <div class="form-group col-md-6">
+                <label for="site-name">City:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter City" ng-model="CustomerData.City" />
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>    
+            <div class="form-group col-md-6">
+                <label for="site-name">Warehouse ID</label><br />
+                <select class="form-control" id="site-name" ng-model="CustomerData.Warehouseid">
+                    <option value="">{{CustomerData.WarehouseName}}</option>
+                    <option value="{{warehouses.Warehouseid}}" ng-repeat="warehouses in warehouse"> {{warehouses.WarehouseName}}</option>
+                </select>
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="site-name">Billing Address:</label><br />
+                <textarea id="Customer-Address" class="form-control" rows="4" required="" placeholder="Enter Billing Address" ng-model="CustomerData.BillingAddress"></textarea>
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">ShippingAddress:</label><br />
+                <textarea id="Customer-Address" class="form-control" rows="4" required="" placeholder="Enter Shipping Address" ng-model="CustomerData.ShippingAddress"></textarea>
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>
+            
+            <div class="form-group col-md-6">
+                <label for="site-name">Billing Address GPS Coordinates:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter Billing Address GPS Coordinates" ng-model="CustomerData.BAGPSCoordinates" />
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Shipping Address GPS Coordinates:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter Shipping Address GPS Coordinates: GPS Coordinates" ng-model="CustomerData.SAGPSCoordinates" />
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Ref No:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter RefNo" ng-model="CustomerData.RefNo" />
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Office Phone No.:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter OfficePhone" ng-model="CustomerData.Mobile" />
+                <!--<textarea class="form-control" rows="4" required="" data-ng-model="CustomerData.Description" aria-multiline="true" tabindex="0" aria-required="true" aria-invalid="true"></textarea>-->
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Email id:</label><br />
+                <input id="Customer-Address" class="form-control" type="text" required="" placeholder="Enter your Email id" ng-model="CustomerData.Emailid" />
+
+            </div>
+            <div class="form-group col-md-6">
+                <label for="site-name">Customer is Active</label><br />
+                <input id="site-name" type="checkbox" class="form-control" ng-model="CustomerData.Active" />
+            </div>
+            <div class="form-group col-md-12">
+                <label for="site-name">Family member:</label><br />
+                <textarea id="Customer-Address" class="form-control" rows="4" required="" placeholder="Enter your Family member" ng-model="CustomerData.Familymember"></textarea>
+
+            </div>
+            
+
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-ar btn-primary" ng-click="PutCustomer(CustomerData)">Save</button>
+        </div>
+    </form>
+</script>
+
+
+<script type="text/ng-template" id="myCustomerModaldelete.html">
+
+    <form name="myFormTaskTypeModal1">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delete Customer</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="TaskType-name">Are you sure you want to Delete?</label><br />
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-ar btn-primary" ng-click="deletecustomers(CustomerData,$index)">Yes</button>
+        </div>
+    </form>
+</script>

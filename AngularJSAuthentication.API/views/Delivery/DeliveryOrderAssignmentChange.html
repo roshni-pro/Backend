@@ -1,0 +1,1145 @@
+﻿<style>
+    /* =============================================================
+      GENERAL STYLES
+    ============================================================ */
+    @media screen {
+        #printSection {
+            display: none;
+        }
+    }
+
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+
+        #printSection {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+
+    /*body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        line-height: 30px;
+    }*/
+
+    .pad-top-botm {
+        padding-bottom: 40px;
+        padding-top: 22px;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    /* =============================================================
+      PAGE STYLES
+    ============================================================ */
+
+    .contact-info span {
+        font-size: 14px;
+        padding: 0px 50px 0px 50px;
+    }
+
+    .contact-info hr {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .client-info {
+        font-size: 15px;
+    }
+
+    .ttl-amts {
+        text-align: right;
+        padding-right: 50px;
+    }
+
+    .containers {
+        padding-left: 45px;
+        padding-right: 45px;
+    }
+
+    hr {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+</style>
+
+<style>
+    @media print {
+        btn-sm.btn-primary.no-print {
+            display: none !important;
+        }
+
+        glyphicon.glyphicon-print.no-print {
+            display: none !important;
+        }
+    }
+
+    .modal-dialog {
+        width: 90% !important;
+    }
+
+    .hd {
+        display: none;
+    }
+</style>
+
+<form name="myFormSiteModal">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+            <span class="icon icon-x" aria-hidden="true">
+            </span>
+            <span class="sr-only">Close</span>
+        </button>
+        <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+        <h4 class="modal-title">Delivery  Assignment Summary</h4>
+    </div>
+    <style>
+        .noshowpage {
+            display: none !important
+        }
+    </style>
+
+    <div class="modal-body">
+        <div class="colasdasdasd">
+            <p style="color: #FF0000" ng-show="gotErrors"> Unable To Create Site  ! Please Try Again</p>
+            <p style="color: #FF0000" ng-show="AlreadyExist"> Site Already Exist  ! Please Try Another Site</p>
+        </div>
+        <div class="">
+            <div id="printSectionId">
+                <style type="text/css">
+                    @media print {
+                        table {
+                            border: solid #000 !important;
+                            border-width: 1px 0 0 1px !important;
+                        }
+
+
+                        th, td {
+                            border: solid #000 !important;
+                            border-width: 0 1px 1px 0 !important;
+                        }
+
+                        .no-print {
+                            display: none !important;
+                        }
+
+                        .border {
+                            border: 1px solid #000 !important;
+                        }
+                    }
+                </style>
+
+                <table class="table table-bordered table-striped table-responsive">
+
+
+                    <p style="text-align:left;font-size: 14px;" class="noshowpage">
+                        <strong>Delivered Assignment Summary</strong>
+                        <span style="float:right" ng-if="AssignmentBarcodeImage!=null">
+                            <img src="data:image/png;base64,{{AssignmentBarcodeImage}}" style="width:60%;float: right;">
+                        </span><br /><br /><br />
+                        <span style="float:left">
+                            <span style="float: right;color:black;font-weight:bold">Assignment Id:  {{DeliveryIssuanceId}} </span>
+                        </span>
+                        <br />
+                        <span>
+                            <span style="float: left;">Date : {{CreatedDate| date :"medium"}}</span>
+                        </span><br />
+                    </p>
+                    <hr>
+                    <p style="text-align:left;font-size: 14px;" class="noshowpage">
+                        Delivery Boy: &nbsp;<span style="color: black;font-weight:bold">{{DBoyName}}&nbsp; </span>
+                        <span style="float:right;">Mobile: <strong> {{DboyMobileNo}}</strong></span>
+                    </p>
+                    <p style="text-align:left;" class="noshowpage">
+                        Total Amount: Rs.&nbsp;<span style="color: black;font-weight:bold"> {{TotalAssignmentAmount}}/- </span>
+                    </p>
+
+                    <hr></hr>
+                    <thead>
+                        <div class="panel panel-info no-print">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <p style="text-align:left;color: black;font-weight:bold">
+                                        Assignment Id: {{DeliveryIssuanceId}}
+                                        <span style="text-align:center;color: red;font-weight:bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {{DBoyName}} </span>
+                                        <span style="float:right">  Date: {{CreatedDate|date:'medium'}}</span><br>
+                                        <span style="float:right;">{{DboyMobileNo}}</span>
+                                    </p>
+                                    <p style="text-align:left;">
+                                        Total Assignment Amount: Rs.&nbsp;<span style="color: black;font-weight:bold"> {{TotalAssignmentAmount}}/- </span>
+                                    </p>
+                                    <span ng-if="(UploadedFileName!=null && UploadedFileName!='')">
+                                        <img src='/images/AssigmentImages/{{UploadedFileName}}' class="img-square img80_80 no-print" onError="this.onerror = null; this.src = '../../img/logoicon.png';" />
+                                    </span>
+                                    <hr></hr>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <p class="panel-title">Delivered Count({{TotalDeliveredOrder}})  Amount: {{TotalDeliveredOrderAmount}}/- </p>
+                            </div>
+                            <div class="panel-footer">
+                        <tr>
+
+
+                            <td colspan="2">Delivered <span class="badge badge-danger ml-2">{{TotalDeliveredOrder}}</span></td>
+                            <td></td>
+                            <td>Cash Amount <span class="badge badge-primary ml-2">{{TotalDeliveredCashAmount}}</span></td>
+                            <td colspan="2">Cheque Amount <span class="badge badge-info ml-2">{{TotalDeliveredChequeAmount}}</span></td>
+
+                            <td>Online Amount<span class="badge badge-success ml-2">{{TotalDeliveredElectronicAmount}}</span></td>
+                            <td>Gullak  Amount <span class="badge badge-success ml-2">{{TotalDeliveredGullak}}</span></td>
+                            <td>mPos  Amount <span class="badge badge-success ml-2">{{TotalDeliveredmPos}}</span></td>
+
+                            <td>EpayLater  Amount <span class="badge badge-success ml-2">{{TotalDeliveredEpayLater}}</span></td>
+                            <td>Comment</td>
+                            <td>Delivered Total Amount<span class="badge badge-danger ml-2">{{TotalDeliveredOrderAmount}}</span></td>
+                        </tr>
+                        <tr>
+                            <th>
+
+                                <div class="th">
+                                    S.No
+                                </div>
+                            </th>
+                            <th>
+
+                                <div class="th">
+                                    OrderId
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Skcode
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Cash Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Cheque Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Cheque No
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Online Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Gullak Amount
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    mPos
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    EpayLater Amount
+                                </div>
+                            </th>
+
+                            <th>
+                                <div class="th">
+                                    Comment
+                                </div>
+                            </th>
+                            <th>
+                                <div class="th">
+                                    Total
+                                </div>
+                            </th>
+                            <th class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted'&& (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1  || UserRoleDA.rolenames.indexOf('Hub Cashier')>-1)">
+                                <div class="th">
+                                    Status
+                                </div>
+                            </th>
+                        </tr>
+            </div>
+        </div>
+        </thead>
+
+        <tbody>
+            <tr data-ng-repeat="trade in delivereddata">
+                <td>{{1+$index}}</td>
+                <td>{{trade.OrderId}}</td>
+                <td>{{trade.Skcode}}</td>
+                <!--//nerw  payment-->
+                <td><span class="badge badge-success ml-2">{{trade.CashAmount}}</span></td>
+                <td><span class="badge badge-success ml-2">{{trade.ChequeAmount}} </span></td>
+                <td>{{trade.ChequeNo}}</td>
+                <td><span class="badge badge-success ml-2">{{trade.ElectronicAmount}} </span> ({{trade.ElectronicTransId}})</td>
+                <td><span class="badge badge-success ml-2">{{trade.GullakAmount}}</span> ({{trade.GatewayOrderId}})</td>
+                <td><span class="badge badge-success ml-2">{{trade.mPosAmount}}</span> ({{trade.mPosTransId}})</td>
+                <td><span class="badge badge-success ml-2">{{trade.EpayLaterAmount}} </span>({{trade.EpayLaterTransId}})</td>
+                <td>{{trade.comments}}</td>
+                <td>{{trade.GrossAmount}}</td>
+                <td class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted' && (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1 || UserRoleDA.rolenames.indexOf('Hub Cashier')>-1)">
+                    close
+                    <span ng-if="trade.IsTripAssignment" style="color:red">
+                        Trip order status can't be changed.
+                    </span>
+
+
+                    <button ng-if="trade.OrderRejectStatus!=true && !trade.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(trade,1)">Reject</button>
+                    <button ng-if="trade.OrderRejectStatus==true && !trade.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(trade,0)">Accept</button>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        <hr></hr>
+        <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+
+                        <p class="panel-title">Cancelled Count({{TotalCanceledOrder}})  Amount: {{TotalCanceledOrderAmount}}/- </p>
+                    </div>
+                    <div class="panel-footer">
+
+                <tr>
+
+                    <td>Total canceld order<span class="badge badge-danger ml-2"> {{TotalCancelOrder}}</span></td>
+                    <td>Total canceld Qty {{TotalCanceledOrderqty}}</td>
+                    <td>Total canceld Amount {{TotalCanceledOrderAmount}} </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        <div class="th">
+                            S.No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            OrderId
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="th">
+                            Skcode
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            Comments
+                        </div>
+                    </th>
+
+                    <th class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted'&& (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1)">
+                        <div class="th">
+                            ChangeStatus
+                        </div>
+                    </th>
+                </tr>
+    </div>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="trades in cancelddata">
+            <td>{{1+$index}}</td>
+            <td>{{trades.OrderId}}</td>
+            <td>{{trades.Skcode}}</td>
+            <td>{{trades.Status}}</td>
+            <td>{{trades.comments}}</td>
+            <!--<td ng-if="DeliveryIssuanceStatus=='Submitted'&& (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1)" class="no-print">
+                <button id="btnallproducts" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="openCancelled(trades)">Change Status</button>
+            </td>-->
+            <td class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted' && (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1|| UserRoleDA.rolenames.indexOf('Hub Cashier')>-1)">
+
+                <span ng-if="trades.IsTripAssignment" style="color:red">
+                    Trip order status can't be changed.
+                </span>
+
+                <button ng-if="trades.OrderRejectStatus!=true && !trades.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(trades,1)">Reject</button>
+                <button ng-if="trades.OrderRejectStatus==true && !trades.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(trades,0)">Accept</button>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+
+                    <p class="panel-title">Delivery Canceled Request Count({{TotalDeliveryCanceledRequestOrder}})  Amount: {{TotalDeliveryCanceledRequestAmount}}/- </p>
+                </div>
+                <div class="panel-footer">
+
+            <tr>
+
+                <td>Total canceld order<span class="badge badge-danger ml-2"> {{TotalCancelOrder}}</span></td>
+                <td>Total canceld Qty {{TotalCanceledOrderqty}}</td>
+                <td>Total canceld Amount {{TotalDeliveryCanceledRequestAmount}} </td>
+            </tr>
+
+            <tr>
+                <th>
+                    <div class="th">
+                        S.No
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        OrderId
+                    </div>
+                </th>
+
+                <th>
+                    <div class="th">
+                        Skcode
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Status
+                    </div>
+                </th>
+                <th>
+                    <div>
+                        Comments
+                    </div>
+                </th>
+                <th>
+                    <div>
+                        DCR Comment
+                    </div>
+                </th>
+                <th class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted'&& (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1)">
+                    <div class="th">
+                        ChangeStatus
+                    </div>
+                </th>
+            </tr>
+            </div>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="trades in DeliveryCanceledRequest">
+                <td>{{1+$index}}</td>
+                <td>{{trades.OrderId}}</td>
+                <td>{{trades.Skcode}}</td>
+                <td>{{trades.Status}}</td>
+                <td>{{trades.comments}}</td>
+                <td>{{trades.DeliveryCanceledComments}}</td>
+                <!--<td ng-if="DeliveryIssuanceStatus=='Submitted'&& (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1)" class="no-print">
+                    <button id="btnallproducts" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="openCancelled(trades)">Change Status</button>
+                </td>-->
+                <td class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted' && (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1|| UserRoleDA.rolenames.indexOf('Hub Cashier')>-1)">
+
+
+                    <span ng-if="trades.IsTripAssignment" style="color:red">
+                        Trip order status can't be changed.
+                    </span>
+                    <button ng-if="trades.OrderRejectStatus!=true && !trades.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(trades,1)">Reject</button>
+                    <button ng-if="trades.OrderRejectStatus==true && !trades.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(trades,0)">Accept</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+
+                    <p class="panel-title">ReDispatch Count({{TotalRedispatchOrder}})  Amount: {{TotalRedispatchOrderAmount}}/- </p>
+
+                </div>
+                <div class="panel-footer">
+            <tr>
+                <th>
+                    <div class="th">
+                        S.No
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Orderid
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        SKCode
+                    </div>
+                </th>
+
+                <th>
+                    <div class="th">
+                        Status
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Comments
+                    </div>
+                </th>
+                <th>
+                    <div>
+                        RD Comment
+                    </div>
+                </th>
+                <th class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted'&& (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1|| UserRoleDA.rolenames.indexOf('Hub Cashier')>-1)">
+                    <div class="th">
+                        ChangeStatus
+                    </div>
+                </th>
+            </tr>
+            </div>
+            </div>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="r in redispatcheddata">
+                <td>{{1+$index}}</td>
+                <td>{{r.OrderId}}</td>
+                <td>{{r.Skcode}}</td>
+                <td>{{r.Status}}</td>
+                <td>{{r.comments}}</td>
+                <td>{{r.DeliveryCanceledComments}}</td>
+                <!--<td class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted'&& (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1)">
+                    <button id="btnallproductredispatched" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="openRedispatch(r)">Change Status</button>
+                </td>-->
+
+                <td class="no-print" ng-if="DeliveryIssuanceStatus=='Submitted' && (UserRoleDA.rolenames.indexOf('HQ Master login')>-1 || UserRoleDA.rolenames.indexOf('WH Service lead')>-1|| UserRoleDA.rolenames.indexOf('Hub Cashier')>-1)">
+                    <span ng-if="r.IsTripAssignment" style="color:red">
+                        Trip order status can't be changed.
+                    </span>
+
+
+                    <button ng-if="r.OrderRejectStatus!=true && !r.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(r,1)">Reject</button>
+                    <button ng-if="r.OrderRejectStatus==true && !r.IsTripAssignment" class="btn-sm btn-primary" style="float:right; margin-right: 15px;" ng-click="orderStatusUpdate(r,0)">Accept</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-striped table-responsive" style="color: brown;font-weight: 800;">
+        <thead class="no-print">
+            <!--<tr>
+                <p>Under Shippment</p>
+            </tr>-->
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title no-print">Under Shippment Order</h3>
+                </div>
+                <div class="panel-footer">
+            <tr>
+                <th>
+                    <div class="th">
+                        S.No
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Orders
+                    </div>
+                </th>
+                <th>
+                    <div class="th">
+                        Sk Code
+                    </div>
+                </th>
+            </tr>
+            </div>
+            </div>
+        </thead>
+        <tbody class="no-print">
+            <tr data-ng-repeat="r in shippedData">
+                <td>{{1+$index}}</td>
+                <td>{{r.OrderId}}</td>
+                <td>{{r.Skcode}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h6 class="noshowpage">*This is a computer-generated document. No signature is required.</h6>
+    </div>
+        </div>
+            </div>
+    <div class="modal-footer">
+
+        <!--<h3 ng-if="deliveryissuancestatus!='freezed' || deliveryissuancestatus!='payment accepted' ||deliveryissuancestatus!='payment submitted'" class="no-print" style="color:green">print button will available after click assignment payment button or  freezed status</h3>-->
+
+        <span >
+             <button style="float: left;"  ng-show="isShowPrintBtn==true" ng-click="printItemAssignment('printSectionId')" class="btn-sm btn-primary">Print</button>
+        </span>
+        </script>
+
+        <center>
+            <h3 class="no-print" style="color:red">*If you do any change in status of Assignment order then final Changes in ordermaster will be reflected after clicking on Assignment Payment button.</h3>
+        </center>
+        <button ng-show="(DeliveryIssuanceStatus=='Submitted') && AssignmentPaymentEnable==true" type="button" id="AssignmentPayment" class="btn btn-ar btn-info" ng-click="AssignmentPayment(DeliveryIssuanceId)" data-dismiss="modal">Assignment Payment</button>
+
+        <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">cancel</button>
+
+    </div>
+</form>
+<script type="text/ng-template" id="otpDialog.html">
+    <style>
+
+        .modal-content {
+            width: 500px;
+            height: 149px;
+            text-align: center;
+        } 
+
+        .modal-open .modal {
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin-left: 33%;
+            margin-top: 15%;
+        }
+        .modal.in .modal-dialog {
+         
+            margin-right: 20em;
+            /* padding-right: 20em; */
+        }
+
+        .modal-footer {
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #e5e5e5;
+        }
+    </style>
+    <div class="test-modal">
+        <modal title="" visible="showModal" id="showModal">
+            <form>
+                <div class="containers">
+
+                    <h4><b>Enter The Code Provided By D-Boy</b></h4>
+                   
+                    <input type="password" ng-model="otp" />
+                    <br>
+                    <div class="modal-footer text-center">
+                        <button type="button" class="btn btn-primary" ng-click="Verification(otp, DBoyId, DeliveryIssuanceId)">Submit</button>
+
+                        <button type="button" class="btn btn-ar btn-warning" ng-click="close()" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </modal>
+    </div>
+</script>
+
+<script type="text/ng-template" id="ChangesStatusModel.html">
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title"> Delivered to Delivered,Delivery Canceled or Delivery Redispatch</h4>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <p class="noshowpage text-center" style="text-align:center;color: black;font-weight:bold"><strong>Delivery Vehicle Assissment Summary</strong></p>
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Skcode
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            OrderId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Comment
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cash Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cheque Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cheque No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Online Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Online TransactionId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            mPos Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            mPos TransactionId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            EpayLater Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            EpayLaterTransactionId
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tfoot>
+            <td><input class="form-control" ng-model="popup.Skcode" disabled></td>
+            <td><input class="form-control" ng-model="popup.OrderId" disabled></td>
+            <td><input class="form-control" ng-model="popup.GrossAmount" disabled></td>
+            <td>
+                <select class="form-control" id="site-name" ng-model="popup.stype" ng-change="StatusChange(popup)">
+                    <option value="">--Select--</option>
+                    <option value="Delivery Canceled">Delivery Canceled</option>
+                    <option value="Delivery Redispatch">Delivery Redispatch</option>
+                    <option value="Delivered">Delivered</option>
+                </select>
+            </td>
+            <td><input class="form-control" ng-model="popup.comments" ng-disabled="!IsUpdate"></td>
+            <td>
+                <input class="form-control" type="number" ng-model="popup.CashAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popup.ChequeAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popup.ChequeNo" ng-disabled="!IsUpdate">
+
+                <span style="color:red" ng-if="popup.ChequeAmount > 0 && (popup.ChequeNo==''|| popup.ChequeNo==0)"> Enter Cheque No </span>
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popup.ElectronicAmount" readonly>
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popup.ElectronicTransId" readonly>
+                <span style="color:red" ng-if="popup.ElectronicAmount > 0 && (popup.ElectronicTransId==''||popup.ElectronicTransId==0) &&  popup.ElectronicAmount>0 "> Enter ElectronicTransId</span>
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popup.mPosAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popup.mPosTransId" ng-disabled="!IsUpdate">
+                <span style="color:red" ng-if="popup.mPosAmount > 0 && (popup.mPosTransId==''||popup.mPosTransId==0"> Enter mPosTransId</span>
+
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popup.EpayLaterAmount" readonly>
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popup.EpayLaterTransId" readonly>
+                <span style="color:red" ng-if="popup.EpayLaterAmount > 0 && (popup.EpayLaterTransId==''||popup.EpayLaterTransId==0) && popup.EpayLaterAmount>0" ng-disabled="!IsUpdate"> Enter mPosTransId</span>
+            </td>
+            </tfoot>
+        </table>
+        <div class="modal-footer">
+
+            <span style="float:center; color:red" ng-if="popup.GrossAmount !=(popup.CashAmount+popup.ChequeAmount+popup.ElectronicAmount+popup.mPosAmount+popup.EpayLaterAmount)&& (popup.stype=='Delivered')">Order Amount Not Matched</span>
+            <button ng-disabled="(popup.GrossAmount !=(popup.CashAmount + popup.ChequeAmount + popup.ElectronicAmount + popup.mPosAmount+popup.EpayLaterAmount) && popup.stype=='Delivered')" ng-click="SetCase(popup)" class="btn-sm btn-primary">Save</button>
+
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">cancel</button>
+        </div>
+
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="ChangesCancelledStatusModel.html">
+    <form name="myFormSiteModal">
+
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delivery Canceled to Delivered or Delivery Redispatch</h4>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive">
+            <p class="noshowpage text-center" style="text-align:center;color: black;font-weight:bold"><strong>Delivery Vehicle Assissment Summary</strong></p>
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Skcode
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            OrderId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Comment
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cash Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cheque Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cheque No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Online Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Online TransactionId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            mPos Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            mPos TransactionId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            EpayLater Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            EpayLaterTransactionId
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tfoot>
+            <td><input class="form-control" ng-model="popupCancelled.Skcode" disabled></td>
+            <td><input class="form-control" ng-model="popupCancelled.OrderId" disabled></td>
+            <td><input class="form-control" ng-model="popupCancelled.GrossAmount" disabled></td>
+            <td>
+                <select class="form-control" id="site-name" ng-model="popupCancelled.stype" ng-change="StatusChange(popupCancelled)">
+                    <option value="">--Select--</option>
+                    <!--<option value="Delivery Canceled">Delivery Canceled</option>-->
+                    <option value="Delivery Redispatch">Delivery Redispatch</option>
+                    <option value="Delivered">Delivered</option>
+                </select>
+            </td>
+            <td><input class="form-control" ng-model="popupCancelled.comments" ng-disabled="!IsUpdate"></td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupCancelled.CashAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupCancelled.ChequeAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupCancelled.ChequeNo" ng-disabled="!IsUpdate">
+
+                <span style="color:red" ng-if="popupCancelled.ChequeAmount > 0 && (popupCancelled.ChequeNo==''|| popupCancelled.ChequeNo==0)"> Enter Cheque No </span>
+
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupCancelled.ElectronicAmount" readonly>
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupCancelled.ElectronicTransId" readonly>
+                <span style="color:red" ng-if="popupCancelled.ElectronicAmount > 0 && (popupCancelled.ElectronicTransId==''||popupCancelled.ElectronicTransId==0) && popupCancelled.ElectronicAmount>0"> Enter ElectronicTransId</span>
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupCancelled.mPosAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupCancelled.mPosTransId" ng-disabled="!IsUpdate">
+                <span style="color:red" ng-if="popupCancelled.mPosAmount > 0 && (popupCancelled.mPosTransId==''||popupCancelled.mPosTransId==0"> Enter mPosTransId</span>
+
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupCancelled.EpayLaterAmount" readonly>
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupCancelled.EpayLaterTransId" readonly>
+                <span style="color:red" ng-if="popupCancelled.EpayLaterAmount > 0 && (popupCancelled.EpayLaterTransId==''||popupCancelled.EpayLaterTransId==0) && popupCancelled.EpayLaterAmount>0"> Enter mPosTransId</span>
+            </td>
+            </tfoot>
+        </table>
+
+        <div class="modal-footer">
+            <span style="float:center; color:red" ng-if="popupCancelled.GrossAmount !=(popupCancelled.CashAmount+popupCancelled.ChequeAmount+popupCancelled.ElectronicAmount+popupCancelled.mPosAmount+popupCancelled.EpayLaterAmount)&& (popup.stype=='Delivered')">Order Amount Not Matched</span>
+            <button ng-disabled="(popupCancelled.GrossAmount !=(popupCancelled.CashAmount + popupCancelled.ChequeAmount + popupCancelled.ElectronicAmount + popupCancelled.mPosAmount+popup.EpayLaterAmount) && popupCancelled.stype=='Delivered')" ng-click="SetCase(popupCancelled)" class="btn-sm btn-primary">Save</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">cancel</button>
+        </div>
+    </form>
+
+</script>
+
+<script type="text/ng-template" id="ChangesRedispatchStatusModel.html">
+    <form name="myFormSiteModal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">
+                <span class="icon icon-x" aria-hidden="true">
+                </span>
+                <span class="sr-only">Close</span>
+            </button>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button" ng-click="ok()">×</button>
+            <h4 class="modal-title">Delivery Redispatch to  Delivered or Delivery Canceled </h4>
+        </div>
+        <table class="table table-bordered table-striped table-responsive">
+            <p class="noshowpage text-center" style="text-align:center;color: black;font-weight:bold"><strong>Delivery Vehicle Assissment Summary</strong></p>
+            <thead>
+                <tr>
+                    <th>
+                        <div class="th">
+                            Skcode
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            OrderId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Status
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Comment
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cash Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cheque Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Cheque No
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Online Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            Online TransactionId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            mPos Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            mPos TransactionId
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            EpayLater Amount
+                        </div>
+                    </th>
+                    <th>
+                        <div class="th">
+                            EpayLaterTransactionId
+                        </div>
+                    </th>
+
+                </tr>
+            </thead>
+            <tfoot>
+            <td><input class="form-control" ng-model="popupRedispatch.Skcode" disabled></td>
+            <td><input class="form-control" ng-model="popupRedispatch.OrderId" disabled></td>
+            <td><input class="form-control" ng-model="popupRedispatch.GrossAmount" disabled></td>
+            <td>
+                <select class="form-control" id="site-name" ng-model="popupRedispatch.stype" ng-change="StatusChange(popupRedispatch)">
+                    <option value="">--Select--</option>
+                    <option value="Delivery Canceled">Delivery Canceled</option>
+                    <!--<option value="Delivery Redispatch">Delivery Redispatch</option>-->
+                    <option value="Delivered">Delivered</option>
+                </select>
+            </td>
+            <td><input class="form-control" ng-model="popupRedispatch.comments" ng-disabled="!IsUpdate"></td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupRedispatch.CashAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupRedispatch.ChequeAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupRedispatch.ChequeNo" ng-disabled="!IsUpdate">
+
+                <span style="color:red" ng-if="popupRedispatch.ChequeAmount > 0 && (popupRedispatch.ChequeNo==''|| popupRedispatch.ChequeNo==0)"> Enter Cheque No </span>
+
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupRedispatch.ElectronicAmount" readonly>
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupRedispatch.ElectronicTransId" readonly>
+                <span style="color:red" ng-if="popupRedispatch.ElectronicAmount > 0 && (popupRedispatch.ElectronicTransId==''||popupRedispatch.ElectronicTransId==0) &&  popupRedispatch.ElectronicAmount>0"> Enter ElectronicTransId</span>
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupRedispatch.mPosAmount" ng-disabled="!IsUpdate">
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupRedispatch.mPosTransId" ng-disabled="!IsUpdate">
+                <span style="color:red" ng-if="popupRedispatch.mPosAmount > 0 && (popupRedispatch.mPosTransId==''||popupRedispatch.mPosTransId==0"> Enter mPosTransId</span>
+
+            </td>
+            <td>
+                <input class="form-control" type="number" ng-model="popupRedispatch.EpayLaterAmount" readonly>
+            </td>
+            <td>
+                <input class="form-control" type="text" ng-model="popupRedispatch.EpayLaterTransId" readonly>
+                <span style="color:red" ng-if="popupRedispatch.EpayLaterAmount > 0 && (popupRedispatch.EpayLaterTransId==''||popupRedispatch.EpayLaterTransId==0) && popupRedispatch.EpayLaterAmount>0"> Enter mPosTransId</span>
+            </td>
+
+            </tfoot>
+        </table>
+        <div class="modal-footer">
+            <button ng-disabled="!((popupRedispatch.GrossAmount ==(popupRedispatch.CashAmount+popupRedispatch.chequeAmount+popupRedispatch.ElectronicAmount+popupRedispatch.mPosAmount+popupRedispatch.EpayLaterAmount))" ng-click="SetCase(popupRedispatch)" class="btn-sm btn-primary">Save</button>
+            <button type="button" class="btn btn-ar btn-warning" ng-click="cancel()" data-dismiss="modal">cancel</button>
+        </div>
+    </form>
+
+</script>
+<script>
+    function printDivbtnPrintAll(divID) {
+        //Get the HTML of div
+        var divElements = document.getElementById(divID).innerHTML;
+        printDivThroughTrick("divtoPrintbtnPrintAll");
+        onRouteChangeOff();
+        window.location.reload();
+    }
+    function printDivThroughTrick(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+            var popupWin = window.open('', '_blank', 'width=900,height=600,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+            popupWin.window.focus();
+            popupWin.document.write('<!DOCTYPE html><html><head>' +
+                '<link rel="stylesheet" type="text/css" href="style.css" />' +
+                '</head><body onload="window.print()"><div class="reward-body">' + printContents + '</div></html>');
+            popupWin.onbeforeunload = function (event) {
+                popupWin.close();
+                return '.\n';
+            };
+            popupWin.onabort = function (event) {
+                popupWin.document.close();
+                popupWin.close();
+            }
+        } else {
+            var popupWin = window.open('', '_blank', 'width=900,height=600');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+            popupWin.document.close();
+        }
+        popupWin.document.close();
+
+        return true;
+    }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+
+    }
+</script>

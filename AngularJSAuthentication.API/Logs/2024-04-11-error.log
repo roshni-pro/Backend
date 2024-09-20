@@ -1,0 +1,2 @@
+2024-04-11 19:18:50.7925|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|Unable to validate user Admin111
+2024-04-11 19:18:50.9135|ERROR|AngularJSAuthentication.API.Providers.SimpleAuthorizationServerProvider|System.ComponentModel.Win32Exception (0x80004005): The network path was not found

@@ -1,0 +1,242 @@
+﻿<style>
+    .multiselect-parent, .dropdown-toggle {
+        width: 100% !important;
+    }
+
+    .dropdown-menu > li > a {
+        cursor: pointer;
+    }
+
+    .dropdownnew {
+        position: absolute;
+        display: inline-block;
+        height: 300px;
+        overflow: auto;
+        width: 285px;
+        box-shadow: 0 8px 6px -6px black;
+        border: solid 1px lightgray;
+        z-index: 999;
+    }
+
+    .dropdownnew-content {
+        display: block;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        padding: 8px 8px;
+        z-index: 1;
+        border-bottom: solid 1px lightgray;
+    }
+
+    .dropdownnew:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdownnew-content:hover {
+        background: #00A4E9 !important;
+        color: white !important;
+    }
+
+    .it-em {
+        border: solid 1px;
+        padding: 5px;
+        margin-right: 10px;
+        border-radius: 9px;
+    }
+
+    .new-rw {
+        border-top: solid 2px orange;
+    }
+</style>
+
+
+<div class="page page-table" ng-init="vm.initialize()"  button-permission-binder parentName="CurrentStock" pageName="CurrentStock">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"> </span>{{ vm.title }}
+            </strong>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="row">
+                <!--<div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="site-name">Searh by Name</label><br />
+                        <input ng-hide="vm.inputParam.selectedItem" class="form-control" type="text" ng-model="vm.inputParam.itemNameKeyword" ng-change="vm.onItemNameChange()" />
+                        <br />
+                        <div class="dropdownnew" ng-if="vm.itemMasterList && vm.itemMasterList.length > 0">
+
+                            <div class="dropdownnew-content" ng-repeat="item in vm.itemMasterList track by $index" ng-click="vm.selectItem(item)">
+                                <p>{{item.itemname}}</p>
+                            </div>
+                        </div>
+
+                        <div class="input-group" style="margin-top: -20px;" ng-show="vm.inputParam.selectedItem">
+                            <input type="search" class="form-control" ng-model="vm.inputParam.selectedItem.itemname" disabled="disabled">
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" ng-click="vm.removeSelectedItem()">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="site-name">Searh by Name</label><br />
+                        <input class="form-control" type="text" ng-model="vm.inputParam.itemNameKeyword" ng-change="vm.onItemNameChange()" />
+                        <br />
+                        <div class="dropdownnew" ng-if="vm.itemMasterList && vm.itemMasterList.length > 0">
+
+                            <div class="dropdownnew-content" ng-repeat="item in vm.itemMasterList track by $index" ng-click="vm.selectItem(item)">
+                                <p>{{item.itemname}}</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="site-name">Select Warehouse</label><br />
+                        <div ng-dropdown-multiselect="" options="vm.warehouseList" selected-model="vm.selectedWarehouseList" extra-settings="vm.warehouseMultiSelectProperty"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="site-name">Start Date</label><br />
+
+                        <div class="input-group">
+
+                            <input type="text"
+                                   id="popup"
+                                   class="form-control"
+                                   datepicker-popup=""
+                                   ng-model="vm.inputParam.StartDate"
+                                   is-open="vm.inputParam.openedStartDate"
+                                   ng-click="vm.openStartDate()" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="site-name">End Date</label><br />
+
+                        <div class="input-group">
+                            <input type="text"
+                                   id="popup"
+                                   class="form-control"
+                                   datepicker-popup=""
+                                   ng-model="vm.inputParam.EndDate"
+                                   is-open="vm.inputParam.endStartDate"
+                                   ng-click="vm.openStartDate()" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <button style="margin-top: 20px;" class="btn btn-primary" ng-click="vm.searchReport()">Search</button>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-12">
+                    <span ng-repeat="item in vm.selectedItemList" class="it-em">
+                        <span>{{item.itemname}}</span> <a href="" ng-click="vm.removeItem(item)"> <i class="fa fa-times" aria-hidden="true"></i></a>
+                    </span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <br />
+            <div class="row">
+
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        ItemName
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        ItemMultiMRPId
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        Warehouse
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        OpeningStock
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        InventoryIn
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        InventoryOut
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        ClosingStock
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="vm.pageList &&  vm.pageList.length > 0">
+                            <tr data-ng-repeat="item in vm.pageList" ng-class="{'new-rw': (vm.pageList[$index-1].ItemName != item.ItemName)&& (vm.pageList[$index-1].ItemMultiMRPId != item.ItemMultiMRPId) }">
+                                <!--<td ng-repeat="col in vm.columnList">{{ ( (($index-1) >0) && (stockList[$index-1][col] == item[col]) ) ? '': item[col] }}</td>-->
+
+                                <td>{{ (vm.pageList[$index-1].ItemName ==item.ItemName) ? '': item.ItemName }}</td>
+                                <td>{{ (vm.pageList[$index-1].ItemMultiMRPId ==item.ItemMultiMRPId) ? '': item.ItemMultiMRPId}}</td>
+                                <td>{{item.WarehouseName}}</td>
+                                <td>{{item.OpeningStock}}</td>
+                                <td>{{item.InventoryIn}}</td>
+                                <td>{{item.InventoryOut}}</td>
+                                <td>{{item.ClosingStock}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="vm.numPerPage"
+                                            data-ng-options="num for num in  vm.numPerPageOpt"
+                                            data-ng-change="vm.getPageData(1)"></select>
+                                    entries per page
+                                </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            page="vm.currentPage"
+                                            total-items="vm.totalRecords"
+                                            max-size="4"
+                                            on-select-page="vm.getPageData(page)"
+                                            items-per-page="vm.numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+
+
+
